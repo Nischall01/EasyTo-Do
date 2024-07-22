@@ -106,6 +106,7 @@ Partial Class My_Day
         Me.SubTablelayoutPanel_Top.Name = "SubTablelayoutPanel_Top"
         Me.SubTablelayoutPanel_Top.RowCount = 1
         Me.SubTablelayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.SubTablelayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubTablelayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTablelayoutPanel_Top.TabIndex = 5
         '

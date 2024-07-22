@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+Imports System.IO
 
 Public Class MainForm
     'Booleans
@@ -49,11 +50,13 @@ Public Class MainForm
     '-----------------------------------------------Methods-----------------------------------------------------'
 
     ' Toggle the sidebar state between expanded and collapsed
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub CustomButton6_Click(sender As Object, e As EventArgs) Handles CustomButton6.Click
         If IsSidebarExpanded Then
             CollapseSidebar()
+
         Else
             ExpandSidebar()
+
         End If
     End Sub
 
@@ -150,8 +153,13 @@ Public Class MainForm
     End Sub
 
     Private Sub LoadProfile()
-        'CircularPictureBox1.Image = Image.FromFile(GetPfpPath())
-        CircularPictureBox1.ImageLocation = GetPfpPath()
+        If File.Exists(GetPfpPath()) Then
+            CircularPictureBox1.Image = Image.FromFile(GetPfpPath())
+        Else
+            EmptyToolStripMenuItem_Click(Nothing, Nothing)
+            EmptyToolStripMenuItem.Checked = True
+        End If
+
     End Sub
 
     Private Function GetPfpPath() As String
@@ -247,7 +255,6 @@ Public Class MainForm
             CircularPictureBox1.BorderStyle = BorderStyle.None
 
             EmptyToolStripMenuItem.Checked = False
-
         End If
     End Sub
 
@@ -257,8 +264,10 @@ Public Class MainForm
         CircularPictureBox1.BorderStyle = BorderStyle.FixedSingle
 
         EmptyToolStripMenuItem.Checked = True
-        ChangeImageToolStripMenuItem.Checked = False
+    End Sub
 
+    Private Sub CircularPictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles CircularPictureBox1.MouseClick
+        ContextMenuStrip1.Show(CircularPictureBox1, e.Location)
     End Sub
 
     'Private Sub CircularPictureBox1_MouseHover(sender As Object, e As EventArgs) Handles CircularPictureBox1.MouseHover

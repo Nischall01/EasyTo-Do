@@ -26,8 +26,14 @@ Partial Class MainForm
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.CustomButton6 = New EasyTo_do_.CustomButton(Me.components)
         Me.SubSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.CustomButton5 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CustomButton1 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CustomButton4 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CustomButton3 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CustomButton2 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CircularPictureBox1 = New EasyTo_do_.CircularPictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ChangeImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EmptyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -35,20 +41,14 @@ Partial Class MainForm
         Me.Test_BackColors = New System.Windows.Forms.Button()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.CustomButton5 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton1 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton4 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton3 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton2 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CircularPictureBox1 = New EasyTo_do_.CircularPictureBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.MainSidebarTableLayoutPanel.SuspendLayout()
         Me.SubSidebarTableLayoutPanel.SuspendLayout()
+        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -75,11 +75,11 @@ Partial Class MainForm
         Me.MainSidebarTableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.MainSidebarTableLayoutPanel.ColumnCount = 1
         Me.MainSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.CustomButton6, 0, 4)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.SubSidebarTableLayoutPanel, 0, 2)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Button1, 0, 3)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.CircularPictureBox1, 0, 0)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.PictureBox_Username, 0, 1)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Test_BackColors, 0, 4)
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Test_BackColors, 0, 3)
         Me.MainSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSidebarTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.MainSidebarTableLayoutPanel.Name = "MainSidebarTableLayoutPanel"
@@ -91,6 +91,20 @@ Partial Class MainForm
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
         Me.MainSidebarTableLayoutPanel.Size = New System.Drawing.Size(202, 459)
         Me.MainSidebarTableLayoutPanel.TabIndex = 0
+        '
+        'CustomButton6
+        '
+        Me.CustomButton6.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.CustomButton6.Icon = CType(resources.GetObject("CustomButton6.Icon"), System.Drawing.Image)
+        Me.CustomButton6.IconMargin = 12
+        Me.CustomButton6.IconSize = New System.Drawing.Size(16, 16)
+        Me.CustomButton6.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.CustomButton6.Location = New System.Drawing.Point(81, 408)
+        Me.CustomButton6.Name = "CustomButton6"
+        Me.CustomButton6.Size = New System.Drawing.Size(40, 30)
+        Me.CustomButton6.TabIndex = 0
+        Me.CustomButton6.UseVisualStyleBackColor = False
         '
         'SubSidebarTableLayoutPanel
         '
@@ -113,63 +127,6 @@ Partial Class MainForm
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(196, 214)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(3, 362)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(196, 23)
-        Me.Button1.TabIndex = 0
-        Me.Button1.Text = "|||"
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'ContextMenuStrip1
-        '
-        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.White
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeImageToolStripMenuItem, Me.EmptyToolStripMenuItem})
-        Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(152, 48)
-        '
-        'ChangeImageToolStripMenuItem
-        '
-        Me.ChangeImageToolStripMenuItem.Name = "ChangeImageToolStripMenuItem"
-        Me.ChangeImageToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.ChangeImageToolStripMenuItem.Text = "Change Image"
-        '
-        'EmptyToolStripMenuItem
-        '
-        Me.EmptyToolStripMenuItem.Checked = True
-        Me.EmptyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.EmptyToolStripMenuItem.Name = "EmptyToolStripMenuItem"
-        Me.EmptyToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.EmptyToolStripMenuItem.Text = "Empty"
-        '
-        'PictureBox_Username
-        '
-        Me.PictureBox_Username.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.PictureBox_Username.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.PictureBox_Username.Location = New System.Drawing.Point(51, 71)
-        Me.PictureBox_Username.Name = "PictureBox_Username"
-        Me.PictureBox_Username.Size = New System.Drawing.Size(100, 24)
-        Me.PictureBox_Username.TabIndex = 1
-        Me.PictureBox_Username.TabStop = False
-        '
-        'Test_BackColors
-        '
-        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Test_BackColors.Location = New System.Drawing.Point(40, 412)
-        Me.Test_BackColors.Name = "Test_BackColors"
-        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
-        Me.Test_BackColors.TabIndex = 7
-        Me.Test_BackColors.Text = "Test BackColors"
-        Me.Test_BackColors.UseVisualStyleBackColor = True
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
         'CustomButton5
         '
@@ -278,6 +235,53 @@ Partial Class MainForm
         Me.CircularPictureBox1.TabStop = False
         Me.CircularPictureBox1.Tag = ""
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.White
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeImageToolStripMenuItem, Me.EmptyToolStripMenuItem})
+        Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(152, 48)
+        '
+        'ChangeImageToolStripMenuItem
+        '
+        Me.ChangeImageToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.ChangeImageToolStripMenuItem.Name = "ChangeImageToolStripMenuItem"
+        Me.ChangeImageToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.ChangeImageToolStripMenuItem.Text = "Change Image"
+        '
+        'EmptyToolStripMenuItem
+        '
+        Me.EmptyToolStripMenuItem.CheckOnClick = True
+        Me.EmptyToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.EmptyToolStripMenuItem.Name = "EmptyToolStripMenuItem"
+        Me.EmptyToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
+        Me.EmptyToolStripMenuItem.Text = "Empty"
+        '
+        'PictureBox_Username
+        '
+        Me.PictureBox_Username.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.PictureBox_Username.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.PictureBox_Username.Location = New System.Drawing.Point(51, 71)
+        Me.PictureBox_Username.Name = "PictureBox_Username"
+        Me.PictureBox_Username.Size = New System.Drawing.Size(100, 24)
+        Me.PictureBox_Username.TabIndex = 1
+        Me.PictureBox_Username.TabStop = False
+        '
+        'Test_BackColors
+        '
+        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Test_BackColors.Location = New System.Drawing.Point(40, 349)
+        Me.Test_BackColors.Name = "Test_BackColors"
+        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
+        Me.Test_BackColors.TabIndex = 7
+        Me.Test_BackColors.Text = "Test BackColors"
+        Me.Test_BackColors.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialog1
+        '
+        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -295,15 +299,14 @@ Partial Class MainForm
         Me.SplitContainer1.ResumeLayout(False)
         Me.MainSidebarTableLayoutPanel.ResumeLayout(False)
         Me.SubSidebarTableLayoutPanel.ResumeLayout(False)
+        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents SplitContainer1 As SplitContainer
-    Friend WithEvents Button1 As Button
     Friend WithEvents MainSidebarTableLayoutPanel As TableLayoutPanel
     Friend WithEvents CircularPictureBox1 As CircularPictureBox
     Friend WithEvents CustomButton2 As CustomButton
@@ -319,4 +322,5 @@ Partial Class MainForm
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ChangeImageToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents EmptyToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CustomButton6 As CustomButton
 End Class
