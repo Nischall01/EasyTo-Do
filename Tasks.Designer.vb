@@ -24,15 +24,16 @@ Partial Class Tasks
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Tasks))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_FormName = New System.Windows.Forms.TextBox()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTableLayoutPanel.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SubTableLayoutPanel_Top
@@ -40,7 +41,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.ColumnCount = 2
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
-        Me.SubTableLayoutPanel_Top.Controls.Add(Me.TextBox_FormName, 0, 0)
+        Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox1, 1, 0)
         Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
         Me.SubTableLayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
@@ -50,25 +51,10 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTableLayoutPanel_Top.TabIndex = 0
         '
-        'TextBox_FormName
-        '
-        Me.TextBox_FormName.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.TextBox_FormName.BackColor = System.Drawing.Color.White
-        Me.TextBox_FormName.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox_FormName.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox_FormName.ForeColor = System.Drawing.Color.Black
-        Me.TextBox_FormName.Location = New System.Drawing.Point(106, 25)
-        Me.TextBox_FormName.Margin = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.TextBox_FormName.Name = "TextBox_FormName"
-        Me.TextBox_FormName.ReadOnly = True
-        Me.TextBox_FormName.Size = New System.Drawing.Size(95, 36)
-        Me.TextBox_FormName.TabIndex = 3
-        Me.TextBox_FormName.Text = "Tasks"
-        '
         'PictureBox_FormIcon
         '
         Me.PictureBox_FormIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.PictureBox_FormIcon.BackColor = System.Drawing.Color.White
+        Me.PictureBox_FormIcon.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox_FormIcon.Enabled = False
         Me.PictureBox_FormIcon.Image = CType(resources.GetObject("PictureBox_FormIcon.Image"), System.Drawing.Image)
         Me.PictureBox_FormIcon.Location = New System.Drawing.Point(61, 23)
@@ -121,6 +107,15 @@ Partial Class Tasks
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(104, 36)
+        Me.PictureBox1.TabIndex = 3
+        Me.PictureBox1.TabStop = False
+        '
         'Tasks
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -130,19 +125,19 @@ Partial Class Tasks
         Me.Name = "Tasks"
         Me.Text = "Tasks"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
-        Me.SubTableLayoutPanel_Top.PerformLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainTableLayoutPanel.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents SubTableLayoutPanel_Top As TableLayoutPanel
-    Friend WithEvents TextBox_FormName As TextBox
     Friend WithEvents PictureBox_FormIcon As PictureBox
     Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

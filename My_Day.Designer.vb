@@ -29,11 +29,12 @@ Partial Class My_Day
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTablelayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
-        Me.TextBox_FormName = New System.Windows.Forms.TextBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.MainTableLayoutPanel.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         Me.SubTablelayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'CheckedListBox_MyDay
@@ -100,7 +101,7 @@ Partial Class My_Day
         Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
         Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
         Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
-        Me.SubTablelayoutPanel_Top.Controls.Add(Me.TextBox_FormName, 1, 0)
+        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox1, 1, 0)
         Me.SubTablelayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTablelayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
         Me.SubTablelayoutPanel_Top.Name = "SubTablelayoutPanel_Top"
@@ -113,7 +114,7 @@ Partial Class My_Day
         'PictureBox_FormIcon
         '
         Me.PictureBox_FormIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.PictureBox_FormIcon.BackColor = System.Drawing.Color.White
+        Me.PictureBox_FormIcon.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox_FormIcon.Enabled = False
         Me.PictureBox_FormIcon.Image = CType(resources.GetObject("PictureBox_FormIcon.Image"), System.Drawing.Image)
         Me.PictureBox_FormIcon.Location = New System.Drawing.Point(61, 23)
@@ -124,20 +125,14 @@ Partial Class My_Day
         Me.PictureBox_FormIcon.TabIndex = 1
         Me.PictureBox_FormIcon.TabStop = False
         '
-        'TextBox_FormName
+        'PictureBox1
         '
-        Me.TextBox_FormName.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.TextBox_FormName.BackColor = System.Drawing.Color.White
-        Me.TextBox_FormName.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox_FormName.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox_FormName.ForeColor = System.Drawing.Color.Black
-        Me.TextBox_FormName.Location = New System.Drawing.Point(106, 25)
-        Me.TextBox_FormName.Margin = New System.Windows.Forms.Padding(5, 0, 0, 0)
-        Me.TextBox_FormName.Name = "TextBox_FormName"
-        Me.TextBox_FormName.ReadOnly = True
-        Me.TextBox_FormName.Size = New System.Drawing.Size(95, 36)
-        Me.TextBox_FormName.TabIndex = 0
-        Me.TextBox_FormName.Text = "My Day"
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(104, 36)
+        Me.PictureBox1.TabIndex = 2
+        Me.PictureBox1.TabStop = False
         '
         'My_Day
         '
@@ -147,12 +142,13 @@ Partial Class My_Day
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTableLayoutPanel)
         Me.Name = "My_Day"
+        Me.Text = "My Day"
         Me.MainTableLayoutPanel.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
         Me.SubTablelayoutPanel_Top.ResumeLayout(False)
-        Me.SubTablelayoutPanel_Top.PerformLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -161,6 +157,6 @@ Partial Class My_Day
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents SubTablelayoutPanel_Top As TableLayoutPanel
     Friend WithEvents PictureBox_FormIcon As PictureBox
-    Friend WithEvents TextBox_FormName As TextBox
     Friend WithEvents TextBox_AddNewTask As TextBox
+    Friend WithEvents PictureBox1 As PictureBox
 End Class
