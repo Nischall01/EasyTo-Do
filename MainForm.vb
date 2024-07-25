@@ -12,6 +12,12 @@ Public Class MainForm
     Const ExpandedSidebarWidth As Integer = 200
     Const MaxSidebarWidth As Integer = 350
 
+    Private Enum SidebarState
+        Collapsed
+        Expanded
+        Maximized
+    End Enum
+
     Const Button1_Text As String = "My Day"
     Const Button2_Text As String = "Daily"
     Const Button3_Text As String = "Important"
@@ -41,7 +47,7 @@ Public Class MainForm
 
     Private Sub InitializeApp()
         ' Initial state for sidebar is set as expanded
-        ExpandSidebar()
+        SetSidebarState(SidebarState.Expanded)
         LoadProfile()
         ' Initial Form
         ShowForm(MyDayFormInstance)
@@ -52,114 +58,80 @@ Public Class MainForm
     ' Toggle the sidebar state between expanded and collapsed on Splitter double click
     Private Sub SplitContainer1_DoubleClick(sender As Object, e As EventArgs) Handles SplitContainer1.DoubleClick
         If IsSidebarExpanded Then
-            CollapseSidebar()
-
+            SetSidebarState(SidebarState.Collapsed)
         Else
-            ExpandSidebar()
+            SetSidebarState(SidebarState.Expanded)
         End If
     End Sub
 
+    Private Sub SetSidebarState(state As SidebarState)
+        Select Case state
+            Case SidebarState.Collapsed
+                IsSidebarExpanded = False
+                SplitContainer1.SplitterDistance = CollapsedSidebarWidth
+                CollapseButtons()
 
+            Case SidebarState.Expanded
+                IsSidebarExpanded = True
+                SplitContainer1.SplitterDistance = ExpandedSidebarWidth
+                ExpandButtons()
 
-    ' Sidebar collapsed state
-    Private Sub CollapseSidebar()
-        IsSidebarExpanded = False
-        SplitContainer1.SplitterDistance = CollapsedSidebarWidth
-
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 0
-
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 0
-
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 0
-
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 0
-
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 0
-
-        ProfileMaxiAndMini()
+            Case SidebarState.Maximized
+                IsSidebarExpanded = True
+                SplitContainer1.SplitterDistance = MaxSidebarWidth
+                ExpandButtons()
+        End Select
+        ProfileMaximizeOrMinimize()
     End Sub
 
-    ' Sidebar expanded state
-    Private Sub ExpandSidebar()
-        IsSidebarExpanded = True
-        SplitContainer1.SplitterDistance = ExpandedSidebarWidth
+    Private Sub SetButtonColumnWidth(cl1width As Single, cl2width As Single)
+        Dim buttons As CustomButton_2() = {CustomButton1, CustomButton2, CustomButton3, CustomButton4, CustomButton5}
 
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        ProfileMaxiAndMini()
+        For Each btn As CustomButton_2 In buttons
+            btn.TableLayoutPanel1.ColumnStyles(0).SizeType = SizeType.Percent
+            btn.TableLayoutPanel1.ColumnStyles(0).Width = cl1width
+            btn.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+            btn.TableLayoutPanel1.ColumnStyles(1).Width = cl2width
+        Next
     End Sub
 
-    Private Sub MaxSidebar()
-        IsSidebarExpanded = True
-        SplitContainer1.SplitterDistance = MaxSidebarWidth
-
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
-        ProfileMaxiAndMini()
+    Private Sub CollapseButtons()
+        SetButtonColumnWidth(100, 0)
     End Sub
+
+    Private Sub ExpandButtons()
+        SetButtonColumnWidth(20, 80)
+    End Sub
+
 
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
         If IsSidebarExpanded Then
             If e.SplitX < ExpandedSidebarWidth - 50 Then
-                CollapseSidebar()
+                SetSidebarState(SidebarState.Collapsed)
             ElseIf e.SplitX < ExpandedSidebarWidth Then
-                ExpandSidebar()
+                SetSidebarState(SidebarState.Expanded)
             ElseIf e.SplitX > MaxSidebarWidth Then
-                MaxSidebar()
+                SetSidebarState(SidebarState.Maximized)
             End If
         Else
             If e.SplitX > ExpandedSidebarWidth And e.SplitX < MaxSidebarWidth Then
                 IsSidebarExpanded = True
                 SplitContainer1.SplitterDistance = e.SplitX
-
-                CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-                CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
-
+                ExpandButtons()
             ElseIf e.SplitX < CollapsedSidebarWidth Then
-                CollapseSidebar()
+                SetSidebarState(SidebarState.Collapsed)
             ElseIf e.SplitX > CollapsedSidebarWidth Then
                 If e.SplitX > MaxSidebarWidth Then
-                    MaxSidebar()
+                    SetSidebarState(SidebarState.Maximized)
                 ElseIf e.SplitX < MaxSidebarWidth Then
-                    ExpandSidebar()
+                    SetSidebarState(SidebarState.Expanded)
                 End If
             Else
             End If
         End If
     End Sub
 
-    Private Sub ProfileMaxiAndMini()
+    Private Sub ProfileMaximizeOrMinimize()
         If IsSidebarExpanded Then
             CircularPictureBox1.Width = 57
             CircularPictureBox1.Height = 57
