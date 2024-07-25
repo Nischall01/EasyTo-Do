@@ -2,10 +2,14 @@
 Imports System.Drawing
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.IO
+Imports System.Timers
 
 Public Class MainForm
     'Booleans
-    Dim IsSidebarExpanded As Boolean
+    Private IsSidebarExpanded As Boolean
+    Private IsMouseOverUsername As Boolean = False
+    Public IsMouseOverPfp As Boolean = False
+
 
     'Constants
     Const CollapsedSidebarWidth As Integer = 50
@@ -163,10 +167,7 @@ Public Class MainForm
         End If
     End Sub
 
-
-
     Private Sub LoadProfile()
-
         If GetPfpPath() = Nothing Then
             Pfp_MenuStripItem_Empty.Checked = True
             Pfp_MenuStripItem_Empty.Enabled = False
@@ -175,20 +176,51 @@ Public Class MainForm
             Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
             Pfp_MenuStripItem_Empty.Enabled = True
         End If
+    End Sub
 
+    Private Sub Username_PictureBox_Paint(sender As Object, e As PaintEventArgs) Handles Username_PictureBox.Paint
+        Dim text As String = GetUsername()
+        Dim desiredBorderStyle As BorderStyle
+
+        If String.IsNullOrWhiteSpace(text) Then
+            desiredBorderStyle = BorderStyle.FixedSingle
+            Username_MenuStripItem_Empty.Checked = True
+            Username_MenuStripItem_Empty.Enabled = False
+        Else
+            desiredBorderStyle = BorderStyle.None
+            Username_MenuStripItem_Empty.Checked = False
+            Username_MenuStripItem_Empty.Enabled = True
+        End If
+
+        If IsMouseOverUsername Then
+            desiredBorderStyle = BorderStyle.FixedSingle
+        End If
+
+        ' Update border style only if it has changed
+        If Username_PictureBox.BorderStyle <> desiredBorderStyle Then
+            Username_PictureBox.BorderStyle = desiredBorderStyle
+        End If
+
+        Dim font As New Font("Microsoft YaHei", 8.25, FontStyle.Bold)
+        Dim brush As New SolidBrush(Color.White)
+
+        AdjustPictureBoxWidthWithStringLength(Username_PictureBox, text, font)
+
+        ' Draw the text in the center of the PictureBox
+        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
+        Dim textX As Single = (Username_PictureBox.ClientSize.Width - textSize.Width) / 2
+        Dim textY As Single = (Username_PictureBox.ClientSize.Height - textSize.Height) / 2
+
+        ' Draw the text
+        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
     End Sub
 
     Private Function GetPfpPath() As String
-        Dim PfpPath As String
-        PfpPath = My.Settings.PfpPath
-        Return PfpPath
+        Return My.Settings.PfpPath
     End Function
 
-    Private Function GetUsername()
-        Dim Username As String
-        'Username = "Meleys"
-        Username = My.Settings.Username
-        Return Username
+    Private Function GetUsername() As String
+        Return My.Settings.Username
     End Function
 
     Private Sub AddFormToPanel(form As Form)
@@ -205,34 +237,6 @@ Public Class MainForm
         formToShow.BringToFront()
     End Sub
 
-    Private Sub Username_PictureBox_Paint(sender As Object, e As PaintEventArgs) Handles Username_PictureBox.Paint
-        Dim text As String = GetUsername()
-
-        If String.IsNullOrWhiteSpace(text) Then
-            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
-            Username_MenuStripItem_Empty.Checked = True
-            Username_MenuStripItem_Empty.Enabled = False
-        Else
-            Username_PictureBox.BorderStyle = BorderStyle.None
-            Username_MenuStripItem_Empty.Checked = False
-            Username_MenuStripItem_Empty.Enabled = True
-        End If
-
-        Dim font As New Font("Microsoft YaHei", 8.25, FontStyle.Bold)
-        Dim brush As New SolidBrush(Color.White)
-
-        AdjustUsernamePictureBoxWidth(Username_PictureBox, text, font)
-
-        ' Draw the text in the center of the PictureBox
-        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = (Username_PictureBox.ClientSize.Width - textSize.Width) / 2
-        Dim textY As Single = (Username_PictureBox.ClientSize.Height - textSize.Height) / 2
-
-        ' Draw the text
-        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
-
-
-    End Sub
 
     Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
         ShowForm(MyDayFormInstance)
@@ -297,22 +301,18 @@ Public Class MainForm
 
         If Pfp_OpenFileDialog.ShowDialog() = DialogResult.OK Then
             Pfp_CircularPictureBox.ImageLocation = Pfp_OpenFileDialog.FileName
-
-            My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
-
             Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
             Pfp_MenuStripItem_Empty.Checked = False
             Pfp_MenuStripItem_Empty.Enabled = True
+            My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
         End If
     End Sub
 
     Private Sub Pfp_MenuStripItem_Empty_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_Empty.Click
         Pfp_CircularPictureBox.Image = Nothing
         Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
-
         Pfp_MenuStripItem_Empty.Checked = True
         Pfp_MenuStripItem_Empty.Enabled = False
-
         My.Settings.PfpPath = Nothing
     End Sub
 
@@ -324,8 +324,9 @@ Public Class MainForm
             Exit Sub
         Else
             My.Settings.Username = userInput
-            Username_PictureBox.Refresh()
             Username_MenuStripItem_Empty.Checked = False
+            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
+            Username_PictureBox.Refresh()
         End If
     End Sub
 
@@ -335,23 +336,54 @@ Public Class MainForm
 
         If result = DialogResult.Yes Then
             My.Settings.Username = ""
-            Username_PictureBox.Refresh()
             Username_MenuStripItem_Empty.Checked = True
-            Username_PictureBox.BorderStyle = BorderStyle.Fixed3D
+            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
+            Username_PictureBox.Refresh()
         ElseIf result = DialogResult.No Then
             Exit Sub
         End If
     End Sub
 
-    Private Sub AdjustUsernamePictureBoxWidth(picBox As PictureBox, text As String, font As Font)
-        ' Create a Graphics object to measure the text width
+    ' Username
+    Private Sub AdjustPictureBoxWidthWithStringLength(picBox As PictureBox, text As String, font As Font)
         Using g As Graphics = picBox.CreateGraphics()
-            ' Measure the string's width using the specified font
             Dim textSize As SizeF = g.MeasureString(text, font)
-
-            ' Set the PictureBox's width based on the text width
-            ' Add some padding for better appearance
-            picBox.Width = CInt(textSize.Width) + 20 ' Adding 20 pixels padding
+            picBox.Width = CInt(textSize.Width) + 20
         End Using
+    End Sub
+
+    Private Sub Username_PictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Username_PictureBox.MouseEnter
+        IsMouseOverUsername = True
+        Username_PictureBox.Invalidate()
+    End Sub
+
+    Private Sub Username_PictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Username_PictureBox.MouseLeave
+        IsMouseOverUsername = False
+        Username_PictureBox.Invalidate()
+    End Sub
+
+    ' Pfp
+    Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
+        IsMouseOverPfp = True
+        UpdatePfpBorderStyle()
+    End Sub
+
+    Private Sub Pfp_CircularPictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseLeave
+        IsMouseOverPfp = False
+        UpdatePfpBorderStyle()
+    End Sub
+
+    Private Sub Pfp_CircularPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseMove
+        UpdatePfpBorderStyle()
+        Pfp_CircularPictureBox.Invalidate()
+    End Sub
+
+    Private Sub UpdatePfpBorderStyle()
+        If IsMouseOverPfp Then
+            Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
+        Else
+            Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
+        End If
+        Pfp_CircularPictureBox.Invalidate()
     End Sub
 End Class
