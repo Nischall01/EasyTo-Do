@@ -49,8 +49,8 @@ Public Class MainForm
 
     '-----------------------------------------------Methods-----------------------------------------------------'
 
-    ' Toggle the sidebar state between expanded and collapsed
-    Private Sub CustomButton6_Click(sender As Object, e As EventArgs) Handles CustomButton6.Click
+    ' Toggle the sidebar state between expanded and collapsed on Splitter double click
+    Private Sub SplitContainer1_DoubleClick(sender As Object, e As EventArgs) Handles SplitContainer1.DoubleClick
         If IsSidebarExpanded Then
             CollapseSidebar()
 
@@ -270,11 +270,9 @@ Public Class MainForm
         ContextMenuStrip1.Show(CircularPictureBox1, e.Location)
     End Sub
 
-    'Private Sub CircularPictureBox1_MouseHover(sender As Object, e As EventArgs) Handles CircularPictureBox1.MouseHover
-    '    ContextMenuStrip1.Show()
-    'End Sub
 
-    'Private Sub CircularPictureBox1_MouseLeave(sender As Object, e As EventArgs) Handles CircularPictureBox1.MouseLeave
-    '    ContextMenuStrip1.Hide()
-    'End Sub
+
+    Private Sub PictureBox_Username_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox_Username.MouseClick
+        ContextMenuStrip2.Show(PictureBox_Username, e.Location)
+    End Sub
 End Class

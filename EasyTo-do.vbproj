@@ -89,6 +89,12 @@
     <Compile Include="CustomButton.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CustomButton_2.Designer.vb">
+      <DependentUpon>CustomButton_2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CustomButton_2.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Daily.Designer.vb">
       <DependentUpon>Daily.vb</DependentUpon>
     </Compile>
