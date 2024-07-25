@@ -31,6 +31,11 @@ Public Class MainForm
     Private PlannedFormInstance As New Planned()
     Private TasksFormInstance As New Tasks()
     '-----------------------------------------------On load-----------------------------------------------------'
+    Public Sub New()
+        InitializeComponent()
+        Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
+        Me.UpdateStyles()
+    End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
@@ -84,16 +89,29 @@ Public Class MainForm
         ProfileMaximizeOrMinimize()
     End Sub
 
-    Private Sub SetButtonColumnWidth(cl1width As Single, cl2width As Single)
+    Private Sub SetButtonColumnWidth(cl0width As Single, cl1width As Single)
         Dim buttons As CustomButton_2() = {CustomButton1, CustomButton2, CustomButton3, CustomButton4, CustomButton5}
 
+        ' Suspend layout for each button to avoid flickering
+        For Each btn As CustomButton_2 In buttons
+            btn.TableLayoutPanel1.SuspendLayout()
+        Next
+
+        ' Update column styles
         For Each btn As CustomButton_2 In buttons
             btn.TableLayoutPanel1.ColumnStyles(0).SizeType = SizeType.Percent
-            btn.TableLayoutPanel1.ColumnStyles(0).Width = cl1width
+            btn.TableLayoutPanel1.ColumnStyles(0).Width = cl0width
             btn.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
-            btn.TableLayoutPanel1.ColumnStyles(1).Width = cl2width
+            btn.TableLayoutPanel1.ColumnStyles(1).Width = cl1width
+        Next
+
+        ' Resume layout for each button
+        For Each btn As CustomButton_2 In buttons
+            btn.TableLayoutPanel1.ResumeLayout()
+            btn.TableLayoutPanel1.Refresh() ' Refresh to apply the changes
         Next
     End Sub
+
 
     Private Sub CollapseButtons()
         SetButtonColumnWidth(100, 0)
@@ -133,39 +151,43 @@ Public Class MainForm
 
     Private Sub ProfileMaximizeOrMinimize()
         If IsSidebarExpanded Then
-            CircularPictureBox1.Width = 57
-            CircularPictureBox1.Height = 57
+            Pfp_CircularPictureBox.Width = 57
+            Pfp_CircularPictureBox.Height = 57
 
-            PictureBox_Username.Show()
+            Username_PictureBox.Show()
         Else
-            CircularPictureBox1.Width = 42
-            CircularPictureBox1.Height = 42
+            Pfp_CircularPictureBox.Width = 42
+            Pfp_CircularPictureBox.Height = 42
 
-            PictureBox_Username.Hide()
+            Username_PictureBox.Hide()
         End If
     End Sub
 
 
 
     Private Sub LoadProfile()
-        If File.Exists(GetPfpPath()) Then
-            CircularPictureBox1.Image = Image.FromFile(GetPfpPath())
-        Else
-            EmptyToolStripMenuItem_Click(Nothing, Nothing)
-            EmptyToolStripMenuItem.Checked = True
+
+        If GetPfpPath() = Nothing Then
+            Pfp_MenuStripItem_Empty.Checked = True
+            Pfp_MenuStripItem_Empty.Enabled = False
+            Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
+        ElseIf File.Exists(GetPfpPath()) Then
+            Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
+            Pfp_MenuStripItem_Empty.Enabled = True
         End If
 
     End Sub
 
     Private Function GetPfpPath() As String
         Dim PfpPath As String
-        PfpPath = "C:\Users\Nischal\Pictures\ShyLily.jpg"
+        PfpPath = My.Settings.PfpPath
         Return PfpPath
     End Function
 
     Private Function GetUsername()
         Dim Username As String
-        Username = "Meleys"
+        'Username = "Meleys"
+        Username = My.Settings.Username
         Return Username
     End Function
 
@@ -183,21 +205,36 @@ Public Class MainForm
         formToShow.BringToFront()
     End Sub
 
-    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox_Username.Paint
+    Private Sub Username_PictureBox_Paint(sender As Object, e As PaintEventArgs) Handles Username_PictureBox.Paint
         Dim text As String = GetUsername()
+
+        If String.IsNullOrWhiteSpace(text) Then
+            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
+            Username_MenuStripItem_Empty.Checked = True
+            Username_MenuStripItem_Empty.Enabled = False
+        Else
+            Username_PictureBox.BorderStyle = BorderStyle.None
+            Username_MenuStripItem_Empty.Checked = False
+            Username_MenuStripItem_Empty.Enabled = True
+        End If
+
         Dim font As New Font("Microsoft YaHei", 8.25, FontStyle.Bold)
         Dim brush As New SolidBrush(Color.White)
 
+        AdjustUsernamePictureBoxWidth(Username_PictureBox, text, font)
+
         ' Draw the text in the center of the PictureBox
         Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = (PictureBox_Username.ClientSize.Width - textSize.Width) / 2
-        Dim textY As Single = (PictureBox_Username.ClientSize.Height - textSize.Height) / 2
+        Dim textX As Single = (Username_PictureBox.ClientSize.Width - textSize.Width) / 2
+        Dim textY As Single = (Username_PictureBox.ClientSize.Height - textSize.Height) / 2
 
         ' Draw the text
         e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
+
+
     End Sub
 
-    Private Sub CustomButton1_Click_1(sender As Object, e As EventArgs)
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
         ShowForm(MyDayFormInstance)
     End Sub
 
@@ -244,32 +281,77 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub ChangeImageToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ChangeImageToolStripMenuItem.Click
-        If OpenFileDialog1.ShowDialog() = DialogResult.OK Then
-            CircularPictureBox1.ImageLocation = OpenFileDialog1.FileName
-            CircularPictureBox1.BorderStyle = BorderStyle.None
 
-            EmptyToolStripMenuItem.Checked = False
+
+    Private Sub CircularPictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseClick
+        Pfp_ContextMenuStrip.Show(Pfp_CircularPictureBox, e.Location)
+    End Sub
+
+    Private Sub PictureBox_Username_MouseClick(sender As Object, e As MouseEventArgs) Handles Username_PictureBox.MouseClick
+        Username_ContextMenuStrip.Show(Username_PictureBox, e.Location)
+    End Sub
+
+    Private Sub Pfp_MenuStripItem_ChangePicture_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_ChangePicture.Click
+        Pfp_OpenFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
+        Pfp_OpenFileDialog.Title = "Select an Image"
+
+        If Pfp_OpenFileDialog.ShowDialog() = DialogResult.OK Then
+            Pfp_CircularPictureBox.ImageLocation = Pfp_OpenFileDialog.FileName
+
+            My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
+
+            Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
+            Pfp_MenuStripItem_Empty.Checked = False
+            Pfp_MenuStripItem_Empty.Enabled = True
         End If
     End Sub
 
-    Private Sub EmptyToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EmptyToolStripMenuItem.Click
+    Private Sub Pfp_MenuStripItem_Empty_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_Empty.Click
+        Pfp_CircularPictureBox.Image = Nothing
+        Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
 
-        CircularPictureBox1.Image = Nothing
-        CircularPictureBox1.BorderStyle = BorderStyle.FixedSingle
+        Pfp_MenuStripItem_Empty.Checked = True
+        Pfp_MenuStripItem_Empty.Enabled = False
 
-        EmptyToolStripMenuItem.Checked = True
+        My.Settings.PfpPath = Nothing
     End Sub
 
-    Private Sub CircularPictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles CircularPictureBox1.MouseClick
-        ContextMenuStrip1.Show(CircularPictureBox1, e.Location)
+    Private Sub Username_MenuStripItem_ChangeName_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_ChangeName.Click
+        Dim userInput As String
+        userInput = InputBox("", "Enter your new Username")
+
+        If String.IsNullOrEmpty(userInput) Then
+            Exit Sub
+        Else
+            My.Settings.Username = userInput
+            Username_PictureBox.Refresh()
+            Username_MenuStripItem_Empty.Checked = False
+        End If
     End Sub
 
-    Private Sub PictureBox_Username_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox_Username.MouseClick
-        ContextMenuStrip2.Show(PictureBox_Username, e.Location)
+    Private Sub Username_MenuStripItem_Empty_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_Empty.Click
+        Dim result As DialogResult
+        result = MessageBox.Show("Are you sure you want Username to be empty?", "Confirm Action", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+        If result = DialogResult.Yes Then
+            My.Settings.Username = ""
+            Username_PictureBox.Refresh()
+            Username_MenuStripItem_Empty.Checked = True
+            Username_PictureBox.BorderStyle = BorderStyle.Fixed3D
+        ElseIf result = DialogResult.No Then
+            Exit Sub
+        End If
     End Sub
 
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-        ShowForm(MyDayFormInstance)
+    Private Sub AdjustUsernamePictureBoxWidth(picBox As PictureBox, text As String, font As Font)
+        ' Create a Graphics object to measure the text width
+        Using g As Graphics = picBox.CreateGraphics()
+            ' Measure the string's width using the specified font
+            Dim textSize As SizeF = g.MeasureString(text, font)
+
+            ' Set the PictureBox's width based on the text width
+            ' Add some padding for better appearance
+            picBox.Width = CInt(textSize.Width) + 20 ' Adding 20 pixels padding
+        End Using
     End Sub
 End Class

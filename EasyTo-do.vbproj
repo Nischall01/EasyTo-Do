@@ -141,6 +141,7 @@
     <Compile Include="Planned.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Settings.vb" />
     <Compile Include="Tasks.Designer.vb">
       <DependentUpon>Tasks.vb</DependentUpon>
     </Compile>

@@ -27,31 +27,31 @@ Partial Class MainForm
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ChangeImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.EmptyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PictureBox_Username = New System.Windows.Forms.PictureBox()
-        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Pfp_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.Pfp_MenuStripItem_ChangePicture = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Pfp_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Username_PictureBox = New System.Windows.Forms.PictureBox()
+        Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
         Me.Test_BackColors = New System.Windows.Forms.Button()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
+        Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.CustomButton5 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton4 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton3 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton2 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton1 = New EasyTo_do_.CustomButton_2()
-        Me.CircularPictureBox1 = New EasyTo_do_.CircularPictureBox()
+        Me.Pfp_CircularPictureBox = New EasyTo_do_.CircularPictureBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.MainSidebarTableLayoutPanel.SuspendLayout()
         Me.SubSidebarTableLayoutPanel.SuspendLayout()
-        Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.ContextMenuStrip2.SuspendLayout()
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Pfp_ContextMenuStrip.SuspendLayout()
+        CType(Me.Username_PictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Username_ContextMenuStrip.SuspendLayout()
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -79,8 +79,8 @@ Partial Class MainForm
         Me.MainSidebarTableLayoutPanel.ColumnCount = 1
         Me.MainSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.SubSidebarTableLayoutPanel, 0, 2)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.CircularPictureBox1, 0, 0)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.PictureBox_Username, 0, 1)
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Pfp_CircularPictureBox, 0, 0)
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Username_PictureBox, 0, 1)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Test_BackColors, 0, 3)
         Me.MainSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSidebarTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
@@ -116,59 +116,60 @@ Partial Class MainForm
         Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(196, 238)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
         '
-        'ContextMenuStrip1
+        'Pfp_ContextMenuStrip
         '
-        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.White
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ChangeImageToolStripMenuItem, Me.EmptyToolStripMenuItem})
-        Me.ContextMenuStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
-        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(152, 48)
+        Me.Pfp_ContextMenuStrip.BackColor = System.Drawing.Color.White
+        Me.Pfp_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Pfp_MenuStripItem_ChangePicture, Me.Pfp_MenuStripItem_Empty})
+        Me.Pfp_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+        Me.Pfp_ContextMenuStrip.Name = "ContextMenuStrip1"
+        Me.Pfp_ContextMenuStrip.Size = New System.Drawing.Size(156, 48)
         '
-        'ChangeImageToolStripMenuItem
+        'Pfp_MenuStripItem_ChangePicture
         '
-        Me.ChangeImageToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.ChangeImageToolStripMenuItem.Name = "ChangeImageToolStripMenuItem"
-        Me.ChangeImageToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.ChangeImageToolStripMenuItem.Text = "Change Image"
+        Me.Pfp_MenuStripItem_ChangePicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.Pfp_MenuStripItem_ChangePicture.Name = "Pfp_MenuStripItem_ChangePicture"
+        Me.Pfp_MenuStripItem_ChangePicture.Size = New System.Drawing.Size(155, 22)
+        Me.Pfp_MenuStripItem_ChangePicture.Text = "Change Picture"
         '
-        'EmptyToolStripMenuItem
+        'Pfp_MenuStripItem_Empty
         '
-        Me.EmptyToolStripMenuItem.CheckOnClick = True
-        Me.EmptyToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.EmptyToolStripMenuItem.Name = "EmptyToolStripMenuItem"
-        Me.EmptyToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
-        Me.EmptyToolStripMenuItem.Text = "Empty"
+        Me.Pfp_MenuStripItem_Empty.CheckOnClick = True
+        Me.Pfp_MenuStripItem_Empty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.Pfp_MenuStripItem_Empty.Name = "Pfp_MenuStripItem_Empty"
+        Me.Pfp_MenuStripItem_Empty.Size = New System.Drawing.Size(155, 22)
+        Me.Pfp_MenuStripItem_Empty.Text = "Empty"
         '
-        'PictureBox_Username
+        'Username_PictureBox
         '
-        Me.PictureBox_Username.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.PictureBox_Username.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.PictureBox_Username.ContextMenuStrip = Me.ContextMenuStrip2
-        Me.PictureBox_Username.Location = New System.Drawing.Point(51, 79)
-        Me.PictureBox_Username.Name = "PictureBox_Username"
-        Me.PictureBox_Username.Size = New System.Drawing.Size(100, 24)
-        Me.PictureBox_Username.TabIndex = 1
-        Me.PictureBox_Username.TabStop = False
+        Me.Username_PictureBox.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Username_PictureBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Username_PictureBox.ContextMenuStrip = Me.Username_ContextMenuStrip
+        Me.Username_PictureBox.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Username_PictureBox.Location = New System.Drawing.Point(41, 79)
+        Me.Username_PictureBox.Name = "Username_PictureBox"
+        Me.Username_PictureBox.Size = New System.Drawing.Size(120, 24)
+        Me.Username_PictureBox.TabIndex = 1
+        Me.Username_PictureBox.TabStop = False
         '
-        'ContextMenuStrip2
+        'Username_ContextMenuStrip
         '
-        Me.ContextMenuStrip2.BackColor = System.Drawing.Color.White
-        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2})
-        Me.ContextMenuStrip2.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
-        Me.ContextMenuStrip2.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(151, 48)
+        Me.Username_ContextMenuStrip.BackColor = System.Drawing.Color.White
+        Me.Username_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Username_MenuStripItem_ChangeName, Me.Username_MenuStripItem_Empty})
+        Me.Username_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+        Me.Username_ContextMenuStrip.Name = "ContextMenuStrip1"
+        Me.Username_ContextMenuStrip.Size = New System.Drawing.Size(151, 48)
         '
-        'ToolStripMenuItem1
+        'Username_MenuStripItem_ChangeName
         '
-        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(150, 22)
-        Me.ToolStripMenuItem1.Text = "Change Name"
+        Me.Username_MenuStripItem_ChangeName.Name = "Username_MenuStripItem_ChangeName"
+        Me.Username_MenuStripItem_ChangeName.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_ChangeName.Text = "Change Name"
         '
-        'ToolStripMenuItem2
+        'Username_MenuStripItem_Empty
         '
-        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(150, 22)
-        Me.ToolStripMenuItem2.Text = "Empty"
+        Me.Username_MenuStripItem_Empty.Name = "Username_MenuStripItem_Empty"
+        Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_Empty.Text = "Empty"
         '
         'Test_BackColors
         '
@@ -179,10 +180,6 @@ Partial Class MainForm
         Me.Test_BackColors.TabIndex = 7
         Me.Test_BackColors.Text = "Test BackColors"
         Me.Test_BackColors.UseVisualStyleBackColor = True
-        '
-        'OpenFileDialog1
-        '
-        Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
         'CustomButton5
         '
@@ -289,18 +286,19 @@ Partial Class MainForm
         Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
-        'CircularPictureBox1
+        'Pfp_CircularPictureBox
         '
-        Me.CircularPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.CircularPictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CircularPictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.CircularPictureBox1.Location = New System.Drawing.Point(72, 16)
-        Me.CircularPictureBox1.Name = "CircularPictureBox1"
-        Me.CircularPictureBox1.Size = New System.Drawing.Size(57, 57)
-        Me.CircularPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.CircularPictureBox1.TabIndex = 0
-        Me.CircularPictureBox1.TabStop = False
-        Me.CircularPictureBox1.Tag = ""
+        Me.Pfp_CircularPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Pfp_CircularPictureBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Pfp_CircularPictureBox.ContextMenuStrip = Me.Pfp_ContextMenuStrip
+        Me.Pfp_CircularPictureBox.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Pfp_CircularPictureBox.Location = New System.Drawing.Point(72, 16)
+        Me.Pfp_CircularPictureBox.Name = "Pfp_CircularPictureBox"
+        Me.Pfp_CircularPictureBox.Size = New System.Drawing.Size(57, 57)
+        Me.Pfp_CircularPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Pfp_CircularPictureBox.TabIndex = 0
+        Me.Pfp_CircularPictureBox.TabStop = False
+        Me.Pfp_CircularPictureBox.Tag = ""
         '
         'MainForm
         '
@@ -319,28 +317,28 @@ Partial Class MainForm
         Me.SplitContainer1.ResumeLayout(False)
         Me.MainSidebarTableLayoutPanel.ResumeLayout(False)
         Me.SubSidebarTableLayoutPanel.ResumeLayout(False)
-        Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ContextMenuStrip2.ResumeLayout(False)
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Pfp_ContextMenuStrip.ResumeLayout(False)
+        CType(Me.Username_PictureBox, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Username_ContextMenuStrip.ResumeLayout(False)
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents MainSidebarTableLayoutPanel As TableLayoutPanel
-    Friend WithEvents CircularPictureBox1 As CircularPictureBox
+    Friend WithEvents Pfp_CircularPictureBox As CircularPictureBox
     Friend WithEvents SubSidebarTableLayoutPanel As TableLayoutPanel
-    Friend WithEvents PictureBox_Username As PictureBox
+    Friend WithEvents Username_PictureBox As PictureBox
     Friend WithEvents Test_BackColors As Button
     Friend WithEvents ColorDialog1 As ColorDialog
-    Friend WithEvents OpenFileDialog1 As OpenFileDialog
-    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents ChangeImageToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents EmptyToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
-    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents Pfp_OpenFileDialog As OpenFileDialog
+    Friend WithEvents Pfp_ContextMenuStrip As ContextMenuStrip
+    Friend WithEvents Pfp_MenuStripItem_ChangePicture As ToolStripMenuItem
+    Friend WithEvents Pfp_MenuStripItem_Empty As ToolStripMenuItem
+    Friend WithEvents Username_ContextMenuStrip As ContextMenuStrip
+    Friend WithEvents Username_MenuStripItem_ChangeName As ToolStripMenuItem
+    Friend WithEvents Username_MenuStripItem_Empty As ToolStripMenuItem
     Friend WithEvents CustomButton1 As CustomButton_2
     Friend WithEvents CustomButton5 As CustomButton_2
     Friend WithEvents CustomButton4 As CustomButton_2
