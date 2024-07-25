@@ -56,22 +56,32 @@ Public Class MainForm
 
         Else
             ExpandSidebar()
-
         End If
     End Sub
+
+
 
     ' Sidebar collapsed state
     Private Sub CollapseSidebar()
         IsSidebarExpanded = False
         SplitContainer1.SplitterDistance = CollapsedSidebarWidth
 
-        CustomButton1.Text = ""
-        CustomButton2.Text = ""
-        CustomButton3.Text = ""
-        CustomButton4.Text = ""
-        CustomButton5.Text = ""
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 0
 
-        ShowOrHideUsername()
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 0
+
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 0
+
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 0
+
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 0
+
+        ProfileMaxiAndMini()
     End Sub
 
     ' Sidebar expanded state
@@ -79,29 +89,77 @@ Public Class MainForm
         IsSidebarExpanded = True
         SplitContainer1.SplitterDistance = ExpandedSidebarWidth
 
-        CustomButton1.Text = Button1_Text
-        CustomButton2.Text = Button2_Text
-        CustomButton3.Text = Button3_Text
-        CustomButton4.Text = Button4_Text
-        CustomButton5.Text = Button5_Text
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
 
-        ShowOrHideUsername()
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        ProfileMaxiAndMini()
     End Sub
 
     Private Sub MaxSidebar()
         IsSidebarExpanded = True
         SplitContainer1.SplitterDistance = MaxSidebarWidth
 
-        CustomButton1.Text = Button1_Text
-        CustomButton2.Text = Button2_Text
-        CustomButton3.Text = Button3_Text
-        CustomButton4.Text = Button4_Text
-        CustomButton5.Text = Button5_Text
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
 
-        ShowOrHideUsername()
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton2.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton3.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton4.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+        CustomButton5.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+        ProfileMaxiAndMini()
     End Sub
 
-    Private Sub ShowOrHideUsername()
+    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
+        If IsSidebarExpanded Then
+            If e.SplitX < ExpandedSidebarWidth - 50 Then
+                CollapseSidebar()
+            ElseIf e.SplitX < ExpandedSidebarWidth Then
+                ExpandSidebar()
+            ElseIf e.SplitX > MaxSidebarWidth Then
+                MaxSidebar()
+            End If
+        Else
+            If e.SplitX > ExpandedSidebarWidth And e.SplitX < MaxSidebarWidth Then
+                IsSidebarExpanded = True
+                SplitContainer1.SplitterDistance = e.SplitX
+
+                CustomButton1.TableLayoutPanel1.ColumnStyles(1).SizeType = SizeType.Percent
+                CustomButton1.TableLayoutPanel1.ColumnStyles(1).Width = 80
+
+            ElseIf e.SplitX < CollapsedSidebarWidth Then
+                CollapseSidebar()
+            ElseIf e.SplitX > CollapsedSidebarWidth Then
+                If e.SplitX > MaxSidebarWidth Then
+                    MaxSidebar()
+                ElseIf e.SplitX < MaxSidebarWidth Then
+                    ExpandSidebar()
+                End If
+            Else
+            End If
+        End If
+    End Sub
+
+    Private Sub ProfileMaxiAndMini()
         If IsSidebarExpanded Then
             CircularPictureBox1.Width = 57
             CircularPictureBox1.Height = 57
@@ -115,42 +173,7 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
-        If IsSidebarExpanded Then
-            If e.SplitX < ExpandedSidebarWidth - 50 Then
-                CollapseSidebar()
-            ElseIf e.SplitX < ExpandedSidebarWidth Then
-                ExpandSidebar()
-            ElseIf e.SplitX > MaxSidebarWidth Then
-                SplitContainer1.SplitterDistance = MaxSidebarWidth
-                IsSidebarExpanded = True
-                CustomButton1.Text = Button1_Text
-                CustomButton2.Text = Button2_Text
-                CustomButton3.Text = Button3_Text
-                CustomButton4.Text = Button4_Text
-                CustomButton5.Text = Button5_Text
-            End If
-        Else
-            If e.SplitX < CollapsedSidebarWidth Then
-                CollapseSidebar()
-            ElseIf e.SplitX > CollapsedSidebarWidth Then
-                If e.SplitX > MaxSidebarWidth Then
-                    MaxSidebar()
-                ElseIf e.SplitX < MaxSidebarWidth Then
-                    ExpandSidebar()
-                End If
-                IsSidebarExpanded = True
-            ElseIf e.SplitX > ExpandedSidebarWidth And e.SplitX < MaxSidebarWidth Then
-                SplitContainer1.SplitterDistance = e.SplitX
-                IsSidebarExpanded = True
-                CustomButton1.Text = Button1_Text
-                CustomButton2.Text = Button2_Text
-                CustomButton3.Text = Button3_Text
-                CustomButton4.Text = Button4_Text
-                CustomButton5.Text = Button5_Text
-            End If
-        End If
-    End Sub
+
 
     Private Sub LoadProfile()
         If File.Exists(GetPfpPath()) Then
@@ -202,7 +225,7 @@ Public Class MainForm
         e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
     End Sub
 
-    Private Sub CustomButton1_Click_1(sender As Object, e As EventArgs) Handles CustomButton1.Click
+    Private Sub CustomButton1_Click_1(sender As Object, e As EventArgs)
         ShowForm(MyDayFormInstance)
     End Sub
 
@@ -270,9 +293,11 @@ Public Class MainForm
         ContextMenuStrip1.Show(CircularPictureBox1, e.Location)
     End Sub
 
-
-
     Private Sub PictureBox_Username_MouseClick(sender As Object, e As MouseEventArgs) Handles PictureBox_Username.MouseClick
         ContextMenuStrip2.Show(PictureBox_Username, e.Location)
+    End Sub
+
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
+        ShowForm(MyDayFormInstance)
     End Sub
 End Class

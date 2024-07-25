@@ -27,11 +27,6 @@ Partial Class MainForm
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.CustomButton5 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton4 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton3 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CustomButton2 = New EasyTo_do_.CustomButton(Me.components)
-        Me.CircularPictureBox1 = New EasyTo_do_.CircularPictureBox()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ChangeImageToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EmptyToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -42,16 +37,21 @@ Partial Class MainForm
         Me.Test_BackColors = New System.Windows.Forms.Button()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
-        Me.CustomButton1 = New EasyTo_do_.CustomButton(Me.components)
+        Me.CustomButton5 = New EasyTo_do_.CustomButton_2()
+        Me.CustomButton4 = New EasyTo_do_.CustomButton_2()
+        Me.CustomButton3 = New EasyTo_do_.CustomButton_2()
+        Me.CustomButton2 = New EasyTo_do_.CustomButton_2()
+        Me.CustomButton1 = New EasyTo_do_.CustomButton_2()
+        Me.CircularPictureBox1 = New EasyTo_do_.CircularPictureBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.MainSidebarTableLayoutPanel.SuspendLayout()
         Me.SubSidebarTableLayoutPanel.SuspendLayout()
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip2.SuspendLayout()
+        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -69,7 +69,7 @@ Partial Class MainForm
         'SplitContainer1.Panel2
         '
         Me.SplitContainer1.Panel2.BackColor = System.Drawing.Color.Black
-        Me.SplitContainer1.Size = New System.Drawing.Size(784, 461)
+        Me.SplitContainer1.Size = New System.Drawing.Size(784, 511)
         Me.SplitContainer1.SplitterDistance = 204
         Me.SplitContainer1.TabIndex = 0
         '
@@ -91,7 +91,7 @@ Partial Class MainForm
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.0!))
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.0!))
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.MainSidebarTableLayoutPanel.Size = New System.Drawing.Size(202, 459)
+        Me.MainSidebarTableLayoutPanel.Size = New System.Drawing.Size(202, 509)
         Me.MainSidebarTableLayoutPanel.TabIndex = 0
         '
         'SubSidebarTableLayoutPanel
@@ -99,12 +99,12 @@ Partial Class MainForm
         Me.SubSidebarTableLayoutPanel.ColumnCount = 1
         Me.SubSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton5, 0, 4)
-        Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton1, 0, 0)
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton4, 0, 3)
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton3, 0, 2)
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton2, 0, 1)
+        Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton1, 0, 0)
         Me.SubSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SubSidebarTableLayoutPanel.Location = New System.Drawing.Point(3, 116)
+        Me.SubSidebarTableLayoutPanel.Location = New System.Drawing.Point(3, 129)
         Me.SubSidebarTableLayoutPanel.Name = "SubSidebarTableLayoutPanel"
         Me.SubSidebarTableLayoutPanel.RowCount = 5
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.20202!))
@@ -113,100 +113,8 @@ Partial Class MainForm
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.20202!))
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.19192!))
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(196, 214)
+        Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(196, 238)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
-        '
-        'CustomButton5
-        '
-        Me.CustomButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CustomButton5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton5.FlatAppearance.BorderSize = 0
-        Me.CustomButton5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomButton5.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!)
-        Me.CustomButton5.ForeColor = System.Drawing.Color.White
-        Me.CustomButton5.Icon = CType(resources.GetObject("CustomButton5.Icon"), System.Drawing.Image)
-        Me.CustomButton5.IconMargin = 5
-        Me.CustomButton5.IconSize = New System.Drawing.Size(30, 30)
-        Me.CustomButton5.Location = New System.Drawing.Point(0, 172)
-        Me.CustomButton5.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton5.Name = "CustomButton5"
-        Me.CustomButton5.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CustomButton5.Size = New System.Drawing.Size(196, 42)
-        Me.CustomButton5.TabIndex = 5
-        Me.CustomButton5.Text = "Tasks"
-        Me.CustomButton5.UseVisualStyleBackColor = False
-        '
-        'CustomButton4
-        '
-        Me.CustomButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CustomButton4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton4.FlatAppearance.BorderSize = 0
-        Me.CustomButton4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomButton4.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!)
-        Me.CustomButton4.ForeColor = System.Drawing.Color.White
-        Me.CustomButton4.Icon = CType(resources.GetObject("CustomButton4.Icon"), System.Drawing.Image)
-        Me.CustomButton4.IconMargin = 5
-        Me.CustomButton4.IconSize = New System.Drawing.Size(30, 30)
-        Me.CustomButton4.Location = New System.Drawing.Point(0, 129)
-        Me.CustomButton4.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton4.Name = "CustomButton4"
-        Me.CustomButton4.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CustomButton4.Size = New System.Drawing.Size(196, 43)
-        Me.CustomButton4.TabIndex = 4
-        Me.CustomButton4.Text = "Planned"
-        Me.CustomButton4.UseVisualStyleBackColor = False
-        '
-        'CustomButton3
-        '
-        Me.CustomButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CustomButton3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton3.FlatAppearance.BorderSize = 0
-        Me.CustomButton3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomButton3.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!)
-        Me.CustomButton3.ForeColor = System.Drawing.Color.White
-        Me.CustomButton3.Icon = CType(resources.GetObject("CustomButton3.Icon"), System.Drawing.Image)
-        Me.CustomButton3.IconMargin = 5
-        Me.CustomButton3.IconSize = New System.Drawing.Size(30, 30)
-        Me.CustomButton3.Location = New System.Drawing.Point(0, 86)
-        Me.CustomButton3.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton3.Name = "CustomButton3"
-        Me.CustomButton3.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CustomButton3.Size = New System.Drawing.Size(196, 43)
-        Me.CustomButton3.TabIndex = 3
-        Me.CustomButton3.Text = "Important"
-        Me.CustomButton3.UseVisualStyleBackColor = False
-        '
-        'CustomButton2
-        '
-        Me.CustomButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CustomButton2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton2.FlatAppearance.BorderSize = 0
-        Me.CustomButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomButton2.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!)
-        Me.CustomButton2.ForeColor = System.Drawing.Color.White
-        Me.CustomButton2.Icon = CType(resources.GetObject("CustomButton2.Icon"), System.Drawing.Image)
-        Me.CustomButton2.IconMargin = 5
-        Me.CustomButton2.IconSize = New System.Drawing.Size(30, 30)
-        Me.CustomButton2.Location = New System.Drawing.Point(0, 43)
-        Me.CustomButton2.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton2.Name = "CustomButton2"
-        Me.CustomButton2.Size = New System.Drawing.Size(196, 43)
-        Me.CustomButton2.TabIndex = 2
-        Me.CustomButton2.Text = "Daily"
-        Me.CustomButton2.UseVisualStyleBackColor = False
-        '
-        'CircularPictureBox1
-        '
-        Me.CircularPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.CircularPictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CircularPictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
-        Me.CircularPictureBox1.Location = New System.Drawing.Point(72, 8)
-        Me.CircularPictureBox1.Name = "CircularPictureBox1"
-        Me.CircularPictureBox1.Size = New System.Drawing.Size(57, 57)
-        Me.CircularPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.CircularPictureBox1.TabIndex = 0
-        Me.CircularPictureBox1.TabStop = False
-        Me.CircularPictureBox1.Tag = ""
         '
         'ContextMenuStrip1
         '
@@ -236,7 +144,7 @@ Partial Class MainForm
         Me.PictureBox_Username.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.PictureBox_Username.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.PictureBox_Username.ContextMenuStrip = Me.ContextMenuStrip2
-        Me.PictureBox_Username.Location = New System.Drawing.Point(51, 71)
+        Me.PictureBox_Username.Location = New System.Drawing.Point(51, 79)
         Me.PictureBox_Username.Name = "PictureBox_Username"
         Me.PictureBox_Username.Size = New System.Drawing.Size(100, 24)
         Me.PictureBox_Username.TabIndex = 1
@@ -265,7 +173,7 @@ Partial Class MainForm
         'Test_BackColors
         '
         Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Test_BackColors.Location = New System.Drawing.Point(40, 349)
+        Me.Test_BackColors.Location = New System.Drawing.Point(40, 389)
         Me.Test_BackColors.Name = "Test_BackColors"
         Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
         Me.Test_BackColors.TabIndex = 7
@@ -276,35 +184,133 @@ Partial Class MainForm
         '
         Me.OpenFileDialog1.FileName = "OpenFileDialog1"
         '
+        'CustomButton5
+        '
+        Me.CustomButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton5.ButtonText = "Tasks"
+        Me.CustomButton5.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.CustomButton5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton5.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomButton5.ForeColor = System.Drawing.Color.White
+        Me.CustomButton5.Icon = CType(resources.GetObject("CustomButton5.Icon"), System.Drawing.Image)
+        Me.CustomButton5.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton5.IconSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton5.LabelMargin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton5.Location = New System.Drawing.Point(0, 192)
+        Me.CustomButton5.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton5.Name = "CustomButton5"
+        Me.CustomButton5.PictureBoxSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton5.Size = New System.Drawing.Size(196, 46)
+        Me.CustomButton5.TabIndex = 10
+        Me.CustomButton5.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton5.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton4
+        '
+        Me.CustomButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton4.ButtonText = "Planned"
+        Me.CustomButton4.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.CustomButton4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton4.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomButton4.ForeColor = System.Drawing.Color.White
+        Me.CustomButton4.Icon = CType(resources.GetObject("CustomButton4.Icon"), System.Drawing.Image)
+        Me.CustomButton4.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton4.IconSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton4.LabelMargin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton4.Location = New System.Drawing.Point(0, 144)
+        Me.CustomButton4.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton4.Name = "CustomButton4"
+        Me.CustomButton4.PictureBoxSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton4.Size = New System.Drawing.Size(196, 48)
+        Me.CustomButton4.TabIndex = 9
+        Me.CustomButton4.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton4.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton3
+        '
+        Me.CustomButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton3.ButtonText = "Important"
+        Me.CustomButton3.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.CustomButton3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton3.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomButton3.ForeColor = System.Drawing.Color.White
+        Me.CustomButton3.Icon = CType(resources.GetObject("CustomButton3.Icon"), System.Drawing.Image)
+        Me.CustomButton3.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton3.IconSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton3.LabelMargin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton3.Location = New System.Drawing.Point(0, 96)
+        Me.CustomButton3.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton3.Name = "CustomButton3"
+        Me.CustomButton3.PictureBoxSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton3.Size = New System.Drawing.Size(196, 48)
+        Me.CustomButton3.TabIndex = 8
+        Me.CustomButton3.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton3.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton2
+        '
+        Me.CustomButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton2.ButtonText = "Daily"
+        Me.CustomButton2.Cursor = System.Windows.Forms.Cursors.Arrow
+        Me.CustomButton2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton2.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomButton2.ForeColor = System.Drawing.Color.White
+        Me.CustomButton2.Icon = CType(resources.GetObject("CustomButton2.Icon"), System.Drawing.Image)
+        Me.CustomButton2.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton2.IconSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton2.LabelMargin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton2.Location = New System.Drawing.Point(0, 48)
+        Me.CustomButton2.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton2.Name = "CustomButton2"
+        Me.CustomButton2.PictureBoxSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton2.Size = New System.Drawing.Size(196, 48)
+        Me.CustomButton2.TabIndex = 7
+        Me.CustomButton2.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton2.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
         'CustomButton1
         '
         Me.CustomButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton1.ButtonText = "My Day"
+        Me.CustomButton1.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton1.FlatAppearance.BorderSize = 0
-        Me.CustomButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.CustomButton1.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!)
+        Me.CustomButton1.Font = New System.Drawing.Font("Arial", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CustomButton1.ForeColor = System.Drawing.Color.White
         Me.CustomButton1.Icon = CType(resources.GetObject("CustomButton1.Icon"), System.Drawing.Image)
-        Me.CustomButton1.IconMargin = 5
-        Me.CustomButton1.IconSize = New System.Drawing.Size(30, 30)
+        Me.CustomButton1.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton1.IconSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton1.LabelMargin = New System.Windows.Forms.Padding(0)
         Me.CustomButton1.Location = New System.Drawing.Point(0, 0)
         Me.CustomButton1.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton1.Name = "CustomButton1"
-        Me.CustomButton1.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.CustomButton1.Size = New System.Drawing.Size(196, 43)
-        Me.CustomButton1.TabIndex = 1
-        Me.CustomButton1.Text = "My day"
-        Me.CustomButton1.UseVisualStyleBackColor = False
+        Me.CustomButton1.PictureBoxSize = New System.Drawing.Size(20, 20)
+        Me.CustomButton1.Size = New System.Drawing.Size(196, 48)
+        Me.CustomButton1.TabIndex = 6
+        Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CircularPictureBox1
+        '
+        Me.CircularPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.CircularPictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CircularPictureBox1.ContextMenuStrip = Me.ContextMenuStrip1
+        Me.CircularPictureBox1.Location = New System.Drawing.Point(72, 16)
+        Me.CircularPictureBox1.Name = "CircularPictureBox1"
+        Me.CircularPictureBox1.Size = New System.Drawing.Size(57, 57)
+        Me.CircularPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.CircularPictureBox1.TabIndex = 0
+        Me.CircularPictureBox1.TabStop = False
+        Me.CircularPictureBox1.Tag = ""
         '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(784, 461)
+        Me.ClientSize = New System.Drawing.Size(784, 511)
         Me.Controls.Add(Me.SplitContainer1)
         Me.DoubleBuffered = True
-        Me.MinimumSize = New System.Drawing.Size(800, 500)
+        Me.MinimumSize = New System.Drawing.Size(800, 550)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = " EasyTo-Do"
@@ -313,10 +319,10 @@ Partial Class MainForm
         Me.SplitContainer1.ResumeLayout(False)
         Me.MainSidebarTableLayoutPanel.ResumeLayout(False)
         Me.SubSidebarTableLayoutPanel.ResumeLayout(False)
-        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip1.ResumeLayout(False)
         CType(Me.PictureBox_Username, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ContextMenuStrip2.ResumeLayout(False)
+        CType(Me.CircularPictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -324,10 +330,6 @@ Partial Class MainForm
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents MainSidebarTableLayoutPanel As TableLayoutPanel
     Friend WithEvents CircularPictureBox1 As CircularPictureBox
-    Friend WithEvents CustomButton2 As CustomButton
-    Friend WithEvents CustomButton5 As CustomButton
-    Friend WithEvents CustomButton4 As CustomButton
-    Friend WithEvents CustomButton3 As CustomButton
     Friend WithEvents SubSidebarTableLayoutPanel As TableLayoutPanel
     Friend WithEvents PictureBox_Username As PictureBox
     Friend WithEvents Test_BackColors As Button
@@ -339,5 +341,9 @@ Partial Class MainForm
     Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
-    Friend WithEvents CustomButton1 As CustomButton
+    Friend WithEvents CustomButton1 As CustomButton_2
+    Friend WithEvents CustomButton5 As CustomButton_2
+    Friend WithEvents CustomButton4 As CustomButton_2
+    Friend WithEvents CustomButton3 As CustomButton_2
+    Friend WithEvents CustomButton2 As CustomButton_2
 End Class

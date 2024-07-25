@@ -5,20 +5,26 @@
         InitializeComponent()
 
         ' Set default properties
-        Me.BackColor = Color.FromArgb(50, 50, 50)
+        Me.BackColor = Color.FromArgb(30, 30, 30)
         Me.Label1.ForeColor = Color.White
 
         ' Add event handlers for the TableLayoutPanel and child controls
         AddHandler Me.TableLayoutPanel1.MouseEnter, AddressOf CustomButton_MouseEnter
         AddHandler Me.TableLayoutPanel1.MouseLeave, AddressOf CustomButton_MouseLeave
+        AddHandler Me.TableLayoutPanel1.MouseDown, AddressOf CustomButton_MouseDown
+        AddHandler Me.TableLayoutPanel1.MouseUp, AddressOf CustomButton_MouseUp
         AddHandler Me.TableLayoutPanel1.Click, AddressOf CustomButton_Click
 
         AddHandler PictureBox1.MouseEnter, AddressOf CustomButton_MouseEnter
         AddHandler PictureBox1.MouseLeave, AddressOf CustomButton_MouseLeave
+        AddHandler PictureBox1.MouseDown, AddressOf CustomButton_MouseDown
+        AddHandler PictureBox1.MouseUp, AddressOf CustomButton_MouseUp
         AddHandler PictureBox1.Click, AddressOf CustomButton_Click
 
         AddHandler Label1.MouseEnter, AddressOf CustomButton_MouseEnter
         AddHandler Label1.MouseLeave, AddressOf CustomButton_MouseLeave
+        AddHandler Label1.MouseDown, AddressOf CustomButton_MouseDown
+        AddHandler Label1.MouseUp, AddressOf CustomButton_MouseUp
         AddHandler Label1.Click, AddressOf CustomButton_Click
     End Sub
 
@@ -92,18 +98,35 @@
         End Set
     End Property
 
+    ' Property to set Label margin
+    Public Property LabelMargin As Padding
+        Get
+            Return Label1.Margin
+        End Get
+        Set(value As Padding)
+            Label1.Margin = value
+        End Set
+    End Property
+
     ' Mouse hover effect
     Private Sub CustomButton_MouseEnter(sender As Object, e As EventArgs)
-        Me.BackColor = Color.FromArgb(70, 70, 70)
+        Me.BackColor = Color.FromArgb(50, 50, 50)
     End Sub
 
     Private Sub CustomButton_MouseLeave(sender As Object, e As EventArgs)
+        Me.BackColor = Color.FromArgb(30, 30, 30)
+    End Sub
+
+    Private Sub CustomButton_MouseDown(sender As Object, e As EventArgs)
+        Me.BackColor = Color.FromArgb(127, 127, 127)
+    End Sub
+
+    Private Sub CustomButton_MouseUp(sender As Object, e As EventArgs)
         Me.BackColor = Color.FromArgb(50, 50, 50)
     End Sub
 
     ' Click event to handle button click
     Private Sub CustomButton_Click(sender As Object, e As EventArgs)
-        ' Perform action on click
-        MessageBox.Show("Button clicked!")
+        MyBase.OnClick(e)
     End Sub
 End Class

@@ -29,7 +29,7 @@
         'PictureBox1
         '
         Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.PictureBox1.Location = New System.Drawing.Point(8, 6)
+        Me.PictureBox1.Location = New System.Drawing.Point(9, 6)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
@@ -40,18 +40,19 @@
         '
         Me.Label1.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(51, 15)
+        Me.Label1.Location = New System.Drawing.Point(63, 15)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(15, 0, 3, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "Label1"
         '
-        'CustomButton
+        'CustomButton_2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Name = "CustomButton"
+        Me.Name = "CustomButton_2"
         Me.Size = New System.Drawing.Size(194, 43)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()

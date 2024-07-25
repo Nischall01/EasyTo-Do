@@ -152,6 +152,9 @@
     <EmbeddedResource Include="CustomButton.resx">
       <DependentUpon>CustomButton.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomButton_2.resx">
+      <DependentUpon>CustomButton_2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Daily.resx">
       <DependentUpon>Daily.vb</DependentUpon>
     </EmbeddedResource>
