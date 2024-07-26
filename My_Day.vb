@@ -4,12 +4,18 @@ Public Class My_Day
 
     Private dt As New DataTable()
 
+    Private CurrentDateTime As DateTime = DateTime.Now
+
+    Private IsTaskPropertiesVisible As Boolean = False
+
     Private Task As String
     Private Done As Boolean
 
     Private Sub InitializeMy_day()
         TextBox_AddNewTask.Focus()
         LoadTasksToCheckedListView()
+        ShowOrHideTaskProperties()
+        Label3.Text = CurrentDateTime.ToString("dddd, MMMM dd")
     End Sub
 
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -20,37 +26,6 @@ Public Class My_Day
         If e.KeyValue = Keys.Enter Then
             EnterTaskTo_My_Day_ChecklistBox()
         End If
-    End Sub
-
-    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox_PanelName.Paint
-        Dim text As String = "My Day"
-        Dim font As New Font("Yu Gothic UI Semibold", 20, FontStyle.Bold)
-        Dim brush As New SolidBrush(Color.Black)
-
-        ' Draw the text in the center of the PictureBox
-        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = 0
-        Dim textY As Single = (PictureBox_PanelName.ClientSize.Height - textSize.Height) / 2
-
-        ' Draw the text
-        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
-    End Sub
-
-    Private Sub PictureBox2_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox_DayDate.Paint
-        Dim CurrentDateTime As DateTime = DateTime.Now
-        Dim formattedDateTime As String = CurrentDateTime.ToString("dddd, MMMM dd")
-
-        Dim text As String = formattedDateTime
-        Dim font As New Font("Yu Gothic UI Semibold", 11, FontStyle.Regular)
-        Dim brush As New SolidBrush(Color.Black)
-
-        ' Draw the text in the center of the PictureBox
-        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = 0
-        Dim textY As Single = (PictureBox_PanelName.ClientSize.Height - textSize.Height) / 2
-
-        ' Draw the text
-        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
     End Sub
 
     '---------------------------------------------------------- BackEnd / Data Procedures --------------------------------------------------------'
@@ -189,9 +164,42 @@ Public Class My_Day
         End Try
     End Sub
 
-    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
+    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs)
         Dim itemIndex As Integer
         itemIndex = e.Index
         DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        ShowOrHideTaskProperties()
+    End Sub
+
+    Private Sub ShowOrHideTaskProperties()
+        If IsTaskPropertiesVisible Then
+            MainTableLayoutPanel.ColumnStyles(0).SizeType = SizeType.Percent
+            MainTableLayoutPanel.ColumnStyles(0).Width = 73%
+            MainTableLayoutPanel.ColumnStyles(1).SizeType = SizeType.Percent
+            MainTableLayoutPanel.ColumnStyles(1).Width = 27%
+            IsTaskPropertiesVisible = False
+        Else
+            MainTableLayoutPanel.ColumnStyles(0).SizeType = SizeType.Percent
+            MainTableLayoutPanel.ColumnStyles(0).Width = 100%
+            MainTableLayoutPanel.ColumnStyles(1).SizeType = SizeType.Percent
+            MainTableLayoutPanel.ColumnStyles(1).Width = 0%
+            IsTaskPropertiesVisible = True
+        End If
+    End Sub
+
+    Private Sub CheckedListBox_MyDay_MouseDown(sender As Object, e As MouseEventArgs) Handles CheckedListBox_MyDay.MouseDown
+        If e.Button = MouseButtons.Right Then
+            ShowOrHideTaskProperties()
+        End If
+    End Sub
+
+    Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
+        If CheckedListBox_MyDay.SelectedIndex <> -1 Then
+            TextBox1.Text = CheckedListBox_MyDay.SelectedItem.ToString()
+        End If
     End Sub
 End Class
