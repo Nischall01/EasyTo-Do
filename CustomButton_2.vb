@@ -5,7 +5,7 @@
         InitializeComponent()
 
         ' Set default properties
-        Me.BackColor = Color.FromArgb(30, 30, 30)
+        Me.BackColor = Color.Transparent
         Me.Label1.ForeColor = Color.White
 
         ' Add event handlers for the TableLayoutPanel and child controls
@@ -114,7 +114,7 @@
     End Sub
 
     Private Sub CustomButton_MouseLeave(sender As Object, e As EventArgs)
-        Me.BackColor = Color.FromArgb(30, 30, 30)
+        Me.BackColor = Color.Transparent
     End Sub
 
     Private Sub CustomButton_MouseDown(sender As Object, e As EventArgs)

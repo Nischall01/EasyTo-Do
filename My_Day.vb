@@ -22,6 +22,14 @@ Public Class My_Day
         InitializeMy_day()
     End Sub
 
+    Private Sub ReloadDataTable()
+        ' Clear the DataTable
+        dt.Clear()
+        ' Reload data from the database
+        LoadTasksToCheckedListView()
+    End Sub
+
+
     Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
         If e.KeyValue = Keys.Enter Then
             EnterTaskTo_My_Day_ChecklistBox()
@@ -99,6 +107,7 @@ Public Class My_Day
                 End Try
             End Using
         End Using
+        ReloadDataTable()
     End Sub
 
     'Private Sub SaveChanges()
@@ -162,13 +171,15 @@ Public Class My_Day
         Catch ex As Exception
             MessageBox.Show("Error updating task status: " & ex.Message)
         End Try
+
+        'ReloadDataTable()
     End Sub
 
-    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs)
+
+    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
         Dim itemIndex As Integer
         itemIndex = e.Index
         DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
-
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -200,6 +211,25 @@ Public Class My_Day
     Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
         If CheckedListBox_MyDay.SelectedIndex <> -1 Then
             TextBox1.Text = CheckedListBox_MyDay.SelectedItem.ToString()
+            Label2.Text = GetTaskEntryDateTime(CheckedListBox_MyDay.SelectedIndex)
         End If
+    End Sub
+
+    Private Function GetTaskEntryDateTime(TaskIndex As Integer) As String
+        Dim TaskId As Integer = TaskIndex + 1
+        Dim TaskEntryDateTime As String = String.Empty
+
+        For Each row As DataRow In dt.Rows
+            If Convert.ToInt32(row("Id")) = TaskId Then
+                ' Convert the DateTime to a string in your desired format
+                TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+                Exit For
+            End If
+        Next
+        Return TaskEntryDateTime
+    End Function
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Button1.BackgroundImage = Image.FromFile("C:\Users\Nischal\Downloads\danger (1).png")
     End Sub
 End Class

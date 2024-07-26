@@ -24,7 +24,6 @@ Partial Class Tasks
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Tasks))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
@@ -32,8 +31,8 @@ Partial Class Tasks
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Label_Tasks = New System.Windows.Forms.Label()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTableLayoutPanel.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
@@ -45,7 +44,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.ColumnCount = 2
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
-        Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox1, 1, 0)
+        Me.SubTableLayoutPanel_Top.Controls.Add(Me.Label_Tasks, 1, 0)
         Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
         Me.SubTableLayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
@@ -55,15 +54,6 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86.0!))
         Me.SubTableLayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTableLayoutPanel_Top.TabIndex = 0
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(104, 36)
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
         '
         'PictureBox_FormIcon
         '
@@ -153,6 +143,17 @@ Partial Class Tasks
         Me.DataGridView1.Size = New System.Drawing.Size(778, 293)
         Me.DataGridView1.TabIndex = 2
         '
+        'Label_Tasks
+        '
+        Me.Label_Tasks.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Label_Tasks.AutoSize = True
+        Me.Label_Tasks.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label_Tasks.Location = New System.Drawing.Point(104, 24)
+        Me.Label_Tasks.Name = "Label_Tasks"
+        Me.Label_Tasks.Size = New System.Drawing.Size(81, 37)
+        Me.Label_Tasks.TabIndex = 5
+        Me.Label_Tasks.Text = "Tasks"
+        '
         'Tasks
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -162,7 +163,7 @@ Partial Class Tasks
         Me.Name = "Tasks"
         Me.Text = "Tasks"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SubTableLayoutPanel_Top.PerformLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainTableLayoutPanel.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
@@ -177,8 +178,8 @@ Partial Class Tasks
     Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
-    Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Button1 As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Button2 As Button
+    Friend WithEvents Label_Tasks As Label
 End Class

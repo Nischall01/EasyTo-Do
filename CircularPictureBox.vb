@@ -6,6 +6,11 @@ Public Class CircularPictureBox
     Inherits PictureBox
 
     Public Sub New()
+        InitializeComponent()
+        InitializeCircularPictureBox()
+    End Sub
+
+    Private Sub InitializeCircularPictureBox()
         ' Ensure the PictureBox maintains a square aspect ratio
         Me.SizeMode = PictureBoxSizeMode.StretchImage
         Me.BackColor = Color.Transparent

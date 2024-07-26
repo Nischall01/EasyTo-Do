@@ -5,6 +5,9 @@ Imports System.IO
 Imports System.Timers
 
 Public Class MainForm
+    Private PfpLastEventTime As DateTime
+    Private debounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
+
     'Booleans
     Private IsSidebarExpanded As Boolean
     Private IsMouseOverUsername As Boolean = False
@@ -34,6 +37,9 @@ Public Class MainForm
     Private ImportantFormInstance As New Important()
     Private PlannedFormInstance As New Planned()
     Private TasksFormInstance As New Tasks()
+
+    Private controlBounds As Rectangle
+
     '-----------------------------------------------On load-----------------------------------------------------'
     Public Sub New()
         InitializeComponent()
@@ -44,6 +50,7 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
         InitializeApp()
+        controlBounds = Pfp_CircularPictureBox.Bounds
     End Sub
 
     Private Sub InitializeForms()
@@ -159,12 +166,12 @@ Public Class MainForm
             Pfp_CircularPictureBox.Width = 57
             Pfp_CircularPictureBox.Height = 57
 
-            Username_PictureBox.Show()
+            Label1.Show()
         Else
             Pfp_CircularPictureBox.Width = 42
             Pfp_CircularPictureBox.Height = 42
 
-            Username_PictureBox.Hide()
+            Label1.Hide()
         End If
     End Sub
 
@@ -177,43 +184,14 @@ Public Class MainForm
             Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
             Pfp_MenuStripItem_Empty.Enabled = True
         End If
-    End Sub
 
-    Private Sub Username_PictureBox_Paint(sender As Object, e As PaintEventArgs) Handles Username_PictureBox.Paint
-        Dim text As String = GetUsername()
-        Dim desiredBorderStyle As BorderStyle
-
-        If String.IsNullOrWhiteSpace(text) Then
-            desiredBorderStyle = BorderStyle.FixedSingle
-            Username_MenuStripItem_Empty.Checked = True
-            Username_MenuStripItem_Empty.Enabled = False
+        If GetUsername() = Nothing Then
+            Label1.Text = "          "
+            Label1.BorderStyle = BorderStyle.FixedSingle
         Else
-            desiredBorderStyle = BorderStyle.None
-            Username_MenuStripItem_Empty.Checked = False
-            Username_MenuStripItem_Empty.Enabled = True
+            Label1.Text = GetUsername()
+            Label1.BorderStyle = BorderStyle.None
         End If
-
-        If IsMouseOverUsername Then
-            desiredBorderStyle = BorderStyle.FixedSingle
-        End If
-
-        ' Update border style only if it has changed
-        If Username_PictureBox.BorderStyle <> desiredBorderStyle Then
-            Username_PictureBox.BorderStyle = desiredBorderStyle
-        End If
-
-        Dim font As New Font("Microsoft YaHei", 8.25, FontStyle.Bold)
-        Dim brush As New SolidBrush(Color.White)
-
-        AdjustPictureBoxWidthWithStringLength(Username_PictureBox, text, font)
-
-        ' Draw the text in the center of the PictureBox
-        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = (Username_PictureBox.ClientSize.Width - textSize.Width) / 2
-        Dim textY As Single = (Username_PictureBox.ClientSize.Height - textSize.Height) / 2
-
-        ' Draw the text
-        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
     End Sub
 
     Private Function GetPfpPath() As String
@@ -286,16 +264,6 @@ Public Class MainForm
         End If
     End Sub
 
-
-
-    Private Sub CircularPictureBox1_MouseClick(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseClick
-        Pfp_ContextMenuStrip.Show(Pfp_CircularPictureBox, e.Location)
-    End Sub
-
-    Private Sub PictureBox_Username_MouseClick(sender As Object, e As MouseEventArgs) Handles Username_PictureBox.MouseClick
-        Username_ContextMenuStrip.Show(Username_PictureBox, e.Location)
-    End Sub
-
     Private Sub Pfp_MenuStripItem_ChangePicture_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_ChangePicture.Click
         Pfp_OpenFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
         Pfp_OpenFileDialog.Title = "Select an Image"
@@ -326,8 +294,9 @@ Public Class MainForm
         Else
             My.Settings.Username = userInput
             Username_MenuStripItem_Empty.Checked = False
-            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
-            Username_PictureBox.Refresh()
+            Username_MenuStripItem_Empty.Enabled = True
+            Label1.Text = userInput
+            Label1.BorderStyle = BorderStyle.None
         End If
     End Sub
 
@@ -336,55 +305,52 @@ Public Class MainForm
         result = MessageBox.Show("Are you sure you want Username to be empty?", "Confirm Action", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
         If result = DialogResult.Yes Then
-            My.Settings.Username = ""
+            My.Settings.Username = Nothing
             Username_MenuStripItem_Empty.Checked = True
-            Username_PictureBox.BorderStyle = BorderStyle.FixedSingle
-            Username_PictureBox.Refresh()
+            Username_MenuStripItem_Empty.Enabled = False
+            Label1.Text = "          "
+            Label1.BorderStyle = BorderStyle.FixedSingle
         ElseIf result = DialogResult.No Then
             Exit Sub
         End If
     End Sub
 
     ' Username
-    Private Sub AdjustPictureBoxWidthWithStringLength(picBox As PictureBox, text As String, font As Font)
-        Using g As Graphics = picBox.CreateGraphics()
-            Dim textSize As SizeF = g.MeasureString(text, font)
-            picBox.Width = CInt(textSize.Width) + 20
-        End Using
+    Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Label1.MouseEnter
+        Label1.BorderStyle = BorderStyle.FixedSingle
     End Sub
 
-    Private Sub Username_PictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Username_PictureBox.MouseEnter
-        IsMouseOverUsername = True
-        Username_PictureBox.Invalidate()
+    Private Sub Label1_MouseLeave(sender As Object, e As EventArgs) Handles Label1.MouseLeave
+        Label1.BorderStyle = BorderStyle.None
     End Sub
 
-    Private Sub Username_PictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Username_PictureBox.MouseLeave
-        IsMouseOverUsername = False
-        Username_PictureBox.Invalidate()
+    Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Label1.MouseClick
+        Username_ContextMenuStrip.Show(Label1, e.Location)
     End Sub
 
-    ' Pfp
+
+    'Pfp
     Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
-        IsMouseOverPfp = True
-        UpdatePfpBorderStyle()
+        Dim now As DateTime = DateTime.Now
+        If now - PfpLastEventTime > debounceDelay Then
+            PfpLastEventTime = now
+            Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
+        End If
     End Sub
 
     Private Sub Pfp_CircularPictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseLeave
-        IsMouseOverPfp = False
-        UpdatePfpBorderStyle()
-    End Sub
-
-    Private Sub Pfp_CircularPictureBox_MouseMove(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseMove
-        UpdatePfpBorderStyle()
-        Pfp_CircularPictureBox.Invalidate()
-    End Sub
-
-    Private Sub UpdatePfpBorderStyle()
-        If IsMouseOverPfp Then
-            Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
-        Else
+        Dim now As DateTime = DateTime.Now
+        If now - PfpLastEventTime > debounceDelay Then
+            PfpLastEventTime = now
             Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
         End If
-        Pfp_CircularPictureBox.Invalidate()
+    End Sub
+
+    Private Sub Pfp_CircularPictureBox_MouseClick(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseClick
+        Pfp_ContextMenuStrip.Show(Pfp_CircularPictureBox, e.Location)
+    End Sub
+
+    Private Sub Pfp_CircularPictureBox_MouseHover(sender As Object, e As EventArgs)
+
     End Sub
 End Class
