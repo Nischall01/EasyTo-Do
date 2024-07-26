@@ -1,16 +1,107 @@
 ﻿Imports System.Data.SqlServerCe
 
 Public Class My_Day
-    Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    Private dt As New DataTable()
+
+    Private Task As String
+    Private Done As Boolean
+
+    Private Sub InitializeMy_day()
         TextBox_AddNewTask.Focus()
+        LoadTasksToCheckedListView()
     End Sub
-    Private Sub AddNewTaskToTable_My_Day(NewTask As String)
+
+    Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeMy_day()
+    End Sub
+
+    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            EnterTaskTo_My_Day_ChecklistBox()
+        End If
+    End Sub
+
+    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox_PanelName.Paint
+        Dim text As String = "My Day"
+        Dim font As New Font("Yu Gothic UI Semibold", 20, FontStyle.Bold)
+        Dim brush As New SolidBrush(Color.Black)
+
+        ' Draw the text in the center of the PictureBox
+        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
+        Dim textX As Single = 0
+        Dim textY As Single = (PictureBox_PanelName.ClientSize.Height - textSize.Height) / 2
+
+        ' Draw the text
+        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
+    End Sub
+
+    Private Sub PictureBox2_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox_DayDate.Paint
+        Dim CurrentDateTime As DateTime = DateTime.Now
+        Dim formattedDateTime As String = CurrentDateTime.ToString("dddd, MMMM dd")
+
+        Dim text As String = formattedDateTime
+        Dim font As New Font("Yu Gothic UI Semibold", 11, FontStyle.Regular)
+        Dim brush As New SolidBrush(Color.Black)
+
+        ' Draw the text in the center of the PictureBox
+        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
+        Dim textX As Single = 0
+        Dim textY As Single = (PictureBox_PanelName.ClientSize.Height - textSize.Height) / 2
+
+        ' Draw the text
+        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
+    End Sub
+
+    '---------------------------------------------------------- BackEnd / Data Procedures --------------------------------------------------------'
+
+    Private Sub EnterTaskTo_My_Day_ChecklistBox()
+        Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
+
+        CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
+        AddNewTaskToTable_My_Day(NewMy_DayTask)
+        TextBox_AddNewTask.Clear()
+    End Sub
+
+    Private Sub LoadTasksToCheckedListView()
         Dim connectionString As String = "Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;"
-        Dim query As String = "INSERT INTO My_Day (Task, Done) VALUES (@NewTask, 0)"
+        Dim query As String = "SELECT * FROM My_Day"
+
+        Try
+            Using connection As New SqlCeConnection(connectionString)
+                Using command As New SqlCeCommand(query, connection)
+                    Using adapter As New SqlCeDataAdapter(command)
+                        connection.Open()
+                        adapter.Fill(dt)
+                    End Using
+                End Using
+            End Using
+
+            CheckedListBox_MyDay.Items.Clear()
+
+            ' Fill CheckedListBox with data from the DataTable
+            For Each row As DataRow In dt.Rows
+                Dim itemText As String = row("Task").ToString()
+                Dim isChecked As Boolean = row("Done") <> 0 ' Convert Done to Boolean
+                CheckedListBox_MyDay.Items.Add(itemText, isChecked)
+            Next
+        Catch ex As SqlCeException
+            MessageBox.Show("A SQL error occurred: " & ex.Message)
+        Catch ex As Exception
+            MessageBox.Show("An unexpected error occurred: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub AddNewTaskToTable_My_Day(NewTask As String)
+        Dim CurrentDateTime As DateTime = DateTime.Now
+
+        Dim connectionString As String = "Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;"
+        Dim query As String = "INSERT INTO My_Day (Task, Done, Entry_DateTime) VALUES (@NewTask, 0, @Entry_DateTime)"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@NewTask", NewTask)
+                command.Parameters.AddWithValue("@Entry_DateTime", CurrentDateTime)
 
                 Try
                     ' Open the connection
@@ -19,7 +110,7 @@ Public Class My_Day
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
 
                     If rowsAffected > 0 Then
-                        MessageBox.Show("Task added successfully.")
+                        'MessageBox.Show("Task added successfully.")
                     Else
                         MessageBox.Show("No rows were affected. The task might not have been added.")
                     End If
@@ -35,32 +126,72 @@ Public Class My_Day
         End Using
     End Sub
 
-    Private Sub EnterTaskTo_My_Day_ChecklistBox()
-        Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
-        CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
+    'Private Sub SaveChanges()
+    '    Try
+    '        ' Get the DataTable that contains only the modified rows
+    '        Dim changes As DataTable = dt.GetChanges(DataRowState.Modified)
 
-        AddNewTaskToTable_My_Day(NewMy_DayTask)
+    '        If changes IsNot Nothing AndAlso changes.Rows.Count > 0 Then
+    '            For Each row As DataRow In changes.Rows
+    '                Dim id As Integer = Convert.ToInt32(row("Id"))
+    '                Dim task As String = row("Task").ToString()
+    '                Dim done As Integer = Convert.ToInt32(row("Done"))
 
-        TextBox_AddNewTask.Clear()
+    '                Dim query As String = "UPDATE My_Day SET Task = @Task, Done = @Done WHERE Id = @Id"
+
+    '                Using connection As New SqlCeConnection("Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;")
+    '                    Using command As New SqlCeCommand(query, connection)
+    '                        command.Parameters.AddWithValue("@Id", id)
+    '                        command.Parameters.AddWithValue("@Task", task)
+    '                        command.Parameters.AddWithValue("@Done", done)
+
+    '                        connection.Open()
+    '                        command.ExecuteNonQuery()
+    '                        connection.Close()
+    '                    End Using
+    '                End Using
+    '            Next
+
+    '            MessageBox.Show("Changes saved successfully.")
+    '            ' Accept changes in the original DataTable
+    '            dt.AcceptChanges()
+    '        Else
+    '            MessageBox.Show("No changes to save.")
+    '        End If
+    '    Catch ex As Exception
+    '        MessageBox.Show("Error saving changes: " & ex.Message)
+    '    End Try
+    'End Sub
+
+    Private Sub DoneCheckChanged(itemIndex As Integer, isChecked As Boolean)
+        'MsgBox("Item Index: " & itemIndex)
+        'MsgBox("IsChecked: " & isChecked)
+
+        Dim done As Integer = If(isChecked, 1, 0)
+        Dim id As Integer = itemIndex + 1 ' DataTable Id starts From 1 not 0 like ListView
+
+        Try
+            ' Update the database with the new 'Done' value
+            Dim query As String = "UPDATE My_Day SET Done = @Done WHERE Id = @Id"
+
+            Using connection As New SqlCeConnection("Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;")
+                Using command As New SqlCeCommand(query, connection)
+                    command.Parameters.AddWithValue("@Id", id)
+                    command.Parameters.AddWithValue("@Done", done)
+
+                    connection.Open()
+                    command.ExecuteNonQuery()
+                    connection.Close()
+                End Using
+            End Using
+        Catch ex As Exception
+            MessageBox.Show("Error updating task status: " & ex.Message)
+        End Try
     End Sub
 
-    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            EnterTaskTo_My_Day_ChecklistBox()
-        End If
-    End Sub
-
-    Private Sub PictureBox1_Paint(sender As Object, e As PaintEventArgs) Handles PictureBox1.Paint
-        Dim text As String = "My Day"
-        Dim font As New Font("Yu Gothic UI Semibold", 20, FontStyle.Bold)
-        Dim brush As New SolidBrush(Color.Black)
-
-        ' Draw the text in the center of the PictureBox
-        Dim textSize As SizeF = e.Graphics.MeasureString(text, font)
-        Dim textX As Single = 0
-        Dim textY As Single = (PictureBox1.ClientSize.Height - textSize.Height) / 2
-
-        ' Draw the text
-        e.Graphics.DrawString(text, font, brush, New PointF(textX, textY))
+    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
+        Dim itemIndex As Integer
+        itemIndex = e.Index
+        DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
     End Sub
 End Class

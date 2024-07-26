@@ -140,6 +140,7 @@ Public Class MainForm
                 IsSidebarExpanded = True
                 SplitContainer1.SplitterDistance = e.SplitX
                 ExpandButtons()
+                ProfileMaximizeOrMinimize()
             ElseIf e.SplitX < CollapsedSidebarWidth Then
                 SetSidebarState(SidebarState.Collapsed)
             ElseIf e.SplitX > CollapsedSidebarWidth Then

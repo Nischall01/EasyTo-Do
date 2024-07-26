@@ -28,13 +28,15 @@ Partial Class My_Day
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTablelayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
-        Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
+        Me.PictureBox_PanelName = New System.Windows.Forms.PictureBox()
+        Me.PictureBox_DayDate = New System.Windows.Forms.PictureBox()
         Me.MainTableLayoutPanel.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         Me.SubTablelayoutPanel_Top.SuspendLayout()
-        CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox_PanelName, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox_DayDate, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'CheckedListBox_MyDay
@@ -97,42 +99,52 @@ Partial Class My_Day
         'SubTablelayoutPanel_Top
         '
         Me.SubTablelayoutPanel_Top.BackColor = System.Drawing.Color.Transparent
-        Me.SubTablelayoutPanel_Top.ColumnCount = 2
+        Me.SubTablelayoutPanel_Top.ColumnCount = 3
         Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
-        Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
-        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
-        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox1, 1, 0)
+        Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
+        Me.SubTablelayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.0!))
+        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
+        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox_PanelName, 1, 0)
+        Me.SubTablelayoutPanel_Top.Controls.Add(Me.PictureBox_DayDate, 2, 0)
         Me.SubTablelayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTablelayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
         Me.SubTablelayoutPanel_Top.Name = "SubTablelayoutPanel_Top"
         Me.SubTablelayoutPanel_Top.RowCount = 1
         Me.SubTablelayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTablelayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubTablelayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTablelayoutPanel_Top.TabIndex = 5
         '
-        'PictureBox_FormIcon
+        'PictureBox_PanelIcon
         '
-        Me.PictureBox_FormIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.PictureBox_FormIcon.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox_FormIcon.Enabled = False
-        Me.PictureBox_FormIcon.Image = CType(resources.GetObject("PictureBox_FormIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_FormIcon.Location = New System.Drawing.Point(61, 23)
-        Me.PictureBox_FormIcon.Margin = New System.Windows.Forms.Padding(0)
-        Me.PictureBox_FormIcon.Name = "PictureBox_FormIcon"
-        Me.PictureBox_FormIcon.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox_FormIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox_FormIcon.TabIndex = 1
-        Me.PictureBox_FormIcon.TabStop = False
+        Me.PictureBox_PanelIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox_PanelIcon.Enabled = False
+        Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
+        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(61, 23)
+        Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
+        Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
+        Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
+        Me.PictureBox_PanelIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox_PanelIcon.TabIndex = 1
+        Me.PictureBox_PanelIcon.TabStop = False
         '
-        'PictureBox1
+        'PictureBox_PanelName
         '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(104, 36)
-        Me.PictureBox1.TabIndex = 2
-        Me.PictureBox1.TabStop = False
+        Me.PictureBox_PanelName.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.PictureBox_PanelName.Location = New System.Drawing.Point(104, 25)
+        Me.PictureBox_PanelName.Name = "PictureBox_PanelName"
+        Me.PictureBox_PanelName.Size = New System.Drawing.Size(104, 36)
+        Me.PictureBox_PanelName.TabIndex = 2
+        Me.PictureBox_PanelName.TabStop = False
+        '
+        'PictureBox_DayDate
+        '
+        Me.PictureBox_DayDate.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.PictureBox_DayDate.Location = New System.Drawing.Point(570, 25)
+        Me.PictureBox_DayDate.Name = "PictureBox_DayDate"
+        Me.PictureBox_DayDate.Size = New System.Drawing.Size(142, 36)
+        Me.PictureBox_DayDate.TabIndex = 3
+        Me.PictureBox_DayDate.TabStop = False
         '
         'My_Day
         '
@@ -147,8 +159,9 @@ Partial Class My_Day
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
         Me.SubTablelayoutPanel_Top.ResumeLayout(False)
-        CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox_PanelName, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox_DayDate, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -156,7 +169,8 @@ Partial Class My_Day
     Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents SubTablelayoutPanel_Top As TableLayoutPanel
-    Friend WithEvents PictureBox_FormIcon As PictureBox
+    Friend WithEvents PictureBox_PanelIcon As PictureBox
     Friend WithEvents TextBox_AddNewTask As TextBox
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents PictureBox_PanelName As PictureBox
+    Friend WithEvents PictureBox_DayDate As PictureBox
 End Class

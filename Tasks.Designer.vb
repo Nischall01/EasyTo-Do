@@ -30,6 +30,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -51,7 +52,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.Name = "SubTableLayoutPanel_Top"
         Me.SubTableLayoutPanel_Top.RowCount = 1
         Me.SubTableLayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTableLayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.SubTableLayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 86.0!))
         Me.SubTableLayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTableLayoutPanel_Top.TabIndex = 0
         '
@@ -104,6 +105,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Bottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.TextBox_AddNewTask, 1, 0)
         Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Button1, 0, 0)
+        Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Button2, 2, 0)
         Me.SubTableLayoutPanel_Bottom.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Bottom.Location = New System.Drawing.Point(3, 394)
         Me.SubTableLayoutPanel_Bottom.Name = "SubTableLayoutPanel_Bottom"
@@ -131,8 +133,19 @@ Partial Class Tasks
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(586, 3)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
+        Me.Button2.TabIndex = 4
+        Me.Button2.Text = "Button2"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'DataGridView1
         '
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(3, 95)
@@ -167,4 +180,5 @@ Partial Class Tasks
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Button1 As Button
     Friend WithEvents DataGridView1 As DataGridView
+    Friend WithEvents Button2 As Button
 End Class
