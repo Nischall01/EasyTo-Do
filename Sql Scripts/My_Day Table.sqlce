@@ -1,9 +1,0 @@
-﻿-- Script Date: 7/25/2024 11:02 PM  - ErikEJ.SqlCeScripting version 3.5.2.95
-CREATE TABLE [My_Day] (
-  [Id] int IDENTITY (1,1) NOT NULL
-, [ToDo] ntext NOT NULL
-, [Done] bit NOT NULL
-);
-GO
-ALTER TABLE [My_Day] ADD CONSTRAINT [PK_My_Day] PRIMARY KEY ([Id]);
-GO

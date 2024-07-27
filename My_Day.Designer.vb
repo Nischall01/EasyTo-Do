@@ -33,7 +33,7 @@ Partial Class My_Day
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label_MyDay = New System.Windows.Forms.Label()
         Me.SubTableLayoutPanel_TaskProperties = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -93,8 +93,8 @@ Partial Class My_Day
         Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
-        Me.CheckedListBox_MyDay.FormattingEnabled = True
         Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(3, 92)
         Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
@@ -187,7 +187,7 @@ Partial Class My_Day
         Me.SubTableLayoutPanel_TaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
         Me.SubTableLayoutPanel_TaskProperties.ColumnCount = 1
         Me.SubTableLayoutPanel_TaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTableLayoutPanel_TaskProperties.Controls.Add(Me.Button3, 0, 6)
+        Me.SubTableLayoutPanel_TaskProperties.Controls.Add(Me.Button_DeleteTask, 0, 6)
         Me.SubTableLayoutPanel_TaskProperties.Controls.Add(Me.TextBox1, 0, 1)
         Me.SubTableLayoutPanel_TaskProperties.Controls.Add(Me.Label1, 0, 2)
         Me.SubTableLayoutPanel_TaskProperties.Controls.Add(Me.Button2, 0, 0)
@@ -211,22 +211,23 @@ Partial Class My_Day
         Me.SubTableLayoutPanel_TaskProperties.Size = New System.Drawing.Size(196, 461)
         Me.SubTableLayoutPanel_TaskProperties.TabIndex = 2
         '
-        'Button3
+        'Button_DeleteTask
         '
-        Me.Button3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), System.Drawing.Image)
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button3.FlatAppearance.BorderSize = 0
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button3.Location = New System.Drawing.Point(86, 400)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Padding = New System.Windows.Forms.Padding(3)
-        Me.Button3.Size = New System.Drawing.Size(23, 25)
-        Me.Button3.TabIndex = 8
-        Me.Button3.UseVisualStyleBackColor = False
+        Me.Button_DeleteTask.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Button_DeleteTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Button_DeleteTask.BackgroundImage = CType(resources.GetObject("Button_DeleteTask.BackgroundImage"), System.Drawing.Image)
+        Me.Button_DeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button_DeleteTask.FlatAppearance.BorderSize = 0
+        Me.Button_DeleteTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button_DeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button_DeleteTask.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_DeleteTask.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_DeleteTask.Location = New System.Drawing.Point(81, 395)
+        Me.Button_DeleteTask.Name = "Button_DeleteTask"
+        Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
+        Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
+        Me.Button_DeleteTask.TabIndex = 8
+        Me.Button_DeleteTask.UseVisualStyleBackColor = False
         '
         'TextBox1
         '
@@ -303,12 +304,12 @@ Partial Class My_Day
         Me.CustomButton_22.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CustomButton_22.Icon = CType(resources.GetObject("CustomButton_22.Icon"), System.Drawing.Image)
         Me.CustomButton_22.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_22.IconSize = New System.Drawing.Size(16, 16)
+        Me.CustomButton_22.IconSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_22.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
         Me.CustomButton_22.Location = New System.Drawing.Point(0, 80)
         Me.CustomButton_22.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_22.Name = "CustomButton_22"
-        Me.CustomButton_22.PictureBoxSize = New System.Drawing.Size(16, 16)
+        Me.CustomButton_22.PictureBoxSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_22.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_22.TabIndex = 11
         Me.CustomButton_22.TextAnchor = System.Windows.Forms.AnchorStyles.Left
@@ -317,16 +318,16 @@ Partial Class My_Day
         'CustomButton_21
         '
         Me.CustomButton_21.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_21.ButtonText = "Repeat Daily"
+        Me.CustomButton_21.ButtonText = "Repeat"
         Me.CustomButton_21.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CustomButton_21.Icon = CType(resources.GetObject("CustomButton_21.Icon"), System.Drawing.Image)
         Me.CustomButton_21.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_21.IconSize = New System.Drawing.Size(18, 18)
+        Me.CustomButton_21.IconSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_21.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
         Me.CustomButton_21.Location = New System.Drawing.Point(0, 40)
         Me.CustomButton_21.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_21.Name = "CustomButton_21"
-        Me.CustomButton_21.PictureBoxSize = New System.Drawing.Size(18, 18)
+        Me.CustomButton_21.PictureBoxSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_21.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_21.TabIndex = 10
         Me.CustomButton_21.TextAnchor = System.Windows.Forms.AnchorStyles.Left
@@ -339,12 +340,12 @@ Partial Class My_Day
         Me.CustomButton_24.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CustomButton_24.Icon = CType(resources.GetObject("CustomButton_24.Icon"), System.Drawing.Image)
         Me.CustomButton_24.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_24.IconSize = New System.Drawing.Size(16, 16)
+        Me.CustomButton_24.IconSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_24.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
         Me.CustomButton_24.Location = New System.Drawing.Point(0, 0)
         Me.CustomButton_24.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_24.Name = "CustomButton_24"
-        Me.CustomButton_24.PictureBoxSize = New System.Drawing.Size(16, 16)
+        Me.CustomButton_24.PictureBoxSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_24.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_24.TabIndex = 9
         Me.CustomButton_24.TextAnchor = System.Windows.Forms.AnchorStyles.Left
@@ -374,10 +375,10 @@ Partial Class My_Day
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button1.Location = New System.Drawing.Point(5, 5)
+        Me.Button1.Location = New System.Drawing.Point(4, 4)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
-        Me.Button1.Padding = New System.Windows.Forms.Padding(3)
-        Me.Button1.Size = New System.Drawing.Size(28, 27)
+        Me.Button1.Size = New System.Drawing.Size(30, 29)
         Me.Button1.TabIndex = 8
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -425,5 +426,5 @@ Partial Class My_Day
     Friend WithEvents CustomButton_22 As CustomButton_2
     Friend WithEvents CustomButton_21 As CustomButton_2
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
-    Friend WithEvents Button3 As Button
+    Friend WithEvents Button_DeleteTask As Button
 End Class

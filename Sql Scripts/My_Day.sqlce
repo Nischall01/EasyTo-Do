@@ -1,0 +1,3 @@
+﻿CREATE TABLE My_Day (Id int IDENTITY(1,1) NOT NULL,Task_Index int NOT NULL,Task nvarchar (255) NULL,Task_Description nvarchar (4000) NULL,Entry_DateTime datetime NULL,Done bit NULL DEFAULT 0,Important bit NULL DEFAULT 0);
+ALTER TABLE [My_Day] ADD CONSTRAINT  [My_Day_PK] PRIMARY KEY ([Id]);
+ALTER TABLE My_Day ADD CONSTRAINT UQ__My_Day__0000000000000264 UNIQUE(Task_Index);
