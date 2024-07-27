@@ -85,6 +85,7 @@ Partial Class My_Day
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(588, 461)
         Me.TableLayoutPanel1.TabIndex = 6
         '
@@ -93,14 +94,13 @@ Partial Class My_Day
         Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
         Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(3, 92)
         Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
         Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(582, 299)
         Me.CheckedListBox_MyDay.TabIndex = 6
-        Me.CheckedListBox_MyDay.ThreeDCheckBoxes = True
         '
         'SubTableLayoutPanel_Bottom
         '
@@ -354,15 +354,15 @@ Partial Class My_Day
         'TableLayoutPanel3
         '
         Me.TableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset
+        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Button1, 0, 0)
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(79, 135)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(80, 135)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 1
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(38, 37)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(36, 36)
         Me.TableLayoutPanel3.TabIndex = 11
         '
         'Button1
@@ -375,10 +375,10 @@ Partial Class My_Day
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button1.Location = New System.Drawing.Point(4, 4)
+        Me.Button1.Location = New System.Drawing.Point(3, 3)
         Me.Button1.Margin = New System.Windows.Forms.Padding(2)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(30, 29)
+        Me.Button1.Size = New System.Drawing.Size(30, 30)
         Me.Button1.TabIndex = 8
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -412,7 +412,6 @@ Partial Class My_Day
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents SubTablelayoutPanel_Top As TableLayoutPanel
@@ -427,4 +426,5 @@ Partial Class My_Day
     Friend WithEvents CustomButton_21 As CustomButton_2
     Friend WithEvents TableLayoutPanel3 As TableLayoutPanel
     Friend WithEvents Button_DeleteTask As Button
+    Friend WithEvents CheckedListBox_MyDay As CheckedListBox
 End Class

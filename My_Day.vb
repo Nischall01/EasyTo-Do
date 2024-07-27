@@ -5,11 +5,11 @@ Public Class My_Day
     ' Image cache variables
     Private UncheckedImportantIcon As Image
     Private CheckedImportantIcon As Image
+    Private DisabledImportantIcon As Image
 
     Private dt As New DataTable()
     Private CurrentDateTime As DateTime = DateTime.Now
     Private IsTaskPropertiesVisible As Boolean = False
-    Private IsTaskPropertiesEnabled As Boolean = False
     Private Task As String
     Private Done As Boolean
 
@@ -35,10 +35,15 @@ Public Class My_Day
         ' Cache images
         UncheckedImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\1.png")
         CheckedImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\2.png")
+        DisabledImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\3.png")
     End Sub
 
     Private Sub DisableTaskProperties(Disable As Boolean)
         If Disable Then
+            TextBox1.Text = Nothing
+            Label2.Text = Nothing
+            Button1.BackgroundImage = DisabledImportantIcon
+
             TextBox1.Enabled = False
             Label1.Enabled = False
             Label2.Enabled = False
@@ -57,21 +62,18 @@ Public Class My_Day
             CustomButton_24.Enabled = True
             Button_DeleteTask.Enabled = True
         End If
-        IsTaskPropertiesEnabled = False
     End Sub
 #End Region
 
     '---------------------------------------------------Data Handling---------------------------------------------------'
 #Region "Data Handling"
-    Private Sub ReloadDataTable()
-        ' Clear the DataTable
-        dt.Clear()
-        ' Reload data from the database
-        LoadTasksToCheckedListView()
-    End Sub
-
     Private Sub LoadTasksToCheckedListView()
-        Dim query As String = "SELECT * FROM My_Day"
+        CheckedListBox_MyDay.SelectedIndex = -1
+
+        Dim query As String = "SELECT * FROM My_Day ORDER BY Task_Index"
+
+        CheckedListBox_MyDay.Items.Clear()
+        dt.Clear()
 
         Try
             Using connection As New SqlCeConnection(connectionString)
@@ -82,8 +84,6 @@ Public Class My_Day
                     End Using
                 End Using
             End Using
-
-            CheckedListBox_MyDay.Items.Clear()
 
             ' Fill CheckedListBox with data from the DataTable
             For Each row As DataRow In dt.Rows
@@ -103,14 +103,14 @@ Public Class My_Day
         Dim newTaskIndex As Integer
 
         ' Determine the next available Task_Index
-        Dim queryGetMaxIndex As String = "SELECT COALESCE(MAX(Task_Index), -1) FROM My_Day"
+        Dim queryGetMaxIndex As String = "SELECT MAX(Task_Index) FROM My_Day"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(queryGetMaxIndex, connection)
                 Try
                     connection.Open()
-                    Dim result As Object = command.ExecuteScalar()
-                    newTaskIndex = Convert.ToInt32(result) + 1
+                    Dim result = command.ExecuteScalar()
+                    newTaskIndex = If(result Is DBNull.Value, 0, Convert.ToInt32(result) + 1)
                 Catch ex As SqlCeException
                     MessageBox.Show("SQL CE Error: " & ex.Message)
                     Return
@@ -120,6 +120,9 @@ Public Class My_Day
                 End Try
             End Using
         End Using
+
+        ' Use String.Empty if TaskDescription is Nothing or empty
+        TaskDescription = If(String.IsNullOrEmpty(TaskDescription), String.Empty, TaskDescription)
 
         ' Insert the new task with the determined Task_Index
         Dim queryInsertTask As String = "INSERT INTO My_Day (Task, Task_Description, Entry_DateTime, Task_Index) VALUES (@Task, @TaskDescription, @Entry_DateTime, @TaskIndex)"
@@ -149,7 +152,7 @@ Public Class My_Day
         End Using
 
         ' Reload the data to reflect changes
-        ReloadDataTable()
+        LoadTasksToCheckedListView()
 
         ' Focus on added task after DataTable reload
         If CheckedListBox_MyDay.Items.Count > 0 Then
@@ -170,10 +173,6 @@ Public Class My_Day
                 Important BIT NULL DEFAULT 0,
                 CONSTRAINT My_Day_PK PRIMARY KEY (Id));"
 
-        Dim addUniqueConstraintQuery As String = "
-                ALTER TABLE My_Day 
-                ADD CONSTRAINT UQ_My_Day_Task_Index UNIQUE (Task_Index);"
-
         Using connection As New SqlCeConnection(connectionString)
             Try
                 connection.Open()
@@ -190,10 +189,6 @@ Public Class My_Day
                         createCommand.ExecuteNonQuery()
                     End Using
 
-                    Using constraintsCommand As New SqlCeCommand(addUniqueConstraintQuery, connection, transaction)
-                        constraintsCommand.ExecuteNonQuery()
-                    End Using
-
                     ' Commit the transaction
                     transaction.Commit()
                 End Using
@@ -210,7 +205,8 @@ Public Class My_Day
         End Using
 
         ' Reload the data to reflect changes
-        ReloadDataTable()
+        LoadTasksToCheckedListView()
+        DisableTaskProperties(True)
     End Sub
 
 
@@ -219,7 +215,6 @@ Public Class My_Day
         Dim countQuery As String = "SELECT COUNT(*) FROM My_Day"
         Dim deleteQuery As String = "DELETE FROM My_Day WHERE Task_Index = @TaskIndex"
         Dim updateQuery As String = "UPDATE My_Day SET Task_Index = Task_Index - 1 WHERE Task_Index > @TaskIndex"
-        Dim emptyTableQuery As String = "DELETE FROM My_Day"
 
         Using connection As New SqlCeConnection(connectionString)
             Try
@@ -234,6 +229,7 @@ Public Class My_Day
                         taskCount = Convert.ToInt32(countCommand.ExecuteScalar())
                     End Using
 
+                    ' If there's only one task, delete it and skip re-sequencing
                     If taskCount = 1 Then
                         HardResetTable_My_Day()
                         Exit Sub
@@ -243,12 +239,14 @@ Public Class My_Day
                             deleteCommand.Parameters.AddWithValue("@TaskIndex", TaskIndex)
                             deleteCommand.ExecuteNonQuery()
                         End Using
+
                         ' Re-sequence the Task_Index
                         Using updateCommand As New SqlCeCommand(updateQuery, connection, transaction)
                             updateCommand.Parameters.AddWithValue("@TaskIndex", TaskIndex)
                             updateCommand.ExecuteNonQuery()
                         End Using
                     End If
+
                     ' Commit the transaction
                     transaction.Commit()
                 End Using
@@ -263,10 +261,9 @@ Public Class My_Day
                 connection.Close()
             End Try
         End Using
-
-        ' Reload the data to reflect changes
-        ReloadDataTable()
+        LoadTasksToCheckedListView()
     End Sub
+
 #End Region
 
     '---------------------------------------------------Task Properties Handling---------------------------------------------------'
@@ -321,7 +318,7 @@ Public Class My_Day
             MessageBox.Show("Error updating task status: " & ex.Message)
         End Try
 
-        ReloadDataTable()
+        LoadTasksToCheckedListView()
         ' Retain Focus after DataTable Reload
         If CheckedListBox_MyDay.Items.Count > 0 AndAlso itemIndex >= 0 AndAlso itemIndex < CheckedListBox_MyDay.Items.Count Then
             CheckedListBox_MyDay.SelectedIndex = itemIndex
@@ -340,10 +337,13 @@ Public Class My_Day
 
     Private Sub EnterTaskTo_My_Day_ChecklistBox()
         Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
-
+        If NewMy_DayTask Is String.Empty Then
+            Exit sub
+        End If
         CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
         AddNewTaskToTable_My_Day(NewMy_DayTask, "")
         TextBox_AddNewTask.Clear()
+        TextBox_AddNewTask.Focus()
     End Sub
 
     Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
@@ -379,20 +379,19 @@ Public Class My_Day
     End Sub
 
     Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
-        If CheckedListBox_MyDay.SelectedIndex <> -1 Then
+        If CheckedListBox_MyDay.SelectedIndex = -1 Then
+            DisableTaskProperties(True)
+            TextBox1.Clear()
+        Else
+            DisableTaskProperties(False)
             TextBox1.Text = CheckedListBox_MyDay.SelectedItem.ToString()
-            Label2.Text = GetTaskEntryDateTime(CheckedListBox_MyDay.SelectedIndex)
+            Label2.Text = GetTaskEntryDateTime()
 
             If IsTaskImportant() Then
                 Button1.BackgroundImage = CheckedImportantIcon
             Else
                 Button1.BackgroundImage = UncheckedImportantIcon
             End If
-        Else
-            TextBox1.Clear()
-        End If
-        If Not IsTaskPropertiesEnabled Then
-            DisableTaskProperties(False)
         End If
     End Sub
 
@@ -417,12 +416,12 @@ Public Class My_Day
         Return False
     End Function
 
-    Private Function GetTaskEntryDateTime(TaskIndex As Integer) As String
-        Dim TaskId As Integer = TaskIndex + 1
+    Private Function GetTaskEntryDateTime() As String
+        Dim TaskId As Integer = CheckedListBox_MyDay.SelectedIndex
         Dim TaskEntryDateTime As String = String.Empty
 
         For Each row As DataRow In dt.Rows
-            If row("Id") = TaskId Then
+            If row("Task_Index") = TaskId Then
                 ' Convert the DateTime to a string in your desired format
                 TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
                 Exit For
@@ -456,6 +455,12 @@ Public Class My_Day
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         DeleteTaskFromTable_My_Day(CheckedListBox_MyDay.SelectedIndex)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub TextBox_AddNewTask_MouseClick(sender As Object, e As MouseEventArgs) Handles TextBox_AddNewTask.MouseClick
+        LoadTasksToCheckedListView()
+        DisableTaskProperties(True)
     End Sub
 #End Region
 End Class

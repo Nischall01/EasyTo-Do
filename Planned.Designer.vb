@@ -29,6 +29,8 @@ Partial Class Planned
         Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
+        Me.MaterialCheckbox1 = New MaterialSkin.Controls.MaterialCheckbox()
+        Me.MaterialCheckbox2 = New MaterialSkin.Controls.MaterialCheckbox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,6 +118,38 @@ Partial Class Planned
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
         '
+        'MaterialCheckbox1
+        '
+        Me.MaterialCheckbox1.BackColor = System.Drawing.SystemColors.ControlDark
+        Me.MaterialCheckbox1.Depth = 0
+        Me.MaterialCheckbox1.Location = New System.Drawing.Point(0, 0)
+        Me.MaterialCheckbox1.Margin = New System.Windows.Forms.Padding(0)
+        Me.MaterialCheckbox1.MouseLocation = New System.Drawing.Point(-1, -1)
+        Me.MaterialCheckbox1.MouseState = MaterialSkin.MouseState.HOVER
+        Me.MaterialCheckbox1.Name = "MaterialCheckbox1"
+        Me.MaterialCheckbox1.ReadOnly = False
+        Me.MaterialCheckbox1.Ripple = True
+        Me.MaterialCheckbox1.Size = New System.Drawing.Size(104, 37)
+        Me.MaterialCheckbox1.TabIndex = 0
+        Me.MaterialCheckbox1.Text = "MaterialCheckbox1"
+        Me.MaterialCheckbox1.UseVisualStyleBackColor = False
+        '
+        'MaterialCheckbox2
+        '
+        Me.MaterialCheckbox2.BackColor = System.Drawing.SystemColors.ControlDark
+        Me.MaterialCheckbox2.Depth = 0
+        Me.MaterialCheckbox2.Location = New System.Drawing.Point(0, 0)
+        Me.MaterialCheckbox2.Margin = New System.Windows.Forms.Padding(0)
+        Me.MaterialCheckbox2.MouseLocation = New System.Drawing.Point(-1, -1)
+        Me.MaterialCheckbox2.MouseState = MaterialSkin.MouseState.HOVER
+        Me.MaterialCheckbox2.Name = "MaterialCheckbox2"
+        Me.MaterialCheckbox2.ReadOnly = False
+        Me.MaterialCheckbox2.Ripple = True
+        Me.MaterialCheckbox2.Size = New System.Drawing.Size(104, 37)
+        Me.MaterialCheckbox2.TabIndex = 0
+        Me.MaterialCheckbox2.Text = "MaterialCheckbox2"
+        Me.MaterialCheckbox2.UseVisualStyleBackColor = False
+        '
         'Planned
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -140,4 +174,6 @@ Partial Class Planned
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents MaterialCheckbox1 As MaterialSkin.Controls.MaterialCheckbox
+    Friend WithEvents MaterialCheckbox2 As MaterialSkin.Controls.MaterialCheckbox
 End Class
