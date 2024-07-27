@@ -1,35 +1,24 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.IO
-Imports System.Timers
 
 Public Class MainForm
+    ' Constants
+    Private Const CollapsedSidebarWidth As Integer = 50
+    Private Const ExpandedSidebarWidth As Integer = 200
+    Private Const MaxSidebarWidth As Integer = 350
+
+    ' Fields
     Private PfpLastEventTime As DateTime
     Private debounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
-
-    'Booleans
     Private IsSidebarExpanded As Boolean
-    Private IsMouseOverUsername As Boolean = False
-    Public IsMouseOverPfp As Boolean = False
 
-
-    'Constants
-    Const CollapsedSidebarWidth As Integer = 50
-    Const ExpandedSidebarWidth As Integer = 200
-    Const MaxSidebarWidth As Integer = 350
-
+    ' Enums
     Private Enum SidebarState
         Collapsed
         Expanded
         Maximized
     End Enum
-
-    Const Button1_Text As String = "My Day"
-    Const Button2_Text As String = "Daily"
-    Const Button3_Text As String = "Important"
-    Const Button4_Text As String = "Planned"
-    Const Button5_Text As String = "Tasks"
 
     ' Forms
     Private MyDayFormInstance As New My_Day()
@@ -38,9 +27,8 @@ Public Class MainForm
     Private PlannedFormInstance As New Planned()
     Private TasksFormInstance As New Tasks()
 
-    Private controlBounds As Rectangle
-
-    '-----------------------------------------------On load-----------------------------------------------------'
+    '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
+#Region "Constructor and Load"
     Public Sub New()
         InitializeComponent()
         Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
@@ -50,9 +38,11 @@ Public Class MainForm
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
         InitializeApp()
-        controlBounds = Pfp_CircularPictureBox.Bounds
     End Sub
+#End Region
 
+    '-------------------------------------------------------------Initialization Methods---------------------------------------------------------------'
+#Region "Initialization Methods"
     Private Sub InitializeForms()
         AddFormToPanel(MyDayFormInstance)
         AddFormToPanel(DailyFormInstance)
@@ -68,10 +58,62 @@ Public Class MainForm
         ' Initial Form
         ShowForm(MyDayFormInstance)
     End Sub
+#End Region
 
-    '-----------------------------------------------Methods-----------------------------------------------------'
+    '----------------------------------------------------------------Form Management-------------------------------------------------------------------'
+#Region "Form Management"
+    Private Sub AddFormToPanel(form As Form)
+        form.TopLevel = False
+        form.FormBorderStyle = FormBorderStyle.None
+        form.Dock = DockStyle.Fill
+        SplitContainer1.Panel2.Controls.Add(form)
+        form.Hide() ' Initially hide all forms
+    End Sub
 
-    ' Toggle the sidebar state between expanded and collapsed on Splitter double click
+    Private Sub ShowForm(formToShow As Form)
+        formToShow.Show()
+        formToShow.BringToFront()
+    End Sub
+
+    Private Function GetActiveFormInPanel(panel As Panel) As Form
+        For Each control As Control In panel.Controls
+            If TypeOf control Is Form Then
+                Return CType(control, Form)
+            End If
+        Next
+        Return Nothing
+    End Function
+#End Region
+
+    '----------------------------------------------------------------Sidebar Methods-------------------------------------------------------------------'
+#Region "Sidebar Methods"
+    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
+        If IsSidebarExpanded Then
+            If e.SplitX < ExpandedSidebarWidth - 50 Then
+                SetSidebarState(SidebarState.Collapsed)
+            ElseIf e.SplitX < ExpandedSidebarWidth Then
+                SetSidebarState(SidebarState.Expanded)
+            ElseIf e.SplitX > MaxSidebarWidth Then
+                SetSidebarState(SidebarState.Maximized)
+            End If
+        Else
+            If e.SplitX > ExpandedSidebarWidth AndAlso e.SplitX < MaxSidebarWidth Then
+                IsSidebarExpanded = True
+                SplitContainer1.SplitterDistance = e.SplitX
+                ExpandButtons()
+                ProfileMaximizeOrMinimize()
+            ElseIf e.SplitX < CollapsedSidebarWidth Then
+                SetSidebarState(SidebarState.Collapsed)
+            ElseIf e.SplitX > CollapsedSidebarWidth Then
+                If e.SplitX > MaxSidebarWidth Then
+                    SetSidebarState(SidebarState.Maximized)
+                ElseIf e.SplitX < MaxSidebarWidth Then
+                    SetSidebarState(SidebarState.Expanded)
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub SplitContainer1_DoubleClick(sender As Object, e As EventArgs) Handles SplitContainer1.DoubleClick
         If IsSidebarExpanded Then
             SetSidebarState(SidebarState.Collapsed)
@@ -123,42 +165,12 @@ Public Class MainForm
         Next
     End Sub
 
-
     Private Sub CollapseButtons()
         SetButtonColumnWidth(100, 0)
     End Sub
 
     Private Sub ExpandButtons()
         SetButtonColumnWidth(20, 80)
-    End Sub
-
-
-    Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
-        If IsSidebarExpanded Then
-            If e.SplitX < ExpandedSidebarWidth - 50 Then
-                SetSidebarState(SidebarState.Collapsed)
-            ElseIf e.SplitX < ExpandedSidebarWidth Then
-                SetSidebarState(SidebarState.Expanded)
-            ElseIf e.SplitX > MaxSidebarWidth Then
-                SetSidebarState(SidebarState.Maximized)
-            End If
-        Else
-            If e.SplitX > ExpandedSidebarWidth And e.SplitX < MaxSidebarWidth Then
-                IsSidebarExpanded = True
-                SplitContainer1.SplitterDistance = e.SplitX
-                ExpandButtons()
-                ProfileMaximizeOrMinimize()
-            ElseIf e.SplitX < CollapsedSidebarWidth Then
-                SetSidebarState(SidebarState.Collapsed)
-            ElseIf e.SplitX > CollapsedSidebarWidth Then
-                If e.SplitX > MaxSidebarWidth Then
-                    SetSidebarState(SidebarState.Maximized)
-                ElseIf e.SplitX < MaxSidebarWidth Then
-                    SetSidebarState(SidebarState.Expanded)
-                End If
-            Else
-            End If
-        End If
     End Sub
 
     Private Sub ProfileMaximizeOrMinimize()
@@ -174,7 +186,10 @@ Public Class MainForm
             Label1.Hide()
         End If
     End Sub
+#End Region
 
+    '----------------------------------------------------------------Profile Methods-------------------------------------------------------------------'
+#Region "Profile Methods"
     Private Sub LoadProfile()
         If GetPfpPath() = Nothing Then
             Pfp_MenuStripItem_Empty.Checked = True
@@ -201,69 +216,10 @@ Public Class MainForm
     Private Function GetUsername() As String
         Return My.Settings.Username
     End Function
+#End Region
 
-    Private Sub AddFormToPanel(form As Form)
-        form.TopLevel = False
-        form.FormBorderStyle = FormBorderStyle.None
-        form.Dock = DockStyle.Fill
-        SplitContainer1.Panel2.Controls.Add(form)
-        form.Hide() ' Initially hide all forms
-    End Sub
-
-    Private Sub ShowForm(formToShow As Form)
-        ' Show the selected form
-        formToShow.Show()
-        formToShow.BringToFront()
-    End Sub
-
-
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-        ShowForm(MyDayFormInstance)
-    End Sub
-
-    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
-        ShowForm(DailyFormInstance)
-    End Sub
-
-    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
-        ShowForm(ImportantFormInstance)
-    End Sub
-
-    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
-        ShowForm(PlannedFormInstance)
-    End Sub
-
-    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
-        ShowForm(TasksFormInstance)
-    End Sub
-
-    Private Function GetActiveFormInPanel(panel As Panel) As Form
-        For Each control As Control In panel.Controls
-            If TypeOf control Is Form Then
-                Return CType(control, Form)
-            End If
-        Next
-        Return Nothing
-    End Function
-
-    'Will be helpful later on
-    Private Sub Test_BackColors_Click(sender As Object, e As EventArgs) Handles Test_BackColors.Click
-        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
-        If activeForm IsNot Nothing Then
-            If ColorDialog1.ShowDialog() = DialogResult.OK Then
-                ' Safely access MainTableLayoutPanel if it exists
-                Dim mainTableLayoutPanel As Control = activeForm.Controls.Find("MainTableLayoutPanel", True).FirstOrDefault()
-                If mainTableLayoutPanel IsNot Nothing Then
-                    mainTableLayoutPanel.BackColor = ColorDialog1.Color
-                Else
-                    MessageBox.Show("The active form does not contain a MainTableLayoutPanel control.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-                End If
-            End If
-        Else
-            MessageBox.Show("No active form found in the panel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End If
-    End Sub
-
+    '----Profile Context Menu Methods----'
+#Region "Profile Context Menu Methods"
     Private Sub Pfp_MenuStripItem_ChangePicture_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_ChangePicture.Click
         Pfp_OpenFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
         Pfp_OpenFileDialog.Title = "Select an Image"
@@ -301,21 +257,16 @@ Public Class MainForm
     End Sub
 
     Private Sub Username_MenuStripItem_Empty_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_Empty.Click
-        Dim result As DialogResult
-        result = MessageBox.Show("Are you sure you want Username to be empty?", "Confirm Action", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-
-        If result = DialogResult.Yes Then
-            My.Settings.Username = Nothing
-            Username_MenuStripItem_Empty.Checked = True
-            Username_MenuStripItem_Empty.Enabled = False
-            Label1.Text = "          "
-            Label1.BorderStyle = BorderStyle.FixedSingle
-        ElseIf result = DialogResult.No Then
-            Exit Sub
-        End If
+        Label1.Text = "          "
+        Label1.BorderStyle = BorderStyle.FixedSingle
+        Username_MenuStripItem_Empty.Checked = True
+        Username_MenuStripItem_Empty.Enabled = False
+        My.Settings.Username = Nothing
     End Sub
+#End Region
 
-    ' Username
+    '----Username Events----'
+#Region "Username Events"
     Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Label1.MouseEnter
         Label1.BorderStyle = BorderStyle.FixedSingle
     End Sub
@@ -327,9 +278,10 @@ Public Class MainForm
     Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Label1.MouseClick
         Username_ContextMenuStrip.Show(Label1, e.Location)
     End Sub
+#End Region
 
-
-    'Pfp
+    '----Profile Picture Events----'
+#Region "Profile Picture Events"
     Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
         Dim now As DateTime = DateTime.Now
         If now - PfpLastEventTime > debounceDelay Then
@@ -349,8 +301,48 @@ Public Class MainForm
     Private Sub Pfp_CircularPictureBox_MouseClick(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseClick
         Pfp_ContextMenuStrip.Show(Pfp_CircularPictureBox, e.Location)
     End Sub
+#End Region
 
-    Private Sub Pfp_CircularPictureBox_MouseHover(sender As Object, e As EventArgs)
-
+    '--------------------------------------------------------------Button Click Events----------------------------------------------------------------'
+#Region "Button Click Events"
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
+        ShowForm(MyDayFormInstance)
     End Sub
+
+    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
+        ShowForm(DailyFormInstance)
+    End Sub
+
+    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
+        ShowForm(ImportantFormInstance)
+    End Sub
+
+    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
+        ShowForm(PlannedFormInstance)
+    End Sub
+
+    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
+        ShowForm(TasksFormInstance)
+    End Sub
+#End Region
+
+    '----------------------------------------------------------------Helper Methods-------------------------------------------------------------------'
+#Region "Helper Methods"
+    Private Sub Test_BackColors_Click(sender As Object, e As EventArgs) Handles Test_BackColors.Click
+        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
+        If activeForm IsNot Nothing Then
+            If ColorDialog1.ShowDialog() = DialogResult.OK Then
+                ' Safely access MainTableLayoutPanel if it exists
+                Dim mainTableLayoutPanel As Control = activeForm.Controls.Find("MainTableLayoutPanel", True).FirstOrDefault()
+                If mainTableLayoutPanel IsNot Nothing Then
+                    mainTableLayoutPanel.BackColor = ColorDialog1.Color
+                Else
+                    MessageBox.Show("The active form does not contain a MainTableLayoutPanel control.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End If
+            End If
+        Else
+            MessageBox.Show("No active form found in the panel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+#End Region
 End Class

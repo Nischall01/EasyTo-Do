@@ -33,6 +33,7 @@ Partial Class My_Day
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label_MyDay = New System.Windows.Forms.Label()
         Me.SubTableLayoutPanel_TaskProperties = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -41,9 +42,8 @@ Partial Class My_Day
         Me.CustomButton_22 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton_21 = New EasyTo_do_.CustomButton_2()
         Me.CustomButton_24 = New EasyTo_do_.CustomButton_2()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.MainTableLayoutPanel.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
@@ -202,14 +202,31 @@ Partial Class My_Day
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38.0!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19.0!))
-        Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
+        Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55.0!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.65656!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.34343!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubTableLayoutPanel_TaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubTableLayoutPanel_TaskProperties.Size = New System.Drawing.Size(196, 461)
         Me.SubTableLayoutPanel_TaskProperties.TabIndex = 2
+        '
+        'Button3
+        '
+        Me.Button3.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), System.Drawing.Image)
+        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.Button3.FlatAppearance.BorderSize = 0
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button3.Location = New System.Drawing.Point(86, 400)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Padding = New System.Windows.Forms.Padding(3)
+        Me.Button3.Size = New System.Drawing.Size(23, 25)
+        Me.Button3.TabIndex = 8
+        Me.Button3.UseVisualStyleBackColor = False
         '
         'TextBox1
         '
@@ -269,14 +286,14 @@ Partial Class My_Day
         Me.TableLayoutPanel2.Controls.Add(Me.CustomButton_21, 0, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.CustomButton_24, 0, 0)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 169)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 184)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 4
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 48.0!))
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(190, 187)
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(190, 177)
         Me.TableLayoutPanel2.TabIndex = 10
         '
         'CustomButton_22
@@ -288,11 +305,11 @@ Partial Class My_Day
         Me.CustomButton_22.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton_22.IconSize = New System.Drawing.Size(16, 16)
         Me.CustomButton_22.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_22.Location = New System.Drawing.Point(0, 96)
+        Me.CustomButton_22.Location = New System.Drawing.Point(0, 80)
         Me.CustomButton_22.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_22.Name = "CustomButton_22"
         Me.CustomButton_22.PictureBoxSize = New System.Drawing.Size(16, 16)
-        Me.CustomButton_22.Size = New System.Drawing.Size(190, 48)
+        Me.CustomButton_22.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_22.TabIndex = 11
         Me.CustomButton_22.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_22.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -306,11 +323,11 @@ Partial Class My_Day
         Me.CustomButton_21.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton_21.IconSize = New System.Drawing.Size(18, 18)
         Me.CustomButton_21.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_21.Location = New System.Drawing.Point(0, 48)
+        Me.CustomButton_21.Location = New System.Drawing.Point(0, 40)
         Me.CustomButton_21.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_21.Name = "CustomButton_21"
         Me.CustomButton_21.PictureBoxSize = New System.Drawing.Size(18, 18)
-        Me.CustomButton_21.Size = New System.Drawing.Size(190, 48)
+        Me.CustomButton_21.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_21.TabIndex = 10
         Me.CustomButton_21.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_21.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -328,10 +345,24 @@ Partial Class My_Day
         Me.CustomButton_24.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_24.Name = "CustomButton_24"
         Me.CustomButton_24.PictureBoxSize = New System.Drawing.Size(16, 16)
-        Me.CustomButton_24.Size = New System.Drawing.Size(190, 48)
+        Me.CustomButton_24.Size = New System.Drawing.Size(190, 40)
         Me.CustomButton_24.TabIndex = 9
         Me.CustomButton_24.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_24.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset
+        Me.TableLayoutPanel3.ColumnCount = 1
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.Button1, 0, 0)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(79, 135)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(38, 37)
+        Me.TableLayoutPanel3.TabIndex = 11
         '
         'Button1
         '
@@ -349,37 +380,6 @@ Partial Class My_Day
         Me.Button1.Size = New System.Drawing.Size(28, 27)
         Me.Button1.TabIndex = 8
         Me.Button1.UseVisualStyleBackColor = False
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TableLayoutPanel3.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Inset
-        Me.TableLayoutPanel3.ColumnCount = 1
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.Button1, 0, 0)
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(79, 126)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(38, 37)
-        Me.TableLayoutPanel3.TabIndex = 11
-        '
-        'Button3
-        '
-        Me.Button3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button3.BackgroundImage = CType(resources.GetObject("Button3.BackgroundImage"), System.Drawing.Image)
-        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.Button3.FlatAppearance.BorderSize = 0
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button3.Location = New System.Drawing.Point(86, 397)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Padding = New System.Windows.Forms.Padding(3)
-        Me.Button3.Size = New System.Drawing.Size(23, 25)
-        Me.Button3.TabIndex = 8
-        Me.Button3.UseVisualStyleBackColor = False
         '
         'My_Day
         '
