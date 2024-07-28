@@ -231,6 +231,9 @@
     <Content Include="Icons\sun %281%29.png" />
     <Content Include="Icons\task %281%29.png" />
     <Content Include="Icons\warning %282%29.png" />
+    <None Include="Resources\3.png" />
+    <None Include="Resources\1.png" />
+    <None Include="Resources\2.png" />
     <Content Include="To_Do.sdf" />
   </ItemGroup>
   <ItemGroup>

@@ -37,9 +37,9 @@ Public Class My_Day
 
     Private Sub LoadCachedImages()
         ' Cache images
-        UncheckedImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\1.png")
-        CheckedImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\2.png")
-        DisabledImportantIcon = Image.FromFile("C:\Users\Nischal\Downloads\3.png")
+        UncheckedImportantIcon = My.Resources._1
+        CheckedImportantIcon = My.Resources._2
+        DisabledImportantIcon = My.Resources._3
     End Sub
 
     Private Sub DisableTaskProperties(Disable As Boolean)
