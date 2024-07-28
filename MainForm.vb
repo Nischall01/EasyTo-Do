@@ -307,6 +307,7 @@ Public Class MainForm
 #Region "Button Click Events"
     Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
         ShowForm(MyDayFormInstance)
+        MyDayFormInstance.TextBox_AddNewTask.Focus()
     End Sub
 
     Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click

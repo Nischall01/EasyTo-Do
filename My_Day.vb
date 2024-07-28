@@ -1,6 +1,8 @@
 ﻿Imports System.Data.SqlServerCe
+Imports System.Runtime.CompilerServices
 
 Public Class My_Day
+    Private DescriptionPlaceholderText As String = "Add Description..."
 
     ' Image cache variables
     Private UncheckedImportantIcon As Image
@@ -15,16 +17,18 @@ Public Class My_Day
 
     Private connectionString As String = "Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;"
 
-    '---------------------------------------------------Initialization---------------------------------------------------'
+    '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
     Private Sub InitializeMy_day()
         TextBox_AddNewTask.Focus()
         LoadTasksToCheckedListView()
         ShowOrHideTaskProperties()
-        Label3.Text = CurrentDateTime.ToString("dddd, MMMM dd")
+        Label_DayDate.Text = CurrentDateTime.ToString("dddd, MMMM dd")
 
         LoadCachedImages()
         DisableTaskProperties(True)
+
+        OnloadCheckedListBoxHeight()
     End Sub
 
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -40,32 +44,37 @@ Public Class My_Day
 
     Private Sub DisableTaskProperties(Disable As Boolean)
         If Disable Then
-            TextBox1.Text = Nothing
-            Label2.Text = Nothing
-            Button1.BackgroundImage = DisabledImportantIcon
+            Textbox_TaskTitle.Text = Nothing
+            Label_TaskEntryDateTime.Text = Nothing
+            Button_Important.BackgroundImage = DisabledImportantIcon
 
-            TextBox1.Enabled = False
-            Label1.Enabled = False
-            Label2.Enabled = False
-            Button1.Enabled = False
-            CustomButton_21.Enabled = False
-            CustomButton_22.Enabled = False
-            CustomButton_24.Enabled = False
+            Textbox_TaskTitle.Enabled = False
+            Label_ADT.Enabled = False
+            Label_TaskEntryDateTime.Enabled = False
+            Button_Important.Enabled = False
+            CustomButton_Repeat.Enabled = False
+            CustomButton_DueDate.Enabled = False
+            CustomButton_AddReminder.Enabled = False
             Button_DeleteTask.Enabled = False
+
+            RichTextBox1.Text = Nothing
+            RichTextBox1.Enabled = False
         Else
-            TextBox1.Enabled = True
-            Label1.Enabled = True
-            Label2.Enabled = True
-            Button1.Enabled = True
-            CustomButton_21.Enabled = True
-            CustomButton_22.Enabled = True
-            CustomButton_24.Enabled = True
+            Textbox_TaskTitle.Enabled = True
+            Label_ADT.Enabled = True
+            Label_TaskEntryDateTime.Enabled = True
+            Button_Important.Enabled = True
+            CustomButton_Repeat.Enabled = True
+            CustomButton_DueDate.Enabled = True
+            CustomButton_AddReminder.Enabled = True
             Button_DeleteTask.Enabled = True
+
+            RichTextBox1.Enabled = True
         End If
     End Sub
 #End Region
 
-    '---------------------------------------------------Data Handling---------------------------------------------------'
+    '---------------------------------------------------------------------------------Data Handling---------------------------------------------------------------------------------------------'
 #Region "Data Handling"
     Private Sub LoadTasksToCheckedListView()
         CheckedListBox_MyDay.SelectedIndex = -1
@@ -98,7 +107,7 @@ Public Class My_Day
         End Try
     End Sub
 
-    Private Sub AddNewTaskToTable_My_Day(NewTask As String, TaskDescription As String)
+    Private Sub AddNewTaskToTable_My_Day(NewTask As String)
         Dim CurrentDateTime As DateTime = DateTime.Now
         Dim newTaskIndex As Integer
 
@@ -121,16 +130,12 @@ Public Class My_Day
             End Using
         End Using
 
-        ' Use String.Empty if TaskDescription is Nothing or empty
-        TaskDescription = If(String.IsNullOrEmpty(TaskDescription), String.Empty, TaskDescription)
-
         ' Insert the new task with the determined Task_Index
-        Dim queryInsertTask As String = "INSERT INTO My_Day (Task, Task_Description, Entry_DateTime, Task_Index) VALUES (@Task, @TaskDescription, @Entry_DateTime, @TaskIndex)"
+        Dim queryInsertTask As String = "INSERT INTO My_Day (Task, Entry_DateTime, Task_Index) VALUES (@Task, @Entry_DateTime, @TaskIndex)"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(queryInsertTask, connection)
                 command.Parameters.AddWithValue("@Task", NewTask)
-                command.Parameters.AddWithValue("@TaskDescription", TaskDescription)
                 command.Parameters.AddWithValue("@Entry_DateTime", CurrentDateTime)
                 command.Parameters.AddWithValue("@TaskIndex", newTaskIndex)
 
@@ -156,10 +161,11 @@ Public Class My_Day
 
         ' Focus on added task after DataTable reload
         If CheckedListBox_MyDay.Items.Count > 0 Then
-            CheckedListBox_MyDay.SelectedIndex = CheckedListBox_MyDay.Items.Count - 1
+            CheckedListBox_MyDay.SelectedIndex = newTaskIndex
             CheckedListBox_MyDay.Focus()
         End If
     End Sub
+
 
     Private Sub HardResetTable_My_Day()
         Dim dropTableQuery As String = "DROP TABLE My_Day"
@@ -208,7 +214,6 @@ Public Class My_Day
         LoadTasksToCheckedListView()
         DisableTaskProperties(True)
     End Sub
-
 
     Private Sub DeleteTaskFromTable_My_Day(TaskIndex As Integer)
         ' The TaskIndex is used to find and delete the task
@@ -264,10 +269,69 @@ Public Class My_Day
         LoadTasksToCheckedListView()
     End Sub
 
+    Private Sub UpdateTaskDescription(taskIndex As Integer, newDescription As String)
+        Dim query As String = "UPDATE My_Day SET Task_Description = @NewDescription WHERE Task_Index = @TaskIndex"
+
+        Using connection As New SqlCeConnection(connectionString)
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@NewDescription", newDescription)
+                command.Parameters.AddWithValue("@TaskIndex", taskIndex)
+
+                Try
+                    connection.Open()
+                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
+                    If rowsAffected > 0 Then
+                        'MessageBox.Show("Task description updated successfully.")
+                    Else
+                        MessageBox.Show("No task found with the specified index.")
+                    End If
+                Catch ex As SqlCeException
+                    MessageBox.Show("SQL CE Error: " & ex.Message)
+                Catch ex As Exception
+                    MessageBox.Show("Unexpected Error: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        LoadTasksToCheckedListView()
+
+        If CheckedListBox_MyDay.Items.Count > 0 Then
+            CheckedListBox_MyDay.SelectedIndex = taskIndex
+            CheckedListBox_MyDay.Focus()
+        End If
+
+    End Sub
 #End Region
 
-    '---------------------------------------------------Task Properties Handling---------------------------------------------------'
-#Region "Task Properties Handling"
+    '-----------------------------------------------------------------------------Task Handling------------------------------------------------------------------------------'
+#Region "Task Handling"
+    Private Sub ShowOrHideTaskProperties()
+        If IsTaskPropertiesVisible Then
+            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(0).Width = 77%
+            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(1).Width = 23%
+            IsTaskPropertiesVisible = False
+        Else
+            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(0).Width = 100%
+            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(1).Width = 0%
+            IsTaskPropertiesVisible = True
+        End If
+    End Sub
+
+    Private Sub EnterTaskTo_My_Day_ChecklistBox()
+        Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
+        If NewMy_DayTask Is String.Empty Then
+            Exit Sub
+        End If
+        CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
+        AddNewTaskToTable_My_Day(NewMy_DayTask)
+
+        TextBox_AddNewTask.Clear()
+        TextBox_AddNewTask.Focus()
+    End Sub
+
     Private Sub DoneCheckChanged(itemIndex As Integer, isChecked As Boolean)
         Dim done As Integer = If(isChecked, 1, 0)
 
@@ -292,13 +356,11 @@ Public Class My_Day
         End Try
     End Sub
 
-
-    Private Sub ImportantCheckChanged(itemIndex As Integer, isChecked As Boolean)
+    Private Sub ImportantCheckChanged(TaskIndex As Integer, isChecked As Boolean)
         'MsgBox("Item Index: " & itemIndex)
         'MsgBox("IsChecked: " & isChecked)
 
         Dim Important As Integer = If(isChecked, 1, 0)
-        Dim id As Integer = itemIndex + 1 ' DataTable Id starts From 1 not 0 like ListView
 
         Try
             ' Update the database with the new 'Done' value
@@ -306,7 +368,7 @@ Public Class My_Day
 
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@Task_Index", itemIndex)
+                    command.Parameters.AddWithValue("@Task_Index", TaskIndex)
                     command.Parameters.AddWithValue("@Important", Important)
 
                     connection.Open()
@@ -320,78 +382,9 @@ Public Class My_Day
 
         LoadTasksToCheckedListView()
         ' Retain Focus after DataTable Reload
-        If CheckedListBox_MyDay.Items.Count > 0 AndAlso itemIndex >= 0 AndAlso itemIndex < CheckedListBox_MyDay.Items.Count Then
-            CheckedListBox_MyDay.SelectedIndex = itemIndex
+        If CheckedListBox_MyDay.Items.Count > 0 Then
+            CheckedListBox_MyDay.SelectedIndex = TaskIndex
             CheckedListBox_MyDay.Focus()
-        End If
-    End Sub
-#End Region
-
-    '---------------------------------------------------Event Handlers---------------------------------------------------'
-#Region "Event Handlers"
-    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            EnterTaskTo_My_Day_ChecklistBox()
-        End If
-    End Sub
-
-    Private Sub EnterTaskTo_My_Day_ChecklistBox()
-        Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
-        If NewMy_DayTask Is String.Empty Then
-            Exit sub
-        End If
-        CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
-        AddNewTaskToTable_My_Day(NewMy_DayTask, "")
-        TextBox_AddNewTask.Clear()
-        TextBox_AddNewTask.Focus()
-    End Sub
-
-    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
-        Dim itemIndex As Integer
-        itemIndex = e.Index
-        DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
-    End Sub
-
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        ShowOrHideTaskProperties()
-    End Sub
-
-    Private Sub ShowOrHideTaskProperties()
-        If IsTaskPropertiesVisible Then
-            MainTableLayoutPanel.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTableLayoutPanel.ColumnStyles(0).Width = 73%
-            MainTableLayoutPanel.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTableLayoutPanel.ColumnStyles(1).Width = 27%
-            IsTaskPropertiesVisible = False
-        Else
-            MainTableLayoutPanel.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTableLayoutPanel.ColumnStyles(0).Width = 100%
-            MainTableLayoutPanel.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTableLayoutPanel.ColumnStyles(1).Width = 0%
-            IsTaskPropertiesVisible = True
-        End If
-    End Sub
-
-    Private Sub CheckedListBox_MyDay_MouseDown(sender As Object, e As MouseEventArgs) Handles CheckedListBox_MyDay.MouseDown
-        If e.Button = MouseButtons.Right Then
-            ShowOrHideTaskProperties()
-        End If
-    End Sub
-
-    Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
-        If CheckedListBox_MyDay.SelectedIndex = -1 Then
-            DisableTaskProperties(True)
-            TextBox1.Clear()
-        Else
-            DisableTaskProperties(False)
-            TextBox1.Text = CheckedListBox_MyDay.SelectedItem.ToString()
-            Label2.Text = GetTaskEntryDateTime()
-
-            If IsTaskImportant() Then
-                Button1.BackgroundImage = CheckedImportantIcon
-            Else
-                Button1.BackgroundImage = UncheckedImportantIcon
-            End If
         End If
     End Sub
 
@@ -430,37 +423,170 @@ Public Class My_Day
         Return TaskEntryDateTime
     End Function
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Function GetTaskDescription() As String
+        Dim TaskId As Integer = CheckedListBox_MyDay.SelectedIndex
+        Dim TaskDescription As String = String.Empty
+
+        For Each row As DataRow In dt.Rows
+            If row("Task_Index") = TaskId Then
+                TaskDescription = row("Task_Description").ToString
+                Exit For
+            End If
+        Next
+        Return TaskDescription
+    End Function
+#End Region
+
+    '-----------------------------------------------------------------Event Handlers---------------------------------------------------'
+#Region "Event Handlers"
+    Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
+        ShowOrHideTaskProperties()
+    End Sub
+
+    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            EnterTaskTo_My_Day_ChecklistBox()
+
+            IncrementCheckedListBoxHeight() ' Increment
+        End If
+    End Sub
+
+    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles CheckedListBox_MyDay.ItemCheck
+        Dim itemIndex As Integer
+        itemIndex = e.Index
+        DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
+    End Sub
+
+    Private Sub CheckedListBox_MyDay_MouseDown(sender As Object, e As MouseEventArgs) Handles CheckedListBox_MyDay.MouseDown
+        If e.Button = MouseButtons.Right Then
+            ShowOrHideTaskProperties()
+        End If
+    End Sub
+
+    Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
+        If CheckedListBox_MyDay.SelectedIndex = -1 Then
+            DisableTaskProperties(True)
+            Textbox_TaskTitle.Clear()
+        Else
+            DisableTaskProperties(False)
+            Textbox_TaskTitle.Text = CheckedListBox_MyDay.SelectedItem.ToString()
+            Label_TaskEntryDateTime.Text = GetTaskEntryDateTime()
+
+            If GetTaskDescription() <> String.Empty Then
+                RichTextBox1.ForeColor = Color.Black
+                RichTextBox1.Text = GetTaskDescription()
+            Else
+                RichTextBox1.Text = DescriptionPlaceholderText
+                RichTextBox1.ForeColor = Color.Gray
+            End If
+
+            If IsTaskImportant() Then
+                Button_Important.BackgroundImage = CheckedImportantIcon
+            Else
+                Button_Important.BackgroundImage = UncheckedImportantIcon
+            End If
+        End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
         If IsTaskImportant() Then
             ImportantCheckChanged(CheckedListBox_MyDay.SelectedIndex, CheckState.Unchecked)
         Else
             ImportantCheckChanged(CheckedListBox_MyDay.SelectedIndex, CheckState.Checked)
         End If
-
     End Sub
 
-    Private Sub Button1_MouseEnter(sender As Object, e As EventArgs) Handles Button1.MouseEnter
+    Private Sub Button_Important_MouseEnter(sender As Object, e As EventArgs) Handles Button_Important.MouseEnter
         If IsTaskImportant() Then
             Exit Sub
         End If
-        Button1.BackgroundImage = CheckedImportantIcon
+        Button_Important.BackgroundImage = CheckedImportantIcon
     End Sub
 
-    Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
+    Private Sub Button_Important1_MouseLeave(sender As Object, e As EventArgs) Handles Button_Important.MouseLeave
         If IsTaskImportant() Then
             Exit Sub
         End If
-        Button1.BackgroundImage = UncheckedImportantIcon
+        Button_Important.BackgroundImage = UncheckedImportantIcon
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         DeleteTaskFromTable_My_Day(CheckedListBox_MyDay.SelectedIndex)
+
+        DecrementCheckedListBoxHeight() ' Decrement
+
         DisableTaskProperties(True)
     End Sub
 
-    Private Sub TextBox_AddNewTask_MouseClick(sender As Object, e As MouseEventArgs) Handles TextBox_AddNewTask.MouseClick
-        LoadTasksToCheckedListView()
+    Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles RichTextBox1.Enter
+        RichTextBox1.ForeColor = Color.Black
+        If RichTextBox1.Text = DescriptionPlaceholderText Then
+            RichTextBox1.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
+        ' Check if Enter key is pressed
+        If e.KeyCode = Keys.Enter Then
+            ' Check if Shift key is also pressed
+            If e.Shift Then
+                ' Allow default behavior (new line)
+            Else
+                ' Prevent the default behavior
+                e.SuppressKeyPress = True
+
+                UpdateTaskDescription(CheckedListBox_MyDay.SelectedIndex, RichTextBox1.Text)
+            End If
+        End If
+    End Sub
+
+    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
+
+    End Sub
+
+    Private Sub Panel1_Click(sender As Object, e As EventArgs)
+        TextBox_AddNewTask.Focus()
+    End Sub
+
+    Private Sub TextBox_AddNewTask_Enter(sender As Object, e As EventArgs) Handles TextBox_AddNewTask.Enter
+        LoseListItemFocus()
         DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
+        Me.ActiveControl = Nothing
+        LoseListItemFocus()
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
+        Me.ActiveControl = Nothing
+        LoseListItemFocus()
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub LoseListItemFocus()
+        CheckedListBox_MyDay.SelectedIndex = -1
+    End Sub
+
+    Private Sub IncrementCheckedListBoxHeight()
+        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+        If CheckedListBox_MyDay.Items.Count < 16 Then
+            CheckedListBox_MyDay.Height += ItemHeight
+        End If
+    End Sub
+
+    Private Sub DecrementCheckedListBoxHeight()
+        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+        If CheckedListBox_MyDay.Items.Count = 0 Then
+            CheckedListBox_MyDay.Height = 0
+        End If
+    End Sub
+
+    Private Sub OnloadCheckedListBoxHeight()
+        Dim NumberOfItems As Integer = CheckedListBox_MyDay.Items.Count
+        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+        CheckedListBox_MyDay.Height = NumberOfItems * ItemHeight
     End Sub
 #End Region
 End Class
