@@ -23,37 +23,37 @@ Partial Class Daily
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Daily))
-        Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.MainTableLayoutPanel.SuspendLayout()
+        Me.MainTlp.SuspendLayout()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         Me.SuspendLayout()
         '
-        'MainTableLayoutPanel
+        'MainTlp
         '
-        Me.MainTableLayoutPanel.BackColor = System.Drawing.Color.White
-        Me.MainTableLayoutPanel.ColumnCount = 1
-        Me.MainTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTableLayoutPanel.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
-        Me.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
-        Me.MainTableLayoutPanel.Name = "MainTableLayoutPanel"
-        Me.MainTableLayoutPanel.RowCount = 3
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.MainTableLayoutPanel.Size = New System.Drawing.Size(784, 461)
-        Me.MainTableLayoutPanel.TabIndex = 0
+        Me.MainTlp.BackColor = System.Drawing.Color.White
+        Me.MainTlp.ColumnCount = 1
+        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainTlp.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
+        Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainTlp.Location = New System.Drawing.Point(0, 0)
+        Me.MainTlp.Name = "MainTlp"
+        Me.MainTlp.RowCount = 3
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.MainTlp.Size = New System.Drawing.Size(784, 461)
+        Me.MainTlp.TabIndex = 0
         '
         'CheckedListBox_MyDay
         '
@@ -97,6 +97,15 @@ Partial Class Daily
         Me.PictureBox_FormIcon.TabIndex = 2
         Me.PictureBox_FormIcon.TabStop = False
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(107, 36)
+        Me.PictureBox1.TabIndex = 3
+        Me.PictureBox1.TabStop = False
+        '
         'SubTableLayoutPanel_Bottom
         '
         Me.SubTableLayoutPanel_Bottom.ColumnCount = 3
@@ -122,34 +131,25 @@ Partial Class Daily
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(107, 36)
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
-        '
         'Daily
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
-        Me.Controls.Add(Me.MainTableLayoutPanel)
+        Me.Controls.Add(Me.MainTlp)
         Me.Name = "Daily"
         Me.Text = "Daily"
-        Me.MainTableLayoutPanel.ResumeLayout(False)
+        Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
+    Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Top As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox

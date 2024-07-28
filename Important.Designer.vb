@@ -26,14 +26,14 @@ Partial Class Important
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
-        Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MainTableLayoutPanel.SuspendLayout()
+        Me.MainTlp.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -75,23 +75,23 @@ Partial Class Important
         Me.PictureBox_FormIcon.TabIndex = 2
         Me.PictureBox_FormIcon.TabStop = False
         '
-        'MainTableLayoutPanel
+        'MainTlp
         '
-        Me.MainTableLayoutPanel.BackColor = System.Drawing.Color.White
-        Me.MainTableLayoutPanel.ColumnCount = 1
-        Me.MainTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTableLayoutPanel.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
-        Me.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
-        Me.MainTableLayoutPanel.Name = "MainTableLayoutPanel"
-        Me.MainTableLayoutPanel.RowCount = 3
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.MainTableLayoutPanel.Size = New System.Drawing.Size(784, 461)
-        Me.MainTableLayoutPanel.TabIndex = 1
+        Me.MainTlp.BackColor = System.Drawing.Color.White
+        Me.MainTlp.ColumnCount = 1
+        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainTlp.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
+        Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainTlp.Location = New System.Drawing.Point(0, 0)
+        Me.MainTlp.Name = "MainTlp"
+        Me.MainTlp.RowCount = 3
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.MainTlp.Size = New System.Drawing.Size(784, 461)
+        Me.MainTlp.TabIndex = 1
         '
         'CheckedListBox_MyDay
         '
@@ -136,13 +136,13 @@ Partial Class Important
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
-        Me.Controls.Add(Me.MainTableLayoutPanel)
+        Me.Controls.Add(Me.MainTlp)
         Me.Name = "Important"
         Me.Text = "Important"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MainTableLayoutPanel.ResumeLayout(False)
+        Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
         Me.ResumeLayout(False)
@@ -151,7 +151,7 @@ Partial Class Important
 
     Friend WithEvents SubTableLayoutPanel_Top As TableLayoutPanel
     Friend WithEvents PictureBox_FormIcon As PictureBox
-    Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
+    Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox

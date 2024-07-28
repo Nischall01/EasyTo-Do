@@ -26,15 +26,13 @@ Partial Class Planned
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
-        Me.MainTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
+        Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
-        Me.MaterialCheckbox1 = New MaterialSkin.Controls.MaterialCheckbox()
-        Me.MaterialCheckbox2 = New MaterialSkin.Controls.MaterialCheckbox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.MainTableLayoutPanel.SuspendLayout()
+        Me.MainTlp.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -76,22 +74,22 @@ Partial Class Planned
         Me.PictureBox_FormIcon.TabIndex = 2
         Me.PictureBox_FormIcon.TabStop = False
         '
-        'MainTableLayoutPanel
+        'MainTlp
         '
-        Me.MainTableLayoutPanel.BackColor = System.Drawing.Color.White
-        Me.MainTableLayoutPanel.ColumnCount = 1
-        Me.MainTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
-        Me.MainTableLayoutPanel.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
-        Me.MainTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
-        Me.MainTableLayoutPanel.Name = "MainTableLayoutPanel"
-        Me.MainTableLayoutPanel.RowCount = 3
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
-        Me.MainTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.MainTableLayoutPanel.Size = New System.Drawing.Size(784, 461)
-        Me.MainTableLayoutPanel.TabIndex = 1
+        Me.MainTlp.BackColor = System.Drawing.Color.White
+        Me.MainTlp.ColumnCount = 1
+        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
+        Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
+        Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MainTlp.Location = New System.Drawing.Point(0, 0)
+        Me.MainTlp.Name = "MainTlp"
+        Me.MainTlp.RowCount = 3
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
+        Me.MainTlp.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
+        Me.MainTlp.Size = New System.Drawing.Size(784, 461)
+        Me.MainTlp.TabIndex = 1
         '
         'SubTableLayoutPanel_Bottom
         '
@@ -118,50 +116,18 @@ Partial Class Planned
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
         '
-        'MaterialCheckbox1
-        '
-        Me.MaterialCheckbox1.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.MaterialCheckbox1.Depth = 0
-        Me.MaterialCheckbox1.Location = New System.Drawing.Point(0, 0)
-        Me.MaterialCheckbox1.Margin = New System.Windows.Forms.Padding(0)
-        Me.MaterialCheckbox1.MouseLocation = New System.Drawing.Point(-1, -1)
-        Me.MaterialCheckbox1.MouseState = MaterialSkin.MouseState.HOVER
-        Me.MaterialCheckbox1.Name = "MaterialCheckbox1"
-        Me.MaterialCheckbox1.ReadOnly = False
-        Me.MaterialCheckbox1.Ripple = True
-        Me.MaterialCheckbox1.Size = New System.Drawing.Size(104, 37)
-        Me.MaterialCheckbox1.TabIndex = 0
-        Me.MaterialCheckbox1.Text = "MaterialCheckbox1"
-        Me.MaterialCheckbox1.UseVisualStyleBackColor = False
-        '
-        'MaterialCheckbox2
-        '
-        Me.MaterialCheckbox2.BackColor = System.Drawing.SystemColors.ControlDark
-        Me.MaterialCheckbox2.Depth = 0
-        Me.MaterialCheckbox2.Location = New System.Drawing.Point(0, 0)
-        Me.MaterialCheckbox2.Margin = New System.Windows.Forms.Padding(0)
-        Me.MaterialCheckbox2.MouseLocation = New System.Drawing.Point(-1, -1)
-        Me.MaterialCheckbox2.MouseState = MaterialSkin.MouseState.HOVER
-        Me.MaterialCheckbox2.Name = "MaterialCheckbox2"
-        Me.MaterialCheckbox2.ReadOnly = False
-        Me.MaterialCheckbox2.Ripple = True
-        Me.MaterialCheckbox2.Size = New System.Drawing.Size(104, 37)
-        Me.MaterialCheckbox2.TabIndex = 0
-        Me.MaterialCheckbox2.Text = "MaterialCheckbox2"
-        Me.MaterialCheckbox2.UseVisualStyleBackColor = False
-        '
         'Planned
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
-        Me.Controls.Add(Me.MainTableLayoutPanel)
+        Me.Controls.Add(Me.MainTlp)
         Me.Name = "Planned"
         Me.Text = "Planned"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.MainTableLayoutPanel.ResumeLayout(False)
+        Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
         Me.ResumeLayout(False)
@@ -170,10 +136,8 @@ Partial Class Planned
 
     Friend WithEvents SubTableLayoutPanel_Top As TableLayoutPanel
     Friend WithEvents PictureBox_FormIcon As PictureBox
-    Friend WithEvents MainTableLayoutPanel As TableLayoutPanel
+    Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents MaterialCheckbox1 As MaterialSkin.Controls.MaterialCheckbox
-    Friend WithEvents MaterialCheckbox2 As MaterialSkin.Controls.MaterialCheckbox
 End Class

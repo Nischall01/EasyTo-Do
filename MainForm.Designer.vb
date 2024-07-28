@@ -32,6 +32,7 @@ Partial Class MainForm
         Me.CustomButton3 = New EasyTo_do.CustomButton_2()
         Me.CustomButton2 = New EasyTo_do.CustomButton_2()
         Me.CustomButton1 = New EasyTo_do.CustomButton_2()
+        Me.Pfp_CircularPictureBox = New EasyTo_do.CircularPictureBox()
         Me.Pfp_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Pfp_MenuStripItem_ChangePicture = New System.Windows.Forms.ToolStripMenuItem()
         Me.Pfp_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
@@ -42,15 +43,14 @@ Partial Class MainForm
         Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
-        Me.Pfp_CircularPictureBox = New EasyTo_do.CircularPictureBox()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.MainSidebarTableLayoutPanel.SuspendLayout()
         Me.SubSidebarTableLayoutPanel.SuspendLayout()
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Pfp_ContextMenuStrip.SuspendLayout()
         Me.Username_ContextMenuStrip.SuspendLayout()
-        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -221,6 +221,21 @@ Partial Class MainForm
         Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'Pfp_CircularPictureBox
+        '
+        Me.Pfp_CircularPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Pfp_CircularPictureBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Pfp_CircularPictureBox.ContextMenuStrip = Me.Pfp_ContextMenuStrip
+        Me.Pfp_CircularPictureBox.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Pfp_CircularPictureBox.Location = New System.Drawing.Point(72, 17)
+        Me.Pfp_CircularPictureBox.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
+        Me.Pfp_CircularPictureBox.Name = "Pfp_CircularPictureBox"
+        Me.Pfp_CircularPictureBox.Size = New System.Drawing.Size(57, 57)
+        Me.Pfp_CircularPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Pfp_CircularPictureBox.TabIndex = 0
+        Me.Pfp_CircularPictureBox.TabStop = False
+        Me.Pfp_CircularPictureBox.Tag = ""
+        '
         'Pfp_ContextMenuStrip
         '
         Me.Pfp_ContextMenuStrip.BackColor = System.Drawing.Color.White
@@ -290,21 +305,6 @@ Partial Class MainForm
         Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(150, 22)
         Me.Username_MenuStripItem_Empty.Text = "Empty"
         '
-        'Pfp_CircularPictureBox
-        '
-        Me.Pfp_CircularPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.Pfp_CircularPictureBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.Pfp_CircularPictureBox.ContextMenuStrip = Me.Pfp_ContextMenuStrip
-        Me.Pfp_CircularPictureBox.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Pfp_CircularPictureBox.Location = New System.Drawing.Point(72, 17)
-        Me.Pfp_CircularPictureBox.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
-        Me.Pfp_CircularPictureBox.Name = "Pfp_CircularPictureBox"
-        Me.Pfp_CircularPictureBox.Size = New System.Drawing.Size(57, 57)
-        Me.Pfp_CircularPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.Pfp_CircularPictureBox.TabIndex = 0
-        Me.Pfp_CircularPictureBox.TabStop = False
-        Me.Pfp_CircularPictureBox.Tag = ""
-        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -323,9 +323,9 @@ Partial Class MainForm
         Me.MainSidebarTableLayoutPanel.ResumeLayout(False)
         Me.MainSidebarTableLayoutPanel.PerformLayout()
         Me.SubSidebarTableLayoutPanel.ResumeLayout(False)
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Pfp_ContextMenuStrip.ResumeLayout(False)
         Me.Username_ContextMenuStrip.ResumeLayout(False)
-        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

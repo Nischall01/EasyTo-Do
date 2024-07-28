@@ -334,7 +334,7 @@ Public Class MainForm
         If activeForm IsNot Nothing Then
             If ColorDialog1.ShowDialog() = DialogResult.OK Then
                 ' Safely access MainTableLayoutPanel if it exists
-                Dim mainTableLayoutPanel As Control = activeForm.Controls.Find("MainTableLayoutPanel", True).FirstOrDefault()
+                Dim mainTableLayoutPanel As Control = activeForm.Controls.Find("MainTlp", True).FirstOrDefault()
                 If mainTableLayoutPanel IsNot Nothing Then
                     mainTableLayoutPanel.BackColor = ColorDialog1.Color
                 Else
@@ -344,6 +344,10 @@ Public Class MainForm
         Else
             MessageBox.Show("No active form found in the panel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+    End Sub
+
+    Private Sub MainForm_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+
     End Sub
 #End Region
 End Class

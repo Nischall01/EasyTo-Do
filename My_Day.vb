@@ -15,7 +15,7 @@ Public Class My_Day
     Private Task As String
     Private Done As Boolean
 
-    Private connectionString As String = "Data Source=D:\_Programs\_Visual_Studio_Workspace\EasyTo-do\To_Do.sdf;Persist Security Info=False;"
+    Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
@@ -28,7 +28,7 @@ Public Class My_Day
         LoadCachedImages()
         DisableTaskProperties(True)
 
-        OnloadCheckedListBoxHeight()
+        ' OnloadCheckedListBoxHeight()
     End Sub
 
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -447,7 +447,8 @@ Public Class My_Day
         If e.KeyValue = Keys.Enter Then
             EnterTaskTo_My_Day_ChecklistBox()
 
-            IncrementCheckedListBoxHeight() ' Increment
+            '   IncrementCheckedListBoxHeight() ' Increment
+
         End If
     End Sub
 
@@ -513,7 +514,7 @@ Public Class My_Day
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         DeleteTaskFromTable_My_Day(CheckedListBox_MyDay.SelectedIndex)
 
-        DecrementCheckedListBoxHeight() ' Decrement
+        ' DecrementCheckedListBoxHeight() ' Decrement
 
         DisableTaskProperties(True)
     End Sub
@@ -538,10 +539,6 @@ Public Class My_Day
                 UpdateTaskDescription(CheckedListBox_MyDay.SelectedIndex, RichTextBox1.Text)
             End If
         End If
-    End Sub
-
-    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
-
     End Sub
 
     Private Sub Panel1_Click(sender As Object, e As EventArgs)
@@ -569,24 +566,43 @@ Public Class My_Day
         CheckedListBox_MyDay.SelectedIndex = -1
     End Sub
 
-    Private Sub IncrementCheckedListBoxHeight()
-        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-        If CheckedListBox_MyDay.Items.Count < 16 Then
-            CheckedListBox_MyDay.Height += ItemHeight
-        End If
+#Region "Under Work"
+    'Private Sub IncrementCheckedListBoxHeight()
+    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+    '    If CheckedListBox_MyDay.Items.Count < 16 Then
+    '        CheckedListBox_MyDay.Height += ItemHeight
+    '    End If
+    'End Sub
+
+    'Private Sub DecrementCheckedListBoxHeight()
+    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+    '    If CheckedListBox_MyDay.Items.Count = 0 Then
+    '        CheckedListBox_MyDay.Height = 0
+    '    End If
+    'End Sub
+
+    'Private Sub OnloadCheckedListBoxHeight()
+    '    Dim NumberOfItems As Integer = CheckedListBox_MyDay.Items.Count
+    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
+    '    CheckedListBox_MyDay.Height = NumberOfItems * ItemHeight
+    'End Sub
+#End Region
+
+
+#Region "Task Properties Buttons"
+    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
+
     End Sub
 
-    Private Sub DecrementCheckedListBoxHeight()
-        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-        If CheckedListBox_MyDay.Items.Count = 0 Then
-            CheckedListBox_MyDay.Height = 0
-        End If
+    Private Sub CustomButton_Repeat_Load(sender As Object, e As EventArgs) Handles CustomButton_Repeat.Load
+
     End Sub
 
-    Private Sub OnloadCheckedListBoxHeight()
-        Dim NumberOfItems As Integer = CheckedListBox_MyDay.Items.Count
-        Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-        CheckedListBox_MyDay.Height = NumberOfItems * ItemHeight
+    Private Sub CustomButton_DueDate_Load(sender As Object, e As EventArgs) Handles CustomButton_DueDate.Load
+
     End Sub
+#End Region
+
+
 #End Region
 End Class

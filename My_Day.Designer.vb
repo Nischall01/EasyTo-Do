@@ -57,6 +57,7 @@ Partial Class My_Day
         '
         'MainTlp
         '
+        Me.MainTlp.BackColor = System.Drawing.Color.White
         Me.MainTlp.ColumnCount = 2
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
@@ -72,7 +73,7 @@ Partial Class My_Day
         '
         'MainTlp_SubTlpTaskView
         '
-        Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.White
+        Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.Transparent
         Me.MainTlp_SubTlpTaskView.ColumnCount = 1
         Me.MainTlp_SubTlpTaskView.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
@@ -94,13 +95,13 @@ Partial Class My_Day
         '
         Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Top
+        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
         Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
         Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(0, 92)
         Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(0)
         Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
-        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(588, 23)
+        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(588, 299)
         Me.CheckedListBox_MyDay.TabIndex = 7
         '
         'SubTlpTaskView_SubTlpBottom
