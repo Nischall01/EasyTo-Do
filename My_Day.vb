@@ -166,7 +166,6 @@ Public Class My_Day
         End If
     End Sub
 
-
     Private Sub HardResetTable_My_Day()
         Dim dropTableQuery As String = "DROP TABLE My_Day"
         Dim createTableQuery As String = "CREATE TABLE My_Day (
@@ -489,7 +488,7 @@ Public Class My_Day
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
+    Private Sub Button_Important_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
         If IsTaskImportant() Then
             ImportantCheckChanged(CheckedListBox_MyDay.SelectedIndex, CheckState.Unchecked)
         Else
@@ -566,43 +565,15 @@ Public Class My_Day
         CheckedListBox_MyDay.SelectedIndex = -1
     End Sub
 
-#Region "Under Work"
-    'Private Sub IncrementCheckedListBoxHeight()
-    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-    '    If CheckedListBox_MyDay.Items.Count < 16 Then
-    '        CheckedListBox_MyDay.Height += ItemHeight
-    '    End If
-    'End Sub
-
-    'Private Sub DecrementCheckedListBoxHeight()
-    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-    '    If CheckedListBox_MyDay.Items.Count = 0 Then
-    '        CheckedListBox_MyDay.Height = 0
-    '    End If
-    'End Sub
-
-    'Private Sub OnloadCheckedListBoxHeight()
-    '    Dim NumberOfItems As Integer = CheckedListBox_MyDay.Items.Count
-    '    Dim ItemHeight As Integer = CheckedListBox_MyDay.ItemHeight
-    '    CheckedListBox_MyDay.Height = NumberOfItems * ItemHeight
-    'End Sub
-#End Region
-
-
-#Region "Task Properties Buttons"
-    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
-
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
+        If e.Button = MouseButtons.Left Then
+            Dim AddReminder_time_Instance As New AddReminder_Time_
+            AddReminder_time_Instance.Show()
+        End If
     End Sub
 
-    Private Sub CustomButton_Repeat_Load(sender As Object, e As EventArgs) Handles CustomButton_Repeat.Load
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
 
     End Sub
-
-    Private Sub CustomButton_DueDate_Load(sender As Object, e As EventArgs) Handles CustomButton_DueDate.Load
-
-    End Sub
-#End Region
-
-
 #End Region
 End Class

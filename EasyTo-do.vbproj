@@ -97,6 +97,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AddReminder_Time_.Designer.vb">
+      <DependentUpon>AddReminder_Time_.vb</DependentUpon>
+    </Compile>
+    <Compile Include="AddReminder_Time_.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CircularPictureBox.Designer.vb">
       <DependentUpon>CircularPictureBox.vb</DependentUpon>
     </Compile>
@@ -177,6 +183,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddReminder_Time_.resx">
+      <DependentUpon>AddReminder_Time_.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomButton.resx">
       <DependentUpon>CustomButton.vb</DependentUpon>
     </EmbeddedResource>

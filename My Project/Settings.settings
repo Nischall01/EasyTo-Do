@@ -3,9 +3,12 @@
   <Profiles />
   <Settings>
     <Setting Name="Username" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Nischal</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="PfpPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="a" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>

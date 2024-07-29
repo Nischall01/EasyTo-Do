@@ -305,25 +305,35 @@ Public Class MainForm
 
     '--------------------------------------------------------------Button Click Events----------------------------------------------------------------'
 #Region "Button Click Events"
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-        ShowForm(MyDayFormInstance)
-        MyDayFormInstance.TextBox_AddNewTask.Focus()
+    Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.Click
+        If e.Button = MouseButtons.Left Then
+            ShowForm(MyDayFormInstance)
+            MyDayFormInstance.TextBox_AddNewTask.Focus()
+        End If
     End Sub
 
-    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
-        ShowForm(DailyFormInstance)
+    Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.Click
+        If e.Button = MouseButtons.Left Then
+            ShowForm(DailyFormInstance)
+        End If
     End Sub
 
-    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
-        ShowForm(ImportantFormInstance)
+    Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.Click
+        If e.Button = MouseButtons.Left Then
+            ShowForm(ImportantFormInstance)
+        End If
     End Sub
 
-    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
-        ShowForm(PlannedFormInstance)
+    Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.Click
+        If e.Button = MouseButtons.Left Then
+            ShowForm(PlannedFormInstance)
+        End If
     End Sub
 
-    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
-        ShowForm(TasksFormInstance)
+    Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.Click
+        If e.Button = MouseButtons.Left Then
+            ShowForm(TasksFormInstance)
+        End If
     End Sub
 #End Region
 
@@ -346,7 +356,23 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub MainForm_Resize(sender As Object, e As EventArgs) Handles MyBase.Resize
+    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
+
+    End Sub
+
+    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
+
+    End Sub
+
+    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
+
+    End Sub
+
+    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
+
+    End Sub
+
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
 
     End Sub
 #End Region
