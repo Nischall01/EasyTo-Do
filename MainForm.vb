@@ -355,25 +355,5 @@ Public Class MainForm
             MessageBox.Show("No active form found in the panel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
-
-    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
-
-    End Sub
-
-    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
-
-    End Sub
-
-    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
-
-    End Sub
-
-    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
-
-    End Sub
-
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-
-    End Sub
 #End Region
 End Class

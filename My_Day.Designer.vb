@@ -30,9 +30,11 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
+        Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
         Me.Label_DayDate = New System.Windows.Forms.Label()
         Me.Label_MyDay = New System.Windows.Forms.Label()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.Textbox_TaskTitle = New System.Windows.Forms.TextBox()
         Me.Label_ADT = New System.Windows.Forms.Label()
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
@@ -40,23 +42,21 @@ Partial Class My_Day
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button_Important = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.PickATimeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
-        Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
         Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
         Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
-        Me.Button_Important = New System.Windows.Forms.Button()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
+        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
         Me.Tlp_ImportantButton.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
-        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MainTlp
@@ -151,6 +151,20 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpTop.Size = New System.Drawing.Size(582, 86)
         Me.SubTlpTaskView_SubTlpTop.TabIndex = 5
         '
+        'PictureBox_PanelIcon
+        '
+        Me.PictureBox_PanelIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
+        Me.PictureBox_PanelIcon.Enabled = False
+        Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
+        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(35, 23)
+        Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
+        Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
+        Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
+        Me.PictureBox_PanelIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.PictureBox_PanelIcon.TabIndex = 1
+        Me.PictureBox_PanelIcon.TabStop = False
+        '
         'Label_DayDate
         '
         Me.Label_DayDate.Anchor = System.Windows.Forms.AnchorStyles.Left
@@ -201,6 +215,24 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.MainTlp_SubTlpTaskProperties.Size = New System.Drawing.Size(196, 461)
         Me.MainTlp_SubTlpTaskProperties.TabIndex = 2
+        '
+        'Button_DeleteTask
+        '
+        Me.Button_DeleteTask.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Button_DeleteTask.BackColor = System.Drawing.Color.Transparent
+        Me.Button_DeleteTask.BackgroundImage = CType(resources.GetObject("Button_DeleteTask.BackgroundImage"), System.Drawing.Image)
+        Me.Button_DeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button_DeleteTask.FlatAppearance.BorderSize = 0
+        Me.Button_DeleteTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
+        Me.Button_DeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button_DeleteTask.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_DeleteTask.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_DeleteTask.Location = New System.Drawing.Point(81, 395)
+        Me.Button_DeleteTask.Name = "Button_DeleteTask"
+        Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
+        Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
+        Me.Button_DeleteTask.TabIndex = 8
+        Me.Button_DeleteTask.UseVisualStyleBackColor = False
         '
         'Textbox_TaskTitle
         '
@@ -296,6 +328,23 @@ Partial Class My_Day
         Me.Tlp_ImportantButton.Size = New System.Drawing.Size(36, 36)
         Me.Tlp_ImportantButton.TabIndex = 11
         '
+        'Button_Important
+        '
+        Me.Button_Important.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Button_Important.BackgroundImage = CType(resources.GetObject("Button_Important.BackgroundImage"), System.Drawing.Image)
+        Me.Button_Important.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Button_Important.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Button_Important.FlatAppearance.BorderSize = 0
+        Me.Button_Important.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button_Important.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button_Important.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Button_Important.Location = New System.Drawing.Point(3, 3)
+        Me.Button_Important.Margin = New System.Windows.Forms.Padding(2)
+        Me.Button_Important.Name = "Button_Important"
+        Me.Button_Important.Size = New System.Drawing.Size(30, 30)
+        Me.Button_Important.TabIndex = 8
+        Me.Button_Important.UseVisualStyleBackColor = False
+        '
         'ContextMenuStrip1
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PickATimeToolStripMenuItem})
@@ -308,43 +357,12 @@ Partial Class My_Day
         Me.PickATimeToolStripMenuItem.Size = New System.Drawing.Size(132, 22)
         Me.PickATimeToolStripMenuItem.Text = "Pick a time"
         '
-        'PictureBox_PanelIcon
-        '
-        Me.PictureBox_PanelIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox_PanelIcon.Enabled = False
-        Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(35, 23)
-        Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
-        Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
-        Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox_PanelIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox_PanelIcon.TabIndex = 1
-        Me.PictureBox_PanelIcon.TabStop = False
-        '
-        'Button_DeleteTask
-        '
-        Me.Button_DeleteTask.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button_DeleteTask.BackColor = System.Drawing.Color.Transparent
-        Me.Button_DeleteTask.BackgroundImage = CType(resources.GetObject("Button_DeleteTask.BackgroundImage"), System.Drawing.Image)
-        Me.Button_DeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button_DeleteTask.FlatAppearance.BorderSize = 0
-        Me.Button_DeleteTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.Button_DeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_DeleteTask.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_DeleteTask.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_DeleteTask.Location = New System.Drawing.Point(81, 395)
-        Me.Button_DeleteTask.Name = "Button_DeleteTask"
-        Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
-        Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
-        Me.Button_DeleteTask.TabIndex = 8
-        Me.Button_DeleteTask.UseVisualStyleBackColor = False
-        '
         'CustomButton_DueDate
         '
         Me.CustomButton_DueDate.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton_DueDate.ButtonText = "Add Due Date"
         Me.CustomButton_DueDate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_DueDate.Enabled = False
         Me.CustomButton_DueDate.Icon = CType(resources.GetObject("CustomButton_DueDate.Icon"), System.Drawing.Image)
         Me.CustomButton_DueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton_DueDate.IconSize = New System.Drawing.Size(17, 17)
@@ -394,23 +412,6 @@ Partial Class My_Day
         Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
-        'Button_Important
-        '
-        Me.Button_Important.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button_Important.BackgroundImage = CType(resources.GetObject("Button_Important.BackgroundImage"), System.Drawing.Image)
-        Me.Button_Important.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button_Important.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Important.FlatAppearance.BorderSize = 0
-        Me.Button_Important.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_Important.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_Important.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_Important.Location = New System.Drawing.Point(3, 3)
-        Me.Button_Important.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button_Important.Name = "Button_Important"
-        Me.Button_Important.Size = New System.Drawing.Size(30, 30)
-        Me.Button_Important.TabIndex = 8
-        Me.Button_Important.UseVisualStyleBackColor = False
-        '
         'My_Day
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -426,12 +427,12 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpBottom.PerformLayout()
         Me.SubTlpTaskView_SubTlpTop.ResumeLayout(False)
         Me.SubTlpTaskView_SubTlpTop.PerformLayout()
+        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ResumeLayout(False)
         Me.Tlp_ImportantButton.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
-        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

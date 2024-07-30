@@ -1,13 +1,21 @@
 ﻿Imports System.Data.SqlServerCe
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 
 Public Class My_Day
+
+    Private AddReminderButtonPlaceholderText As String = "Add Reminder"
+    Private RepeatButtonPlaceholderText As String = "Repeat"
     Private DescriptionPlaceholderText As String = "Add Description..."
+
+    Private UserDefaultTimeFormat As Integer = 24
 
     ' Image cache variables
     Private UncheckedImportantIcon As Image
     Private CheckedImportantIcon As Image
     Private DisabledImportantIcon As Image
+
+    'Private HasReminder As Boolean
 
     Private dt As New DataTable()
     Private CurrentDateTime As DateTime = DateTime.Now
@@ -52,9 +60,12 @@ Public Class My_Day
             Label_ADT.Enabled = False
             Label_TaskEntryDateTime.Enabled = False
             Button_Important.Enabled = False
+
+            CustomButton_AddReminder.Enabled = False
+            CustomButton_AddReminder.ButtonText = AddReminderButtonPlaceholderText
             CustomButton_Repeat.Enabled = False
             CustomButton_DueDate.Enabled = False
-            CustomButton_AddReminder.Enabled = False
+
             Button_DeleteTask.Enabled = False
 
             RichTextBox1.Text = Nothing
@@ -77,8 +88,6 @@ Public Class My_Day
     '---------------------------------------------------------------------------------Data Handling---------------------------------------------------------------------------------------------'
 #Region "Data Handling"
     Private Sub LoadTasksToCheckedListView()
-        CheckedListBox_MyDay.SelectedIndex = -1
-
         Dim query As String = "SELECT * FROM My_Day ORDER BY Task_Index"
 
         CheckedListBox_MyDay.Items.Clear()
@@ -297,7 +306,6 @@ Public Class My_Day
             CheckedListBox_MyDay.SelectedIndex = taskIndex
             CheckedListBox_MyDay.Focus()
         End If
-
     End Sub
 #End Region
 
@@ -414,8 +422,11 @@ Public Class My_Day
 
         For Each row As DataRow In dt.Rows
             If row("Task_Index") = TaskId Then
-                ' Convert the DateTime to a string in your desired format
-                TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+                If UserDefaultTimeFormat = 12 Then
+                    TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+                Else
+                    TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  HH:mm")
+                End If
                 Exit For
             End If
         Next
@@ -433,6 +444,28 @@ Public Class My_Day
             End If
         Next
         Return TaskDescription
+    End Function
+
+    Public Function GetReminder() As String
+        Dim TaskId As Integer = CheckedListBox_MyDay.SelectedIndex
+        Dim TaskReminder As String = String.Empty
+
+        For Each row As DataRow In dt.Rows
+            If row("Task_Index") = TaskId Then
+                If IsDBNull(row("Reminder_DateTime")) Then
+                    Return String.Empty
+                Else
+                    Dim reminderDateTime As DateTime = Convert.ToDateTime(row("Reminder_DateTime"))
+                    If UserDefaultTimeFormat = 12 Then
+                        TaskReminder = reminderDateTime.ToString("yyyy-MM-dd  |  hh:mm tt")
+                    Else
+                        TaskReminder = reminderDateTime.ToString("yyyy-MM-dd  |  HH:mm")
+                    End If
+                End If
+                Exit For
+            End If
+        Next
+        Return TaskReminder
     End Function
 #End Region
 
@@ -485,6 +518,13 @@ Public Class My_Day
             Else
                 Button_Important.BackgroundImage = UncheckedImportantIcon
             End If
+
+            If GetReminder() <> String.Empty Then
+                CustomButton_AddReminder.ButtonText = GetReminder()
+            Else
+                CustomButton_AddReminder.ButtonText = AddReminderButtonPlaceholderText
+            End If
+
         End If
     End Sub
 
@@ -568,11 +608,20 @@ Public Class My_Day
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
             Dim AddReminder_time_Instance As New AddReminder_Time_
-            AddReminder_time_Instance.Show()
+
+            AddReminder_time_Instance.Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
+            AddReminder_time_Instance.ShowDialog()
+            AddReminder_time_Instance.BringToFront()
+            LoadTasksToCheckedListView()
+            If CheckedListBox_MyDay.Items.Count > 0 Then
+                CheckedListBox_MyDay.SelectedIndex = AddReminder_time_Instance.Reminder_SelectedTaskIndex
+                CheckedListBox_MyDay.Focus()
+            End If
+            AddReminder_time_Instance.Dispose()
         End If
     End Sub
 
-    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
+    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
 
     End Sub
 #End Region
