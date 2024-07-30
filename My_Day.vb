@@ -191,6 +191,7 @@ Public Class My_Day
                 Entry_DateTime DATETIME NULL,
                 Done BIT NULL DEFAULT 0,
                 Important BIT NULL DEFAULT 0,
+                Reminder_DateTime DATETIME NULL,
                 CONSTRAINT My_Day_PK PRIMARY KEY (Id));"
 
         Using connection As New SqlCeConnection(connectionString)

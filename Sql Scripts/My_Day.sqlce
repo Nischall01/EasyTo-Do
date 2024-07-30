@@ -1,2 +1,2 @@
-﻿CREATE TABLE My_Day (Id int IDENTITY(1,1) NOT NULL,Task_Index int NOT NULL,Task nvarchar (255) NULL,Task_Description nvarchar (4000) NULL,Entry_DateTime datetime NULL,Done bit NULL DEFAULT 0,Important bit NULL DEFAULT 0);
+﻿CREATE TABLE My_Day (Id int IDENTITY(1,1) NOT NULL,Task_Index int NOT NULL,Task nvarchar (255) NULL,Task_Description nvarchar (4000) NULL,Entry_DateTime datetime NULL,Done bit NULL DEFAULT 0,Important bit NULL DEFAULT 0,Reminder_DateTime datetime NULL);
 ALTER TABLE [My_Day] ADD CONSTRAINT  [My_Day_PK] PRIMARY KEY ([Id]);
