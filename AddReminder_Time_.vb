@@ -10,7 +10,7 @@
 
     Private SelectedHour As String = String.Empty
 
-    Private UserDefaultTimeFormat As Integer = 24
+    Private UserDefaultTimeFormat As Integer = 12
 
     Private CurrentDateTime As DateTime = DateTime.Now
     Private IsAM As Boolean
@@ -30,7 +30,6 @@
         GetAlreadySetReminder()
 
         ReminderInitialization()
-
     End Sub
 
     Private Sub ReminderInitialization()
@@ -44,9 +43,9 @@
                 If hour12Format = 0 Then hour12Format = 12
 
                 ComboBox1.SelectedItem = hour12Format.ToString("00")
-                ComboBox2.SelectedItem = AlreadySetReminder.Minute.ToString("00")
+                ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
 
-                If hour12Format < 12 Then
+                If AlreadySetReminder.Hour < 12 Then
                     Button1.Text = "AM"
                     IsAM = True
                 Else
@@ -56,7 +55,7 @@
             Else
                 RadioButton2.PerformClick()
                 ComboBox1.SelectedItem = AlreadySetReminder.Hour.ToString("00")
-                ComboBox2.SelectedItem = AlreadySetReminder.Minute.ToString("00")
+                ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
             End If
         Else
             If UserDefaultTimeFormat = 12 Then
@@ -156,6 +155,7 @@
     End Sub
 
     Private Sub ShowMinutes()
+        ComboBox2.Items.Clear()
         For i As Integer = 0 To 55 Step 5
             ComboBox2.Items.Add(i.ToString("00"))
         Next

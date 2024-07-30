@@ -44,10 +44,12 @@ Partial Class My_Day
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_Important = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.PickATimeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
         Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
         Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
         Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
+        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
@@ -347,22 +349,25 @@ Partial Class My_Day
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.PickATimeToolStripMenuItem})
+        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.White
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(133, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(118, 26)
         '
-        'PickATimeToolStripMenuItem
+        'ToolStripMenuItem1
         '
-        Me.PickATimeToolStripMenuItem.Name = "PickATimeToolStripMenuItem"
-        Me.PickATimeToolStripMenuItem.Size = New System.Drawing.Size(132, 22)
-        Me.PickATimeToolStripMenuItem.Text = "Pick a time"
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(117, 22)
+        Me.ToolStripMenuItem1.Text = "Remove"
+        '
+        'ReminderTimer
+        '
         '
         'CustomButton_DueDate
         '
         Me.CustomButton_DueDate.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton_DueDate.ButtonText = "Add Due Date"
         Me.CustomButton_DueDate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_DueDate.Enabled = False
         Me.CustomButton_DueDate.Icon = CType(resources.GetObject("CustomButton_DueDate.Icon"), System.Drawing.Image)
         Me.CustomButton_DueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton_DueDate.IconSize = New System.Drawing.Size(17, 17)
@@ -412,6 +417,11 @@ Partial Class My_Day
         Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'NotifyIcon1
+        '
+        Me.NotifyIcon1.Text = "NotifyIcon1"
+        Me.NotifyIcon1.Visible = True
+        '
         'My_Day
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -460,5 +470,7 @@ Partial Class My_Day
     Friend WithEvents RichTextBox1 As RichTextBox
     Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
-    Friend WithEvents PickATimeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ReminderTimer As Timer
+    Friend WithEvents NotifyIcon1 As NotifyIcon
 End Class

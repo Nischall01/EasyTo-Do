@@ -8,7 +8,7 @@ Public Class My_Day
     Private RepeatButtonPlaceholderText As String = "Repeat"
     Private DescriptionPlaceholderText As String = "Add Description..."
 
-    Private UserDefaultTimeFormat As Integer = 24
+    Private UserDefaultTimeFormat As Integer = 12
 
     ' Image cache variables
     Private UncheckedImportantIcon As Image
@@ -41,6 +41,12 @@ Public Class My_Day
 
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeMy_day()
+
+        ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
+        ReminderTimer.Start() ' Start the Timer
+
+        NotifyIcon1.Icon = SystemIcons.Information ' Set your icon here
+        NotifyIcon1.Visible = True
     End Sub
 
     Private Sub LoadCachedImages()
@@ -457,9 +463,9 @@ Public Class My_Day
                 Else
                     Dim reminderDateTime As DateTime = Convert.ToDateTime(row("Reminder_DateTime"))
                     If UserDefaultTimeFormat = 12 Then
-                        TaskReminder = reminderDateTime.ToString("yyyy-MM-dd  |  hh:mm tt")
+                        TaskReminder = reminderDateTime.ToString("hh:mm tt")
                     Else
-                        TaskReminder = reminderDateTime.ToString("yyyy-MM-dd  |  HH:mm")
+                        TaskReminder = reminderDateTime.ToString("HH:mm")
                     End If
                 End If
                 Exit For
@@ -618,11 +624,96 @@ Public Class My_Day
                 CheckedListBox_MyDay.Focus()
             End If
             AddReminder_time_Instance.Dispose()
+        ElseIf e.Button = MouseButtons.Right Then
+            ShowContextMenuCentered(ContextMenuStrip1, CustomButton_AddReminder)
         End If
     End Sub
 
-    Private Sub CustomButton_AddReminder_Load(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Load
+    Private Sub ShowContextMenuCentered(contextMenu As ContextMenuStrip, control As Control)
+        ' Calculate the center position of the control on the screen
+        Dim buttonCenterScreenPosition As Point = control.PointToScreen(New Point(control.Width / 2, control.Height / 2))
 
+        ' Calculate the location to show the ContextMenuStrip centered over the control
+        Dim contextMenuPosition As New Point(buttonCenterScreenPosition.X - (contextMenu.Width / 2), buttonCenterScreenPosition.Y - (contextMenu.Height / 2))
+
+        ' Show the ContextMenuStrip at the calculated position
+        contextMenu.Show(contextMenuPosition)
+    End Sub
+
+    Private Sub RemoveReminder()
+        Dim query As String = "UPDATE My_Day SET Reminder_DateTime = NULL WHERE Task_Index = @TaskIndex"
+
+        Using connection As New SqlCeConnection(connectionString)
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@TaskIndex", CheckedListBox_MyDay.SelectedIndex)
+
+                Try
+                    connection.Open()
+                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
+                    If rowsAffected > 0 Then
+                        'MessageBox.Show("Reminder removed successfully.")
+                    Else
+                        MessageBox.Show("No task found with the specified index.")
+                    End If
+                Catch ex As SqlCeException
+                    MessageBox.Show("SQL CE Error: " & ex.Message)
+                Catch ex As Exception
+                    MessageBox.Show("Unexpected Error: " & ex.Message)
+                End Try
+            End Using
+        End Using
+        LoadTasksToCheckedListView()
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Dim ToDeleteReminderTaskIndex As Integer = CheckedListBox_MyDay.SelectedIndex
+        RemoveReminder()
+        If CheckedListBox_MyDay.Items.Count > 0 Then
+            CheckedListBox_MyDay.SelectedIndex = ToDeleteReminderTaskIndex
+            CheckedListBox_MyDay.Focus()
+        End If
+    End Sub
+
+    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
+        CheckReminders()
+    End Sub
+    Private Sub CheckReminders()
+        Dim currentTime As DateTime = DateTime.Now
+
+        For Each row As DataRow In dt.Rows
+            ' Check if the Reminder_DateTime column is not null
+            If row("Reminder_DateTime") IsNot DBNull.Value Then
+                ' Directly cast to DateTime
+                Dim reminderTime As DateTime = row("Reminder_DateTime")
+
+                ' Convert both current time and reminder time to string in the same format
+                Dim currentTimeString As String = currentTime.ToString("yyyy-MM-dd HH:mm:ss")
+                Dim reminderTimeString As String = reminderTime.ToString("yyyy-MM-dd HH:mm:ss")
+
+                ' Compare the formatted date and time strings
+                If reminderTimeString = currentTimeString Then
+                    ' Display reminder
+                    If row("Task_Description") IsNot DBNull.Value Then
+                        ShowNotification(row("Task"), row("Task_Description"))
+                    Else
+                        ShowNotification(row("Task"), "~")
+                    End If
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub ShowNotification(title As String, message As String)
+        NotifyIcon1.BalloonTipTitle = title
+        NotifyIcon1.BalloonTipText = message
+        NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
+        NotifyIcon1.ShowBalloonTip(3000) ' 3000 milliseconds = 3 seconds
+    End Sub
+
+    ' Dispose of the NotifyIcon when the form is closed
+    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+        NotifyIcon1.Dispose()
+        MyBase.OnFormClosing(e)
     End Sub
 #End Region
 End Class
