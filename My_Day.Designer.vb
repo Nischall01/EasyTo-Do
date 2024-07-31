@@ -32,7 +32,7 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
         Me.Label_DayDate = New System.Windows.Forms.Label()
-        Me.Label_MyDay = New System.Windows.Forms.Label()
+        Me.MyDay_Label = New System.Windows.Forms.Label()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.Textbox_TaskTitle = New System.Windows.Forms.TextBox()
@@ -127,10 +127,10 @@ Partial Class My_Day
         '
         'TextBox_AddNewTask
         '
-        Me.TextBox_AddNewTask.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(148, 22)
+        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(148, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(285, 20)
         Me.TextBox_AddNewTask.TabIndex = 3
@@ -144,7 +144,7 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.0!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Label_DayDate, 2, 0)
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Label_MyDay, 1, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.MyDay_Label, 1, 0)
         Me.SubTlpTaskView_SubTlpTop.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(3, 3)
         Me.SubTlpTaskView_SubTlpTop.Name = "SubTlpTaskView_SubTlpTop"
@@ -178,16 +178,16 @@ Partial Class My_Day
         Me.Label_DayDate.TabIndex = 4
         Me.Label_DayDate.Text = "DateTime"
         '
-        'Label_MyDay
+        'MyDay_Label
         '
-        Me.Label_MyDay.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label_MyDay.AutoSize = True
-        Me.Label_MyDay.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label_MyDay.Location = New System.Drawing.Point(78, 24)
-        Me.Label_MyDay.Name = "Label_MyDay"
-        Me.Label_MyDay.Size = New System.Drawing.Size(110, 37)
-        Me.Label_MyDay.TabIndex = 4
-        Me.Label_MyDay.Text = "My Day"
+        Me.MyDay_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.MyDay_Label.AutoSize = True
+        Me.MyDay_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MyDay_Label.Location = New System.Drawing.Point(78, 24)
+        Me.MyDay_Label.Name = "MyDay_Label"
+        Me.MyDay_Label.Size = New System.Drawing.Size(110, 37)
+        Me.MyDay_Label.TabIndex = 4
+        Me.MyDay_Label.Text = "My Day"
         '
         'MainTlp_SubTlpTaskProperties
         '
@@ -458,7 +458,7 @@ Partial Class My_Day
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
     Friend WithEvents PictureBox_PanelIcon As PictureBox
     Friend WithEvents Label_DayDate As Label
-    Friend WithEvents Label_MyDay As Label
+    Friend WithEvents MyDay_Label As Label
     Friend WithEvents Label_TaskEntryDateTime As Label
     Friend WithEvents Button_Important As Button
     Friend WithEvents CustomButton_AddReminder As CustomButton_2

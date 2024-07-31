@@ -24,7 +24,7 @@ Partial Class Tasks
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Tasks))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label_Tasks = New System.Windows.Forms.Label()
+        Me.Tasks_Label = New System.Windows.Forms.Label()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
@@ -44,7 +44,7 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.ColumnCount = 2
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
-        Me.SubTableLayoutPanel_Top.Controls.Add(Me.Label_Tasks, 1, 0)
+        Me.SubTableLayoutPanel_Top.Controls.Add(Me.Tasks_Label, 1, 0)
         Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
         Me.SubTableLayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
@@ -55,16 +55,16 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTableLayoutPanel_Top.TabIndex = 0
         '
-        'Label_Tasks
+        'Tasks_Label
         '
-        Me.Label_Tasks.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label_Tasks.AutoSize = True
-        Me.Label_Tasks.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label_Tasks.Location = New System.Drawing.Point(104, 24)
-        Me.Label_Tasks.Name = "Label_Tasks"
-        Me.Label_Tasks.Size = New System.Drawing.Size(81, 37)
-        Me.Label_Tasks.TabIndex = 5
-        Me.Label_Tasks.Text = "Tasks"
+        Me.Tasks_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Tasks_Label.AutoSize = True
+        Me.Tasks_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tasks_Label.Location = New System.Drawing.Point(104, 24)
+        Me.Tasks_Label.Name = "Tasks_Label"
+        Me.Tasks_Label.Size = New System.Drawing.Size(81, 37)
+        Me.Tasks_Label.TabIndex = 5
+        Me.Tasks_Label.Text = "Tasks"
         '
         'PictureBox_FormIcon
         '
@@ -117,10 +117,10 @@ Partial Class Tasks
         '
         'TextBox_AddNewTask
         '
-        Me.TextBox_AddNewTask.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 22)
+        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
@@ -181,5 +181,5 @@ Partial Class Tasks
     Friend WithEvents Button1 As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Button2 As Button
-    Friend WithEvents Label_Tasks As Label
+    Friend WithEvents Tasks_Label As Label
 End Class

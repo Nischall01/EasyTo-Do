@@ -24,13 +24,12 @@ Partial Class Planned
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Planned))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
+        Me.Planned_Label = New System.Windows.Forms.Label()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTlp.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
@@ -41,7 +40,7 @@ Partial Class Planned
         Me.SubTableLayoutPanel_Top.ColumnCount = 2
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
         Me.SubTableLayoutPanel_Top.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.0!))
-        Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox1, 1, 0)
+        Me.SubTableLayoutPanel_Top.Controls.Add(Me.Planned_Label, 1, 0)
         Me.SubTableLayoutPanel_Top.Controls.Add(Me.PictureBox_FormIcon, 0, 0)
         Me.SubTableLayoutPanel_Top.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Top.Location = New System.Drawing.Point(3, 3)
@@ -50,15 +49,6 @@ Partial Class Planned
         Me.SubTableLayoutPanel_Top.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.SubTableLayoutPanel_Top.Size = New System.Drawing.Size(778, 86)
         Me.SubTableLayoutPanel_Top.TabIndex = 0
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.PictureBox1.Location = New System.Drawing.Point(104, 25)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(104, 36)
-        Me.PictureBox1.TabIndex = 3
-        Me.PictureBox1.TabStop = False
         '
         'PictureBox_FormIcon
         '
@@ -108,13 +98,24 @@ Partial Class Planned
         '
         'TextBox_AddNewTask
         '
-        Me.TextBox_AddNewTask.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 22)
+        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 2
+        '
+        'Planned_Label
+        '
+        Me.Planned_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.Planned_Label.AutoSize = True
+        Me.Planned_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Planned_Label.Location = New System.Drawing.Point(104, 24)
+        Me.Planned_Label.Name = "Planned_Label"
+        Me.Planned_Label.Size = New System.Drawing.Size(116, 37)
+        Me.Planned_Label.TabIndex = 6
+        Me.Planned_Label.Text = "Planned"
         '
         'Planned
         '
@@ -125,7 +126,7 @@ Partial Class Planned
         Me.Name = "Planned"
         Me.Text = "Planned"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SubTableLayoutPanel_Top.PerformLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
@@ -139,5 +140,5 @@ Partial Class Planned
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents TextBox_AddNewTask As TextBox
-    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Planned_Label As Label
 End Class

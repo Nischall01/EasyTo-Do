@@ -201,9 +201,12 @@ Public Class MainForm
         End If
 
         If GetUsername() = Nothing Then
+            Username_MenuStripItem_Empty.Checked = True
+            Username_MenuStripItem_Empty.Enabled = False
             Label1.Text = "          "
             Label1.BorderStyle = BorderStyle.FixedSingle
         Else
+            Username_MenuStripItem_Empty.Enabled = True
             Label1.Text = GetUsername()
             Label1.BorderStyle = BorderStyle.None
         End If
@@ -268,11 +271,15 @@ Public Class MainForm
     '----Username Events----'
 #Region "Username Events"
     Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Label1.MouseEnter
-        Label1.BorderStyle = BorderStyle.FixedSingle
+        If GetUsername() <> Nothing Then
+            Label1.BorderStyle = BorderStyle.FixedSingle
+        End If
     End Sub
 
     Private Sub Label1_MouseLeave(sender As Object, e As EventArgs) Handles Label1.MouseLeave
-        Label1.BorderStyle = BorderStyle.None
+        If GetUsername() <> Nothing Then
+            Label1.BorderStyle = BorderStyle.None
+        End If
     End Sub
 
     Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Label1.MouseClick
@@ -283,18 +290,22 @@ Public Class MainForm
     '----Profile Picture Events----'
 #Region "Profile Picture Events"
     Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
-        Dim now As DateTime = DateTime.Now
-        If now - PfpLastEventTime > debounceDelay Then
-            PfpLastEventTime = now
-            Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
+        If GetPfpPath() <> Nothing Then
+            Dim now As DateTime = DateTime.Now
+            If now - PfpLastEventTime > debounceDelay Then
+                PfpLastEventTime = now
+                Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
+            End If
         End If
     End Sub
 
     Private Sub Pfp_CircularPictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseLeave
-        Dim now As DateTime = DateTime.Now
-        If now - PfpLastEventTime > debounceDelay Then
-            PfpLastEventTime = now
-            Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
+        If GetPfpPath() <> Nothing Then
+            Dim now As DateTime = DateTime.Now
+            If now - PfpLastEventTime > debounceDelay Then
+                PfpLastEventTime = now
+                Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
+            End If
         End If
     End Sub
 

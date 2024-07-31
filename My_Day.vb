@@ -736,7 +736,7 @@ Public Class My_Day
 
     End Sub
 
-    Private Sub Label_MyDay_Click(sender As Object, e As EventArgs) Handles Label_MyDay.Click
+    Private Sub Label_MyDay_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
         LoseListItemFocus()
     End Sub
 
