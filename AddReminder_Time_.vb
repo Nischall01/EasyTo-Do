@@ -16,66 +16,78 @@
     Private IsAM As Boolean
     Private IsSelectedTimeFormat12 As Boolean
 
-    Private TimeSet As DateTime
-
     Private dt As New DataTable()
 
     Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
 #Region "Form Load"
     Private Sub AddReminder_Time__Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
-
-        LoadTable()
-
-        GetAlreadySetReminder()
-
-        ReminderInitialization()
+        LoadTable() ' Loads a Data Table to extract the state of reminders
+        GetAlreadySetReminder() ' Initialize AlreadySetReminder. (A DateTime var)
+        ReminderInitialization() ' The Reminder Interface Initialization
     End Sub
 
     Private Sub ReminderInitialization()
+        ShowMinutes() ' Initialize multiples of five minute items in the combo box
+        If AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = 12 Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is set to 12hr
+            RadioButton1.PerformClick()
+            Dim hour12Format As Integer = AlreadySetReminder.Hour Mod 12
+            If hour12Format = 0 Then hour12Format = 12
 
-        ShowMinutes()
+            ComboBox1.SelectedItem = hour12Format.ToString("00")
+            ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
 
-        If AlreadySetReminder <> Nothing Then
-            If UserDefaultTimeFormat = 12 Then
-                RadioButton1.PerformClick()
-                Dim hour12Format As Integer = AlreadySetReminder.Hour Mod 12
-                If hour12Format = 0 Then hour12Format = 12
-
-                ComboBox1.SelectedItem = hour12Format.ToString("00")
-                ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
-
-                If AlreadySetReminder.Hour < 12 Then
-                    Button1.Text = "AM"
-                    IsAM = True
-                Else
-                    Button1.Text = "PM"
-                    IsAM = False
-                End If
+            If AlreadySetReminder.Hour < 12 Then
+                ToggleButton_AM_PM.Text = "AM"
+                IsAM = True
             Else
-                RadioButton2.PerformClick()
-                ComboBox1.SelectedItem = AlreadySetReminder.Hour.ToString("00")
-                ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
-            End If
-        Else
-            If UserDefaultTimeFormat = 12 Then
-                RadioButton1.PerformClick()
-                ComboBox1.SelectedItem = CurrentDateTime.ToString("hh")
-
-                If CurrentDateTime.Hour < 12 Then
-                    Button1.Text = "AM"
-                    IsAM = True
-                Else
-                    Button1.Text = "PM"
-                    IsAM = False
-                End If
-            Else
-                RadioButton2.PerformClick()
-                ComboBox1.SelectedItem = CurrentDateTime.ToString("HH")
+                ToggleButton_AM_PM.Text = "PM"
+                IsAM = False
             End If
 
-            Dim nearestFive As Integer = CInt(Math.Round(CurrentDateTime.Minute / 5.0) * 5)
-            If nearestFive = 60 Then nearestFive = 55 ' Handle edge case where rounding up results in 60
+        ElseIf AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = 24 Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is det to 24hr
+            RadioButton2.PerformClick()
+            ComboBox1.SelectedItem = AlreadySetReminder.Hour.ToString("00")
+            ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
+
+        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = 12 Then ' If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 12hr.
+            RadioButton1.PerformClick()
+            ComboBox1.SelectedItem = CurrentDateTime.ToString("hh")
+
+            If CurrentDateTime.Hour < 12 Then
+                ToggleButton_AM_PM.Text = "AM"
+                IsAM = True
+            Else
+                ToggleButton_AM_PM.Text = "PM"
+                IsAM = False
+            End If
+
+            Dim nearestFive As Integer = FindTheNearestUpperMultipleOf5FromCurrentMinute()
+            ' Ensure it doesn't exceed 55
+            If nearestFive >= 60 Then
+                If ComboBox1.SelectedIndex < 12 Then
+                    ComboBox1.SelectedIndex += 1
+                Else
+                    ComboBox1.SelectedIndex = 0
+                End If
+                nearestFive = 0
+            End If
+            ComboBox2.SelectedItem = nearestFive.ToString("00")
+
+        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = 24 Then 'If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 24hr.
+            RadioButton2.PerformClick()
+            ComboBox1.SelectedItem = CurrentDateTime.ToString("HH")
+
+            Dim nearestFive As Integer = FindTheNearestUpperMultipleOf5FromCurrentMinute()
+            ' Ensure it doesn't exceed 55
+            If nearestFive >= 60 Then
+                If ComboBox1.SelectedIndex < 24 Then
+                    ComboBox1.SelectedIndex += 1
+                Else
+                    ComboBox1.SelectedIndex = 0
+                End If
+                nearestFive = 0
+            End If
             ComboBox2.SelectedItem = nearestFive.ToString("00")
         End If
     End Sub
@@ -127,7 +139,7 @@
 
 
 #Region "Reminder Settings Methods"
-    Private Sub GetAlreadySetReminder()
+    Private Sub GetAlreadySetReminder() ' Sub to get if the reminder for the task is already set or not
         For Each row As DataRow In dt.Rows
             If row("Task_Index") = Reminder_SelectedTaskIndex Then
                 If IsDBNull(row("Reminder_DateTime")) Then
@@ -163,54 +175,54 @@
 
     Private Sub XIIFormat()
         If SelectedHour = "01" Or "02" Or "03" Or "04" Or "05" Or "06" Or "07" Or "08" Or "09" Or "10" Or "11" Then
-            If Not IsAM Then Button1_Click(Button1, EventArgs.Empty)
+            If Not IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
         End If
 
         Select Case SelectedHour
             Case "00"
                 ComboBox1.SelectedItem = "12"
-                If Not IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If Not IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "12"
                 ComboBox1.SelectedItem = "12"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "13"
                 ComboBox1.SelectedItem = "01"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "14"
                 ComboBox1.SelectedItem = "02"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "15"
                 ComboBox1.SelectedItem = "03"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "16"
                 ComboBox1.SelectedItem = "04"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "17"
                 ComboBox1.SelectedItem = "05"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "18"
                 ComboBox1.SelectedItem = "06"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "19"
                 ComboBox1.SelectedItem = "07"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "20"
                 ComboBox1.SelectedItem = "08"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "21"
                 ComboBox1.SelectedItem = "09"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "22"
                 ComboBox1.SelectedItem = "10"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
             Case "23"
                 ComboBox1.SelectedItem = "11"
-                If IsAM Then Button1_Click(Button1, EventArgs.Empty)
+                If IsAM Then ToggleButton_AM_PM_Click(ToggleButton_AM_PM, EventArgs.Empty)
         End Select
 
         ComboBox1.Anchor = AnchorStyles.Right
         ComboBox2.Anchor = AnchorStyles.Right
-        Button1.Show()
+        ToggleButton_AM_PM.Show()
     End Sub
 
     Private Sub XXIVFormat()
@@ -249,10 +261,10 @@
 
         ComboBox1.Anchor = AnchorStyles.Right
         ComboBox2.Anchor = AnchorStyles.Left
-        Button1.Hide()
+        ToggleButton_AM_PM.Hide()
     End Sub
 
-    Private Sub AddReminder()
+    Private Sub AddReminder(TimeSet As DateTime) ' The method to add the reminder to the database
         Dim query As String = "UPDATE My_Day SET Reminder_DateTime = @Reminder_DateTime WHERE Task_Index = @TaskIndex"
 
         Using connection As New SqlCeConnection(connectionString)
@@ -277,22 +289,27 @@
         End Using
     End Sub
 
-    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean
+    Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean ' Overriding the Enter Key to act as the set reminder button when reminder is open
         If keyData = Keys.Enter Then
-            HandleEnterKey()
+            Button2_Click(Nothing, Nothing) ' Emulating the 'Set' button click
             Return True
         End If
-
         Return MyBase.ProcessCmdKey(msg, keyData)
     End Function
 
-    Private Sub HandleEnterKey()
-        Button2_Click(Nothing, Nothing)
-    End Sub
+    Private Function FindTheNearestUpperMultipleOf5FromCurrentMinute()
+        Dim NearestUpperMultipleOf5FromCurrentMinute As Integer
+        If CurrentDateTime.Minute Mod 5 = 0 Then
+            NearestUpperMultipleOf5FromCurrentMinute = CurrentDateTime.Minute + 5
+        Else
+            NearestUpperMultipleOf5FromCurrentMinute = Math.Ceiling(CurrentDateTime.Minute / 5.0) * 5
+        End If
+        Return NearestUpperMultipleOf5FromCurrentMinute
+    End Function
 #End Region
 
 #Region "Reimder Settings Button Events"
-    Private Sub Button_CloseAddReminder_Click(sender As Object, e As EventArgs) Handles Button_CloseAddReminder.Click
+    Private Sub Button_CloseAddReminder_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
         Me.Close()
     End Sub
 
@@ -326,17 +343,17 @@
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub ToggleButton_AM_PM_Click(sender As Object, e As EventArgs) Handles ToggleButton_AM_PM.Click
         If IsAM Then
-            Button1.Text = "PM"
+            ToggleButton_AM_PM.Text = "PM"
             IsAM = False
         Else
-            Button1.Text = "AM"
+            ToggleButton_AM_PM.Text = "AM"
             IsAM = True
         End If
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click ' The 'Set' reminder button Click
         Dim SetHour As Integer
         Dim SetMinute As Integer
         SetHour = Integer.Parse(ComboBox1.Text)
@@ -350,9 +367,9 @@
             End If
         End If
 
-        TimeSet = New DateTime(CurrentDateTime.Year, CurrentDateTime.Month, CurrentDateTime.Day, SetHour, SetMinute, 0)
+        Dim TimeSet As New DateTime(CurrentDateTime.Year, CurrentDateTime.Month, CurrentDateTime.Day, SetHour, SetMinute, 0)
 
-        AddReminder()
+        AddReminder(TimeSet)
 
         Me.Close()
     End Sub

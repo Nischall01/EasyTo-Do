@@ -45,7 +45,8 @@ Public Class My_Day
         ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
         ReminderTimer.Start() ' Start the Timer
 
-        NotifyIcon1.Icon = SystemIcons.Information ' Set your icon here
+        NotifyIcon1.Text = "EasyTo_do"
+        NotifyIcon1.Icon = New Icon("C:\Users\Nischal\Downloads\compressed\to-do-list (3).ico")
         NotifyIcon1.Visible = True
     End Sub
 
@@ -614,9 +615,9 @@ Public Class My_Day
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
-            Dim AddReminder_time_Instance As New AddReminder_Time_
-
-            AddReminder_time_Instance.Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
+            Dim AddReminder_time_Instance As New AddReminder_Time_ With {
+                .Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
+            }
             AddReminder_time_Instance.ShowDialog()
             AddReminder_time_Instance.BringToFront()
             LoadTasksToCheckedListView()
@@ -694,27 +695,53 @@ Public Class My_Day
                 ' Compare the formatted date and time strings
                 If reminderTimeString = currentTimeString Then
                     ' Display reminder
-                    If row("Task_Description") IsNot DBNull.Value Then
-                        ShowNotification(row("Task"), row("Task_Description"))
-                    Else
-                        ShowNotification(row("Task"), "~")
+                    If row("Task_Description") IsNot DBNull.Value And row("Important") = True Then
+                        ShowNotification(row("Task"), True, row("Task_Description"))
+                    ElseIf row("Task_Description") IsNot DBNull.Value And row("Important") = False Then
+                        ShowNotification(row("Task"), False, row("Task_Description"))
+                    ElseIf row("Task_Description") Is DBNull.Value And row("Important") = True Then
+                        ShowNotification(row("Task"), True)
+                    ElseIf row("Task_Description") Is DBNull.Value And row("Important") = False Then
+                        ShowNotification(row("Task"), False)
                     End If
                 End If
             End If
         Next
     End Sub
 
-    Private Sub ShowNotification(title As String, message As String)
+    Private Sub ShowNotification(title As String, IsImportant As Boolean, Optional message As String = " ")
         NotifyIcon1.BalloonTipTitle = title
-        NotifyIcon1.BalloonTipText = message
-        NotifyIcon1.BalloonTipIcon = ToolTipIcon.Info
+        If IsImportant Then
+            NotifyIcon1.BalloonTipIcon = ToolTipIcon.Warning
+            NotifyIcon1.BalloonTipText = message
+        Else
+            NotifyIcon1.BalloonTipIcon = ToolTipIcon.None
+            NotifyIcon1.BalloonTipText = message
+        End If
         NotifyIcon1.ShowBalloonTip(3000) ' 3000 milliseconds = 3 seconds
     End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
+        ' Show the context menu at the mouse cursor position when the balloon tip is clicked
+    End Sub
+
 
     ' Dispose of the NotifyIcon when the form is closed
     Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
         NotifyIcon1.Dispose()
         MyBase.OnFormClosing(e)
+    End Sub
+
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
+
+    End Sub
+
+    Private Sub Label_MyDay_Click(sender As Object, e As EventArgs) Handles Label_MyDay.Click
+        LoseListItemFocus()
+    End Sub
+
+    Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles Label_DayDate.Click
+        LoseListItemFocus()
     End Sub
 #End Region
 End Class

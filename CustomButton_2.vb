@@ -122,7 +122,7 @@
     End Sub
 
     Private Sub CustomButton_MouseUp(sender As Object, e As EventArgs)
-        Me.BackColor = Color.FromArgb(50, 50, 50)
+        Me.BackColor = Color.Transparent
     End Sub
 
     ' Click event to handle button click

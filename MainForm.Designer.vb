@@ -331,6 +331,7 @@ Partial Class MainForm
         Me.ClientSize = New System.Drawing.Size(784, 511)
         Me.Controls.Add(Me.SplitContainer1)
         Me.DoubleBuffered = True
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MinimumSize = New System.Drawing.Size(800, 550)
         Me.Name = "MainForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
