@@ -35,19 +35,19 @@ Partial Class AddReminder_Time_
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.CloseReminder_Button = New System.Windows.Forms.Button()
-        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
         Me.ReminderProperty_Icon = New System.Windows.Forms.PictureBox()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.TableLayoutPanel7.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.ReminderProperty_Icon, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel7.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -232,6 +232,33 @@ Partial Class AddReminder_Time_
         Me.CloseReminder_Button.Text = "X"
         Me.CloseReminder_Button.UseVisualStyleBackColor = False
         '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.TableLayoutPanel6.ColumnCount = 1
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.ReminderProperty_Icon, 0, 0)
+        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 32)
+        Me.TableLayoutPanel6.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 43)
+        Me.TableLayoutPanel6.TabIndex = 4
+        '
+        'ReminderProperty_Icon
+        '
+        Me.ReminderProperty_Icon.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.ReminderProperty_Icon.BackgroundImage = CType(resources.GetObject("ReminderProperty_Icon.BackgroundImage"), System.Drawing.Image)
+        Me.ReminderProperty_Icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.ReminderProperty_Icon.Location = New System.Drawing.Point(87, 7)
+        Me.ReminderProperty_Icon.Margin = New System.Windows.Forms.Padding(0)
+        Me.ReminderProperty_Icon.Name = "ReminderProperty_Icon"
+        Me.ReminderProperty_Icon.Size = New System.Drawing.Size(30, 28)
+        Me.ReminderProperty_Icon.TabIndex = 2
+        Me.ReminderProperty_Icon.TabStop = False
+        '
         'TableLayoutPanel7
         '
         Me.TableLayoutPanel7.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
@@ -262,33 +289,6 @@ Partial Class AddReminder_Time_
         Me.Button2.Text = "Set"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'TableLayoutPanel6
-        '
-        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.TableLayoutPanel6.ColumnCount = 1
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.ReminderProperty_Icon, 0, 0)
-        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 32)
-        Me.TableLayoutPanel6.Margin = New System.Windows.Forms.Padding(0)
-        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 1
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 43)
-        Me.TableLayoutPanel6.TabIndex = 4
-        '
-        'ReminderProperty_Icon
-        '
-        Me.ReminderProperty_Icon.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.ReminderProperty_Icon.BackgroundImage = CType(resources.GetObject("ReminderProperty_Icon.BackgroundImage"), System.Drawing.Image)
-        Me.ReminderProperty_Icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.ReminderProperty_Icon.Location = New System.Drawing.Point(87, 7)
-        Me.ReminderProperty_Icon.Margin = New System.Windows.Forms.Padding(0)
-        Me.ReminderProperty_Icon.Name = "ReminderProperty_Icon"
-        Me.ReminderProperty_Icon.Size = New System.Drawing.Size(30, 28)
-        Me.ReminderProperty_Icon.TabIndex = 2
-        Me.ReminderProperty_Icon.TabStop = False
-        '
         'DateTimePicker1
         '
         Me.DateTimePicker1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -313,9 +313,9 @@ Partial Class AddReminder_Time_
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.PerformLayout()
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel7.ResumeLayout(False)
         Me.TableLayoutPanel6.ResumeLayout(False)
         CType(Me.ReminderProperty_Icon, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel7.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

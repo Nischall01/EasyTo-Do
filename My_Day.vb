@@ -1,4 +1,7 @@
-﻿Imports System.Data.SqlServerCe
+﻿Imports System.Windows.Forms
+Imports System.Runtime.InteropServices
+
+Imports System.Data.SqlServerCe
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 
@@ -25,6 +28,20 @@ Public Class My_Day
 
     Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
 
+    ' Import the SetForegroundWindow function from user32.dll
+    ' Import the SetForegroundWindow function from user32.dll
+    <DllImport("user32.dll")>
+    Private Shared Function SetForegroundWindow(ByVal hWnd As IntPtr) As Boolean
+    End Function
+
+    ' Import the ShowWindow function from user32.dll
+    <DllImport("user32.dll")>
+    Private Shared Function ShowWindow(ByVal hWnd As IntPtr, ByVal nCmdShow As Integer) As Boolean
+    End Function
+
+    ' Constants for ShowWindow
+    Private Const SW_RESTORE As Integer = 9
+
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
     Private Sub InitializeMy_day()
@@ -44,7 +61,7 @@ Public Class My_Day
         ReminderTimer.Start() ' Start the Timer
 
         NotifyIcon1.Text = "EasyTo_do"
-        NotifyIcon1.Icon = New Icon("C:\Users\Nischal\Downloads\compressed\to-do-list (3).ico")
+        NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
         NotifyIcon1.Visible = True
     End Sub
 
@@ -721,7 +738,9 @@ Public Class My_Day
     End Sub
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
-        ' Show the context menu at the mouse cursor position when the balloon tip is clicked
+        ShowWindow(MainForm.Handle, SW_RESTORE)
+        ' Bring the form to the front
+        SetForegroundWindow(MainForm.Handle)
     End Sub
 
 
@@ -731,16 +750,22 @@ Public Class My_Day
         MyBase.OnFormClosing(e)
     End Sub
 
-    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
-
-    End Sub
-
     Private Sub Label_MyDay_Click(sender As Object, e As EventArgs)
         Me.ActiveControl = Nothing
         LoseListItemFocus()
     End Sub
 
     Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles Label_DayDate.Click
+        Me.ActiveControl = Nothing
+        LoseListItemFocus()
+    End Sub
+
+    Private Sub TableLayoutPanel1_Click(sender As Object, e As EventArgs) Handles TableLayoutPanel1.Click
+        Me.ActiveControl = Nothing
+        LoseListItemFocus()
+    End Sub
+
+    Private Sub Time_Label_Click(sender As Object, e As EventArgs) Handles Time_Label.Click
         Me.ActiveControl = Nothing
         LoseListItemFocus()
     End Sub
