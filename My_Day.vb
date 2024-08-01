@@ -19,7 +19,7 @@ Public Class My_Day
 
     Private dt As New DataTable()
     Private CurrentDateTime As DateTime = DateTime.Now
-    Private IsTaskPropertiesVisible As Boolean = False
+    Private IsTaskPropertiesVisible As Boolean = True
     Private Task As String
     Private Done As Boolean
 
@@ -35,8 +35,6 @@ Public Class My_Day
 
         LoadCachedImages()
         DisableTaskProperties(True)
-
-        ' OnloadCheckedListBoxHeight()
     End Sub
 
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -616,7 +614,7 @@ Public Class My_Day
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
             Dim AddReminder_time_Instance = New AddReminder_Time_ With {
-                .Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
+                .Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex, .NeedsDatePicker = False
             }
             AddReminder_time_Instance.ShowDialog()
             AddReminder_time_Instance.BringToFront()
@@ -678,6 +676,7 @@ Public Class My_Day
 
     Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
         CheckReminders()
+        Time_Label.Text = DateTime.Now.ToString("hh:mm tt")
     End Sub
     Private Sub CheckReminders()
         Dim currentTime As DateTime = DateTime.Now
@@ -736,11 +735,13 @@ Public Class My_Day
 
     End Sub
 
-    Private Sub Label_MyDay_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
+    Private Sub Label_MyDay_Click(sender As Object, e As EventArgs)
+        Me.ActiveControl = Nothing
         LoseListItemFocus()
     End Sub
 
     Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles Label_DayDate.Click
+        Me.ActiveControl = Nothing
         LoseListItemFocus()
     End Sub
 #End Region

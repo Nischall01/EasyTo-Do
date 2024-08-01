@@ -6,6 +6,8 @@
 
     Public Reminder_SelectedTaskIndex As Integer
 
+    Public NeedsDatePicker As Boolean
+
     Private AlreadySetReminder As DateTime
 
     Private SelectedHour As String = String.Empty
@@ -28,6 +30,10 @@
     End Sub
 
     Private Sub ReminderInitialization()
+        If NeedsDatePicker = False Then
+            TableLayoutPanel1.RowStyles(3).Height = 0
+        End If
+
         ShowMinutes() ' Initialize multiples of five minute items in the combo box
         If AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = 12 Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is set to 12hr
             RadioButton1.PerformClick()
@@ -93,7 +99,7 @@
     End Sub
 #End Region
 
-    '#Region "Window Dragging Logic"
+#Region "Window Dragging Logic"
     '    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
     '        If e.Button = MouseButtons.Left Then
     '            isDragging = True
@@ -114,8 +120,7 @@
     '            isDragging = False
     '        End If
     '    End Sub
-    '#End Region
-
+#End Region ' Diabled
 
 #Region "Database Table"
     Private Sub LoadTable()

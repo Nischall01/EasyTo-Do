@@ -6,6 +6,9 @@
     Public Sub New()
         InitializeComponent()
 
+        Me.PictureBox1.BackColor = Color.Transparent
+        Me.Label1.BackColor = Color.Transparent
+
         ' Set default properties
         Me.BackColor = Color.Transparent
         Me.Label1.ForeColor = Color.White

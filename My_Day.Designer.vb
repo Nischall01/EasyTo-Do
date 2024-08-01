@@ -31,8 +31,6 @@ Partial Class My_Day
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
-        Me.Label_DayDate = New System.Windows.Forms.Label()
-        Me.MyDay_Label = New System.Windows.Forms.Label()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.Textbox_TaskTitle = New System.Windows.Forms.TextBox()
@@ -40,9 +38,6 @@ Partial Class My_Day
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
-        Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
-        Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
-        Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
         Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_Important = New System.Windows.Forms.Button()
@@ -50,6 +45,13 @@ Partial Class My_Day
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
+        Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
+        Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
+        Me.MyDay_Label = New System.Windows.Forms.Label()
+        Me.Time_Label = New System.Windows.Forms.Label()
+        Me.Label_DayDate = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
@@ -59,6 +61,7 @@ Partial Class My_Day
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
         Me.Tlp_ImportantButton.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainTlp
@@ -140,11 +143,11 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpTop.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpTop.ColumnCount = 3
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.0!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.0!))
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Label_DayDate, 2, 0)
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.85911!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.2543!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.MyDay_Label, 1, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.TableLayoutPanel1, 2, 0)
         Me.SubTlpTaskView_SubTlpTop.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(3, 3)
         Me.SubTlpTaskView_SubTlpTop.Name = "SubTlpTaskView_SubTlpTop"
@@ -166,28 +169,6 @@ Partial Class My_Day
         Me.PictureBox_PanelIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox_PanelIcon.TabIndex = 1
         Me.PictureBox_PanelIcon.TabStop = False
-        '
-        'Label_DayDate
-        '
-        Me.Label_DayDate.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Label_DayDate.AutoSize = True
-        Me.Label_DayDate.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label_DayDate.Location = New System.Drawing.Point(427, 33)
-        Me.Label_DayDate.Name = "Label_DayDate"
-        Me.Label_DayDate.Size = New System.Drawing.Size(74, 20)
-        Me.Label_DayDate.TabIndex = 4
-        Me.Label_DayDate.Text = "DateTime"
-        '
-        'MyDay_Label
-        '
-        Me.MyDay_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.MyDay_Label.AutoSize = True
-        Me.MyDay_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MyDay_Label.Location = New System.Drawing.Point(78, 24)
-        Me.MyDay_Label.Name = "MyDay_Label"
-        Me.MyDay_Label.Size = New System.Drawing.Size(110, 37)
-        Me.MyDay_Label.TabIndex = 4
-        Me.MyDay_Label.Text = "My Day"
         '
         'MainTlp_SubTlpTaskProperties
         '
@@ -305,60 +286,6 @@ Partial Class My_Day
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(190, 177)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.TabIndex = 10
         '
-        'CustomButton_DueDate
-        '
-        Me.CustomButton_DueDate.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_DueDate.ButtonText = "Add Due Date"
-        Me.CustomButton_DueDate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_DueDate.Icon = CType(resources.GetObject("CustomButton_DueDate.Icon"), System.Drawing.Image)
-        Me.CustomButton_DueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_DueDate.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_DueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_DueDate.Location = New System.Drawing.Point(0, 80)
-        Me.CustomButton_DueDate.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_DueDate.Name = "CustomButton_DueDate"
-        Me.CustomButton_DueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_DueDate.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_DueDate.TabIndex = 11
-        Me.CustomButton_DueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_DueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'CustomButton_Repeat
-        '
-        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_Repeat.ButtonText = "Repeat"
-        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
-        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
-        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
-        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_Repeat.TabIndex = 10
-        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'CustomButton_AddReminder
-        '
-        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
-        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
-        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
-        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
-        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_AddReminder.TabIndex = 9
-        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
         'RichTextBox1
         '
         Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
@@ -422,6 +349,110 @@ Partial Class My_Day
         Me.NotifyIcon1.Text = "NotifyIcon1"
         Me.NotifyIcon1.Visible = True
         '
+        'CustomButton_DueDate
+        '
+        Me.CustomButton_DueDate.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_DueDate.ButtonText = "Add Due Date"
+        Me.CustomButton_DueDate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_DueDate.Icon = CType(resources.GetObject("CustomButton_DueDate.Icon"), System.Drawing.Image)
+        Me.CustomButton_DueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_DueDate.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_DueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_DueDate.Location = New System.Drawing.Point(0, 80)
+        Me.CustomButton_DueDate.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_DueDate.Name = "CustomButton_DueDate"
+        Me.CustomButton_DueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_DueDate.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_DueDate.TabIndex = 11
+        Me.CustomButton_DueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_DueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton_Repeat
+        '
+        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_Repeat.ButtonText = "Repeat"
+        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
+        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
+        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
+        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_Repeat.TabIndex = 10
+        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton_AddReminder
+        '
+        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
+        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
+        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
+        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
+        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddReminder.TabIndex = 9
+        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'MyDay_Label
+        '
+        Me.MyDay_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.MyDay_Label.AutoSize = True
+        Me.MyDay_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MyDay_Label.Location = New System.Drawing.Point(78, 24)
+        Me.MyDay_Label.Name = "MyDay_Label"
+        Me.MyDay_Label.Size = New System.Drawing.Size(110, 37)
+        Me.MyDay_Label.TabIndex = 6
+        Me.MyDay_Label.Text = "My Day"
+        '
+        'Time_Label
+        '
+        Me.Time_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Time_Label.AutoSize = True
+        Me.Time_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.Time_Label.Location = New System.Drawing.Point(82, 43)
+        Me.Time_Label.Margin = New System.Windows.Forms.Padding(3)
+        Me.Time_Label.Name = "Time_Label"
+        Me.Time_Label.Size = New System.Drawing.Size(42, 20)
+        Me.Time_Label.TabIndex = 5
+        Me.Time_Label.Text = "Time"
+        '
+        'Label_DayDate
+        '
+        Me.Label_DayDate.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.Label_DayDate.AutoSize = True
+        Me.Label_DayDate.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label_DayDate.Location = New System.Drawing.Point(82, 17)
+        Me.Label_DayDate.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label_DayDate.Name = "Label_DayDate"
+        Me.Label_DayDate.Size = New System.Drawing.Size(41, 20)
+        Me.Label_DayDate.TabIndex = 4
+        Me.Label_DayDate.Text = "Date"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Label_DayDate, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Time_Label, 0, 1)
+        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(373, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(206, 80)
+        Me.TableLayoutPanel1.TabIndex = 2
+        '
         'My_Day
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -443,6 +474,8 @@ Partial Class My_Day
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ResumeLayout(False)
         Me.Tlp_ImportantButton.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -457,8 +490,6 @@ Partial Class My_Day
     Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
     Friend WithEvents PictureBox_PanelIcon As PictureBox
-    Friend WithEvents Label_DayDate As Label
-    Friend WithEvents MyDay_Label As Label
     Friend WithEvents Label_TaskEntryDateTime As Label
     Friend WithEvents Button_Important As Button
     Friend WithEvents CustomButton_AddReminder As CustomButton_2
@@ -473,4 +504,8 @@ Partial Class My_Day
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ReminderTimer As Timer
     Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents MyDay_Label As Label
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Label_DayDate As Label
+    Friend WithEvents Time_Label As Label
 End Class
