@@ -615,7 +615,7 @@ Public Class My_Day
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
-            Dim AddReminder_time_Instance As New AddReminder_Time_ With {
+            Dim AddReminder_time_Instance = New AddReminder_Time_ With {
                 .Reminder_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
             }
             AddReminder_time_Instance.ShowDialog()

@@ -1,6 +1,8 @@
 ﻿Public Class CustomButton_2
     Inherits UserControl
 
+    Private effectsEnabled As Boolean = True
+
     Public Sub New()
         InitializeComponent()
 
@@ -110,11 +112,15 @@
 
     ' Mouse hover effect
     Private Sub CustomButton_MouseEnter(sender As Object, e As EventArgs)
-        Me.BackColor = Color.FromArgb(50, 50, 50)
+        If effectsEnabled Then
+            Me.BackColor = Color.FromArgb(50, 50, 50)
+        End If
     End Sub
 
     Private Sub CustomButton_MouseLeave(sender As Object, e As EventArgs)
-        Me.BackColor = Color.Transparent
+        If effectsEnabled Then
+            Me.BackColor = Color.Transparent
+        End If
     End Sub
 
     Private Sub CustomButton_MouseDown(sender As Object, e As EventArgs)
@@ -122,11 +128,29 @@
     End Sub
 
     Private Sub CustomButton_MouseUp(sender As Object, e As EventArgs)
-        Me.BackColor = Color.Transparent
+        If effectsEnabled Then
+            Me.BackColor = Color.Transparent
+        Else
+            Me.BackColor = Color.FromArgb(50, 50, 50)
+        End If
     End Sub
 
     ' Click event to handle button click
     Private Sub CustomButton_Click(sender As Object, e As EventArgs)
         MyBase.OnClick(e)
+    End Sub
+
+    ' Method to disable all effects
+    Public Sub DisableEffects()
+        effectsEnabled = False
+        Me.BackColor = Color.FromArgb(50, 50, 50)
+        Me.BorderStyle = BorderStyle.FixedSingle
+    End Sub
+
+    ' Method to enable all effects
+    Public Sub EnableEffects()
+        effectsEnabled = True
+        Me.BackColor = Color.Transparent
+        Me.BorderStyle = BorderStyle.None
     End Sub
 End Class

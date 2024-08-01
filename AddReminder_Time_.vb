@@ -93,28 +93,28 @@
     End Sub
 #End Region
 
-#Region "Window Dragging Logic"
-    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
-        If e.Button = MouseButtons.Left Then
-            isDragging = True
-            startX = e.X
-            startY = e.Y
-        End If
-    End Sub
+    '#Region "Window Dragging Logic"
+    '    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
+    '        If e.Button = MouseButtons.Left Then
+    '            isDragging = True
+    '            startX = e.X
+    '            startY = e.Y
+    '        End If
+    '    End Sub
 
-    Private Sub TableLayoutPanel2_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseMove
-        If isDragging Then
-            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
-            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
-        End If
-    End Sub
+    '    Private Sub TableLayoutPanel2_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseMove
+    '        If isDragging Then
+    '            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+    '            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+    '        End If
+    '    End Sub
 
-    Private Sub TableLayoutPanel2_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseUp
-        If e.Button = MouseButtons.Left Then
-            isDragging = False
-        End If
-    End Sub
-#End Region
+    '    Private Sub TableLayoutPanel2_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseUp
+    '        If e.Button = MouseButtons.Left Then
+    '            isDragging = False
+    '        End If
+    '    End Sub
+    '#End Region
 
 
 #Region "Database Table"
@@ -373,5 +373,29 @@
 
         Me.Close()
     End Sub
+
+    'Private Sub AddReminder_Time__LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged
+    '    ' Ensure the child form stays within the bounds of the parent form
+    '    Dim parentForm As Form = Me.Owner
+
+    '    If parentForm IsNot Nothing Then
+    '        Dim childBounds As Rectangle = Me.Bounds
+    '        Dim parentBounds As Rectangle = parentForm.Bounds
+
+    '        ' Check the boundaries and adjust the position if necessary
+    '        If childBounds.Left < parentBounds.Left Then
+    '            Me.Left = parentBounds.Left
+    '        End If
+    '        If childBounds.Top < parentBounds.Top Then
+    '            Me.Top = parentBounds.Top
+    '        End If
+    '        If childBounds.Right > parentBounds.Right Then
+    '            Me.Left = parentBounds.Right - Me.Width
+    '        End If
+    '        If childBounds.Bottom > parentBounds.Bottom Then
+    '            Me.Top = parentBounds.Bottom - Me.Height
+    '        End If
+    '    End If
+    'End Sub
 #End Region
 End Class

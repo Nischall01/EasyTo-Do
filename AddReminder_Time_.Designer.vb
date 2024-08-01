@@ -125,11 +125,11 @@ Partial Class AddReminder_Time_
         '
         'ComboBox2
         '
-        Me.ComboBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer))
+        Me.ComboBox2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ComboBox2.ForeColor = System.Drawing.SystemColors.Menu
         Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(106, 5)
+        Me.ComboBox2.Location = New System.Drawing.Point(106, 3)
         Me.ComboBox2.Name = "ComboBox2"
         Me.ComboBox2.Size = New System.Drawing.Size(48, 21)
         Me.ComboBox2.TabIndex = 1
@@ -137,11 +137,11 @@ Partial Class AddReminder_Time_
         '
         'ComboBox1
         '
-        Me.ComboBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer))
+        Me.ComboBox1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ComboBox1.ForeColor = System.Drawing.SystemColors.Menu
         Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(37, 5)
+        Me.ComboBox1.Location = New System.Drawing.Point(37, 3)
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(48, 21)
         Me.ComboBox1.TabIndex = 0
@@ -265,6 +265,7 @@ Partial Class AddReminder_Time_
         Me.TableLayoutPanel6.ColumnCount = 1
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel6.Controls.Add(Me.ReminderProperty_Icon, 0, 0)
+        Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 36)
         Me.TableLayoutPanel6.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
@@ -293,8 +294,8 @@ Partial Class AddReminder_Time_
         Me.ClientSize = New System.Drawing.Size(194, 236)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Name = "AddReminder_Time_"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "AddReminder_Time_"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
+        Me.Text = "Add Reminder"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)

@@ -27,6 +27,8 @@ Public Class MainForm
     Private PlannedFormInstance As New Planned()
     Private TasksFormInstance As New Tasks()
 
+    Private SettingsInstance As New Settings()
+
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 #Region "Constructor and Load"
     Public Sub New()
@@ -49,6 +51,8 @@ Public Class MainForm
         AddFormToPanel(ImportantFormInstance)
         AddFormToPanel(PlannedFormInstance)
         AddFormToPanel(TasksFormInstance)
+
+        AddFormToPanel(SettingsInstance)
     End Sub
 
     Private Sub InitializeApp()
@@ -73,6 +77,7 @@ Public Class MainForm
     Private Sub ShowForm(formToShow As Form)
         formToShow.Show()
         formToShow.BringToFront()
+        HighlightActiveFormButton()
     End Sub
 
     Private Function GetActiveFormInPanel(panel As Panel) As Form
@@ -348,6 +353,47 @@ Public Class MainForm
     End Sub
 #End Region
 
+    Private Sub HighlightActiveFormButton()
+        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
+        If activeForm Is MyDayFormInstance Then
+            CustomButton1.DisableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is DailyFormInstance Then
+            CustomButton2.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is ImportantFormInstance Then
+            CustomButton3.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is PlannedFormInstance Then
+            CustomButton4.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is TasksFormInstance Then
+            CustomButton5.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+        Else
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        End If
+    End Sub
+
     '----------------------------------------------------------------Helper Methods-------------------------------------------------------------------'
 #Region "Helper Methods"
     Private Sub Test_BackColors_Click(sender As Object, e As EventArgs) Handles Test_BackColors.Click
@@ -365,6 +411,11 @@ Public Class MainForm
         Else
             MessageBox.Show("No active form found in the panel.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ShowForm(SettingsInstance)
+        HighlightActiveFormButton()
     End Sub
 #End Region
 End Class
