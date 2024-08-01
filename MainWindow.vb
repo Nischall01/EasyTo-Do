@@ -2,7 +2,7 @@
 Imports System.Drawing
 Imports System.IO
 
-Public Class MainForm
+Public Class MainWindow
     ' Constants
     Private Const CollapsedSidebarWidth As Integer = 50
     Private Const ExpandedSidebarWidth As Integer = 200
@@ -26,7 +26,6 @@ Public Class MainForm
     Private ImportantFormInstance As New Important()
     Private PlannedFormInstance As New Planned()
     Private TasksFormInstance As New Tasks()
-
     Private SettingsInstance As New Settings()
 
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
@@ -37,7 +36,7 @@ Public Class MainForm
         Me.UpdateStyles()
     End Sub
 
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
         InitializeApp()
     End Sub

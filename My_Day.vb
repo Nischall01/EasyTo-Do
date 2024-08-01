@@ -28,21 +28,9 @@ Public Class My_Day
 
     Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
 
-    ' Import the SetForegroundWindow function from user32.dll
-    ' Import the SetForegroundWindow function from user32.dll
     <DllImport("user32.dll")>
-    Private Shared Function SetForegroundWindow(ByVal hWnd As IntPtr) As Boolean
+    Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
     End Function
-
-    ' Import the ShowWindow function from user32.dll
-    <DllImport("user32.dll")>
-    Private Shared Function ShowWindow(ByVal hWnd As IntPtr, ByVal nCmdShow As Integer) As Boolean
-    End Function
-
-    ' Constants for ShowWindow
-    Private Const SW_RESTORE As Integer = 9
-    Private Const SW_SHOW As Integer = 5
-    Private Const SW_Normal As Integer = 1
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
@@ -740,18 +728,19 @@ Public Class My_Day
     End Sub
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
-        ShowWindow(MainForm.Handle, SW_RESTORE)
-        ShowWindow(MainForm.Handle, SW_Normal)
-        ShowWindow(MainForm.Handle, SW_SHOW)
-        ' Bring the form to the front
-        SetForegroundWindow(MainForm.Handle)
+        If MainWindow IsNot Nothing Then
+          MainWindow.Activate()
+            MainWindow.WindowState = FormWindowState.Normal
+            MainWindow.TopMost = True
+            System.Threading.Thread.Sleep(500)
+            MainWindow.TopMost = False
+            SetForegroundWindow(MainWindow.Handle)
+        End If
     End Sub
 
-
     ' Dispose of the NotifyIcon when the form is closed
-    Protected Overrides Sub OnFormClosing(e As FormClosingEventArgs)
+    Private Sub My_Day_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         NotifyIcon1.Dispose()
-        MyBase.OnFormClosing(e)
     End Sub
 
     Private Sub Label_MyDay_Click(sender As Object, e As EventArgs)
