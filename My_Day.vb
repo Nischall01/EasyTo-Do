@@ -41,6 +41,8 @@ Public Class My_Day
 
     ' Constants for ShowWindow
     Private Const SW_RESTORE As Integer = 9
+    Private Const SW_SHOW As Integer = 5
+    Private Const SW_Normal As Integer = 1
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
@@ -739,6 +741,8 @@ Public Class My_Day
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
         ShowWindow(MainForm.Handle, SW_RESTORE)
+        ShowWindow(MainForm.Handle, SW_Normal)
+        ShowWindow(MainForm.Handle, SW_SHOW)
         ' Bring the form to the front
         SetForegroundWindow(MainForm.Handle)
     End Sub
