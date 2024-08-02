@@ -59,7 +59,9 @@ Partial Class Tasks
         '
         Me.Tasks_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Tasks_Label.AutoSize = True
+        Me.Tasks_Label.BackColor = System.Drawing.Color.Transparent
         Me.Tasks_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tasks_Label.ForeColor = System.Drawing.Color.BlueViolet
         Me.Tasks_Label.Location = New System.Drawing.Point(104, 24)
         Me.Tasks_Label.Name = "Tasks_Label"
         Me.Tasks_Label.Size = New System.Drawing.Size(81, 37)
@@ -82,7 +84,7 @@ Partial Class Tasks
         '
         'MainTlp
         '
-        Me.MainTlp.BackColor = System.Drawing.Color.White
+        Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 1
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
@@ -147,11 +149,13 @@ Partial Class Tasks
         '
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.DataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(3, 95)
+        Me.DataGridView1.Location = New System.Drawing.Point(6, 92)
+        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(778, 293)
+        Me.DataGridView1.Size = New System.Drawing.Size(772, 299)
         Me.DataGridView1.TabIndex = 2
         '
         'Tasks

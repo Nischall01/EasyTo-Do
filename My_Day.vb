@@ -68,7 +68,9 @@ Public Class My_Day
             Label_TaskEntryDateTime.Text = Nothing
             Button_Important.BackgroundImage = DisabledImportantIcon
 
+            Textbox_TaskTitle.BackColor = Color.FromArgb(30, 30, 30)
             Textbox_TaskTitle.Enabled = False
+
             Label_ADT.Enabled = False
             Label_TaskEntryDateTime.Enabled = False
             Button_Important.Enabled = False
@@ -82,7 +84,9 @@ Public Class My_Day
 
             RichTextBox1.Text = Nothing
             RichTextBox1.Enabled = False
+            RichTextBox1.Hide()
         Else
+            Textbox_TaskTitle.BackColor = Color.FromArgb(40, 40, 40)
             Textbox_TaskTitle.Enabled = True
             Label_ADT.Enabled = True
             Label_TaskEntryDateTime.Enabled = True
@@ -93,6 +97,7 @@ Public Class My_Day
             Button_DeleteTask.Enabled = True
 
             RichTextBox1.Enabled = True
+            RichTextBox1.Show()
         End If
     End Sub
 #End Region
@@ -519,11 +524,11 @@ Public Class My_Day
             Label_TaskEntryDateTime.Text = GetTaskEntryDateTime()
 
             If GetTaskDescription() <> String.Empty Then
-                RichTextBox1.ForeColor = Color.Black
+                RichTextBox1.ForeColor = Color.Pink
                 RichTextBox1.Text = GetTaskDescription()
             Else
-                RichTextBox1.Text = DescriptionPlaceholderText
                 RichTextBox1.ForeColor = Color.Gray
+                RichTextBox1.Text = DescriptionPlaceholderText
             End If
 
             If IsTaskImportant() Then
@@ -572,13 +577,14 @@ Public Class My_Day
     End Sub
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles RichTextBox1.Enter
-        RichTextBox1.ForeColor = Color.Black
+        RichTextBox1.ForeColor = Color.White
         If RichTextBox1.Text = DescriptionPlaceholderText Then
             RichTextBox1.Text = String.Empty
         End If
     End Sub
 
     Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
+
         ' Check if Enter key is pressed
         If e.KeyCode = Keys.Enter Then
             ' Check if Shift key is also pressed
@@ -587,7 +593,6 @@ Public Class My_Day
             Else
                 ' Prevent the default behavior
                 e.SuppressKeyPress = True
-
                 UpdateTaskDescription(CheckedListBox_MyDay.SelectedIndex, RichTextBox1.Text)
             End If
         End If
@@ -729,7 +734,7 @@ Public Class My_Day
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
         If MainWindow IsNot Nothing Then
-          MainWindow.Activate()
+            MainWindow.Activate()
             MainWindow.WindowState = FormWindowState.Normal
             MainWindow.TopMost = True
             System.Threading.Thread.Sleep(500)
@@ -763,4 +768,18 @@ Public Class My_Day
         LoseListItemFocus()
     End Sub
 #End Region
+
+    Private Sub RichTextBox1_EnabledChanged(sender As Object, e As EventArgs)
+        If Not RichTextBox1.Enabled Then
+            RichTextBox1.BackColor = Color.FromArgb(40, 40, 40) ' Set your desired background color
+        End If
+    End Sub
+
+    Private Sub SubTlpTaskProperties_SubTlpTaskFeatureButtons_Paint(sender As Object, e As PaintEventArgs) Handles SubTlpTaskProperties_SubTlpTaskFeatureButtons.Paint
+
+    End Sub
+
+    Private Sub MainTlp_SubTlpTaskProperties_Paint(sender As Object, e As PaintEventArgs) Handles MainTlp_SubTlpTaskProperties.Paint
+
+    End Sub
 End Class

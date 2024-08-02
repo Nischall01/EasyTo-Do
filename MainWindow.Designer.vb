@@ -68,7 +68,8 @@ Partial Class MainWindow
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
+        Me.SplitContainer1.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.SplitContainer1.Panel2.ForeColor = System.Drawing.Color.Black
         Me.SplitContainer1.Size = New System.Drawing.Size(784, 511)
         Me.SplitContainer1.SplitterDistance = 204
         Me.SplitContainer1.SplitterWidth = 5
@@ -120,7 +121,7 @@ Partial Class MainWindow
         '
         'CustomButton5
         '
-        Me.CustomButton5.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton5.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton5.ButtonText = "Tasks"
         Me.CustomButton5.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton5.Dock = System.Windows.Forms.DockStyle.Fill
@@ -141,7 +142,7 @@ Partial Class MainWindow
         '
         'CustomButton4
         '
-        Me.CustomButton4.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton4.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton4.ButtonText = "Planned"
         Me.CustomButton4.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton4.Dock = System.Windows.Forms.DockStyle.Fill
@@ -162,7 +163,7 @@ Partial Class MainWindow
         '
         'CustomButton3
         '
-        Me.CustomButton3.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton3.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton3.ButtonText = "Important"
         Me.CustomButton3.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton3.Dock = System.Windows.Forms.DockStyle.Fill
@@ -183,7 +184,7 @@ Partial Class MainWindow
         '
         'CustomButton2
         '
-        Me.CustomButton2.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton2.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton2.ButtonText = "Daily"
         Me.CustomButton2.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -204,7 +205,7 @@ Partial Class MainWindow
         '
         'CustomButton1
         '
-        Me.CustomButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton1.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton1.ButtonText = "My Day"
         Me.CustomButton1.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -327,6 +328,7 @@ Partial Class MainWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.ClientSize = New System.Drawing.Size(784, 511)
         Me.Controls.Add(Me.SplitContainer1)

@@ -38,7 +38,7 @@ Partial Class Daily
         '
         'MainTlp
         '
-        Me.MainTlp.BackColor = System.Drawing.Color.White
+        Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 1
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
@@ -62,9 +62,10 @@ Partial Class Daily
         Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
         Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
         Me.CheckedListBox_MyDay.FormattingEnabled = True
-        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(3, 95)
+        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(6, 92)
+        Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
         Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
-        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(778, 293)
+        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(772, 299)
         Me.CheckedListBox_MyDay.TabIndex = 3
         '
         'SubTableLayoutPanel_Top
@@ -86,7 +87,9 @@ Partial Class Daily
         '
         Me.Daily_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.Daily_Label.AutoSize = True
+        Me.Daily_Label.BackColor = System.Drawing.Color.Transparent
         Me.Daily_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Daily_Label.ForeColor = System.Drawing.Color.Chocolate
         Me.Daily_Label.Location = New System.Drawing.Point(104, 24)
         Me.Daily_Label.Name = "Daily_Label"
         Me.Daily_Label.Size = New System.Drawing.Size(78, 37)
