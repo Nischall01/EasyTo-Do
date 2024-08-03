@@ -28,10 +28,10 @@ Partial Class Tasks
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTlp.SuspendLayout()
@@ -61,7 +61,7 @@ Partial Class Tasks
         Me.Tasks_Label.AutoSize = True
         Me.Tasks_Label.BackColor = System.Drawing.Color.Transparent
         Me.Tasks_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Tasks_Label.ForeColor = System.Drawing.Color.BlueViolet
+        Me.Tasks_Label.ForeColor = System.Drawing.Color.White
         Me.Tasks_Label.Location = New System.Drawing.Point(104, 24)
         Me.Tasks_Label.Name = "Tasks_Label"
         Me.Tasks_Label.Size = New System.Drawing.Size(81, 37)
@@ -117,16 +117,6 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Bottom.Size = New System.Drawing.Size(778, 64)
         Me.SubTableLayoutPanel_Bottom.TabIndex = 1
         '
-        'TextBox_AddNewTask
-        '
-        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
-        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
-        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
-        Me.TextBox_AddNewTask.TabIndex = 2
-        '
         'Button1
         '
         Me.Button1.Location = New System.Drawing.Point(3, 3)
@@ -150,6 +140,7 @@ Partial Class Tasks
         Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.DataGridView1.Location = New System.Drawing.Point(6, 92)
@@ -157,6 +148,19 @@ Partial Class Tasks
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(772, 299)
         Me.DataGridView1.TabIndex = 2
+        '
+        'TextBox_AddNewTask
+        '
+        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
+        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
+        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
+        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
+        Me.TextBox_AddNewTask.TabIndex = 5
         '
         'Tasks
         '
@@ -181,9 +185,9 @@ Partial Class Tasks
     Friend WithEvents PictureBox_FormIcon As PictureBox
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents Button1 As Button
     Friend WithEvents DataGridView1 As DataGridView
     Friend WithEvents Button2 As Button
     Friend WithEvents Tasks_Label As Label
+    Friend WithEvents TextBox_AddNewTask As TextBox
 End Class

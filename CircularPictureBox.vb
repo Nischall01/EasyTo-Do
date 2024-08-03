@@ -1,9 +1,13 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Windows.Forms
+Imports EasyTo_do.My
 
 Public Class CircularPictureBox
     Inherits PictureBox
+
+    Public PfpColorScheme As String = My.Settings.ColorScheme
+    Private PictureBoxBackColor As Color
 
     Public Sub New()
         InitializeComponent()
@@ -12,11 +16,27 @@ Public Class CircularPictureBox
 
     Private Sub InitializeCircularPictureBox()
         ' Ensure the PictureBox maintains a square aspect ratio
-        Me.SizeMode = PictureBoxSizeMode.StretchImage
-        Me.BackColor = Color.Transparent
+        Me.SizeMode = PictureBoxSizeMode.CenterImage
+
+        Select Case PfpColorScheme
+            Case "Light"
+                PictureBoxBackColor = Color.White
+            Case "Dark"
+                PictureBoxBackColor = Color.FromArgb(30, 30, 30)
+            Case "Custom"
+        End Select
     End Sub
 
     Protected Overrides Sub OnPaint(e As PaintEventArgs)
+        PfpColorScheme = My.Settings.ColorScheme
+        Select Case PfpColorScheme
+            Case "Light"
+                PictureBoxBackColor = Color.White
+            Case "Dark"
+                PictureBoxBackColor = Color.FromArgb(30, 30, 30)
+            Case "Custom"
+        End Select
+
         MyBase.OnPaint(e)
 
         ' Define the diameter for the circular clipping region
@@ -31,7 +51,7 @@ Public Class CircularPictureBox
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias
 
             ' Clear the background to make sure transparency is visible
-            e.Graphics.Clear(Me.BackColor)
+            e.Graphics.Clear(PictureBoxBackColor)
 
             ' Set the clipping region to circular
             e.Graphics.SetClip(clipRegion, CombineMode.Replace)
@@ -42,7 +62,7 @@ Public Class CircularPictureBox
             End If
 
             ' Draw the circular border if needed
-            Using pen As New Pen(Me.BackColor, 4)
+            Using pen As New Pen(PictureBoxBackColor, 4)
                 e.Graphics.DrawEllipse(pen, 0, 0, diameter - 1, diameter - 1)
             End Using
         End Using

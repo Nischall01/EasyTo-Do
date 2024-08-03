@@ -8,8 +8,8 @@
     <Setting Name="PfpPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="a" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ColorScheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Dark</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -89,7 +89,7 @@ Partial Class Daily
         Me.Daily_Label.AutoSize = True
         Me.Daily_Label.BackColor = System.Drawing.Color.Transparent
         Me.Daily_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Daily_Label.ForeColor = System.Drawing.Color.Chocolate
+        Me.Daily_Label.ForeColor = System.Drawing.Color.White
         Me.Daily_Label.Location = New System.Drawing.Point(104, 24)
         Me.Daily_Label.Name = "Daily_Label"
         Me.Daily_Label.Size = New System.Drawing.Size(78, 37)
@@ -129,11 +129,14 @@ Partial Class Daily
         '
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
         Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
-        Me.TextBox_AddNewTask.TabIndex = 2
+        Me.TextBox_AddNewTask.TabIndex = 4
         '
         'Daily
         '
@@ -156,8 +159,8 @@ Partial Class Daily
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Top As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents PictureBox_FormIcon As PictureBox
     Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents Daily_Label As Label
+    Friend WithEvents TextBox_AddNewTask As TextBox
 End Class

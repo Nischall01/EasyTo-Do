@@ -10,7 +10,7 @@ Public Class MainWindow
 
     ' Fields
     Private PfpLastEventTime As DateTime
-    Private debounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
+    Private DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
     Private IsSidebarExpanded As Boolean
 
     ' Enums
@@ -21,12 +21,12 @@ Public Class MainWindow
     End Enum
 
     ' Forms
-    Private MyDayFormInstance As New My_Day()
-    Private DailyFormInstance As New Daily()
-    Private ImportantFormInstance As New Important()
-    Private PlannedFormInstance As New Planned()
-    Private TasksFormInstance As New Tasks()
-    Private SettingsInstance As New Settings()
+    Public MyDayInstance As New My_Day()
+    Public DailyInstance As New Daily()
+    Public ImportantInstance As New Important()
+    Public PlannedInstance As New Planned()
+    Public TasksInstance As New Tasks()
+    Public SettingsInstance As New Settings()
 
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 #Region "Constructor and Load"
@@ -45,23 +45,40 @@ Public Class MainWindow
     '-------------------------------------------------------------Initialization Methods---------------------------------------------------------------'
 #Region "Initialization Methods"
     Private Sub InitializeForms()
-        AddFormToPanel(MyDayFormInstance)
-        AddFormToPanel(DailyFormInstance)
-        AddFormToPanel(ImportantFormInstance)
-        AddFormToPanel(PlannedFormInstance)
-        AddFormToPanel(TasksFormInstance)
-
-        AddFormToPanel(SettingsInstance)
+        AddFormToPanel(MyDayInstance)
+        AddFormToPanel(DailyInstance)
+        AddFormToPanel(ImportantInstance)
+        AddFormToPanel(PlannedInstance)
+        AddFormToPanel(TasksInstance)
     End Sub
 
     Private Sub InitializeApp()
         ' Initial state for sidebar is set as expanded
         SetSidebarState(SidebarState.Expanded)
+        'Load the User Profile
         LoadProfile()
         ' Initial Form
-        ShowForm(MyDayFormInstance)
+        ShowForm(MyDayInstance)
+        ' Load the Selected Appearance 
+        LoadSelectedAppearance()
     End Sub
 #End Region
+
+    '-----------------------------------------------------------------UI Appearance---------------------------------------------------------------
+
+    Private Sub LoadSelectedAppearance()
+        Select Case My.Settings.ColorScheme
+            Case "Light"
+                ColorScheme.Light()
+                SettingsInstance.ColorScheme_Light_RadioBtn.Checked = True
+            Case "Dark"
+                ColorScheme.Dark()
+                SettingsInstance.ColorScheme_Dark_RadioBtn.Checked = True
+            Case "Custom"
+                ColorScheme.Custom()
+                SettingsInstance.ColorScheme_Custom_RadioBtn.Checked = True
+        End Select
+    End Sub
 
     '----------------------------------------------------------------Form Management-------------------------------------------------------------------'
 #Region "Form Management"
@@ -182,12 +199,12 @@ Public Class MainWindow
             Pfp_CircularPictureBox.Width = 57
             Pfp_CircularPictureBox.Height = 57
 
-            Label1.Show()
+            Username_Label.Show()
         Else
             Pfp_CircularPictureBox.Width = 42
             Pfp_CircularPictureBox.Height = 42
 
-            Label1.Hide()
+            Username_Label.Hide()
         End If
     End Sub
 #End Region
@@ -207,12 +224,12 @@ Public Class MainWindow
         If GetUsername() = Nothing Then
             Username_MenuStripItem_Empty.Checked = True
             Username_MenuStripItem_Empty.Enabled = False
-            Label1.Text = "          "
-            Label1.BorderStyle = BorderStyle.FixedSingle
+            Username_Label.Text = "          "
+            Username_Label.BorderStyle = BorderStyle.FixedSingle
         Else
             Username_MenuStripItem_Empty.Enabled = True
-            Label1.Text = GetUsername()
-            Label1.BorderStyle = BorderStyle.None
+            Username_Label.Text = GetUsername()
+            Username_Label.BorderStyle = BorderStyle.None
         End If
     End Sub
 
@@ -258,14 +275,14 @@ Public Class MainWindow
             My.Settings.Username = userInput
             Username_MenuStripItem_Empty.Checked = False
             Username_MenuStripItem_Empty.Enabled = True
-            Label1.Text = userInput
-            Label1.BorderStyle = BorderStyle.None
+            Username_Label.Text = userInput
+            Username_Label.BorderStyle = BorderStyle.None
         End If
     End Sub
 
     Private Sub Username_MenuStripItem_Empty_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_Empty.Click
-        Label1.Text = "          "
-        Label1.BorderStyle = BorderStyle.FixedSingle
+        Username_Label.Text = "          "
+        Username_Label.BorderStyle = BorderStyle.FixedSingle
         Username_MenuStripItem_Empty.Checked = True
         Username_MenuStripItem_Empty.Enabled = False
         My.Settings.Username = Nothing
@@ -274,20 +291,20 @@ Public Class MainWindow
 
     '----Username Events----'
 #Region "Username Events"
-    Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Label1.MouseEnter
+    Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Username_Label.MouseEnter
         If GetUsername() <> Nothing Then
-            Label1.BorderStyle = BorderStyle.FixedSingle
+            Username_Label.BorderStyle = BorderStyle.FixedSingle
         End If
     End Sub
 
-    Private Sub Label1_MouseLeave(sender As Object, e As EventArgs) Handles Label1.MouseLeave
+    Private Sub Label1_MouseLeave(sender As Object, e As EventArgs) Handles Username_Label.MouseLeave
         If GetUsername() <> Nothing Then
-            Label1.BorderStyle = BorderStyle.None
+            Username_Label.BorderStyle = BorderStyle.None
         End If
     End Sub
 
-    Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Label1.MouseClick
-        Username_ContextMenuStrip.Show(Label1, e.Location)
+    Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Username_Label.MouseClick
+        Username_ContextMenuStrip.Show(Username_Label, e.Location)
     End Sub
 #End Region
 
@@ -296,7 +313,7 @@ Public Class MainWindow
     Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
         If GetPfpPath() <> Nothing Then
             Dim now As DateTime = DateTime.Now
-            If now - PfpLastEventTime > debounceDelay Then
+            If now - PfpLastEventTime > DebounceDelay Then
                 PfpLastEventTime = now
                 Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
             End If
@@ -306,7 +323,7 @@ Public Class MainWindow
     Private Sub Pfp_CircularPictureBox_MouseLeave(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseLeave
         If GetPfpPath() <> Nothing Then
             Dim now As DateTime = DateTime.Now
-            If now - PfpLastEventTime > debounceDelay Then
+            If now - PfpLastEventTime > DebounceDelay Then
                 PfpLastEventTime = now
                 Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
             End If
@@ -322,63 +339,63 @@ Public Class MainWindow
 #Region "Button Click Events"
     Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(MyDayFormInstance)
-            MyDayFormInstance.TextBox_AddNewTask.Focus()
+            ShowForm(MyDayInstance)
+            MyDayInstance.AddNewTask_TextBox.Focus()
         End If
     End Sub
 
     Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(DailyFormInstance)
+            ShowForm(DailyInstance)
         End If
     End Sub
 
     Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(ImportantFormInstance)
+            ShowForm(ImportantInstance)
         End If
     End Sub
 
     Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(PlannedFormInstance)
+            ShowForm(PlannedInstance)
         End If
     End Sub
 
     Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(TasksFormInstance)
+            ShowForm(TasksInstance)
         End If
     End Sub
 #End Region
 
     Private Sub HighlightActiveFormButton()
         Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
-        If activeForm Is MyDayFormInstance Then
+        If activeForm Is MyDayInstance Then
             CustomButton1.DisableEffects()
             CustomButton2.EnableEffects()
             CustomButton3.EnableEffects()
             CustomButton4.EnableEffects()
             CustomButton5.EnableEffects()
-        ElseIf activeForm Is DailyFormInstance Then
+        ElseIf activeForm Is DailyInstance Then
             CustomButton2.DisableEffects()
             CustomButton1.EnableEffects()
             CustomButton3.EnableEffects()
             CustomButton4.EnableEffects()
             CustomButton5.EnableEffects()
-        ElseIf activeForm Is ImportantFormInstance Then
+        ElseIf activeForm Is ImportantInstance Then
             CustomButton3.DisableEffects()
             CustomButton1.EnableEffects()
             CustomButton2.EnableEffects()
             CustomButton4.EnableEffects()
             CustomButton5.EnableEffects()
-        ElseIf activeForm Is PlannedFormInstance Then
+        ElseIf activeForm Is PlannedInstance Then
             CustomButton4.DisableEffects()
             CustomButton1.EnableEffects()
             CustomButton2.EnableEffects()
             CustomButton3.EnableEffects()
             CustomButton5.EnableEffects()
-        ElseIf activeForm Is TasksFormInstance Then
+        ElseIf activeForm Is TasksInstance Then
             CustomButton5.DisableEffects()
             CustomButton1.EnableEffects()
             CustomButton2.EnableEffects()
@@ -413,8 +430,30 @@ Public Class MainWindow
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        ShowForm(SettingsInstance)
+        SettingsInstance.ShowDialog()
+        SettingsInstance.BringToFront()
         HighlightActiveFormButton()
     End Sub
+
+    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
+
+    End Sub
+
+    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
+
+    End Sub
+
+    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
+
+    End Sub
+
+    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
+
+    End Sub
+
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
+
+    End Sub
+
 #End Region
 End Class

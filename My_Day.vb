@@ -35,10 +35,10 @@ Public Class My_Day
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
     Private Sub InitializeMy_day()
-        TextBox_AddNewTask.Focus()
+        AddNewTask_TextBox.Focus()
         LoadTasksToCheckedListView()
         ShowOrHideTaskProperties()
-        Label_DayDate.Text = CurrentDateTime.ToString("dddd, MMMM dd")
+        DayDate_Label.Text = CurrentDateTime.ToString("dddd, MMMM dd")
 
         LoadCachedImages()
         DisableTaskProperties(True)
@@ -64,12 +64,17 @@ Public Class My_Day
 
     Private Sub DisableTaskProperties(Disable As Boolean)
         If Disable Then
-            Textbox_TaskTitle.Text = Nothing
+            TaskTitle_TextBox.Text = Nothing
             Label_TaskEntryDateTime.Text = Nothing
             Button_Important.BackgroundImage = DisabledImportantIcon
 
-            Textbox_TaskTitle.BackColor = Color.FromArgb(30, 30, 30)
-            Textbox_TaskTitle.Enabled = False
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                TaskTitle_TextBox.Enabled = False
+                TaskDescription_RichTextBox.Hide()
+            End If
+            TaskDescription_RichTextBox.Text = Nothing
+            TaskDescription_RichTextBox.Enabled = False
 
             Label_ADT.Enabled = False
             Label_TaskEntryDateTime.Enabled = False
@@ -82,12 +87,15 @@ Public Class My_Day
 
             Button_DeleteTask.Enabled = False
 
-            RichTextBox1.Text = Nothing
-            RichTextBox1.Enabled = False
-            RichTextBox1.Hide()
+
         Else
-            Textbox_TaskTitle.BackColor = Color.FromArgb(40, 40, 40)
-            Textbox_TaskTitle.Enabled = True
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                TaskTitle_TextBox.Enabled = True
+
+                TaskDescription_RichTextBox.Show()
+            End If
+            TaskDescription_RichTextBox.Enabled = True
             Label_ADT.Enabled = True
             Label_TaskEntryDateTime.Enabled = True
             Button_Important.Enabled = True
@@ -95,9 +103,6 @@ Public Class My_Day
             CustomButton_DueDate.Enabled = True
             CustomButton_AddReminder.Enabled = True
             Button_DeleteTask.Enabled = True
-
-            RichTextBox1.Enabled = True
-            RichTextBox1.Show()
         End If
     End Sub
 #End Region
@@ -346,15 +351,15 @@ Public Class My_Day
     End Sub
 
     Private Sub EnterTaskTo_My_Day_ChecklistBox()
-        Dim NewMy_DayTask As String = TextBox_AddNewTask.Text
+        Dim NewMy_DayTask As String = AddNewTask_TextBox.Text
         If NewMy_DayTask Is String.Empty Then
             Exit Sub
         End If
         CheckedListBox_MyDay.Items.Add(NewMy_DayTask)
         AddNewTaskToTable_My_Day(NewMy_DayTask)
 
-        TextBox_AddNewTask.Clear()
-        TextBox_AddNewTask.Focus()
+        AddNewTask_TextBox.Clear()
+        AddNewTask_TextBox.Focus()
     End Sub
 
     Private Sub DoneCheckChanged(itemIndex As Integer, isChecked As Boolean)
@@ -493,7 +498,7 @@ Public Class My_Day
         ShowOrHideTaskProperties()
     End Sub
 
-    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox_AddNewTask.KeyDown
+    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
             EnterTaskTo_My_Day_ChecklistBox()
 
@@ -517,18 +522,20 @@ Public Class My_Day
     Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles CheckedListBox_MyDay.SelectedIndexChanged
         If CheckedListBox_MyDay.SelectedIndex = -1 Then
             DisableTaskProperties(True)
-            Textbox_TaskTitle.Clear()
+            TaskTitle_TextBox.Clear()
         Else
             DisableTaskProperties(False)
-            Textbox_TaskTitle.Text = CheckedListBox_MyDay.SelectedItem.ToString()
+            TaskTitle_TextBox.Text = CheckedListBox_MyDay.SelectedItem.ToString()
             Label_TaskEntryDateTime.Text = GetTaskEntryDateTime()
 
             If GetTaskDescription() <> String.Empty Then
-                RichTextBox1.ForeColor = Color.Pink
-                RichTextBox1.Text = GetTaskDescription()
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Pink
+                End If
+                TaskDescription_RichTextBox.Text = GetTaskDescription()
             Else
-                RichTextBox1.ForeColor = Color.Gray
-                RichTextBox1.Text = DescriptionPlaceholderText
+                TaskDescription_RichTextBox.ForeColor = Color.Gray
+                TaskDescription_RichTextBox.Text = DescriptionPlaceholderText
             End If
 
             If IsTaskImportant() Then
@@ -576,14 +583,16 @@ Public Class My_Day
         DisableTaskProperties(True)
     End Sub
 
-    Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles RichTextBox1.Enter
-        RichTextBox1.ForeColor = Color.White
-        If RichTextBox1.Text = DescriptionPlaceholderText Then
-            RichTextBox1.Text = String.Empty
+    Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
+        If My.Settings.ColorScheme = "Dark" Then
+            TaskDescription_RichTextBox.ForeColor = Color.White
+        End If
+        If TaskDescription_RichTextBox.Text = DescriptionPlaceholderText Then
+            TaskDescription_RichTextBox.Text = String.Empty
         End If
     End Sub
 
-    Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles RichTextBox1.KeyDown
+    Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
 
         ' Check if Enter key is pressed
         If e.KeyCode = Keys.Enter Then
@@ -593,16 +602,16 @@ Public Class My_Day
             Else
                 ' Prevent the default behavior
                 e.SuppressKeyPress = True
-                UpdateTaskDescription(CheckedListBox_MyDay.SelectedIndex, RichTextBox1.Text)
+                UpdateTaskDescription(CheckedListBox_MyDay.SelectedIndex, TaskDescription_RichTextBox.Text)
             End If
         End If
     End Sub
 
     Private Sub Panel1_Click(sender As Object, e As EventArgs)
-        TextBox_AddNewTask.Focus()
+        AddNewTask_TextBox.Focus()
     End Sub
 
-    Private Sub TextBox_AddNewTask_Enter(sender As Object, e As EventArgs) Handles TextBox_AddNewTask.Enter
+    Private Sub TextBox_AddNewTask_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
         LoseListItemFocus()
         DisableTaskProperties(True)
     End Sub
@@ -753,7 +762,7 @@ Public Class My_Day
         LoseListItemFocus()
     End Sub
 
-    Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles Label_DayDate.Click
+    Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
         Me.ActiveControl = Nothing
         LoseListItemFocus()
     End Sub
@@ -770,8 +779,8 @@ Public Class My_Day
 #End Region
 
     Private Sub RichTextBox1_EnabledChanged(sender As Object, e As EventArgs)
-        If Not RichTextBox1.Enabled Then
-            RichTextBox1.BackColor = Color.FromArgb(40, 40, 40) ' Set your desired background color
+        If Not TaskDescription_RichTextBox.Enabled Then
+            TaskDescription_RichTextBox.BackColor = Color.FromArgb(40, 40, 40) ' Set your desired background color
         End If
     End Sub
 

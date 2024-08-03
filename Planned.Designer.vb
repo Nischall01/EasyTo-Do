@@ -28,6 +28,7 @@ Partial Class Planned
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
+        Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -56,7 +57,7 @@ Partial Class Planned
         Me.Planned_Label.AutoSize = True
         Me.Planned_Label.BackColor = System.Drawing.Color.Transparent
         Me.Planned_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Planned_Label.ForeColor = System.Drawing.Color.DeepSkyBlue
+        Me.Planned_Label.ForeColor = System.Drawing.Color.White
         Me.Planned_Label.Location = New System.Drawing.Point(104, 24)
         Me.Planned_Label.Name = "Planned_Label"
         Me.Planned_Label.Size = New System.Drawing.Size(116, 37)
@@ -82,6 +83,7 @@ Partial Class Planned
         Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 1
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainTlp.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
         Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
@@ -109,15 +111,32 @@ Partial Class Planned
         Me.SubTableLayoutPanel_Bottom.Size = New System.Drawing.Size(778, 64)
         Me.SubTableLayoutPanel_Bottom.TabIndex = 1
         '
+        'CheckedListBox_MyDay
+        '
+        Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
+        Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
+        Me.CheckedListBox_MyDay.FormattingEnabled = True
+        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(6, 92)
+        Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
+        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(772, 299)
+        Me.CheckedListBox_MyDay.TabIndex = 4
+        '
         'TextBox_AddNewTask
         '
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
         Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
-        Me.TextBox_AddNewTask.TabIndex = 2
+        Me.TextBox_AddNewTask.TabIndex = 4
         '
         'Planned
         '
@@ -141,6 +160,7 @@ Partial Class Planned
     Friend WithEvents PictureBox_FormIcon As PictureBox
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents Planned_Label As Label
+    Friend WithEvents CheckedListBox_MyDay As CheckedListBox
+    Friend WithEvents TextBox_AddNewTask As TextBox
 End Class

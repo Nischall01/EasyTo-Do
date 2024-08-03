@@ -28,14 +28,15 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskView = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
+        Me.AddNewTask_TextBox = New System.Windows.Forms.TextBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
         Me.MyDay_Label = New System.Windows.Forms.Label()
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label_DayDate = New System.Windows.Forms.Label()
+        Me.DayDate_Label = New System.Windows.Forms.Label()
         Me.Time_Label = New System.Windows.Forms.Label()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
+        Me.TaskTitle_TextBox = New System.Windows.Forms.TextBox()
         Me.Button_DeleteTask = New System.Windows.Forms.Button()
         Me.Label_ADT = New System.Windows.Forms.Label()
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
@@ -44,15 +45,14 @@ Partial Class My_Day
         Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
         Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
         Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.TaskDescription_RichTextBox = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
         Me.Button_Important = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
-        Me.Textbox_TaskTitle = New System.Windows.Forms.TextBox()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
@@ -61,9 +61,9 @@ Partial Class My_Day
         Me.TableLayoutPanel1.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.Tlp_ImportantButton.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
-        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainTlp
@@ -122,7 +122,7 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.SubTlpTaskView_SubTlpBottom.Controls.Add(Me.TextBox_AddNewTask, 1, 0)
+        Me.SubTlpTaskView_SubTlpBottom.Controls.Add(Me.AddNewTask_TextBox, 1, 0)
         Me.SubTlpTaskView_SubTlpBottom.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpBottom.Location = New System.Drawing.Point(3, 394)
         Me.SubTlpTaskView_SubTlpBottom.Name = "SubTlpTaskView_SubTlpBottom"
@@ -131,18 +131,18 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpBottom.Size = New System.Drawing.Size(582, 64)
         Me.SubTlpTaskView_SubTlpBottom.TabIndex = 4
         '
-        'TextBox_AddNewTask
+        'AddNewTask_TextBox
         '
-        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(148, 3)
-        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
-        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(285, 20)
-        Me.TextBox_AddNewTask.TabIndex = 3
+        Me.AddNewTask_TextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.AddNewTask_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.AddNewTask_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.AddNewTask_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.AddNewTask_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AddNewTask_TextBox.ForeColor = System.Drawing.Color.White
+        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(148, 3)
+        Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
+        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(285, 20)
+        Me.AddNewTask_TextBox.TabIndex = 3
         '
         'SubTlpTaskView_SubTlpTop
         '
@@ -167,7 +167,7 @@ Partial Class My_Day
         Me.MyDay_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.MyDay_Label.AutoSize = True
         Me.MyDay_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.MyDay_Label.ForeColor = System.Drawing.Color.Goldenrod
+        Me.MyDay_Label.ForeColor = System.Drawing.Color.White
         Me.MyDay_Label.Location = New System.Drawing.Point(78, 24)
         Me.MyDay_Label.Name = "MyDay_Label"
         Me.MyDay_Label.Size = New System.Drawing.Size(110, 37)
@@ -192,7 +192,7 @@ Partial Class My_Day
         '
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Label_DayDate, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.DayDate_Label, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Time_Label, 0, 1)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(373, 3)
@@ -203,18 +203,18 @@ Partial Class My_Day
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(206, 80)
         Me.TableLayoutPanel1.TabIndex = 2
         '
-        'Label_DayDate
+        'DayDate_Label
         '
-        Me.Label_DayDate.Anchor = System.Windows.Forms.AnchorStyles.Bottom
-        Me.Label_DayDate.AutoSize = True
-        Me.Label_DayDate.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label_DayDate.ForeColor = System.Drawing.Color.White
-        Me.Label_DayDate.Location = New System.Drawing.Point(82, 17)
-        Me.Label_DayDate.Margin = New System.Windows.Forms.Padding(3)
-        Me.Label_DayDate.Name = "Label_DayDate"
-        Me.Label_DayDate.Size = New System.Drawing.Size(41, 20)
-        Me.Label_DayDate.TabIndex = 4
-        Me.Label_DayDate.Text = "Date"
+        Me.DayDate_Label.Anchor = System.Windows.Forms.AnchorStyles.Bottom
+        Me.DayDate_Label.AutoSize = True
+        Me.DayDate_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DayDate_Label.ForeColor = System.Drawing.Color.White
+        Me.DayDate_Label.Location = New System.Drawing.Point(82, 17)
+        Me.DayDate_Label.Margin = New System.Windows.Forms.Padding(3)
+        Me.DayDate_Label.Name = "DayDate_Label"
+        Me.DayDate_Label.Size = New System.Drawing.Size(41, 20)
+        Me.DayDate_Label.TabIndex = 4
+        Me.DayDate_Label.Text = "Date"
         '
         'Time_Label
         '
@@ -234,7 +234,7 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Textbox_TaskTitle, 0, 1)
+        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Button_DeleteTask, 0, 6)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Label_ADT, 0, 2)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Button_CloseTaskProperties, 0, 0)
@@ -255,6 +255,19 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.34343!))
         Me.MainTlp_SubTlpTaskProperties.Size = New System.Drawing.Size(196, 461)
         Me.MainTlp_SubTlpTaskProperties.TabIndex = 2
+        '
+        'TaskTitle_TextBox
+        '
+        Me.TaskTitle_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.TaskTitle_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TaskTitle_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TaskTitle_TextBox.ForeColor = System.Drawing.Color.White
+        Me.TaskTitle_TextBox.Location = New System.Drawing.Point(0, 38)
+        Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.TaskTitle_TextBox.Name = "TaskTitle_TextBox"
+        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(196, 20)
+        Me.TaskTitle_TextBox.TabIndex = 12
+        Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Button_DeleteTask
         '
@@ -388,6 +401,29 @@ Partial Class My_Day
         Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'Panel1
+        '
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel1.Controls.Add(Me.TaskDescription_RichTextBox)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel1.Location = New System.Drawing.Point(3, 123)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(184, 55)
+        Me.Panel1.TabIndex = 12
+        '
+        'TaskDescription_RichTextBox
+        '
+        Me.TaskDescription_RichTextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
+        Me.TaskDescription_RichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TaskDescription_RichTextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TaskDescription_RichTextBox.ForeColor = System.Drawing.Color.Pink
+        Me.TaskDescription_RichTextBox.Location = New System.Drawing.Point(0, 0)
+        Me.TaskDescription_RichTextBox.Margin = New System.Windows.Forms.Padding(5, 10, 5, 10)
+        Me.TaskDescription_RichTextBox.Name = "TaskDescription_RichTextBox"
+        Me.TaskDescription_RichTextBox.Size = New System.Drawing.Size(182, 53)
+        Me.TaskDescription_RichTextBox.TabIndex = 13
+        Me.TaskDescription_RichTextBox.Text = ""
+        '
         'Tlp_ImportantButton
         '
         Me.Tlp_ImportantButton.Anchor = System.Windows.Forms.AnchorStyles.None
@@ -440,42 +476,6 @@ Partial Class My_Day
         Me.NotifyIcon1.Text = "NotifyIcon1"
         Me.NotifyIcon1.Visible = True
         '
-        'Panel1
-        '
-        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel1.Controls.Add(Me.RichTextBox1)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel1.Location = New System.Drawing.Point(3, 123)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(184, 55)
-        Me.Panel1.TabIndex = 12
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.ForeColor = System.Drawing.Color.Pink
-        Me.RichTextBox1.Location = New System.Drawing.Point(0, 0)
-        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(5, 10, 5, 10)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.Size = New System.Drawing.Size(182, 53)
-        Me.RichTextBox1.TabIndex = 13
-        Me.RichTextBox1.Text = ""
-        '
-        'Textbox_TaskTitle
-        '
-        Me.Textbox_TaskTitle.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
-        Me.Textbox_TaskTitle.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Textbox_TaskTitle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Textbox_TaskTitle.ForeColor = System.Drawing.Color.White
-        Me.Textbox_TaskTitle.Location = New System.Drawing.Point(0, 38)
-        Me.Textbox_TaskTitle.Margin = New System.Windows.Forms.Padding(0)
-        Me.Textbox_TaskTitle.Name = "Textbox_TaskTitle"
-        Me.Textbox_TaskTitle.Size = New System.Drawing.Size(196, 20)
-        Me.Textbox_TaskTitle.TabIndex = 12
-        Me.Textbox_TaskTitle.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
         'My_Day
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -497,9 +497,9 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ResumeLayout(False)
+        Me.Panel1.ResumeLayout(False)
         Me.Tlp_ImportantButton.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
-        Me.Panel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -510,7 +510,7 @@ Partial Class My_Day
     Friend WithEvents Label_ADT As Label
     Friend WithEvents MainTlp_SubTlpTaskView As TableLayoutPanel
     Friend WithEvents SubTlpTaskView_SubTlpBottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
+    Friend WithEvents AddNewTask_TextBox As TextBox
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
     Friend WithEvents PictureBox_PanelIcon As PictureBox
     Friend WithEvents Label_TaskEntryDateTime As Label
@@ -528,9 +528,9 @@ Partial Class My_Day
     Friend WithEvents NotifyIcon1 As NotifyIcon
     Friend WithEvents MyDay_Label As Label
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents Label_DayDate As Label
+    Friend WithEvents DayDate_Label As Label
     Friend WithEvents Time_Label As Label
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents Textbox_TaskTitle As TextBox
+    Friend WithEvents TaskDescription_RichTextBox As RichTextBox
+    Friend WithEvents TaskTitle_TextBox As TextBox
 End Class

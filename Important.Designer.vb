@@ -57,7 +57,7 @@ Partial Class Important
         Me.Important_Label.AutoSize = True
         Me.Important_Label.BackColor = System.Drawing.Color.Transparent
         Me.Important_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Important_Label.ForeColor = System.Drawing.Color.Crimson
+        Me.Important_Label.ForeColor = System.Drawing.Color.White
         Me.Important_Label.Location = New System.Drawing.Point(104, 24)
         Me.Important_Label.Name = "Important_Label"
         Me.Important_Label.Size = New System.Drawing.Size(141, 37)
@@ -129,11 +129,14 @@ Partial Class Important
         '
         Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
         Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
         Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
-        Me.TextBox_AddNewTask.TabIndex = 2
+        Me.TextBox_AddNewTask.TabIndex = 4
         '
         'Important
         '
@@ -158,6 +161,6 @@ Partial Class Important
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
     Friend WithEvents Important_Label As Label
+    Friend WithEvents TextBox_AddNewTask As TextBox
 End Class
