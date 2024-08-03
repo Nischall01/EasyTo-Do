@@ -28,10 +28,10 @@ Partial Class Tasks
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
+        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
-        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTlp.SuspendLayout()
@@ -117,9 +117,24 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Bottom.Size = New System.Drawing.Size(778, 64)
         Me.SubTableLayoutPanel_Bottom.TabIndex = 1
         '
+        'TextBox_AddNewTask
+        '
+        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
+        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
+        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
+        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
+        Me.TextBox_AddNewTask.TabIndex = 5
+        '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(3, 3)
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(109, 2)
+        Me.Button1.Margin = New System.Windows.Forms.Padding(10, 2, 10, 10)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 23)
         Me.Button1.TabIndex = 3
@@ -128,7 +143,8 @@ Partial Class Tasks
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(586, 3)
+        Me.Button2.Location = New System.Drawing.Point(593, 2)
+        Me.Button2.Margin = New System.Windows.Forms.Padding(10, 2, 10, 10)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 4
@@ -148,19 +164,6 @@ Partial Class Tasks
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(772, 299)
         Me.DataGridView1.TabIndex = 2
-        '
-        'TextBox_AddNewTask
-        '
-        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(197, 3)
-        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
-        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
-        Me.TextBox_AddNewTask.TabIndex = 5
         '
         'Tasks
         '

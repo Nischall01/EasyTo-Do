@@ -27,8 +27,8 @@ Partial Class Planned
         Me.Planned_Label = New System.Windows.Forms.Label()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
-        Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
+        Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -96,6 +96,20 @@ Partial Class Planned
         Me.MainTlp.Size = New System.Drawing.Size(784, 461)
         Me.MainTlp.TabIndex = 1
         '
+        'CheckedListBox_MyDay
+        '
+        Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
+        Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
+        Me.CheckedListBox_MyDay.FormattingEnabled = True
+        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(6, 92)
+        Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
+        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(772, 299)
+        Me.CheckedListBox_MyDay.TabIndex = 4
+        '
         'SubTableLayoutPanel_Bottom
         '
         Me.SubTableLayoutPanel_Bottom.ColumnCount = 3
@@ -110,20 +124,6 @@ Partial Class Planned
         Me.SubTableLayoutPanel_Bottom.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.SubTableLayoutPanel_Bottom.Size = New System.Drawing.Size(778, 64)
         Me.SubTableLayoutPanel_Bottom.TabIndex = 1
-        '
-        'CheckedListBox_MyDay
-        '
-        Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
-        Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
-        Me.CheckedListBox_MyDay.FormattingEnabled = True
-        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(6, 92)
-        Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
-        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(772, 299)
-        Me.CheckedListBox_MyDay.TabIndex = 4
         '
         'TextBox_AddNewTask
         '
