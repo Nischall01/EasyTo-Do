@@ -312,6 +312,9 @@ Public Class MainWindow
             My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
 
             My.Settings.IsPfpDefault = False
+
+            ImBatman.Checked = False
+            ImBatman.Enabled = True
         End If
     End Sub
 
@@ -325,6 +328,9 @@ Public Class MainWindow
         My.Settings.PfpPath = Nothing
 
         My.Settings.IsPfpDefault = False
+
+        ImBatman.Checked = False
+        ImBatman.Enabled = True
     End Sub
 
     Private Sub Pfp_MenuStripItem_Default_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_Default.Click
@@ -384,7 +390,7 @@ Public Class MainWindow
         Pfp_MenuStripItem_Default.Enabled = False
 
         Pfp_MenuStripItem_Empty.Checked = False
-
+        Pfp_MenuStripItem_Empty.Enabled = True
 
         ImBatman.Checked = True
         ImBatman.Enabled = False
