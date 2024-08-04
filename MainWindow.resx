@@ -124,7 +124,7 @@
   <data name="Button1.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAA2BJREFUSEutls9LVFEUx8c3P1Q0XqP5o8lGRysdcyZQKxdqCiEuItCIyBxaGVRi
+        EQAACxEBf2RfkQAAA2BJREFUSEutls9LVFEUx8c3P1Q0XqP5o8lGRysdcyZQKxdqCiEuItCIyBxaGVRi
         iyJIR6uFQdCmNi3aZEUKLYIQ+wH9BbWJoiEoyEXapk00VtNrbufz3ryYcaZwwANf5nDO+X7n3nPPvTOO
         NZru1Nz3vZ4GA4g/S8xKrY/t9RW3Lp3c8UoBfGJWKj9zCzoFPQIngZQNh72R+FTYUACfmJUyjVo4cNHI
         aW7NoU37itvjdSX7DM3hvC2xVkGts8CzcLDmVvJSWCmAT4wcNdTCgYsGWoIs66SAFpxr/qy6K6PGpsLg
@@ -141,15 +141,6 @@
         jVo4XYJ/iv/POnS5OLQAbJSLScxKrY/p3EquPkjd0DX8bXE4/gADanyAkQQWUQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="Username_ContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>438, 17</value>
-  </metadata>
-  <metadata name="ColorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="Pfp_OpenFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>140, 17</value>
-  </metadata>
   <data name="CustomButton5.Icon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAADs
@@ -1490,6 +1481,15 @@
         9yV0AAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="Username_ContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>438, 17</value>
+  </metadata>
+  <metadata name="ColorDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="Pfp_OpenFileDialog.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>140, 17</value>
+  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>44</value>
   </metadata>

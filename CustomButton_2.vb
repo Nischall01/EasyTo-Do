@@ -6,19 +6,19 @@
     Public Sub New()
         InitializeComponent()
 
+        ' Set default properties
         Me.PictureBox1.BackColor = Color.Transparent
         Me.Label1.BackColor = Color.Transparent
+        Me.TableLayoutPanel1.BackColor = Color.Transparent
 
-        ' Set default properties
-        Me.BackColor = Color.Transparent
         Me.Label1.ForeColor = Color.White
 
         ' Add event handlers for the TableLayoutPanel and child controls
-        AddHandler Me.TableLayoutPanel1.MouseEnter, AddressOf CustomButton_MouseEnter
-        AddHandler Me.TableLayoutPanel1.MouseLeave, AddressOf CustomButton_MouseLeave
-        AddHandler Me.TableLayoutPanel1.MouseDown, AddressOf CustomButton_MouseDown
-        AddHandler Me.TableLayoutPanel1.MouseUp, AddressOf CustomButton_MouseUp
-        AddHandler Me.TableLayoutPanel1.Click, AddressOf CustomButton_Click
+        AddHandler TableLayoutPanel1.MouseEnter, AddressOf CustomButton_MouseEnter
+        AddHandler TableLayoutPanel1.MouseLeave, AddressOf CustomButton_MouseLeave
+        AddHandler TableLayoutPanel1.MouseDown, AddressOf CustomButton_MouseDown
+        AddHandler TableLayoutPanel1.MouseUp, AddressOf CustomButton_MouseUp
+        AddHandler TableLayoutPanel1.Click, AddressOf CustomButton_Click
 
         AddHandler PictureBox1.MouseEnter, AddressOf CustomButton_MouseEnter
         AddHandler PictureBox1.MouseLeave, AddressOf CustomButton_MouseLeave
@@ -115,8 +115,10 @@
 
     ' Mouse hover effect
     Private Sub CustomButton_MouseEnter(sender As Object, e As EventArgs)
-        If effectsEnabled Then
+        If My.Settings.ColorScheme = "Dark" Then
             Me.BackColor = Color.FromArgb(50, 50, 50)
+        Else
+            Me.BackColor = Color.FromArgb(159, 159, 159)
         End If
     End Sub
 
@@ -131,10 +133,14 @@
     End Sub
 
     Private Sub CustomButton_MouseUp(sender As Object, e As EventArgs)
-        If effectsEnabled Then
+        If effectsEnabled = True Then
             Me.BackColor = Color.Transparent
         Else
-            Me.BackColor = Color.FromArgb(50, 50, 50)
+            If My.Settings.ColorScheme = "Dark" Then
+                Me.BackColor = Color.FromArgb(50, 50, 50)
+            ElseIf My.Settings.ColorScheme = "Light" Then
+                Me.BackColor = Color.FromArgb(159, 159, 159)
+            End If
         End If
     End Sub
 
@@ -146,8 +152,12 @@
     ' Method to disable all effects
     Public Sub DisableEffects()
         effectsEnabled = False
-        Me.BackColor = Color.FromArgb(50, 50, 50)
         Me.BorderStyle = BorderStyle.FixedSingle
+        If My.Settings.ColorScheme = "Dark" Then
+            Me.BackColor = Color.FromArgb(50, 50, 50)
+        Else
+            Me.BackColor = Color.FromArgb(159, 159, 159)
+        End If
     End Sub
 
     ' Method to enable all effects

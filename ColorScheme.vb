@@ -1,4 +1,6 @@
-﻿Module ColorScheme
+﻿Imports System.Xml
+
+Module ColorScheme
 
 #Region "Scheme Methods"
     Public Sub Light()
@@ -26,17 +28,33 @@
             Case "Light"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 
+                MainWindow.CustomButton1.Label1.ForeColor = Color.Black
+                MainWindow.CustomButton2.Label1.ForeColor = Color.Black
+                MainWindow.CustomButton3.Label1.ForeColor = Color.Black
+                MainWindow.CustomButton4.Label1.ForeColor = Color.Black
+                MainWindow.CustomButton5.Label1.ForeColor = Color.Black
                 MainWindow.MainSidebarTableLayoutPanel.BackColor = Color.White
-                MainWindow.SubSidebarTableLayoutPanel.BackColor = Color.FromArgb(30, 30, 30)
+
                 MainWindow.Username_Label.ForeColor = Color.Black
                 MainWindow.Test_BackColors.Hide()
+
+                MainWindow.Button1.FlatAppearance.MouseOverBackColor = Color.DarkGray
+                MainWindow.Button1.FlatAppearance.MouseDownBackColor = Color.Gray
             Case "Dark"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 
+                MainWindow.CustomButton1.Label1.ForeColor = Color.White
+                MainWindow.CustomButton2.Label1.ForeColor = Color.White
+                MainWindow.CustomButton3.Label1.ForeColor = Color.White
+                MainWindow.CustomButton4.Label1.ForeColor = Color.White
+                MainWindow.CustomButton5.Label1.ForeColor = Color.White
                 MainWindow.MainSidebarTableLayoutPanel.BackColor = Color.FromArgb(30, 30, 30)
-                MainWindow.SubSidebarTableLayoutPanel.BackColor = Color.FromArgb(30, 30, 30)
+
                 MainWindow.Username_Label.ForeColor = Color.White
                 MainWindow.Test_BackColors.Hide()
+
+                MainWindow.Button1.FlatAppearance.MouseOverBackColor = Color.DarkGray
+                MainWindow.Button1.FlatAppearance.MouseDownBackColor = Color.Gray
             Case "Custom"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 

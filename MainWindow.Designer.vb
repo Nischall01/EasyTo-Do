@@ -27,31 +27,31 @@ Partial Class MainWindow
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.Pfp_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.Pfp_MenuStripItem_ChangePicture = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Pfp_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Test_BackColors = New System.Windows.Forms.Button()
-        Me.Username_Label = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
-        Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
-        Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         Me.CustomButton5 = New EasyTo_do.CustomButton_2()
         Me.CustomButton4 = New EasyTo_do.CustomButton_2()
         Me.CustomButton3 = New EasyTo_do.CustomButton_2()
         Me.CustomButton2 = New EasyTo_do.CustomButton_2()
         Me.CustomButton1 = New EasyTo_do.CustomButton_2()
         Me.Pfp_CircularPictureBox = New EasyTo_do.CircularPictureBox()
+        Me.Pfp_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.Pfp_MenuStripItem_ChangePicture = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Pfp_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Test_BackColors = New System.Windows.Forms.Button()
+        Me.Username_Label = New System.Windows.Forms.Label()
+        Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
+        Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.MainSidebarTableLayoutPanel.SuspendLayout()
         Me.SubSidebarTableLayoutPanel.SuspendLayout()
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Pfp_ContextMenuStrip.SuspendLayout()
         Me.Username_ContextMenuStrip.SuspendLayout()
-        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SplitContainer1
@@ -99,6 +99,7 @@ Partial Class MainWindow
         '
         'SubSidebarTableLayoutPanel
         '
+        Me.SubSidebarTableLayoutPanel.BackColor = System.Drawing.Color.Transparent
         Me.SubSidebarTableLayoutPanel.ColumnCount = 1
         Me.SubSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton5, 0, 4)
@@ -118,91 +119,6 @@ Partial Class MainWindow
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(196, 236)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
-        '
-        'Pfp_ContextMenuStrip
-        '
-        Me.Pfp_ContextMenuStrip.BackColor = System.Drawing.Color.White
-        Me.Pfp_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Pfp_MenuStripItem_ChangePicture, Me.Pfp_MenuStripItem_Empty})
-        Me.Pfp_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
-        Me.Pfp_ContextMenuStrip.Name = "ContextMenuStrip1"
-        Me.Pfp_ContextMenuStrip.Size = New System.Drawing.Size(156, 48)
-        '
-        'Pfp_MenuStripItem_ChangePicture
-        '
-        Me.Pfp_MenuStripItem_ChangePicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.Pfp_MenuStripItem_ChangePicture.Name = "Pfp_MenuStripItem_ChangePicture"
-        Me.Pfp_MenuStripItem_ChangePicture.Size = New System.Drawing.Size(155, 22)
-        Me.Pfp_MenuStripItem_ChangePicture.Text = "Change Picture"
-        '
-        'Pfp_MenuStripItem_Empty
-        '
-        Me.Pfp_MenuStripItem_Empty.CheckOnClick = True
-        Me.Pfp_MenuStripItem_Empty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-        Me.Pfp_MenuStripItem_Empty.Name = "Pfp_MenuStripItem_Empty"
-        Me.Pfp_MenuStripItem_Empty.Size = New System.Drawing.Size(155, 22)
-        Me.Pfp_MenuStripItem_Empty.Text = "Empty"
-        '
-        'Test_BackColors
-        '
-        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Test_BackColors.Location = New System.Drawing.Point(40, 389)
-        Me.Test_BackColors.Name = "Test_BackColors"
-        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
-        Me.Test_BackColors.TabIndex = 7
-        Me.Test_BackColors.Text = "Test BackColors"
-        Me.Test_BackColors.UseVisualStyleBackColor = True
-        '
-        'Username_Label
-        '
-        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.Username_Label.AutoSize = True
-        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
-        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Username_Label.ForeColor = System.Drawing.Color.White
-        Me.Username_Label.Location = New System.Drawing.Point(70, 78)
-        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
-        Me.Username_Label.Name = "Username_Label"
-        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
-        Me.Username_Label.TabIndex = 8
-        Me.Username_Label.Text = "Username"
-        '
-        'Button1
-        '
-        Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button1.BackColor = System.Drawing.Color.Transparent
-        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(CType(CType(127, Byte), Integer), CType(CType(127, Byte), Integer), CType(CType(127, Byte), Integer))
-        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Location = New System.Drawing.Point(86, 456)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(30, 30)
-        Me.Button1.TabIndex = 9
-        Me.Button1.UseVisualStyleBackColor = False
-        '
-        'Username_ContextMenuStrip
-        '
-        Me.Username_ContextMenuStrip.BackColor = System.Drawing.Color.White
-        Me.Username_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Username_MenuStripItem_ChangeName, Me.Username_MenuStripItem_Empty})
-        Me.Username_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
-        Me.Username_ContextMenuStrip.Name = "ContextMenuStrip1"
-        Me.Username_ContextMenuStrip.Size = New System.Drawing.Size(151, 48)
-        '
-        'Username_MenuStripItem_ChangeName
-        '
-        Me.Username_MenuStripItem_ChangeName.Name = "Username_MenuStripItem_ChangeName"
-        Me.Username_MenuStripItem_ChangeName.Size = New System.Drawing.Size(150, 22)
-        Me.Username_MenuStripItem_ChangeName.Text = "Change Name"
-        '
-        'Username_MenuStripItem_Empty
-        '
-        Me.Username_MenuStripItem_Empty.Name = "Username_MenuStripItem_Empty"
-        Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(150, 22)
-        Me.Username_MenuStripItem_Empty.Text = "Empty"
         '
         'CustomButton5
         '
@@ -290,7 +206,7 @@ Partial Class MainWindow
         '
         'CustomButton1
         '
-        Me.CustomButton1.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.CustomButton1.BackColor = System.Drawing.Color.Transparent
         Me.CustomButton1.ButtonText = "My Day"
         Me.CustomButton1.Cursor = System.Windows.Forms.Cursors.Arrow
         Me.CustomButton1.Dock = System.Windows.Forms.DockStyle.Fill
@@ -324,6 +240,91 @@ Partial Class MainWindow
         Me.Pfp_CircularPictureBox.TabStop = False
         Me.Pfp_CircularPictureBox.Tag = ""
         '
+        'Pfp_ContextMenuStrip
+        '
+        Me.Pfp_ContextMenuStrip.BackColor = System.Drawing.Color.White
+        Me.Pfp_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Pfp_MenuStripItem_ChangePicture, Me.Pfp_MenuStripItem_Empty})
+        Me.Pfp_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+        Me.Pfp_ContextMenuStrip.Name = "ContextMenuStrip1"
+        Me.Pfp_ContextMenuStrip.Size = New System.Drawing.Size(156, 48)
+        '
+        'Pfp_MenuStripItem_ChangePicture
+        '
+        Me.Pfp_MenuStripItem_ChangePicture.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.Pfp_MenuStripItem_ChangePicture.Name = "Pfp_MenuStripItem_ChangePicture"
+        Me.Pfp_MenuStripItem_ChangePicture.Size = New System.Drawing.Size(155, 22)
+        Me.Pfp_MenuStripItem_ChangePicture.Text = "Change Picture"
+        '
+        'Pfp_MenuStripItem_Empty
+        '
+        Me.Pfp_MenuStripItem_Empty.CheckOnClick = True
+        Me.Pfp_MenuStripItem_Empty.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+        Me.Pfp_MenuStripItem_Empty.Name = "Pfp_MenuStripItem_Empty"
+        Me.Pfp_MenuStripItem_Empty.Size = New System.Drawing.Size(155, 22)
+        Me.Pfp_MenuStripItem_Empty.Text = "Empty"
+        '
+        'Test_BackColors
+        '
+        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Test_BackColors.Location = New System.Drawing.Point(40, 389)
+        Me.Test_BackColors.Name = "Test_BackColors"
+        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
+        Me.Test_BackColors.TabIndex = 7
+        Me.Test_BackColors.Text = "Test BackColors"
+        Me.Test_BackColors.UseVisualStyleBackColor = True
+        '
+        'Username_Label
+        '
+        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Username_Label.AutoSize = True
+        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
+        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Username_Label.ForeColor = System.Drawing.Color.White
+        Me.Username_Label.Location = New System.Drawing.Point(70, 78)
+        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+        Me.Username_Label.Name = "Username_Label"
+        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
+        Me.Username_Label.TabIndex = 8
+        Me.Username_Label.Text = "Username"
+        '
+        'Username_ContextMenuStrip
+        '
+        Me.Username_ContextMenuStrip.BackColor = System.Drawing.Color.White
+        Me.Username_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Username_MenuStripItem_ChangeName, Me.Username_MenuStripItem_Empty})
+        Me.Username_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+        Me.Username_ContextMenuStrip.Name = "ContextMenuStrip1"
+        Me.Username_ContextMenuStrip.Size = New System.Drawing.Size(151, 48)
+        '
+        'Username_MenuStripItem_ChangeName
+        '
+        Me.Username_MenuStripItem_ChangeName.Name = "Username_MenuStripItem_ChangeName"
+        Me.Username_MenuStripItem_ChangeName.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_ChangeName.Text = "Change Name"
+        '
+        'Username_MenuStripItem_Empty
+        '
+        Me.Username_MenuStripItem_Empty.Name = "Username_MenuStripItem_Empty"
+        Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_Empty.Text = "Empty"
+        '
+        'Button1
+        '
+        Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Button1.BackColor = System.Drawing.Color.Transparent
+        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button1.FlatAppearance.BorderSize = 0
+        Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
+        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Location = New System.Drawing.Point(86, 456)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(30, 30)
+        Me.Button1.TabIndex = 9
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'MainWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -344,9 +345,9 @@ Partial Class MainWindow
         Me.MainSidebarTableLayoutPanel.ResumeLayout(False)
         Me.MainSidebarTableLayoutPanel.PerformLayout()
         Me.SubSidebarTableLayoutPanel.ResumeLayout(False)
+        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Pfp_ContextMenuStrip.ResumeLayout(False)
         Me.Username_ContextMenuStrip.ResumeLayout(False)
-        CType(Me.Pfp_CircularPictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

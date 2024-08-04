@@ -70,9 +70,9 @@ Public Class My_Day
 
             If My.Settings.ColorScheme = "Dark" Then
                 TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
-                TaskTitle_TextBox.Enabled = False
                 TaskDescription_RichTextBox.Hide()
             End If
+            TaskTitle_TextBox.Enabled = False
             TaskDescription_RichTextBox.Text = Nothing
             TaskDescription_RichTextBox.Enabled = False
 
@@ -91,10 +91,9 @@ Public Class My_Day
         Else
             If My.Settings.ColorScheme = "Dark" Then
                 TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                TaskTitle_TextBox.Enabled = True
-
                 TaskDescription_RichTextBox.Show()
             End If
+            TaskTitle_TextBox.Enabled = True
             TaskDescription_RichTextBox.Enabled = True
             Label_ADT.Enabled = True
             Label_TaskEntryDateTime.Enabled = True
@@ -531,6 +530,8 @@ Public Class My_Day
             If GetTaskDescription() <> String.Empty Then
                 If My.Settings.ColorScheme = "Dark" Then
                     TaskDescription_RichTextBox.ForeColor = Color.Pink
+                ElseIf My.Settings.ColorScheme = "Light" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Black
                 End If
                 TaskDescription_RichTextBox.Text = GetTaskDescription()
             Else
@@ -586,6 +587,8 @@ Public Class My_Day
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
         If My.Settings.ColorScheme = "Dark" Then
             TaskDescription_RichTextBox.ForeColor = Color.White
+        ElseIf My.Settings.ColorScheme = "Light" Then
+            TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
         End If
         If TaskDescription_RichTextBox.Text = DescriptionPlaceholderText Then
             TaskDescription_RichTextBox.Text = String.Empty
@@ -789,6 +792,10 @@ Public Class My_Day
     End Sub
 
     Private Sub MainTlp_SubTlpTaskProperties_Paint(sender As Object, e As PaintEventArgs) Handles MainTlp_SubTlpTaskProperties.Paint
+
+    End Sub
+
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
 
     End Sub
 End Class
