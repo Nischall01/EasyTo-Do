@@ -11,7 +11,7 @@ Public Class My_Day
     Private RepeatButtonPlaceholderText As String = "Repeat"
     Private DescriptionPlaceholderText As String = "Add Description..."
 
-    Private UserDefaultTimeFormat As Integer = 12
+    Private UserDefaultTimeFormat As String
 
     ' Image cache variables
     Private UncheckedImportantIcon As Image
@@ -34,9 +34,22 @@ Public Class My_Day
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
+    Public Sub New()
+        InitializeComponent()
+
+        UserDefaultTimeFormat = My.Settings.TimeFormat
+    End Sub
+
     Private Sub InitializeMy_day()
+
         AddNewTask_TextBox.Focus()
         LoadTasksToCheckedListView()
+        Select Case My.Settings.TaskPropertiesSidebarOnStart
+            Case "Expanded"
+                IsTaskPropertiesVisible = True
+            Case "Collapsed"
+                IsTaskPropertiesVisible = False
+        End Select
         ShowOrHideTaskProperties()
         DayDate_Label.Text = CurrentDateTime.ToString("dddd, MMMM dd")
 
@@ -444,7 +457,7 @@ Public Class My_Day
 
         For Each row As DataRow In dt.Rows
             If row("Task_Index") = TaskId Then
-                If UserDefaultTimeFormat = 12 Then
+                If UserDefaultTimeFormat = "12" Then
                     TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
                 Else
                     TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  HH:mm")
@@ -478,7 +491,7 @@ Public Class My_Day
                     Return String.Empty
                 Else
                     Dim reminderDateTime As DateTime = Convert.ToDateTime(row("Reminder_DateTime"))
-                    If UserDefaultTimeFormat = 12 Then
+                    If UserDefaultTimeFormat = "12" Then
                         TaskReminder = reminderDateTime.ToString("hh:mm tt")
                     Else
                         TaskReminder = reminderDateTime.ToString("HH:mm")
@@ -700,7 +713,11 @@ Public Class My_Day
 
     Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
         CheckReminders()
-        Time_Label.Text = DateTime.Now.ToString("hh:mm tt")
+        If UserDefaultTimeFormat = "12" Then
+            Time_Label.Text = DateTime.Now.ToString("hh:mm tt")
+        Else
+            Time_Label.Text = DateTime.Now.ToString("HH:MM")
+        End If
     End Sub
     Private Sub CheckReminders()
         Dim currentTime As DateTime = DateTime.Now

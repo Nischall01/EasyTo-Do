@@ -11,5 +11,20 @@
     <Setting Name="ColorScheme" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dark</Value>
     </Setting>
+    <Setting Name="SidebarOnStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Expanded</Value>
+    </Setting>
+    <Setting Name="TaskPropertiesSidebarOnStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Expanded</Value>
+    </Setting>
+    <Setting Name="TimeFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">12</Value>
+    </Setting>
+    <Setting Name="IsPfpVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="IsUsernameVisible" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

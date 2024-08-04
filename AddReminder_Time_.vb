@@ -12,7 +12,7 @@
 
     Private SelectedHour As String = String.Empty
 
-    Private UserDefaultTimeFormat As Integer = 12
+    Private UserDefaultTimeFormat As String
 
     Private CurrentDateTime As DateTime = DateTime.Now
     Private IsAM As Boolean
@@ -22,6 +22,12 @@
 
     Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
 #Region "Form Load"
+    Public Sub New()
+        InitializeComponent()
+
+        UserDefaultTimeFormat = My.Settings.TimeFormat
+    End Sub
+
     Private Sub AddReminder_Time__Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
         LoadTable() ' Loads a Data Table to extract the state of reminders
@@ -35,7 +41,7 @@
         End If
 
         ShowMinutes() ' Initialize multiples of five minute items in the combo box
-        If AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = 12 Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is set to 12hr
+        If AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = "12" Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is set to 12hr
             RadioButton1.PerformClick()
             Dim hour12Format As Integer = AlreadySetReminder.Hour Mod 12
             If hour12Format = 0 Then hour12Format = 12
@@ -51,12 +57,12 @@
                 IsAM = False
             End If
 
-        ElseIf AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = 24 Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is det to 24hr
+        ElseIf AlreadySetReminder <> Nothing AndAlso UserDefaultTimeFormat = "24" Then ' If AlreadySetReminder DateTime var is not Nothing and UserDefaultTimeFormat is det to 24hr
             RadioButton2.PerformClick()
             ComboBox1.SelectedItem = AlreadySetReminder.Hour.ToString("00")
             ComboBox2.SelectedText = AlreadySetReminder.Minute.ToString("00")
 
-        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = 12 Then ' If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 12hr.
+        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = "12" Then ' If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 12hr.
             RadioButton1.PerformClick()
             ComboBox1.SelectedItem = CurrentDateTime.ToString("hh")
 
@@ -80,7 +86,7 @@
             End If
             ComboBox2.SelectedItem = nearestFive.ToString("00")
 
-        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = 24 Then 'If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 24hr.
+        ElseIf AlreadySetReminder = Nothing AndAlso UserDefaultTimeFormat = "24" Then 'If AlreadySetReminder DateTime var is Nothing and UserDefaultTimeFormat is set to 24hr.
             RadioButton2.PerformClick()
             ComboBox1.SelectedItem = CurrentDateTime.ToString("HH")
 

@@ -54,19 +54,24 @@ Public Class MainWindow
 
     Private Sub InitializeApp()
         ' Initial state for sidebar is set as expanded
-        SetSidebarState(SidebarState.Expanded)
+        Select Case My.Settings.SidebarOnStart
+            Case "Expanded"
+                SetSidebarState(SidebarState.Expanded)
+            Case "Collapsed"
+                SetSidebarState(SidebarState.Collapsed)
+        End Select
         'Load the User Profile
         LoadProfile()
         ' Initial Form
         ShowForm(MyDayInstance)
         ' Load the Selected Appearance 
-        LoadSelectedAppearance()
+        LoadSettings()
     End Sub
 #End Region
 
     '-----------------------------------------------------------------UI Appearance---------------------------------------------------------------
 
-    Private Sub LoadSelectedAppearance()
+    Private Sub LoadSettings()
         Select Case My.Settings.ColorScheme
             Case "Light"
                 ColorScheme.Light()
@@ -77,6 +82,41 @@ Public Class MainWindow
             Case "Custom"
                 ColorScheme.Custom()
                 SettingsInstance.ColorScheme_Custom_RadioBtn.Checked = True
+        End Select
+
+        Select Case My.Settings.SidebarOnStart
+            Case "Expanded"
+                SettingsInstance.RadioButton3.Checked = True
+            Case "Collapsed"
+                SettingsInstance.RadioButton2.Checked = True
+        End Select
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart
+            Case "Expanded"
+                SettingsInstance.RadioButton4.Checked = True
+            Case "Collapsed"
+                SettingsInstance.RadioButton1.Checked = True
+        End Select
+
+        Select Case My.Settings.TimeFormat
+            Case "12"
+                SettingsInstance.RadioButton6.Checked = True
+            Case "24"
+                SettingsInstance.RadioButton5.Checked = True
+        End Select
+
+        Select Case My.Settings.IsPfpVisible
+            Case True
+                SettingsInstance.CheckBox1.Checked = False
+            Case False
+                SettingsInstance.CheckBox1.Checked = True
+        End Select
+
+        Select Case My.Settings.IsUsernameVisible
+            Case True
+                SettingsInstance.CheckBox2.Checked = False
+            Case False
+                SettingsInstance.CheckBox2.Checked = True
         End Select
     End Sub
 
@@ -434,6 +474,26 @@ Public Class MainWindow
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
+    End Sub
+
+    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
+
+    End Sub
+
+    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
+
+    End Sub
+
+    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
+
+    End Sub
+
+    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
+
+    End Sub
+
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
+
     End Sub
 #End Region
 End Class

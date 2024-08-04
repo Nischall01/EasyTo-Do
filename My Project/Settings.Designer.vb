@@ -89,6 +89,66 @@ Namespace My
                 Me("ColorScheme") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Expanded")>  _
+        Public Property SidebarOnStart() As String
+            Get
+                Return CType(Me("SidebarOnStart"),String)
+            End Get
+            Set
+                Me("SidebarOnStart") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Expanded")>  _
+        Public Property TaskPropertiesSidebarOnStart() As String
+            Get
+                Return CType(Me("TaskPropertiesSidebarOnStart"),String)
+            End Get
+            Set
+                Me("TaskPropertiesSidebarOnStart") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("12")>  _
+        Public Property TimeFormat() As String
+            Get
+                Return CType(Me("TimeFormat"),String)
+            End Get
+            Set
+                Me("TimeFormat") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property IsPfpVisible() As Boolean
+            Get
+                Return CType(Me("IsPfpVisible"),Boolean)
+            End Get
+            Set
+                Me("IsPfpVisible") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property IsUsernameVisible() As Boolean
+            Get
+                Return CType(Me("IsUsernameVisible"),Boolean)
+            End Get
+            Set
+                Me("IsUsernameVisible") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
