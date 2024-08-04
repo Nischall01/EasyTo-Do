@@ -43,6 +43,8 @@ Partial Class MainWindow
         Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
         Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
+        Me.I = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImBatman = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -315,22 +317,35 @@ Partial Class MainWindow
         'Username_ContextMenuStrip
         '
         Me.Username_ContextMenuStrip.BackColor = System.Drawing.Color.White
-        Me.Username_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Username_MenuStripItem_ChangeName, Me.Username_MenuStripItem_Empty})
+        Me.Username_ContextMenuStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.Username_MenuStripItem_ChangeName, Me.Username_MenuStripItem_Empty, Me.I})
         Me.Username_ContextMenuStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
         Me.Username_ContextMenuStrip.Name = "ContextMenuStrip1"
-        Me.Username_ContextMenuStrip.Size = New System.Drawing.Size(151, 48)
+        Me.Username_ContextMenuStrip.Size = New System.Drawing.Size(192, 92)
         '
         'Username_MenuStripItem_ChangeName
         '
         Me.Username_MenuStripItem_ChangeName.Name = "Username_MenuStripItem_ChangeName"
-        Me.Username_MenuStripItem_ChangeName.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_ChangeName.Size = New System.Drawing.Size(191, 22)
         Me.Username_MenuStripItem_ChangeName.Text = "Change Name"
         '
         'Username_MenuStripItem_Empty
         '
         Me.Username_MenuStripItem_Empty.Name = "Username_MenuStripItem_Empty"
-        Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(150, 22)
+        Me.Username_MenuStripItem_Empty.Size = New System.Drawing.Size(191, 22)
         Me.Username_MenuStripItem_Empty.Text = "Empty"
+        '
+        'I
+        '
+        Me.I.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ImBatman})
+        Me.I.Name = "I"
+        Me.I.Size = New System.Drawing.Size(191, 22)
+        Me.I.Text = "What the hell are you?"
+        '
+        'ImBatman
+        '
+        Me.ImBatman.Name = "ImBatman"
+        Me.ImBatman.Size = New System.Drawing.Size(180, 22)
+        Me.ImBatman.Text = "I'm Batman"
         '
         'MainWindow
         '
@@ -381,4 +396,6 @@ Partial Class MainWindow
     Friend WithEvents Username_Label As Label
     Friend WithEvents Button1 As Button
     Friend WithEvents Pfp_MenuStripItem_Default As ToolStripMenuItem
+    Friend WithEvents I As ToolStripMenuItem
+    Friend WithEvents ImBatman As ToolStripMenuItem
 End Class

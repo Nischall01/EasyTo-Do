@@ -149,6 +149,30 @@ Namespace My
                 Me("IsUsernameVisible") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property IsPfpDefault() As Boolean
+            Get
+                Return CType(Me("IsPfpDefault"),Boolean)
+            End Get
+            Set
+                Me("IsPfpDefault") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property ImBatman() As String
+            Get
+                Return CType(Me("ImBatman"),String)
+            End Get
+            Set
+                Me("ImBatman") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

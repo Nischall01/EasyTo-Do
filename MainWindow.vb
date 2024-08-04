@@ -257,24 +257,32 @@ Public Class MainWindow
             Pfp_MenuStripItem_Empty.Enabled = False
             Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
         ElseIf File.Exists(GetPfpPath()) Then
-            Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
-            If GetPfpPath() = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png") Then
+            If My.Settings.IsPfpDefault = True Then
+                Pfp_CircularPictureBox.Image = Image.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png"))
                 Pfp_MenuStripItem_Default.Checked = True
+                Pfp_MenuStripItem_Default.Enabled = False
                 Pfp_MenuStripItem_Empty.Checked = False
             Else
+                Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
                 Pfp_MenuStripItem_Default.Checked = False
                 Pfp_MenuStripItem_Empty.Checked = False
             End If
         End If
-
         If GetUsername() = Nothing Then
             Username_MenuStripItem_Empty.Checked = True
             Username_MenuStripItem_Empty.Enabled = False
             Username_Label.Text = "          "
             Username_Label.BorderStyle = BorderStyle.FixedSingle
         Else
-            Username_MenuStripItem_Empty.Enabled = True
             Username_Label.Text = GetUsername()
+            If My.Settings.Username = "I'm Batman" And My.Settings.IsPfpDefault = True Then
+                ImBatman.Checked = True
+                ImBatman.Enabled = False
+            Else
+                ImBatman.Checked = False
+                ImBatman.Enabled = True
+            End If
+            Username_MenuStripItem_Empty.Enabled = True
             Username_Label.BorderStyle = BorderStyle.None
         End If
     End Sub
@@ -302,6 +310,8 @@ Public Class MainWindow
             Pfp_MenuStripItem_Default.Checked = False
             Pfp_MenuStripItem_Default.Enabled = True
             My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
+
+            My.Settings.IsPfpDefault = False
         End If
     End Sub
 
@@ -313,15 +323,20 @@ Public Class MainWindow
         Pfp_MenuStripItem_Default.Checked = False
         Pfp_MenuStripItem_Default.Enabled = True
         My.Settings.PfpPath = Nothing
+
+        My.Settings.IsPfpDefault = False
     End Sub
 
     Private Sub Pfp_MenuStripItem_Default_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_Default.Click
         My.Settings.PfpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png")
         Pfp_CircularPictureBox.ImageLocation = My.Settings.PfpPath
+        Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
         Pfp_MenuStripItem_Empty.Enabled = True
         Pfp_MenuStripItem_Empty.Checked = False
         Pfp_MenuStripItem_Default.Checked = True
         Pfp_MenuStripItem_Default.Enabled = False
+
+        My.Settings.IsPfpDefault = True
     End Sub
 
     Private Sub Username_MenuStripItem_ChangeName_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_ChangeName.Click
@@ -336,6 +351,9 @@ Public Class MainWindow
             Username_MenuStripItem_Empty.Enabled = True
             Username_Label.Text = userInput
             Username_Label.BorderStyle = BorderStyle.None
+
+            ImBatman.Checked = False
+            ImBatman.Enabled = True
         End If
     End Sub
 
@@ -345,6 +363,37 @@ Public Class MainWindow
         Username_MenuStripItem_Empty.Checked = True
         Username_MenuStripItem_Empty.Enabled = False
         My.Settings.Username = Nothing
+
+
+        ImBatman.Checked = False
+        ImBatman.Enabled = True
+    End Sub
+
+    Private Sub ImBatman_Click(sender As Object, e As EventArgs) Handles ImBatman.Click
+        My.Settings.ImBatman = True
+
+        My.Settings.IsPfpDefault = True
+        My.Settings.PfpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png")
+        My.Settings.Username = "I'm Batman"
+        Username_Label.ResetText()
+        Username_Label.Text = My.Settings.Username
+
+        Pfp_CircularPictureBox.Image = Image.FromFile(My.Settings.PfpPath)
+
+        Pfp_MenuStripItem_Default.Checked = True
+        Pfp_MenuStripItem_Default.Enabled = False
+
+        Pfp_MenuStripItem_Empty.Checked = False
+
+
+        ImBatman.Checked = True
+        ImBatman.Enabled = False
+
+        Username_MenuStripItem_Empty.Checked = False
+        Username_MenuStripItem_Empty.Enabled = True
+
+        Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
+        Username_Label.BorderStyle = BorderStyle.None
     End Sub
 #End Region
 
