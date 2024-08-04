@@ -258,7 +258,13 @@ Public Class MainWindow
             Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
         ElseIf File.Exists(GetPfpPath()) Then
             Pfp_CircularPictureBox.Image = Image.FromFile(GetPfpPath())
-            Pfp_MenuStripItem_Empty.Enabled = True
+            If GetPfpPath() = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png") Then
+                Pfp_MenuStripItem_Default.Checked = True
+                Pfp_MenuStripItem_Empty.Checked = False
+            Else
+                Pfp_MenuStripItem_Default.Checked = False
+                Pfp_MenuStripItem_Empty.Checked = False
+            End If
         End If
 
         If GetUsername() = Nothing Then
@@ -293,6 +299,8 @@ Public Class MainWindow
             Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
             Pfp_MenuStripItem_Empty.Checked = False
             Pfp_MenuStripItem_Empty.Enabled = True
+            Pfp_MenuStripItem_Default.Checked = False
+            Pfp_MenuStripItem_Default.Enabled = True
             My.Settings.PfpPath = Pfp_OpenFileDialog.FileName
         End If
     End Sub
@@ -302,7 +310,18 @@ Public Class MainWindow
         Pfp_CircularPictureBox.BorderStyle = BorderStyle.FixedSingle
         Pfp_MenuStripItem_Empty.Checked = True
         Pfp_MenuStripItem_Empty.Enabled = False
+        Pfp_MenuStripItem_Default.Checked = False
+        Pfp_MenuStripItem_Default.Enabled = True
         My.Settings.PfpPath = Nothing
+    End Sub
+
+    Private Sub Pfp_MenuStripItem_Default_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_Default.Click
+        My.Settings.PfpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png")
+        Pfp_CircularPictureBox.ImageLocation = My.Settings.PfpPath
+        Pfp_MenuStripItem_Empty.Enabled = True
+        Pfp_MenuStripItem_Empty.Checked = False
+        Pfp_MenuStripItem_Default.Checked = True
+        Pfp_MenuStripItem_Default.Enabled = False
     End Sub
 
     Private Sub Username_MenuStripItem_ChangeName_Click(sender As Object, e As EventArgs) Handles Username_MenuStripItem_ChangeName.Click
@@ -474,26 +493,6 @@ Public Class MainWindow
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
-    End Sub
-
-    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
-
-    End Sub
-
-    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
-
-    End Sub
-
-    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
-
-    End Sub
-
-    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
-
-    End Sub
-
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-
     End Sub
 #End Region
 End Class
