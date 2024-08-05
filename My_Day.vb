@@ -647,8 +647,10 @@ Public Class My_Day
         DisableTaskProperties(True)
     End Sub
 
-    Private Sub LoseListItemFocus()
-        CheckedListBox_MyDay.SelectedIndex = -1
+    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
+        Me.ActiveControl = Nothing
+        LoseListItemFocus()
+        DisableTaskProperties(True)
     End Sub
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
@@ -807,16 +809,8 @@ Public Class My_Day
         End If
     End Sub
 
-    Private Sub SubTlpTaskProperties_SubTlpTaskFeatureButtons_Paint(sender As Object, e As PaintEventArgs) Handles SubTlpTaskProperties_SubTlpTaskFeatureButtons.Paint
-
-    End Sub
-
-    Private Sub MainTlp_SubTlpTaskProperties_Paint(sender As Object, e As PaintEventArgs) Handles MainTlp_SubTlpTaskProperties.Paint
-
-    End Sub
-
-    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
-
+    Private Sub LoseListItemFocus()
+        CheckedListBox_MyDay.SelectedIndex = -1
     End Sub
 
     Private Sub My_Day_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckedListBox_MyDay.KeyDown
