@@ -24,7 +24,7 @@ EasyTo-Do is a task management windows appliction designed especially for desk w
 
 # Download & Installation
 
-Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/latest) installer and run it. That's it.
+Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/latest) installer and run it. That's it 🎉️. It is EasyTo-Do.
 
 # How to Use EasyTo-Do
 
@@ -36,4 +36,20 @@ Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/lat
 ### Expanding/Collapsing Task Properties
 
 * Right-click inside the Task List Box: Right-click anywhere inside the task list box to expand or collapse task properties.
+
+### Adding a Task
+
+* Write down the task in the bottom text box and press Enter to add a new task to the list.
+
+### Deleting a Task
+
+* Select the task you want to delete. Click the Trash icon within the Task Properties or Simply press the Delete key to delete the task.
+
+### Adding Reminder
+
+* Left click the 'Add Reminder' button: Make sure the Task properties is expanded and the task is selected. Left-click the 'Add Reminder' button within the Task Properties, set your desired settings, and click the 'Set' button or press Enter to add a reminder.
+
+### Removing Reminder
+
+* Right click the 'Add Reminder' button: Make sure the Task properties is expanded and the task is selected. If the selected task has a reminder set, the reminder time will be displayed on the button. Right click the button and click the 'Remove' popup option to remove the reminder.
 
