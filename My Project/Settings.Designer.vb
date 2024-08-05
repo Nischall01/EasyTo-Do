@@ -164,10 +164,10 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property ImBatman() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property ImBatman() As Boolean
             Get
-                Return CType(Me("ImBatman"),String)
+                Return CType(Me("ImBatman"),Boolean)
             End Get
             Set
                 Me("ImBatman") = value

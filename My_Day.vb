@@ -590,11 +590,15 @@ Public Class My_Day
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
+        Dim DeletedIndex As Integer = CheckedListBox_MyDay.SelectedIndex
         DeleteTaskFromTable_My_Day(CheckedListBox_MyDay.SelectedIndex)
 
-        ' DecrementCheckedListBoxHeight() ' Decrement
-
-        DisableTaskProperties(True)
+        If DeletedIndex > 0 Then
+            CheckedListBox_MyDay.Focus()
+            CheckedListBox_MyDay.SelectedIndex = DeletedIndex - 1
+        ElseIf DeletedIndex = 0 Then
+            DisableTaskProperties(True)
+        End If
     End Sub
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
@@ -609,7 +613,6 @@ Public Class My_Day
     End Sub
 
     Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
-
         ' Check if Enter key is pressed
         If e.KeyCode = Keys.Enter Then
             ' Check if Shift key is also pressed
@@ -814,5 +817,13 @@ Public Class My_Day
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
 
+    End Sub
+
+    Private Sub My_Day_KeyDown(sender As Object, e As KeyEventArgs) Handles CheckedListBox_MyDay.KeyDown
+        If e.KeyValue = Keys.Delete Then
+            If CheckedListBox_MyDay.SelectedIndex <> -1 Then
+                Button_DeleteTask_Click(Nothing, Nothing)
+            End If
+        End If
     End Sub
 End Class
