@@ -67,7 +67,7 @@
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>to-do-list %283%29.ico</ApplicationIcon>
+    <ApplicationIcon>EasyToDo_Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -248,6 +248,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EasyToDo_Icon.ico" />
     <Content Include="Icons\calendar %283%29.png" />
     <None Include="Icons\EasyToDo_Icon.ico" />
     <Content Include="Icons\repeat %284%29.png" />
