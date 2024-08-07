@@ -1,2 +1,2 @@
-﻿CREATE TABLE My_Day (Id int IDENTITY(1,1) NOT NULL,Task_Index int NOT NULL,Task nvarchar (255) NULL,Task_Description nvarchar (4000) NULL,Entry_DateTime datetime NULL,Done bit NULL DEFAULT 0,Important bit NULL DEFAULT 0,Reminder_DateTime datetime NULL);
-ALTER TABLE [My_Day] ADD CONSTRAINT  [My_Day_PK] PRIMARY KEY ([Id]);
+﻿CREATE TABLE Tasks (TaskID int IDENTITY(1,1) NOT NULL,Task nvarchar (256) NOT NULL,Description ntext NULL,IsDone bit NULL DEFAULT 0,IsImportant bit NULL DEFAULT 0,DueDate datetime NULL,Section nvarchar (256) NOT NULL,AddedDateTime datetime NOT NULL);
+ALTER TABLE [Tasks] ADD CONSTRAINT  [Tasks_PK] PRIMARY KEY ([TaskID]);

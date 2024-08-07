@@ -207,6 +207,7 @@
     <Compile Include="Settings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="TaskItem.vb" />
     <Compile Include="Tasks.Designer.vb">
       <DependentUpon>Tasks.vb</DependentUpon>
     </Compile>

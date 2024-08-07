@@ -27,16 +27,15 @@ Partial Class Tasks
         Me.Tasks_Label = New System.Windows.Forms.Label()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
+        Me.Tasks_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Delete_Button = New System.Windows.Forms.Button()
+        Me.Description_Button = New System.Windows.Forms.Button()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
         CType(Me.PictureBox_FormIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MainTlp.SuspendLayout()
         Me.SubTableLayoutPanel_Bottom.SuspendLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'SubTableLayoutPanel_Top
@@ -87,9 +86,9 @@ Partial Class Tasks
         Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 1
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.MainTlp.Controls.Add(Me.Tasks_CheckedListBox, 0, 1)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
-        Me.MainTlp.Controls.Add(Me.DataGridView1, 0, 1)
         Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainTlp.Location = New System.Drawing.Point(0, 0)
         Me.MainTlp.Name = "MainTlp"
@@ -100,6 +99,19 @@ Partial Class Tasks
         Me.MainTlp.Size = New System.Drawing.Size(784, 461)
         Me.MainTlp.TabIndex = 1
         '
+        'Tasks_CheckedListBox
+        '
+        Me.Tasks_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Tasks_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.Tasks_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Tasks_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tasks_CheckedListBox.ForeColor = System.Drawing.Color.White
+        Me.Tasks_CheckedListBox.Location = New System.Drawing.Point(6, 92)
+        Me.Tasks_CheckedListBox.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Tasks_CheckedListBox.Name = "Tasks_CheckedListBox"
+        Me.Tasks_CheckedListBox.Size = New System.Drawing.Size(772, 299)
+        Me.Tasks_CheckedListBox.TabIndex = 9
+        '
         'SubTableLayoutPanel_Bottom
         '
         Me.SubTableLayoutPanel_Bottom.ColumnCount = 3
@@ -107,8 +119,8 @@ Partial Class Tasks
         Me.SubTableLayoutPanel_Bottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTableLayoutPanel_Bottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.TextBox_AddNewTask, 1, 0)
-        Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Button1, 0, 0)
-        Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Button2, 2, 0)
+        Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Delete_Button, 2, 0)
+        Me.SubTableLayoutPanel_Bottom.Controls.Add(Me.Description_Button, 0, 0)
         Me.SubTableLayoutPanel_Bottom.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTableLayoutPanel_Bottom.Location = New System.Drawing.Point(3, 394)
         Me.SubTableLayoutPanel_Bottom.Name = "SubTableLayoutPanel_Bottom"
@@ -130,40 +142,23 @@ Partial Class Tasks
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 5
         '
-        'Button1
+        'Delete_Button
         '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(109, 2)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(10, 2, 10, 10)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 3
-        Me.Button1.Text = "Refresh"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.Delete_Button.Location = New System.Drawing.Point(586, 3)
+        Me.Delete_Button.Name = "Delete_Button"
+        Me.Delete_Button.Size = New System.Drawing.Size(75, 23)
+        Me.Delete_Button.TabIndex = 6
+        Me.Delete_Button.Text = "Delete"
+        Me.Delete_Button.UseVisualStyleBackColor = True
         '
-        'Button2
+        'Description_Button
         '
-        Me.Button2.Location = New System.Drawing.Point(593, 2)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(10, 2, 10, 10)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 23)
-        Me.Button2.TabIndex = 4
-        Me.Button2.Text = "Delete All"
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'DataGridView1
-        '
-        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.DataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DataGridView1.Location = New System.Drawing.Point(6, 92)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(772, 299)
-        Me.DataGridView1.TabIndex = 2
+        Me.Description_Button.Location = New System.Drawing.Point(3, 3)
+        Me.Description_Button.Name = "Description_Button"
+        Me.Description_Button.Size = New System.Drawing.Size(75, 23)
+        Me.Description_Button.TabIndex = 7
+        Me.Description_Button.Text = "Description"
+        Me.Description_Button.UseVisualStyleBackColor = True
         '
         'Tasks
         '
@@ -179,7 +174,6 @@ Partial Class Tasks
         Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.ResumeLayout(False)
         Me.SubTableLayoutPanel_Bottom.PerformLayout()
-        CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -188,9 +182,9 @@ Partial Class Tasks
     Friend WithEvents PictureBox_FormIcon As PictureBox
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
-    Friend WithEvents Button1 As Button
-    Friend WithEvents DataGridView1 As DataGridView
-    Friend WithEvents Button2 As Button
     Friend WithEvents Tasks_Label As Label
     Friend WithEvents TextBox_AddNewTask As TextBox
+    Friend WithEvents Tasks_CheckedListBox As CheckedListBox
+    Friend WithEvents Delete_Button As Button
+    Friend WithEvents Description_Button As Button
 End Class

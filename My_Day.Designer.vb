@@ -26,7 +26,6 @@ Partial Class My_Day
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(My_Day))
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.MainTlp_SubTlpTaskView = New System.Windows.Forms.TableLayoutPanel()
-        Me.CheckedListBox_MyDay = New System.Windows.Forms.CheckedListBox()
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
         Me.AddNewTask_TextBox = New System.Windows.Forms.TextBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
@@ -35,6 +34,8 @@ Partial Class My_Day
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DayDate_Label = New System.Windows.Forms.Label()
         Me.Time_Label = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.MyDay_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
         Me.TaskTitle_TextBox = New System.Windows.Forms.TextBox()
         Me.Button_DeleteTask = New System.Windows.Forms.Button()
@@ -59,6 +60,7 @@ Partial Class My_Day
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -87,9 +89,9 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.Transparent
         Me.MainTlp_SubTlpTaskView.ColumnCount = 1
         Me.MainTlp_SubTlpTaskView.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTlp_SubTlpTaskView.Controls.Add(Me.CheckedListBox_MyDay, 0, 1)
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpBottom, 0, 2)
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpTop, 0, 0)
+        Me.MainTlp_SubTlpTaskView.Controls.Add(Me.TableLayoutPanel2, 0, 1)
         Me.MainTlp_SubTlpTaskView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainTlp_SubTlpTaskView.Location = New System.Drawing.Point(0, 0)
         Me.MainTlp_SubTlpTaskView.Margin = New System.Windows.Forms.Padding(0)
@@ -101,19 +103,6 @@ Partial Class My_Day
         Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.MainTlp_SubTlpTaskView.Size = New System.Drawing.Size(588, 461)
         Me.MainTlp_SubTlpTaskView.TabIndex = 6
-        '
-        'CheckedListBox_MyDay
-        '
-        Me.CheckedListBox_MyDay.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CheckedListBox_MyDay.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CheckedListBox_MyDay.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckedListBox_MyDay.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckedListBox_MyDay.ForeColor = System.Drawing.Color.White
-        Me.CheckedListBox_MyDay.Location = New System.Drawing.Point(6, 92)
-        Me.CheckedListBox_MyDay.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.CheckedListBox_MyDay.Name = "CheckedListBox_MyDay"
-        Me.CheckedListBox_MyDay.Size = New System.Drawing.Size(576, 299)
-        Me.CheckedListBox_MyDay.TabIndex = 7
         '
         'SubTlpTaskView_SubTlpBottom
         '
@@ -228,6 +217,33 @@ Partial Class My_Day
         Me.Time_Label.Size = New System.Drawing.Size(37, 17)
         Me.Time_Label.TabIndex = 5
         Me.Time_Label.Text = "Time"
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.ColumnCount = 1
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.MyDay_CheckedListBox, 0, 0)
+        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 95)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(582, 293)
+        Me.TableLayoutPanel2.TabIndex = 6
+        '
+        'MyDay_CheckedListBox
+        '
+        Me.MyDay_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.MyDay_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.MyDay_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.MyDay_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MyDay_CheckedListBox.ForeColor = System.Drawing.Color.White
+        Me.MyDay_CheckedListBox.Location = New System.Drawing.Point(0, 0)
+        Me.MyDay_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.MyDay_CheckedListBox.Name = "MyDay_CheckedListBox"
+        Me.MyDay_CheckedListBox.Size = New System.Drawing.Size(582, 293)
+        Me.MyDay_CheckedListBox.TabIndex = 8
         '
         'MainTlp_SubTlpTaskProperties
         '
@@ -497,6 +513,7 @@ Partial Class My_Day
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ResumeLayout(False)
@@ -524,7 +541,6 @@ Partial Class My_Day
     Friend WithEvents CustomButton_Repeat As CustomButton_2
     Friend WithEvents Tlp_ImportantButton As TableLayoutPanel
     Friend WithEvents Button_DeleteTask As Button
-    Friend WithEvents CheckedListBox_MyDay As CheckedListBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ReminderTimer As Timer
@@ -536,4 +552,6 @@ Partial Class My_Day
     Friend WithEvents Panel1 As Panel
     Friend WithEvents TaskDescription_RichTextBox As RichTextBox
     Friend WithEvents TaskTitle_TextBox As TextBox
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents MyDay_CheckedListBox As CheckedListBox
 End Class

@@ -551,30 +551,10 @@ Public Class MainWindow
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        MyDayInstance.CheckedListBox_MyDay.SelectedIndex = -1
+        MyDayInstance.MyDay_CheckedListBox.SelectedIndex = -1
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
-    End Sub
-
-    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
-
-    End Sub
-
-    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
-
-    End Sub
-
-    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
-
-    End Sub
-
-    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
-
-    End Sub
-
-    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
-
     End Sub
 #End Region
 End Class
