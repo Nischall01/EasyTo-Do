@@ -12,7 +12,7 @@
 
     Private SelectedHour As String = String.Empty
 
-    Private UserDefaultTimeFormat As String
+    Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
 
     Private CurrentDateTime As DateTime = DateTime.Now
     Private IsAM As Boolean
@@ -20,14 +20,8 @@
 
     Private dt As New DataTable()
 
-    Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
+    Private connectionString As String = My.Settings.ConnectionString
 #Region "Form Load"
-    Public Sub New()
-        InitializeComponent()
-
-        UserDefaultTimeFormat = My.Settings.TimeFormat
-    End Sub
-
     Private Sub AddReminder_Time__Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
         LoadTable() ' Loads a Data Table to extract the state of reminders
@@ -126,7 +120,7 @@
     '            isDragging = False
     '        End If
     '    End Sub
-#End Region ' Diabled
+#End Region ' Disabled
 
 #Region "Database Table"
     Private Sub LoadTable()

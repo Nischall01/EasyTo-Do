@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Module ColorScheme
+Module SetColorScheme
 
 #Region "Scheme Methods"
     Public Sub Light()
@@ -91,7 +91,7 @@ Module ColorScheme
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.BackColor = Color.White
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.MyDayInstance.MainTlp.BackColor = Color.FromArgb(35, 35, 35)
+                MainWindow.MyDayInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.MyDayInstance.MyDay_Label.ForeColor = Color.White
                 MainWindow.MyDayInstance.DayDate_Label.ForeColor = Color.White
                 MainWindow.MyDayInstance.Time_Label.ForeColor = Color.White
@@ -117,7 +117,7 @@ Module ColorScheme
                 MainWindow.DailyInstance.TextBox_AddNewTask.BackColor = Color.White
                 MainWindow.DailyInstance.TextBox_AddNewTask.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.DailyInstance.MainTlp.BackColor = Color.FromArgb(35, 35, 35)
+                MainWindow.DailyInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.DailyInstance.Daily_Label.ForeColor = Color.White
                 MainWindow.DailyInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.DailyInstance.TextBox_AddNewTask.ForeColor = Color.White
@@ -133,7 +133,7 @@ Module ColorScheme
                 MainWindow.ImportantInstance.TextBox_AddNewTask.BackColor = Color.White
                 MainWindow.ImportantInstance.TextBox_AddNewTask.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.ImportantInstance.MainTlp.BackColor = Color.FromArgb(35, 35, 35)
+                MainWindow.ImportantInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.ImportantInstance.Important_Label.ForeColor = Color.White
                 MainWindow.ImportantInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.ImportantInstance.TextBox_AddNewTask.ForeColor = Color.White
@@ -149,7 +149,7 @@ Module ColorScheme
                 MainWindow.PlannedInstance.TextBox_AddNewTask.BackColor = Color.White
                 MainWindow.PlannedInstance.TextBox_AddNewTask.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.PlannedInstance.MainTlp.BackColor = Color.FromArgb(35, 35, 35)
+                MainWindow.PlannedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.PlannedInstance.Planned_Label.ForeColor = Color.White
                 MainWindow.PlannedInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.PlannedInstance.TextBox_AddNewTask.ForeColor = Color.White
@@ -165,7 +165,7 @@ Module ColorScheme
                 MainWindow.TasksInstance.TextBox_AddNewTask.BackColor = Color.White
                 MainWindow.TasksInstance.TextBox_AddNewTask.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.TasksInstance.MainTlp.BackColor = Color.FromArgb(35, 35, 35)
+                MainWindow.TasksInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.TasksInstance.Tasks_Label.ForeColor = Color.White
                 MainWindow.TasksInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.TasksInstance.TextBox_AddNewTask.ForeColor = Color.White

@@ -1,7 +1,12 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Threading
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement
+
+Imports System.IO
+Imports Newtonsoft.Json
 
 Public Class Settings
+
     Private TimeFormatAtStart As String
 
     Public Sub New()
@@ -35,7 +40,7 @@ Public Class Settings
             CheckBox2.ForeColor = Color.Black
 
             My.Settings.ColorScheme = "Light"
-            ColorScheme.Light()
+            SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
             Me.BackColor = Color.FromArgb(35, 35, 35)
 
@@ -61,10 +66,10 @@ Public Class Settings
             CheckBox2.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
-            ColorScheme.Dark()
+            SetColorScheme.Dark()
         Else
             My.Settings.ColorScheme = "Custom"
-            ColorScheme.Custom()
+            SetColorScheme.Custom()
         End If
     End Sub
 

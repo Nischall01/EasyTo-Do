@@ -9,9 +9,10 @@ Public Class My_Day
 
     Private AddReminderButtonPlaceholderText As String = "Add Reminder"
     Private RepeatButtonPlaceholderText As String = "Repeat"
+    Private DueDatePlaceHolderText As String = "Add Due Date"
     Private DescriptionPlaceholderText As String = "Add Description..."
 
-    Private UserDefaultTimeFormat As String
+    Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
 
     ' Image cache variables
     Private UncheckedImportantIcon As Image
@@ -26,7 +27,7 @@ Public Class My_Day
     Private Task As String
     Private Done As Boolean
 
-    Private connectionString As String = "Data Source=To_Do.sdf;Persist Security Info=False;"
+    Private connectionString As String = My.Settings.ConnectionString
 
     <DllImport("user32.dll")>
     Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
@@ -34,12 +35,6 @@ Public Class My_Day
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "Initialization"
-    Public Sub New()
-        InitializeComponent()
-
-        UserDefaultTimeFormat = My.Settings.TimeFormat
-    End Sub
-
     Private Sub InitializeMy_day()
 
         AddNewTask_TextBox.Focus()
@@ -481,7 +476,7 @@ Public Class My_Day
         Return TaskDescription
     End Function
 
-    Public Function GetReminder() As String
+    Private Function GetReminder() As String
         Dim TaskId As Integer = CheckedListBox_MyDay.SelectedIndex
         Dim TaskReminder As String = String.Empty
 
@@ -501,6 +496,28 @@ Public Class My_Day
             End If
         Next
         Return TaskReminder
+    End Function
+
+    Private Function GetDueDate() As String
+        Dim TaskId As Integer = CheckedListBox_MyDay.SelectedIndex
+        Dim TaskDueDate As String = String.Empty
+
+        For Each row As DataRow In dt.Rows
+            If row("Task_Index") = TaskId Then
+                If IsDBNull(row("DueDate")) Then
+                    Return String.Empty
+                Else
+                    Dim reminderDueDate As DateTime = Convert.ToDateTime(row("DueDate"))
+                    If UserDefaultTimeFormat = "12" Then
+                        TaskDueDate = reminderDueDate
+                    Else
+                        TaskDueDate = reminderDueDate
+                    End If
+                End If
+                Exit For
+            End If
+        Next
+        Return TaskDueDate
     End Function
 #End Region
 
@@ -564,6 +581,11 @@ Public Class My_Day
                 CustomButton_AddReminder.ButtonText = AddReminderButtonPlaceholderText
             End If
 
+            If GetDueDate() <> String.Empty Then
+                CustomButton_DueDate.ButtonText = GetDueDate()
+            Else
+                CustomButton_DueDate.ButtonText = DueDatePlaceHolderText
+            End If
         End If
     End Sub
 
@@ -819,5 +841,31 @@ Public Class My_Day
                 Button_DeleteTask_Click(Nothing, Nothing)
             End If
         End If
+    End Sub
+
+    Private Sub CustomButton_DueDate_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_DueDate.Click
+        If e.Button = MouseButtons.Left Then
+            Dim DueDateInstance As New DueDate With {
+                .DueDate_SelectedTaskIndex = CheckedListBox_MyDay.SelectedIndex
+            }
+            DueDateInstance.ShowDialog()
+            DueDateInstance.BringToFront()
+            LoadTasksToCheckedListView()
+            If CheckedListBox_MyDay.Items.Count > 0 Then
+                CheckedListBox_MyDay.SelectedIndex = DueDateInstance.DueDate_SelectedTaskIndex
+                CheckedListBox_MyDay.Focus()
+            End If
+            DueDateInstance.Dispose()
+        ElseIf e.Button = MouseButtons.Right Then
+
+        End If
+    End Sub
+
+    Private Sub CustomButton_DueDate_Click(sender As Object, e As EventArgs) Handles CustomButton_DueDate.Click
+
+    End Sub
+
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
+
     End Sub
 End Class

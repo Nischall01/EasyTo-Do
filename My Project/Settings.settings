@@ -32,5 +32,8 @@
     <Setting Name="ImBatman" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="ConnectionString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=To_Do.sdf;Persist Security Info=False;</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

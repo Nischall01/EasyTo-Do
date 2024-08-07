@@ -173,6 +173,18 @@ Namespace My
                 Me("ImBatman") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=To_Do.sdf;Persist Security Info=False;")>  _
+        Public Property ConnectionString() As String
+            Get
+                Return CType(Me("ConnectionString"),String)
+            End Get
+            Set
+                Me("ConnectionString") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
@@ -184,9 +196,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.EasyTo_do.My.MySettings
+        Friend ReadOnly Property Settings() As Global.EasyTo_Do.My.MySettings
             Get
-                Return Global.EasyTo_do.My.MySettings.Default
+                Return Global.EasyTo_Do.My.MySettings.Default
             End Get
         End Property
     End Module

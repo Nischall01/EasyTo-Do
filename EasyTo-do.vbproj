@@ -6,9 +6,9 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B51D5E84-5AF1-4532-A20E-99060E6DB60B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>EasyTo_do.My.MyApplication</StartupObject>
-    <RootNamespace>EasyTo_do</RootNamespace>
-    <AssemblyName>EasyTo-do</AssemblyName>
+    <StartupObject>EasyTo_Do.My.MyApplication</StartupObject>
+    <RootNamespace>EasyTo_Do</RootNamespace>
+    <AssemblyName>EasyTo-Do</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -25,9 +25,10 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -37,7 +38,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>EasyTo-do.xml</DocumentationFile>
+    <DocumentationFile>EasyTo-Do.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -48,7 +49,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>EasyTo-do.xml</DocumentationFile>
+    <DocumentationFile>EasyTo-Do.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -69,7 +70,22 @@
   <PropertyGroup>
     <ApplicationIcon>EasyToDo_Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>69ECF41DD2C1399CC8CF417BC77E118F7ED89516</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>EasyTo-do_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -131,6 +147,12 @@
     <Compile Include="Daily.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DueDate.Designer.vb">
+      <DependentUpon>DueDate.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DueDate.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
@@ -150,7 +172,7 @@
       <DependentUpon>MainWindow.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ColorScheme.vb" />
+    <Compile Include="SetColorScheme.vb" />
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -205,6 +227,9 @@
     <EmbeddedResource Include="Daily.resx">
       <DependentUpon>Daily.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DueDate.resx">
+      <DependentUpon>DueDate.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
@@ -248,6 +273,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Defaults\DefaultPfp.png" />
     <Content Include="EasyToDo_Icon.ico" />
     <Content Include="Icons\calendar %283%29.png" />
     <None Include="Icons\EasyToDo_Icon.ico" />
@@ -258,8 +284,6 @@
     <None Include="Resources\3.png" />
     <None Include="Resources\1.png" />
     <None Include="Resources\2.png" />
-    <Content Include="to-do-list %283%29.ico" />
-    <Content Include="To_Do.sdf" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -273,5 +297,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

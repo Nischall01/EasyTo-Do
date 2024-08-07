@@ -42,9 +42,9 @@ Partial Class My_Day
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
-        Me.CustomButton_DueDate = New EasyTo_do.CustomButton_2()
-        Me.CustomButton_Repeat = New EasyTo_do.CustomButton_2()
-        Me.CustomButton_AddReminder = New EasyTo_do.CustomButton_2()
+        Me.CustomButton_DueDate = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TaskDescription_RichTextBox = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
@@ -166,11 +166,11 @@ Partial Class My_Day
         '
         Me.MyDay_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
         Me.MyDay_Label.AutoSize = True
-        Me.MyDay_Label.Font = New System.Drawing.Font("Yu Gothic UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MyDay_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MyDay_Label.ForeColor = System.Drawing.Color.White
-        Me.MyDay_Label.Location = New System.Drawing.Point(78, 24)
+        Me.MyDay_Label.Location = New System.Drawing.Point(78, 25)
         Me.MyDay_Label.Name = "MyDay_Label"
-        Me.MyDay_Label.Size = New System.Drawing.Size(110, 37)
+        Me.MyDay_Label.Size = New System.Drawing.Size(120, 36)
         Me.MyDay_Label.TabIndex = 6
         Me.MyDay_Label.Text = "My Day"
         '
@@ -207,12 +207,12 @@ Partial Class My_Day
         '
         Me.DayDate_Label.Anchor = System.Windows.Forms.AnchorStyles.Bottom
         Me.DayDate_Label.AutoSize = True
-        Me.DayDate_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DayDate_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.DayDate_Label.ForeColor = System.Drawing.Color.White
-        Me.DayDate_Label.Location = New System.Drawing.Point(82, 17)
+        Me.DayDate_Label.Location = New System.Drawing.Point(85, 20)
         Me.DayDate_Label.Margin = New System.Windows.Forms.Padding(3)
         Me.DayDate_Label.Name = "DayDate_Label"
-        Me.DayDate_Label.Size = New System.Drawing.Size(41, 20)
+        Me.DayDate_Label.Size = New System.Drawing.Size(36, 17)
         Me.DayDate_Label.TabIndex = 4
         Me.DayDate_Label.Text = "Date"
         '
@@ -220,12 +220,12 @@ Partial Class My_Day
         '
         Me.Time_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.Time_Label.AutoSize = True
-        Me.Time_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 11.25!, System.Drawing.FontStyle.Bold)
+        Me.Time_Label.Font = New System.Drawing.Font("Yu Gothic UI Semibold", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Time_Label.ForeColor = System.Drawing.Color.White
-        Me.Time_Label.Location = New System.Drawing.Point(82, 43)
+        Me.Time_Label.Location = New System.Drawing.Point(84, 43)
         Me.Time_Label.Margin = New System.Windows.Forms.Padding(3)
         Me.Time_Label.Name = "Time_Label"
-        Me.Time_Label.Size = New System.Drawing.Size(42, 20)
+        Me.Time_Label.Size = New System.Drawing.Size(37, 17)
         Me.Time_Label.TabIndex = 5
         Me.Time_Label.Text = "Time"
         '
@@ -292,11 +292,11 @@ Partial Class My_Day
         Me.Label_ADT.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Label_ADT.AutoSize = True
         Me.Label_ADT.BackColor = System.Drawing.Color.Transparent
-        Me.Label_ADT.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label_ADT.Font = New System.Drawing.Font("Leelawadee UI", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label_ADT.ForeColor = System.Drawing.Color.Snow
-        Me.Label_ADT.Location = New System.Drawing.Point(58, 66)
+        Me.Label_ADT.Location = New System.Drawing.Point(55, 65)
         Me.Label_ADT.Name = "Label_ADT"
-        Me.Label_ADT.Size = New System.Drawing.Size(80, 9)
+        Me.Label_ADT.Size = New System.Drawing.Size(85, 11)
         Me.Label_ADT.TabIndex = 2
         Me.Label_ADT.Text = "Added Date and Time:"
         '
@@ -320,11 +320,11 @@ Partial Class My_Day
         Me.Label_TaskEntryDateTime.Anchor = System.Windows.Forms.AnchorStyles.Top
         Me.Label_TaskEntryDateTime.AutoSize = True
         Me.Label_TaskEntryDateTime.BackColor = System.Drawing.Color.Transparent
-        Me.Label_TaskEntryDateTime.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label_TaskEntryDateTime.Font = New System.Drawing.Font("Microsoft YaHei", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label_TaskEntryDateTime.ForeColor = System.Drawing.Color.Snow
-        Me.Label_TaskEntryDateTime.Location = New System.Drawing.Point(93, 84)
+        Me.Label_TaskEntryDateTime.Location = New System.Drawing.Point(92, 84)
         Me.Label_TaskEntryDateTime.Name = "Label_TaskEntryDateTime"
-        Me.Label_TaskEntryDateTime.Size = New System.Drawing.Size(9, 12)
+        Me.Label_TaskEntryDateTime.Size = New System.Drawing.Size(11, 14)
         Me.Label_TaskEntryDateTime.TabIndex = 3
         Me.Label_TaskEntryDateTime.Text = "-"
         '

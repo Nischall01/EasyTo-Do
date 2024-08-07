@@ -1,12 +1,15 @@
 ﻿Imports System.Windows.Forms
 Imports System.Drawing
+'Imports System.Text.json
 Imports System.IO
+Imports Newtonsoft.Json
+Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
     ' Constants
     Private Const CollapsedSidebarWidth As Integer = 50
     Private Const ExpandedSidebarWidth As Integer = 200
-    Private Const MaxSidebarWidth As Integer = 350
+    Private Const MaxSidebarWidth As Integer = 333
 
     ' Fields
     Private PfpLastEventTime As DateTime
@@ -39,6 +42,8 @@ Public Class MainWindow
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
         InitializeApp()
+
+
     End Sub
 #End Region
 
@@ -74,13 +79,13 @@ Public Class MainWindow
     Private Sub LoadSettings()
         Select Case My.Settings.ColorScheme
             Case "Light"
-                ColorScheme.Light()
+                SetColorScheme.Light()
                 SettingsInstance.ColorScheme_Light_RadioBtn.Checked = True
             Case "Dark"
-                ColorScheme.Dark()
+                SetColorScheme.Dark()
                 SettingsInstance.ColorScheme_Dark_RadioBtn.Checked = True
             Case "Custom"
-                ColorScheme.Custom()
+                SetColorScheme.Custom()
                 SettingsInstance.ColorScheme_Custom_RadioBtn.Checked = True
         End Select
 
@@ -239,7 +244,9 @@ Public Class MainWindow
             Pfp_CircularPictureBox.Width = 57
             Pfp_CircularPictureBox.Height = 57
 
-            Username_Label.Show()
+            If My.Settings.IsUsernameVisible = True Then
+                Username_Label.Show()
+            End If
         Else
             Pfp_CircularPictureBox.Width = 42
             Pfp_CircularPictureBox.Height = 42
@@ -548,6 +555,26 @@ Public Class MainWindow
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
+    End Sub
+
+    Private Sub CustomButton5_Click(sender As Object, e As EventArgs) Handles CustomButton5.Click
+
+    End Sub
+
+    Private Sub CustomButton4_Click(sender As Object, e As EventArgs) Handles CustomButton4.Click
+
+    End Sub
+
+    Private Sub CustomButton3_Click(sender As Object, e As EventArgs) Handles CustomButton3.Click
+
+    End Sub
+
+    Private Sub CustomButton2_Click(sender As Object, e As EventArgs) Handles CustomButton2.Click
+
+    End Sub
+
+    Private Sub CustomButton1_Click(sender As Object, e As EventArgs) Handles CustomButton1.Click
+
     End Sub
 #End Region
 End Class
