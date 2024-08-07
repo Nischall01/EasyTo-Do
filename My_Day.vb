@@ -54,7 +54,7 @@ Public Class My_Day
         InitializeMy_day()
 
         'ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
-        'ReminderTimer.Start() ' Start the Timer
+        'ReminderTimer.Start() ' Start the Timers
 
         'NotifyIcon1.Text = "EasyTo_do"
         'NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
