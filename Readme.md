@@ -20,7 +20,7 @@ EasyTo-Do is a task management windows appliction designed especially for desk w
 
 * 12/24 Hour Time Format: Select between 12-hour and 24-hour time formats to suit your needs.
 
-### <u>Note: Still under development and not a v1.0.0 product yet, so many things are not functional.</u> See the [latest release.](https://github.com/Nischall01/EasyTo-do/releases/latest)
+### <i>(Note: Still under development and not a v1.0.0 product yet, so many things are not functional.)</i> See the [latest release.](https://github.com/Nischall01/EasyTo-do/releases/latest)
 
 # Download & Installation
 
