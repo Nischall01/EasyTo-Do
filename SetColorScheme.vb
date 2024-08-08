@@ -4,7 +4,7 @@ Module SetColorScheme
 
 #Region "Scheme Methods"
     Public Sub Light()
-        SideBar("Light")
+        SetSideBarScheme("Light")
         SetMyDayColorScheme("Light")
         SetDailyColorScheme("Light")
         SetImportantColorScheme("Light")
@@ -13,7 +13,7 @@ Module SetColorScheme
     End Sub
 
     Public Sub Dark()
-        SideBar("Dark")
+        SetSideBarScheme("Dark")
         SetMyDayColorScheme("Dark")
         SetDailyColorScheme("Dark")
         SetImportantColorScheme("Dark")
@@ -22,7 +22,7 @@ Module SetColorScheme
     End Sub
 
     Public Sub Custom()
-        SideBar("Custom")
+        SetSideBarScheme("Custom")
         SetMyDayColorScheme("Custom")
         SetDailyColorScheme("Custom")
         SetImportantColorScheme("Custom")
@@ -32,7 +32,7 @@ Module SetColorScheme
 #End Region
 
 #Region "Side Bar"
-    Private Sub SideBar(Scheme As String)
+    Private Sub SetSideBarScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
@@ -112,15 +112,15 @@ Module SetColorScheme
     Private Sub SetDailyColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
-                MainWindow.DailyInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
-                MainWindow.DailyInstance.Daily_Label.ForeColor = Color.Black
-                MainWindow.DailyInstance.TextBox_AddNewTask.BackColor = Color.White
-                MainWindow.DailyInstance.TextBox_AddNewTask.ForeColor = Color.Black
+                MainWindow.RepeatedInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
+                MainWindow.RepeatedInstance.Repeated_Label.ForeColor = Color.Black
+                MainWindow.RepeatedInstance.TextBox_AddNewTask.BackColor = Color.White
+                MainWindow.RepeatedInstance.TextBox_AddNewTask.ForeColor = Color.Black
             Case "Dark"
-                MainWindow.DailyInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
-                MainWindow.DailyInstance.Daily_Label.ForeColor = Color.White
-                MainWindow.DailyInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
-                MainWindow.DailyInstance.TextBox_AddNewTask.ForeColor = Color.White
+                MainWindow.RepeatedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.RepeatedInstance.Repeated_Label.ForeColor = Color.White
+                MainWindow.RepeatedInstance.TextBox_AddNewTask.BackColor = Color.FromArgb(45, 45, 45)
+                MainWindow.RepeatedInstance.TextBox_AddNewTask.ForeColor = Color.White
             Case "Custom"
 
         End Select
@@ -174,4 +174,5 @@ Module SetColorScheme
         End Select
     End Sub
 #End Region
+
 End Module

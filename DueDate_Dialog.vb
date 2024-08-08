@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-Public Class DueDate
+Public Class DueDate_Dialog
     Public DueDate_SelectedTaskIndex As Integer
     Private selectedDate As DateTime
 
@@ -40,7 +40,8 @@ Public Class DueDate
 
 #Region "Database and DataTables"
     Private Sub LoadTable()
-        Dim query As String = "SELECT * FROM My_Day ORDER BY Task_Index"
+        Dim query As String = "SELECT * FROM 
+ORDER BY Task_Index"
         Try
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)

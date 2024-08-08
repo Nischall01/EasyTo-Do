@@ -5,7 +5,7 @@ Imports System.Data.SqlServerCe
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 
-Public Class My_Day
+Public Class MyDay_View
     Private connectionString As String = My.Settings.ConnectionString
 
     Private dt As New DataTable()
@@ -27,6 +27,9 @@ Public Class My_Day
     Private IsTaskPropertiesVisible As Boolean = True
     Private Task As String
     Private Done As Boolean
+
+    Private SelectedTaskIndex As Integer = -1
+    Private SelectedTaskItem As TaskItem
 
     <DllImport("user32.dll")>
     Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
@@ -114,66 +117,17 @@ Public Class My_Day
 
     '---------------------------------------------------------------------------------Data Handling---------------------------------------------------------------------------------------------'
 #Region "Data Handling"
-    Private Sub LoadTasksToCheckedListView()
-        Dim query As String = "SELECT * FROM My_Day ORDER BY Task_Index"
-
-        MyDay_CheckedListBox.Items.Clear()
-        dt.Clear()
-
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    Using adapter As New SqlCeDataAdapter(command)
-                        connection.Open()
-                        adapter.Fill(dt)
-                    End Using
-                End Using
-            End Using
-
-            ' Fill CheckedListBox with data from the DataTable
-            For Each row As DataRow In dt.Rows
-                Dim itemText As String = row("Task").ToString()
-                Dim isChecked As Boolean = row("Done")
-                MyDay_CheckedListBox.Items.Add(itemText, isChecked)
-            Next
-        Catch ex As SqlCeException
-            MessageBox.Show("A SQL error occurred: " & ex.Message)
-        Catch ex As Exception
-            MessageBox.Show("An unexpected error occurred: " & ex.Message)
-        End Try
-    End Sub
-
-    Private Sub AddNewTaskToTable_My_Day(NewTask As String)
+    Private Sub AddNewTaskToMyDay(NewTask As String)
         Dim CurrentDateTime As DateTime = DateTime.Now
-        Dim newTaskIndex As Integer
 
-        ' Determine the next available Task_Index
-        Dim queryGetMaxIndex As String = "SELECT MAX(Task_Index) FROM My_Day"
-
-        Using connection As New SqlCeConnection(connectionString)
-            Using command As New SqlCeCommand(queryGetMaxIndex, connection)
-                Try
-                    connection.Open()
-                    Dim result = command.ExecuteScalar()
-                    newTaskIndex = If(result Is DBNull.Value, 0, Convert.ToInt32(result) + 1)
-                Catch ex As SqlCeException
-                    MessageBox.Show("SQL CE Error: " & ex.Message)
-                    Return
-                Catch ex As Exception
-                    MessageBox.Show("Unexpected Error: " & ex.Message)
-                    Return
-                End Try
-            End Using
-        End Using
-
-        ' Insert the new task with the determined Task_Index
-        Dim queryInsertTask As String = "INSERT INTO My_Day (Task, Entry_DateTime, Task_Index) VALUES (@Task, @Entry_DateTime, @TaskIndex)"
+        ' Insert the new task
+        Dim queryInsertTask As String = "INSERT INTO Tasks (Task, EntryDateTime, Section) VALUES (@Task, @EntryDateTime, @Section)"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(queryInsertTask, connection)
                 command.Parameters.AddWithValue("@Task", NewTask)
-                command.Parameters.AddWithValue("@Entry_DateTime", CurrentDateTime)
-                command.Parameters.AddWithValue("@TaskIndex", newTaskIndex)
+                command.Parameters.AddWithValue("@EntryDateTime", CurrentDateTime)
+                command.Parameters.AddWithValue("@Section", "MyDay")
 
                 Try
                     connection.Open()
@@ -193,28 +147,24 @@ Public Class My_Day
         End Using
 
         ' Reload the data to reflect changes
-        LoadTasksToCheckedListView()
-
-        ' Focus on added task after DataTable reload
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = newTaskIndex
-            MyDay_CheckedListBox.Focus()
-        End If
+        Views.RefreshTasks()
     End Sub
 
-    Private Sub HardResetTable_My_Day()
-        Dim dropTableQuery As String = "DROP TABLE My_Day"
-        Dim createTableQuery As String = "CREATE TABLE My_Day (
-                Id INT IDENTITY(1,1) NOT NULL,
-                Task_Index INT NOT NULL,
-                Task NVARCHAR(255) NULL,
-                Task_Description NVARCHAR(4000) NULL,
-                Entry_DateTime DATETIME NULL,
-                Done BIT NULL DEFAULT 0,
-                Important BIT NULL DEFAULT 0,
-                Reminder_DateTime DATETIME NULL,
-                CONSTRAINT My_Day_PK PRIMARY KEY (Id));"
-
+    Private Sub HardResetTableTasks()
+        Dim dropTableQuery As String = "DROP TABLE Tasks"
+        Dim createTableQuery As String = "
+                                            CREATE TABLE Tasks (
+                                            TaskID int IDENTITY(1,1) NOT NULL,
+                                            Task NVARCHAR (256) NOT NULL,Description NVARCHAR(4000) NULL,
+                                            IsDone bit NOT NULL DEFAULT 0,
+                                            IsImportant bit NOT NULL DEFAULT 0,
+                                            DueDate datetime NULL,Section NVARCHAR (256) NOT NULL,
+                                            EntryDateTime datetime NOT NULL,
+                                            IsRepeated bit NOT NULL DEFAULT 0,
+                                            RepeatedDays NVARCHAR (256) NULL);
+                                            ALTER TABLE [Tasks] 
+                                            ADD CONSTRAINT  [Tasks_PK] PRIMARY KEY ([TaskID]);
+                                         "
         Using connection As New SqlCeConnection(connectionString)
             Try
                 connection.Open()
@@ -247,62 +197,8 @@ Public Class My_Day
         End Using
 
         ' Reload the data to reflect changes
-        LoadTasksToCheckedListView()
+        LoadTasksToMyDay()
         DisableTaskProperties(True)
-    End Sub
-
-    Private Sub DeleteTaskFromTable_My_Day(TaskIndex As Integer)
-        ' The TaskIndex is used to find and delete the task
-        Dim countQuery As String = "SELECT COUNT(*) FROM My_Day"
-        Dim deleteQuery As String = "DELETE FROM My_Day WHERE Task_Index = @TaskIndex"
-        Dim updateQuery As String = "UPDATE My_Day SET Task_Index = Task_Index - 1 WHERE Task_Index > @TaskIndex"
-
-        Using connection As New SqlCeConnection(connectionString)
-            Try
-                connection.Open()
-
-                ' Begin a transaction
-                Using transaction = connection.BeginTransaction()
-                    Dim taskCount As Integer
-
-                    ' Check the number of tasks
-                    Using countCommand As New SqlCeCommand(countQuery, connection, transaction)
-                        taskCount = Convert.ToInt32(countCommand.ExecuteScalar())
-                    End Using
-
-                    ' If there's only one task, delete it and skip re-sequencing
-                    If taskCount = 1 Then
-                        HardResetTable_My_Day()
-                        Exit Sub
-                    Else
-                        ' Delete the task
-                        Using deleteCommand As New SqlCeCommand(deleteQuery, connection, transaction)
-                            deleteCommand.Parameters.AddWithValue("@TaskIndex", TaskIndex)
-                            deleteCommand.ExecuteNonQuery()
-                        End Using
-
-                        ' Re-sequence the Task_Index
-                        Using updateCommand As New SqlCeCommand(updateQuery, connection, transaction)
-                            updateCommand.Parameters.AddWithValue("@TaskIndex", TaskIndex)
-                            updateCommand.ExecuteNonQuery()
-                        End Using
-                    End If
-
-                    ' Commit the transaction
-                    transaction.Commit()
-                End Using
-
-            Catch ex As SqlCeException
-                ' Detailed SQL CE exception
-                MessageBox.Show("SQL CE Error: " & ex.Message)
-            Catch ex As Exception
-                ' General exception
-                MessageBox.Show("Unexpected Error: " & ex.Message)
-            Finally
-                connection.Close()
-            End Try
-        End Using
-        LoadTasksToCheckedListView()
     End Sub
 
     Private Sub UpdateTaskDescription(taskIndex As Integer, newDescription As String)
@@ -328,7 +224,7 @@ Public Class My_Day
                 End Try
             End Using
         End Using
-        LoadTasksToCheckedListView()
+        LoadTasksToMyDay()
 
         If MyDay_CheckedListBox.Items.Count > 0 Then
             MyDay_CheckedListBox.SelectedIndex = taskIndex
@@ -361,7 +257,7 @@ Public Class My_Day
             Exit Sub
         End If
         MyDay_CheckedListBox.Items.Add(NewMy_DayTask)
-        AddNewTaskToTable_My_Day(NewMy_DayTask)
+        AddNewTaskToMyDay(NewMy_DayTask)
 
         AddNewTask_TextBox.Clear()
         AddNewTask_TextBox.Focus()
@@ -391,20 +287,18 @@ Public Class My_Day
         End Try
     End Sub
 
-    Private Sub ImportantCheckChanged(TaskIndex As Integer, isChecked As Boolean)
-        'MsgBox("Item Index: " & itemIndex)
+    Private Sub ImportantCheckChanged(SelectedTaskID As Integer, isChecked As Boolean)
+        'MsgBox("Task ID: " & TaskID)
         'MsgBox("IsChecked: " & isChecked)
-
-        Dim Important As Integer = If(isChecked, 1, 0)
-
+        Dim IsImportant As Integer = If(isChecked, 1, 0)
         Try
             ' Update the database with the new 'Done' value
-            Dim query As String = "UPDATE My_Day SET Important = @Important WHERE Task_Index = @Task_Index"
+            Dim query As String = "UPDATE Tasks SET IsImportant = @IsImportant WHERE TaskID = @TaskID"
 
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@Task_Index", TaskIndex)
-                    command.Parameters.AddWithValue("@Important", Important)
+                    command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
+                    command.Parameters.AddWithValue("@IsImportant", IsImportant)
 
                     connection.Open()
                     command.ExecuteNonQuery()
@@ -415,25 +309,26 @@ Public Class My_Day
             MessageBox.Show("Error updating task status: " & ex.Message)
         End Try
 
-        LoadTasksToCheckedListView()
+        LoadTasksToMyDay()
+        MainWindow.ImportantInstance.LoadTasksToImportant()
+
         ' Retain Focus after DataTable Reload
         If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = TaskIndex
+            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
             MyDay_CheckedListBox.Focus()
         End If
     End Sub
 
     Private Function IsTaskImportant() As Boolean
-        Dim selectedIndex As Integer = MyDay_CheckedListBox.SelectedIndex
-        If selectedIndex < 0 Then
+        If SelectedTaskItem.ID < 0 Then
             Return False
         End If
 
         ' Find the task in the DataTable
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = selectedIndex Then
+            If row("TaskID") = SelectedTaskItem.ID Then
                 ' Check if the task is marked as important
-                If Convert.ToInt16(row("Important")) = 1 Then
+                If Convert.ToInt16(row("IsImportant")) = 1 Then
                     Return True
                 Else
                     Return False
@@ -445,15 +340,14 @@ Public Class My_Day
     End Function
 
     Private Function GetTaskEntryDateTime() As String
-        Dim TaskId As Integer = MyDay_CheckedListBox.SelectedIndex
         Dim TaskEntryDateTime As String = String.Empty
 
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = TaskId Then
+            If row("TaskID") = SelectedTaskItem.ID Then
                 If UserDefaultTimeFormat = "12" Then
-                    TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+                    TaskEntryDateTime = Convert.ToDateTime(row("EntryDateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
                 Else
-                    TaskEntryDateTime = Convert.ToDateTime(row("Entry_DateTime")).ToString("yyyy-MM-dd  |  HH:mm")
+                    TaskEntryDateTime = Convert.ToDateTime(row("EntryDateTime")).ToString("yyyy-MM-dd  |  HH:mm")
                 End If
                 Exit For
             End If
@@ -462,12 +356,11 @@ Public Class My_Day
     End Function
 
     Private Function GetTaskDescription() As String
-        Dim TaskId As Integer = MyDay_CheckedListBox.SelectedIndex
         Dim TaskDescription As String = String.Empty
 
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = TaskId Then
-                TaskDescription = row("Task_Description").ToString
+            If row("TaskID") = SelectedTaskItem.ID Then
+                TaskDescription = row("Description").ToString
                 Exit For
             End If
         Next
@@ -475,12 +368,11 @@ Public Class My_Day
     End Function
 
     Private Function GetReminder() As String
-        Dim TaskId As Integer = MyDay_CheckedListBox.SelectedIndex
         Dim TaskReminder As String = String.Empty
 
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = TaskId Then
-                If IsDBNull(row("Reminder_DateTime")) Then
+            If row("TaskID") = SelectedTaskItem.ID Then
+                If IsDBNull(row("ReminderDateTime")) Then
                     Return String.Empty
                 Else
                     Dim reminderDateTime As DateTime = Convert.ToDateTime(row("Reminder_DateTime"))
@@ -497,11 +389,10 @@ Public Class My_Day
     End Function
 
     Private Function GetDueDate() As String
-        Dim TaskId As Integer = MyDay_CheckedListBox.SelectedIndex
         Dim TaskDueDate As String = String.Empty
 
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = TaskId Then
+            If row("TaskID") = SelectedTaskItem.ID Then
                 If IsDBNull(row("DueDate")) Then
                     Return String.Empty
                 Else
@@ -546,7 +437,10 @@ Public Class My_Day
         End If
     End Sub
 
-    Private Sub CheckedListBox_MyDay_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MyDay_CheckedListBox.SelectedIndexChanged
+    Private Sub MyDay_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MyDay_CheckedListBox.SelectedIndexChanged
+        SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex
+        SelectedTaskItem = MyDay_CheckedListBox.SelectedItem
+
         If MyDay_CheckedListBox.SelectedIndex = -1 Then
             DisableTaskProperties(True)
             TaskTitle_TextBox.Clear()
@@ -589,9 +483,9 @@ Public Class My_Day
 
     Private Sub Button_Important_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
         If IsTaskImportant() Then
-            ImportantCheckChanged(MyDay_CheckedListBox.SelectedIndex, CheckState.Unchecked)
+            ImportantCheckChanged(SelectedTaskItem.ID, CheckState.Unchecked)
         Else
-            ImportantCheckChanged(MyDay_CheckedListBox.SelectedIndex, CheckState.Checked)
+            ImportantCheckChanged(SelectedTaskItem.ID, CheckState.Checked)
         End If
     End Sub
 
@@ -610,20 +504,7 @@ Public Class My_Day
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        'Dim DeletedIndex As Integer = MyDay_CheckedListBox.SelectedIndex
-        'DeleteTaskFromTable_My_Day(MyDay_CheckedListBox.SelectedIndex)
-
-        'If DeletedIndex > 0 Then
-        '    MyDay_CheckedListBox.Focus()
-        '    MyDay_CheckedListBox.SelectedIndex = DeletedIndex - 1
-        'ElseIf DeletedIndex = 0 Then
-        '    DisableTaskProperties(True)
-        'End If
-
-        Dim DeleteItem As TaskItem = MyDay_CheckedListBox.SelectedItem
-        DeleteTask(DeleteItem.TaskID)
-        LoadTasksToMyDay()
-        MainWindow.ImportantInstance.LoadTasksToImportant()
+        DeleteTask()
     End Sub
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
@@ -679,12 +560,12 @@ Public Class My_Day
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
-            Dim AddReminder_time_Instance = New AddReminder_Time_ With {
+            Dim AddReminder_time_Instance = New Reminder_Dialog With {
                 .Reminder_SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex, .NeedsDatePicker = False
             }
             AddReminder_time_Instance.ShowDialog()
             AddReminder_time_Instance.BringToFront()
-            LoadTasksToCheckedListView()
+            LoadTasksToMyDay()
             If MyDay_CheckedListBox.Items.Count > 0 Then
                 MyDay_CheckedListBox.SelectedIndex = AddReminder_time_Instance.Reminder_SelectedTaskIndex
                 MyDay_CheckedListBox.Focus()
@@ -728,7 +609,7 @@ Public Class My_Day
                 End Try
             End Using
         End Using
-        LoadTasksToCheckedListView()
+        LoadTasksToMyDay()
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
@@ -845,12 +726,12 @@ Public Class My_Day
 
     Private Sub CustomButton_DueDate_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_DueDate.Click
         If e.Button = MouseButtons.Left Then
-            Dim DueDateInstance As New DueDate With {
+            Dim DueDateInstance As New DueDate_Dialog With {
                 .DueDate_SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex
             }
             DueDateInstance.ShowDialog()
             DueDateInstance.BringToFront()
-            LoadTasksToCheckedListView()
+            LoadTasksToMyDay()
             If MyDay_CheckedListBox.Items.Count > 0 Then
                 MyDay_CheckedListBox.SelectedIndex = DueDateInstance.DueDate_SelectedTaskIndex
                 MyDay_CheckedListBox.Focus()
@@ -866,7 +747,7 @@ Public Class My_Day
     Public Sub LoadTasksToMyDay()
         dt.Clear()
         '  Dim query As String = "SELECT TaskID, Task, IsDone FROM Tasks WHERE DueDate = @Today ORDER BY TaskID;"
-        Dim query As String = "SELECT * FROM Tasks WHERE Section = 'MyDay' ORDER BY AddedDateTime;"
+        Dim query As String = "SELECT * FROM Tasks WHERE Section = 'MyDay' ORDER BY EntryDateTime;"
 
 
         Using connection As New SqlCeConnection(connectionString)
@@ -886,16 +767,24 @@ Public Class My_Day
     End Sub
 
 
-    Private Sub DeleteTask(taskID As Integer)
+    Private Sub DeleteTask()
         Dim query As String = "DELETE FROM Tasks WHERE TaskID = @TaskID"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@TaskID", taskID)
+                command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
                 connection.Open()
                 command.ExecuteNonQuery()
             End Using
         End Using
+
+        Views.RefreshTasks()
+
+        If MyDay_CheckedListBox.Items.Count <> 0 Then
+            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex - 1
+        Else
+            MyDay_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
+        End If
     End Sub
 #End Region
 End Class

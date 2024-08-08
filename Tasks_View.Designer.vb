@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Tasks
+Partial Class Tasks_View
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class Tasks
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Tasks))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Tasks_View))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.Tasks_Label = New System.Windows.Forms.Label()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
@@ -160,13 +160,13 @@ Partial Class Tasks
         Me.Description_Button.Text = "Description"
         Me.Description_Button.UseVisualStyleBackColor = True
         '
-        'Tasks
+        'Tasks_View
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTlp)
-        Me.Name = "Tasks"
+        Me.Name = "Tasks_View"
         Me.Text = "Tasks"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
         Me.SubTableLayoutPanel_Top.PerformLayout()

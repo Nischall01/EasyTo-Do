@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class AddReminder_Time_
+Partial Class Reminder_Dialog
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class AddReminder_Time_
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AddReminder_Time_))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Reminder_Dialog))
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.ToggleButton_AM_PM = New System.Windows.Forms.Button()
@@ -297,14 +297,14 @@ Partial Class AddReminder_Time_
         Me.DateTimePicker1.Size = New System.Drawing.Size(199, 20)
         Me.DateTimePicker1.TabIndex = 5
         '
-        'AddReminder_Time_
+        'Reminder_Dialog
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer), CType(CType(15, Byte), Integer))
         Me.ClientSize = New System.Drawing.Size(205, 258)
         Me.Controls.Add(Me.TableLayoutPanel1)
-        Me.Name = "AddReminder_Time_"
+        Me.Name = "Reminder_Dialog"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Add Reminder"
         Me.TableLayoutPanel1.ResumeLayout(False)

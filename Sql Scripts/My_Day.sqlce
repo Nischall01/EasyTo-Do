@@ -1,2 +1,0 @@
-﻿CREATE TABLE Tasks (TaskID int IDENTITY(1,1) NOT NULL,Task nvarchar (256) NOT NULL,Description ntext NULL,IsDone bit NULL DEFAULT 0,IsImportant bit NULL DEFAULT 0,DueDate datetime NULL,Section nvarchar (256) NOT NULL,AddedDateTime datetime NOT NULL);
-ALTER TABLE [Tasks] ADD CONSTRAINT  [Tasks_PK] PRIMARY KEY ([TaskID]);

@@ -24,12 +24,12 @@ Public Class MainWindow
     End Enum
 
     ' Forms
-    Public MyDayInstance As New My_Day()
-    Public DailyInstance As New Daily()
-    Public ImportantInstance As New Important()
-    Public PlannedInstance As New Planned()
-    Public TasksInstance As New Tasks()
-    Public SettingsInstance As New Settings()
+    Public MyDayInstance As New MyDay_View()
+    Public RepeatedInstance As New Repeated_View()
+    Public ImportantInstance As New Important_View()
+    Public PlannedInstance As New Planned_View()
+    Public TasksInstance As New Tasks_View()
+    Public SettingsInstance As New Settings_Dialog()
 
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 #Region "Constructor and Load"
@@ -51,7 +51,7 @@ Public Class MainWindow
 #Region "Initialization Methods"
     Private Sub InitializeForms()
         AddFormToPanel(MyDayInstance)
-        AddFormToPanel(DailyInstance)
+        AddFormToPanel(RepeatedInstance)
         AddFormToPanel(ImportantInstance)
         AddFormToPanel(PlannedInstance)
         AddFormToPanel(TasksInstance)
@@ -467,7 +467,7 @@ Public Class MainWindow
 
     Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.Click
         If e.Button = MouseButtons.Left Then
-            ShowForm(DailyInstance)
+            ShowForm(RepeatedInstance)
         End If
     End Sub
 
@@ -498,7 +498,7 @@ Public Class MainWindow
             CustomButton3.EnableEffects()
             CustomButton4.EnableEffects()
             CustomButton5.EnableEffects()
-        ElseIf activeForm Is DailyInstance Then
+        ElseIf activeForm Is RepeatedInstance Then
             CustomButton2.DisableEffects()
             CustomButton1.EnableEffects()
             CustomButton3.EnableEffects()

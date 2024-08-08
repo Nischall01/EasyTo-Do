@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class Planned
+Partial Class Planned_View
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,12 +22,12 @@ Partial Class Planned
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Planned))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Planned_View))
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
         Me.Planned_Label = New System.Windows.Forms.Label()
         Me.PictureBox_FormIcon = New System.Windows.Forms.PictureBox()
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
-        Me.CheckedListBox_Planned = New System.Windows.Forms.CheckedListBox()
+        Me.Planned_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.SubTableLayoutPanel_Bottom = New System.Windows.Forms.TableLayoutPanel()
         Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
         Me.SubTableLayoutPanel_Top.SuspendLayout()
@@ -83,7 +83,7 @@ Partial Class Planned
         Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 1
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.MainTlp.Controls.Add(Me.CheckedListBox_Planned, 0, 1)
+        Me.MainTlp.Controls.Add(Me.Planned_CheckedListBox, 0, 1)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Top, 0, 0)
         Me.MainTlp.Controls.Add(Me.SubTableLayoutPanel_Bottom, 0, 2)
         Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
@@ -96,19 +96,19 @@ Partial Class Planned
         Me.MainTlp.Size = New System.Drawing.Size(784, 461)
         Me.MainTlp.TabIndex = 1
         '
-        'CheckedListBox_Planned
+        'Planned_CheckedListBox
         '
-        Me.CheckedListBox_Planned.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
-        Me.CheckedListBox_Planned.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.CheckedListBox_Planned.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CheckedListBox_Planned.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
-        Me.CheckedListBox_Planned.ForeColor = System.Drawing.Color.White
-        Me.CheckedListBox_Planned.FormattingEnabled = True
-        Me.CheckedListBox_Planned.Location = New System.Drawing.Point(6, 92)
-        Me.CheckedListBox_Planned.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
-        Me.CheckedListBox_Planned.Name = "CheckedListBox_Planned"
-        Me.CheckedListBox_Planned.Size = New System.Drawing.Size(772, 299)
-        Me.CheckedListBox_Planned.TabIndex = 4
+        Me.Planned_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Planned_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.Planned_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Planned_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!)
+        Me.Planned_CheckedListBox.ForeColor = System.Drawing.Color.White
+        Me.Planned_CheckedListBox.FormattingEnabled = True
+        Me.Planned_CheckedListBox.Location = New System.Drawing.Point(6, 92)
+        Me.Planned_CheckedListBox.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.Planned_CheckedListBox.Name = "Planned_CheckedListBox"
+        Me.Planned_CheckedListBox.Size = New System.Drawing.Size(772, 299)
+        Me.Planned_CheckedListBox.TabIndex = 4
         '
         'SubTableLayoutPanel_Bottom
         '
@@ -138,13 +138,13 @@ Partial Class Planned
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 4
         '
-        'Planned
+        'Planned_View
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTlp)
-        Me.Name = "Planned"
+        Me.Name = "Planned_View"
         Me.Text = "Planned"
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)
         Me.SubTableLayoutPanel_Top.PerformLayout()
@@ -161,6 +161,6 @@ Partial Class Planned
     Friend WithEvents MainTlp As TableLayoutPanel
     Friend WithEvents SubTableLayoutPanel_Bottom As TableLayoutPanel
     Friend WithEvents Planned_Label As Label
-    Friend WithEvents CheckedListBox_Planned As CheckedListBox
+    Friend WithEvents Planned_CheckedListBox As CheckedListBox
     Friend WithEvents TextBox_AddNewTask As TextBox
 End Class

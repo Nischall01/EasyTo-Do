@@ -1,7 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Data.SqlServerCe
 
-Public Class Tasks
+Public Class Tasks_View
     Private connectionString As String = My.Settings.ConnectionString
 
     Private dt As New DataTable()
@@ -43,23 +43,24 @@ Public Class Tasks
                 command.ExecuteNonQuery()
             End Using
         End Using
+
+        Views.RefreshTasks()
     End Sub
 #End Region
 
     Private Sub Delete_Button_Click(sender As Object, e As EventArgs) Handles Delete_Button.Click
         Dim TaskToDelete As TaskItem = Tasks_CheckedListBox.SelectedItem
-        DeleteTask(TaskToDelete.TaskID)
-        LoadTasksToTasks()
-        MainWindow.MyDayInstance.LoadTasksToMyDay()
-        MainWindow.ImportantInstance.LoadTasksToImportant()
+        DeleteTask(TaskToDelete.ID)
     End Sub
 
     Private Sub Description_Button_Click(sender As Object, e As EventArgs) Handles Description_Button.Click
         Dim TaskToShowDescription As TaskItem = Tasks_CheckedListBox.SelectedItem
         For Each row As DataRow In dt.Rows
-            If row("TaskId") = TaskToShowDescription.TaskID Then
+            If row("TaskId") = TaskToShowDescription.ID Then
                 MsgBox(row("Description"))
             End If
         Next
     End Sub
+
+
 End Class

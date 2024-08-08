@@ -5,7 +5,7 @@ Imports System.Windows.Forms.VisualStyles.VisualStyleElement
 Imports System.IO
 Imports Newtonsoft.Json
 
-Public Class Settings
+Public Class Settings_Dialog
 
     Private TimeFormatAtStart As String
 

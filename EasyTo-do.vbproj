@@ -117,10 +117,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddReminder_Time_.Designer.vb">
-      <DependentUpon>AddReminder_Time_.vb</DependentUpon>
+    <Compile Include="Views.vb" />
+    <Compile Include="Reminder_Dialog.Designer.vb">
+      <DependentUpon>Reminder_Dialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="AddReminder_Time_.vb">
+    <Compile Include="Reminder_Dialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CircularPictureBox.Designer.vb">
@@ -129,28 +130,22 @@
     <Compile Include="CircularPictureBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="CustomButton.Designer.vb">
-      <DependentUpon>CustomButton.vb</DependentUpon>
-    </Compile>
-    <Compile Include="CustomButton.vb">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CustomButton_2.Designer.vb">
       <DependentUpon>CustomButton_2.vb</DependentUpon>
     </Compile>
     <Compile Include="CustomButton_2.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Daily.Designer.vb">
-      <DependentUpon>Daily.vb</DependentUpon>
+    <Compile Include="Repeated_View.Designer.vb">
+      <DependentUpon>Repeated_View.vb</DependentUpon>
     </Compile>
-    <Compile Include="Daily.vb">
+    <Compile Include="Repeated_View.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DueDate.Designer.vb">
-      <DependentUpon>DueDate.vb</DependentUpon>
+    <Compile Include="DueDate_Dialog.Designer.vb">
+      <DependentUpon>DueDate_Dialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="DueDate.vb">
+    <Compile Include="DueDate_Dialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.vb">
@@ -159,10 +154,10 @@
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Important.Designer.vb">
-      <DependentUpon>Important.vb</DependentUpon>
+    <Compile Include="Important_View.Designer.vb">
+      <DependentUpon>Important_View.vb</DependentUpon>
     </Compile>
-    <Compile Include="Important.vb">
+    <Compile Include="Important_View.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.vb">
@@ -178,10 +173,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="My_Day.Designer.vb">
-      <DependentUpon>My_Day.vb</DependentUpon>
+    <Compile Include="MyDay_View.Designer.vb">
+      <DependentUpon>MyDay_View.vb</DependentUpon>
     </Compile>
-    <Compile Include="My_Day.vb">
+    <Compile Include="MyDay_View.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -195,47 +190,44 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Planned.Designer.vb">
-      <DependentUpon>Planned.vb</DependentUpon>
+    <Compile Include="Planned_View.Designer.vb">
+      <DependentUpon>Planned_View.vb</DependentUpon>
     </Compile>
-    <Compile Include="Planned.vb">
+    <Compile Include="Planned_View.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Settings.Designer.vb">
-      <DependentUpon>Settings.vb</DependentUpon>
+    <Compile Include="Settings_Dialog.Designer.vb">
+      <DependentUpon>Settings_Dialog.vb</DependentUpon>
     </Compile>
-    <Compile Include="Settings.vb">
+    <Compile Include="Settings_Dialog.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TaskItem.vb" />
-    <Compile Include="Tasks.Designer.vb">
-      <DependentUpon>Tasks.vb</DependentUpon>
+    <Compile Include="Tasks_View.Designer.vb">
+      <DependentUpon>Tasks_View.vb</DependentUpon>
     </Compile>
-    <Compile Include="Tasks.vb">
+    <Compile Include="Tasks_View.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AddReminder_Time_.resx">
-      <DependentUpon>AddReminder_Time_.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CustomButton.resx">
-      <DependentUpon>CustomButton.vb</DependentUpon>
+    <EmbeddedResource Include="Reminder_Dialog.resx">
+      <DependentUpon>Reminder_Dialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomButton_2.resx">
       <DependentUpon>CustomButton_2.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Daily.resx">
-      <DependentUpon>Daily.vb</DependentUpon>
+    <EmbeddedResource Include="Repeated_View.resx">
+      <DependentUpon>Repeated_View.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DueDate.resx">
-      <DependentUpon>DueDate.vb</DependentUpon>
+    <EmbeddedResource Include="DueDate_Dialog.resx">
+      <DependentUpon>DueDate_Dialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Important.resx">
-      <DependentUpon>Important.vb</DependentUpon>
+    <EmbeddedResource Include="Important_View.resx">
+      <DependentUpon>Important_View.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.vb</DependentUpon>
@@ -246,17 +238,17 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="My_Day.resx">
-      <DependentUpon>My_Day.vb</DependentUpon>
+    <EmbeddedResource Include="MyDay_View.resx">
+      <DependentUpon>MyDay_View.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Planned.resx">
-      <DependentUpon>Planned.vb</DependentUpon>
+    <EmbeddedResource Include="Planned_View.resx">
+      <DependentUpon>Planned_View.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Settings.resx">
-      <DependentUpon>Settings.vb</DependentUpon>
+    <EmbeddedResource Include="Settings_Dialog.resx">
+      <DependentUpon>Settings_Dialog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tasks.resx">
-      <DependentUpon>Tasks.vb</DependentUpon>
+    <EmbeddedResource Include="Tasks_View.resx">
+      <DependentUpon>Tasks_View.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

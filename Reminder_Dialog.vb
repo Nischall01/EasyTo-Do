@@ -1,4 +1,4 @@
-﻿Public Class AddReminder_Time_
+﻿Public Class Reminder_Dialog
 
     Private isDragging As Boolean = False
     Private startX As Integer

@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Repeated
+Partial Class Repeated_View
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -22,7 +22,7 @@ Partial Class Repeated
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Repeated))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Repeated_View))
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.Repeated_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.SubTableLayoutPanel_Top = New System.Windows.Forms.TableLayoutPanel()
@@ -138,13 +138,13 @@ Partial Class Repeated
         Me.TextBox_AddNewTask.Size = New System.Drawing.Size(383, 20)
         Me.TextBox_AddNewTask.TabIndex = 4
         '
-        'Repeated
+        'Repeated_View
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTlp)
-        Me.Name = "Repeated"
+        Me.Name = "Repeated_View"
         Me.Text = "Daily"
         Me.MainTlp.ResumeLayout(False)
         Me.SubTableLayoutPanel_Top.ResumeLayout(False)

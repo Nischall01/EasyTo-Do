@@ -1,18 +1,18 @@
 ﻿Imports System.Data.SqlServerCe
 
-Public Class Planned
+Public Class Planned_View
     Private connectionString As String = My.Settings.ConnectionString
     Private dt As New DataTable
 
     Private Sub Planned_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToCheckedListView()
+        LoadTasksToPlanned()
     End Sub
 
 #Region "Data Handling"
-    Private Sub LoadTasksToCheckedListView()
-        Dim query As String = "SELECT * FROM My_Day WHERE DueDate IS NOT NULL ORDER BY Task_Index;"
+    Public Sub LoadTasksToPlanned()
+        Dim query As String = "SELECT * FROM Tasks WHERE DueDate IS NOT NULL ORDER BY DueDate;"
 
-        CheckedListBox_Planned.Items.Clear()
+        Planned_CheckedListBox.Items.Clear()
 
         Try
             Using connection As New SqlCeConnection(connectionString)
@@ -28,7 +28,7 @@ Public Class Planned
             For Each row As DataRow In dt.Rows
                 Dim itemText As String = row("Task").ToString()
                 Dim isChecked As Boolean = row("Done")
-                CheckedListBox_Planned.Items.Add(itemText, isChecked)
+                Planned_CheckedListBox.Items.Add(itemText, isChecked)
             Next
         Catch ex As SqlCeException
             MessageBox.Show("A SQL error occurred: " & ex.Message)

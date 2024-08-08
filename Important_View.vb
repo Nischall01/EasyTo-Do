@@ -1,4 +1,4 @@
-﻿Public Class Important
+﻿Public Class Important_View
     Private connectionString As String = My.Settings.ConnectionString
 
     Private dt As New DataTable()
@@ -11,8 +11,7 @@
     ' Load tasks onto the Checked list Box.
     Public Sub LoadTasksToImportant()
         dt.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1 ORDER BY AddedDateTime;"
-
+        Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1 ORDER BY EntryDateTime;"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
@@ -41,13 +40,13 @@
                 command.ExecuteNonQuery()
             End Using
         End Using
+
+        Views.RefreshTasks()
     End Sub
 #End Region
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         Dim TaskToDelete As TaskItem = Important_CheckedListBox.SelectedItem
-        DeleteTask(TaskToDelete.TaskID)
-        LoadTasksToImportant()
-        MainWindow.MyDayInstance.LoadTasksToMyDay()
+        DeleteTask(TaskToDelete.ID)
     End Sub
 End Class
