@@ -880,7 +880,7 @@ Public Class My_Day
 
         MyDay_CheckedListBox.Items.Clear()
         For Each row As DataRow In dt.Rows
-            Dim item As New TaskItem(row("Task").ToString(), CInt(row("TaskID")), If(IsDBNull(row("IsDone")), False, CBool(row("IsDone"))))
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
             MyDay_CheckedListBox.Items.Add(item, item.IsDone)
         Next
     End Sub

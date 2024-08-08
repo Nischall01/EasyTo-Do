@@ -118,21 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Button_DeleteTask.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAATxJREFUOE/tVLFOAlEQvFI7fwEbSwpLKzo72E1ezV+gHyCJpSWNjYmNUtAYa4yJ
-        xorSXzAmJFTII+Sc2VvPk+MCIZZMMrl5u7Nz7+5yL6lCGsL+TLU3E5lE1ZSkZi1tt/fctjkw2PWge+hL
-        Mor0PfjCbZsDgyOEvPgyB8Je2fNlNWA6R8A4p8gCjH9qWT1ar1DDzs88JgMMdd6Vj7MlR8zwONtdZ8mw
-        DTsehy/abB5MVQ9t+6p31D/8CuEotlrHJHWxRy9nqJnhcb9A8xPv45p6LnKKgRPTqg2SmjX2TMPLGeqV
-        KAbi+o7hgdVFnkmro8ae6V1gCbvA/w2EfoO+df1IUrPGnuu1gR8w3fhyLejljC/L4C7waBPwCtoO1UrS
-        k3kffLwM/uQwPGFgjne16kTJSQ+8w2kINR8HkuQbkksIuEA54S8AAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="PictureBox_PanelIcon.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADtKSURBVHhe7d0J
+        vQAADr0BR/uQrQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAADtKSURBVHhe7d0J
         mFx1mff9Wk6fpbau6qreu3rJvickZCFkJUJ8ApEoYQkEAoEQ6ZCwXvropWM7+iqjjs6o4+gr+IyO4zo4
         uL6Du+KC476goiJoZHncR1FkS733P2knau6YTvqu6q6q7+e6ftd9uoGmz//UVb+q6qpzYgAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEA9uCEcGtgd
@@ -387,6 +376,17 @@
         OGiJJQ7+DX8gGT3qrlHg3m+wJej64I6w90XXpPsWyL8DAAAawQ3h0IA7+RAn5wEAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEDDisX+fxsYC8TOUqbiAAAA
         AElFTkSuQmCC
+</value>
+  </data>
+  <data name="Button_DeleteTask.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAATxJREFUOE/tVLFOAlEQvFI7fwEbSwpLKzo72E1ezV+gHyCJpSWNjYmNUtAYa4yJ
+        xorSXzAmJFTII+Sc2VvPk+MCIZZMMrl5u7Nz7+5yL6lCGsL+TLU3E5lE1ZSkZi1tt/fctjkw2PWge+hL
+        Mor0PfjCbZsDgyOEvPgyB8Je2fNlNWA6R8A4p8gCjH9qWT1ar1DDzs88JgMMdd6Vj7MlR8zwONtdZ8mw
+        DTsehy/abB5MVQ9t+6p31D/8CuEotlrHJHWxRy9nqJnhcb9A8xPv45p6LnKKgRPTqg2SmjX2TMPLGeqV
+        KAbi+o7hgdVFnkmro8ae6V1gCbvA/w2EfoO+df1IUrPGnuu1gR8w3fhyLejljC/L4C7waBPwCtoO1UrS
+        k3kffLwM/uQwPGFgjne16kTJSQ+8w2kINR8HkuQbkksIuEA54S8AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="CustomButton_DueDate.Icon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
