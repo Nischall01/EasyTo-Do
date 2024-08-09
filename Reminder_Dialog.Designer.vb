@@ -52,7 +52,7 @@ Partial Class Reminder_Dialog
         '
         'TableLayoutPanel1
         '
-        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.BackColor = System.Drawing.SystemColors.Control
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 0, 2)
@@ -65,8 +65,8 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 5
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.50929!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.7534!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 39.09126!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.34109!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.08527!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.308186!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.33786!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(205, 258)
@@ -74,21 +74,21 @@ Partial Class Reminder_Dialog
         '
         'TableLayoutPanel3
         '
-        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.ToggleButton_AM_PM, 0, 2)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel5, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel4, 0, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 75)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 69)
         Me.TableLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 3
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.23881!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.76119!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(205, 100)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(205, 106)
         Me.TableLayoutPanel3.TabIndex = 3
         '
         'ToggleButton_AM_PM
@@ -96,8 +96,8 @@ Partial Class Reminder_Dialog
         Me.ToggleButton_AM_PM.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ToggleButton_AM_PM.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ToggleButton_AM_PM.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ToggleButton_AM_PM.ForeColor = System.Drawing.SystemColors.ControlLight
-        Me.ToggleButton_AM_PM.Location = New System.Drawing.Point(88, 68)
+        Me.ToggleButton_AM_PM.ForeColor = System.Drawing.Color.Black
+        Me.ToggleButton_AM_PM.Location = New System.Drawing.Point(88, 74)
         Me.ToggleButton_AM_PM.Margin = New System.Windows.Forms.Padding(0)
         Me.ToggleButton_AM_PM.Name = "ToggleButton_AM_PM"
         Me.ToggleButton_AM_PM.Size = New System.Drawing.Size(29, 21)
@@ -108,6 +108,7 @@ Partial Class Reminder_Dialog
         '
         'TableLayoutPanel5
         '
+        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel5.ColumnCount = 5
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 18.0!))
         Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.0!))
@@ -118,19 +119,19 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel5.Controls.Add(Me.ComboBox1, 1, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Label1, 2, 0)
         Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(0, 30)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(0, 33)
         Me.TableLayoutPanel5.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(205, 27)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(205, 30)
         Me.TableLayoutPanel5.TabIndex = 1
         '
         'ComboBox2
         '
-        Me.ComboBox2.BackColor = System.Drawing.Color.FromArgb(CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer))
+        Me.ComboBox2.BackColor = System.Drawing.Color.White
         Me.ComboBox2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ComboBox2.ForeColor = System.Drawing.SystemColors.Menu
+        Me.ComboBox2.ForeColor = System.Drawing.Color.Black
         Me.ComboBox2.FormattingEnabled = True
         Me.ComboBox2.Location = New System.Drawing.Point(112, 3)
         Me.ComboBox2.Name = "ComboBox2"
@@ -140,9 +141,9 @@ Partial Class Reminder_Dialog
         '
         'ComboBox1
         '
-        Me.ComboBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer), CType(CType(18, Byte), Integer))
+        Me.ComboBox1.BackColor = System.Drawing.Color.White
         Me.ComboBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.ComboBox1.ForeColor = System.Drawing.SystemColors.Menu
+        Me.ComboBox1.ForeColor = System.Drawing.Color.Black
         Me.ComboBox1.FormattingEnabled = True
         Me.ComboBox1.Location = New System.Drawing.Point(39, 3)
         Me.ComboBox1.Name = "ComboBox1"
@@ -156,13 +157,14 @@ Partial Class Reminder_Dialog
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(96, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(10, 27)
+        Me.Label1.Size = New System.Drawing.Size(10, 30)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = ":"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'TableLayoutPanel4
         '
+        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel4.ColumnCount = 2
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -174,15 +176,15 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(205, 30)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(205, 33)
         Me.TableLayoutPanel4.TabIndex = 0
         '
         'RadioButton2
         '
         Me.RadioButton2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.White
-        Me.RadioButton2.Location = New System.Drawing.Point(132, 6)
+        Me.RadioButton2.ForeColor = System.Drawing.Color.Black
+        Me.RadioButton2.Location = New System.Drawing.Point(132, 8)
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.Size = New System.Drawing.Size(43, 17)
         Me.RadioButton2.TabIndex = 1
@@ -193,8 +195,8 @@ Partial Class Reminder_Dialog
         '
         Me.RadioButton1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.White
-        Me.RadioButton1.Location = New System.Drawing.Point(29, 6)
+        Me.RadioButton1.ForeColor = System.Drawing.Color.Black
+        Me.RadioButton1.Location = New System.Drawing.Point(29, 8)
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.Size = New System.Drawing.Size(43, 17)
         Me.RadioButton1.TabIndex = 0
@@ -244,7 +246,7 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 43)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 37)
         Me.TableLayoutPanel6.TabIndex = 4
         '
         'ReminderProperty_Icon
@@ -252,7 +254,7 @@ Partial Class Reminder_Dialog
         Me.ReminderProperty_Icon.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.ReminderProperty_Icon.BackgroundImage = CType(resources.GetObject("ReminderProperty_Icon.BackgroundImage"), System.Drawing.Image)
         Me.ReminderProperty_Icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.ReminderProperty_Icon.Location = New System.Drawing.Point(87, 7)
+        Me.ReminderProperty_Icon.Location = New System.Drawing.Point(87, 4)
         Me.ReminderProperty_Icon.Margin = New System.Windows.Forms.Padding(0)
         Me.ReminderProperty_Icon.Name = "ReminderProperty_Icon"
         Me.ReminderProperty_Icon.Size = New System.Drawing.Size(30, 28)
@@ -261,7 +263,7 @@ Partial Class Reminder_Dialog
         '
         'TableLayoutPanel7
         '
-        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel7.ColumnCount = 1
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel7.Controls.Add(Me.Button2, 0, 0)

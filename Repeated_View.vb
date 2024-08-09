@@ -3,6 +3,10 @@
 
     Private dt As New DataTable
 
+    Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        LoadTasksToRepeated()
+    End Sub
+
     Public Sub LoadTasksToRepeated()
         dt.Clear()
         Dim query As String = "SELECT * FROM Tasks WHERE IsRepeated = 1 ORDER BY EntryDateTime;"

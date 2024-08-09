@@ -56,12 +56,12 @@ Public Class MyDay_View
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeMy_day()
 
-        'ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
-        'ReminderTimer.Start() ' Start the Timers
+        ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
+        ReminderTimer.Start() ' Start the Timers
 
-        'NotifyIcon1.Text = "EasyTo_do"
-        'NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
-        'NotifyIcon1.Visible = True
+        NotifyIcon1.Text = "EasyTo_do"
+        NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
+        NotifyIcon1.Visible = True
     End Sub
 
     Private Sub LoadCachedImages()
@@ -92,7 +92,7 @@ Public Class MyDay_View
             CustomButton_AddReminder.Enabled = False
             CustomButton_AddReminder.ButtonText = AddReminderButtonPlaceholderText
             CustomButton_Repeat.Enabled = False
-            CustomButton_DueDate.Enabled = False
+            CustomButton_AddDueDate.Enabled = False
 
             Button_DeleteTask.Enabled = False
 
@@ -108,7 +108,7 @@ Public Class MyDay_View
             Label_TaskEntryDateTime.Enabled = True
             Button_Important.Enabled = True
             CustomButton_Repeat.Enabled = True
-            CustomButton_DueDate.Enabled = True
+            CustomButton_AddDueDate.Enabled = True
             CustomButton_AddReminder.Enabled = True
             Button_DeleteTask.Enabled = True
         End If
@@ -224,7 +224,8 @@ Public Class MyDay_View
                 End Try
             End Using
         End Using
-        LoadTasksToMyDay()
+
+        Views.RefreshTasks()
 
         If MyDay_CheckedListBox.Items.Count > 0 Then
             MyDay_CheckedListBox.SelectedIndex = taskIndex
@@ -263,18 +264,17 @@ Public Class MyDay_View
         AddNewTask_TextBox.Focus()
     End Sub
 
-    Private Sub DoneCheckChanged(itemIndex As Integer, isChecked As Boolean)
-        Dim done As Integer = If(isChecked, 1, 0)
-
+    Private Sub DoneCheckChanged(isChecked As Boolean)
+        Dim IsDone As Integer = If(isChecked, 1, 0)
         Try
             ' Update the database with the new 'Done' value
-            Dim query As String = "UPDATE My_Day SET Done = @Done WHERE Task_Index = @Task_Index"
+            Dim query As String = "UPDATE Tasks SET IsDone = @IsDone WHERE TaskID = @TaskID"
 
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)
                     ' Use specific type for parameters
-                    command.Parameters.Add("@Task_Index", SqlDbType.Int).Value = itemIndex
-                    command.Parameters.Add("@Done", SqlDbType.Int).Value = done
+                    command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
+                    command.Parameters.AddWithValue("@IsDone", IsDone)
 
                     connection.Open()
                     command.ExecuteNonQuery()
@@ -285,11 +285,13 @@ Public Class MyDay_View
         Catch ex As Exception
             MessageBox.Show("Unexpected Error: " & ex.Message)
         End Try
+        Views.RefreshTasksWithException("MyDay")
     End Sub
 
-    Private Sub ImportantCheckChanged(SelectedTaskID As Integer, isChecked As Boolean)
+    Private Sub ImportantCheckChanged(isChecked As Boolean)
         'MsgBox("Task ID: " & TaskID)
         'MsgBox("IsChecked: " & isChecked)
+
         Dim IsImportant As Integer = If(isChecked, 1, 0)
         Try
             ' Update the database with the new 'Done' value
@@ -297,7 +299,7 @@ Public Class MyDay_View
 
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
+                    command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
                     command.Parameters.AddWithValue("@IsImportant", IsImportant)
 
                     connection.Open()
@@ -309,8 +311,7 @@ Public Class MyDay_View
             MessageBox.Show("Error updating task status: " & ex.Message)
         End Try
 
-        LoadTasksToMyDay()
-        MainWindow.ImportantInstance.LoadTasksToImportant()
+        RefreshTasks()
 
         ' Retain Focus after DataTable Reload
         If MyDay_CheckedListBox.Items.Count > 0 Then
@@ -375,7 +376,7 @@ Public Class MyDay_View
                 If IsDBNull(row("ReminderDateTime")) Then
                     Return String.Empty
                 Else
-                    Dim reminderDateTime As DateTime = Convert.ToDateTime(row("Reminder_DateTime"))
+                    Dim reminderDateTime As DateTime = Convert.ToDateTime(row("ReminderDateTime"))
                     If UserDefaultTimeFormat = "12" Then
                         TaskReminder = reminderDateTime.ToString("hh:mm tt")
                     Else
@@ -386,6 +387,26 @@ Public Class MyDay_View
             End If
         Next
         Return TaskReminder
+    End Function
+
+    Private Function GetRepeat() As String
+        Dim TaskRepeat As String = String.Empty
+
+        For Each row As DataRow In dt.Rows
+            If row("TaskID") = SelectedTaskItem.ID Then
+                If IsDBNull(row("RepeatedDays")) Then
+                    Return String.Empty
+                Else
+                    If row("RepeatedDays") = " sun  mon  tue  wed  thu  fri  sat " Then
+                        TaskRepeat = "Everyday"
+                    Else
+                        TaskRepeat = "Every..."
+                    End If
+                End If
+                Exit For
+            End If
+        Next
+        Return TaskRepeat
     End Function
 
     Private Function GetDueDate() As String
@@ -423,12 +444,6 @@ Public Class MyDay_View
             '   IncrementCheckedListBoxHeight() ' Increment
 
         End If
-    End Sub
-
-    Private Sub CheckedListBox_MyDay_ItemCheck(sender As Object, e As ItemCheckEventArgs)
-        Dim itemIndex As Integer
-        itemIndex = e.Index
-        DoneCheckChanged(itemIndex, e.NewValue = CheckState.Checked)
     End Sub
 
     Private Sub CheckedListBox_MyDay_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown
@@ -473,19 +488,25 @@ Public Class MyDay_View
                 CustomButton_AddReminder.ButtonText = AddReminderButtonPlaceholderText
             End If
 
-            If GetDueDate() <> String.Empty Then
-                CustomButton_DueDate.ButtonText = GetDueDate()
+            If GetRepeat() <> String.Empty Then
+                CustomButton_Repeat.ButtonText = GetRepeat()
             Else
-                CustomButton_DueDate.ButtonText = DueDatePlaceHolderText
+                CustomButton_Repeat.ButtonText = RepeatButtonPlaceholderText
+            End If
+
+            If GetDueDate() <> String.Empty Then
+                CustomButton_AddDueDate.ButtonText = GetDueDate()
+            Else
+                CustomButton_AddDueDate.ButtonText = DueDatePlaceHolderText
             End If
         End If
     End Sub
 
     Private Sub Button_Important_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
         If IsTaskImportant() Then
-            ImportantCheckChanged(SelectedTaskItem.ID, CheckState.Unchecked)
+            ImportantCheckChanged(CheckState.Unchecked)
         Else
-            ImportantCheckChanged(SelectedTaskItem.ID, CheckState.Checked)
+            ImportantCheckChanged(CheckState.Checked)
         End If
     End Sub
 
@@ -561,15 +582,17 @@ Public Class MyDay_View
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.Click
         If e.Button = MouseButtons.Left Then
             Dim AddReminder_time_Instance = New Reminder_Dialog With {
-                .Reminder_SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex, .NeedsDatePicker = False
+                .Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = False
             }
             AddReminder_time_Instance.ShowDialog()
             AddReminder_time_Instance.BringToFront()
-            LoadTasksToMyDay()
-            If MyDay_CheckedListBox.Items.Count > 0 Then
-                MyDay_CheckedListBox.SelectedIndex = AddReminder_time_Instance.Reminder_SelectedTaskIndex
-                MyDay_CheckedListBox.Focus()
+
+            If MyDay_CheckedListBox.Items.Count <> 0 Then
+                MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            Else
+                MyDay_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
             End If
+
             AddReminder_time_Instance.Dispose()
         ElseIf e.Button = MouseButtons.Right Then
             ShowContextMenuCentered(ContextMenuStrip1, CustomButton_AddReminder)
@@ -588,11 +611,11 @@ Public Class MyDay_View
     End Sub
 
     Private Sub RemoveReminder()
-        Dim query As String = "UPDATE My_Day SET Reminder_DateTime = NULL WHERE Task_Index = @TaskIndex"
+        Dim query As String = "UPDATE Tasks SET ReminderDateTime = NULL WHERE TaskID = @TaskID"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@TaskIndex", MyDay_CheckedListBox.SelectedIndex)
+                command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
 
                 Try
                     connection.Open()
@@ -609,7 +632,7 @@ Public Class MyDay_View
                 End Try
             End Using
         End Using
-        LoadTasksToMyDay()
+        Views.RefreshTasks()
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
@@ -634,24 +657,26 @@ Public Class MyDay_View
 
         For Each row As DataRow In dt.Rows
             ' Check if the Reminder_DateTime column is not null
-            If row("Reminder_DateTime") IsNot DBNull.Value Then
+            If row("ReminderDateTime") IsNot DBNull.Value Then
                 ' Directly cast to DateTime
-                Dim reminderTime As DateTime = row("Reminder_DateTime")
+                Dim reminderTime As DateTime = row("ReminderDateTime")
 
                 ' Convert both current time and reminder time to string in the same format
                 Dim currentTimeString As String = currentTime.ToString("yyyy-MM-dd HH:mm:ss")
                 Dim reminderTimeString As String = reminderTime.ToString("yyyy-MM-dd HH:mm:ss")
-
                 ' Compare the formatted date and time strings
                 If reminderTimeString = currentTimeString Then
+
+                    Dim ImportantTask As String = row("Task")
+                    ImportantTask = ImportantTask.Substring(3)
                     ' Display reminder
-                    If row("Task_Description") IsNot DBNull.Value And row("Important") = True Then
-                        ShowNotification(row("Task"), True, row("Task_Description"))
-                    ElseIf row("Task_Description") IsNot DBNull.Value And row("Important") = False Then
-                        ShowNotification(row("Task"), False, row("Task_Description"))
-                    ElseIf row("Task_Description") Is DBNull.Value And row("Important") = True Then
-                        ShowNotification(row("Task"), True)
-                    ElseIf row("Task_Description") Is DBNull.Value And row("Important") = False Then
+                    If row("Description") IsNot DBNull.Value And row("IsImportant") = True Then
+                        ShowNotification(ImportantTask, True, row("Description"))
+                    ElseIf row("Description") IsNot DBNull.Value And row("IsImportant") = False Then
+                        ShowNotification(row("Task"), False, row("Description"))
+                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = True Then
+                        ShowNotification(ImportantTask, True)
+                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = False Then
                         ShowNotification(row("Task"), False)
                     End If
                 End If
@@ -724,7 +749,7 @@ Public Class MyDay_View
         End If
     End Sub
 
-    Private Sub CustomButton_DueDate_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_DueDate.Click
+    Private Sub CustomButton_DueDate_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddDueDate.Click
         If e.Button = MouseButtons.Left Then
             Dim DueDateInstance As New DueDate_Dialog With {
                 .DueDate_SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex
@@ -760,7 +785,22 @@ Public Class MyDay_View
         End Using
 
         MyDay_CheckedListBox.Items.Clear()
+
         For Each row As DataRow In dt.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+                'row("Task") = RemindedTask + "  " + reminderDateTime.ToString("(hh:mmtt)").ToLower()
+                'row("Task") = "~" + "  " + RemindedTask
+                ' row("Task") = RemindedTask + "  " + "~"
+            End If
+
+            If row("IsImportant") Then
+                Dim ImportantTask As String = "!" + "  " + row("Task")
+                row("Task") = ImportantTask
+            End If
+
             Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
             MyDay_CheckedListBox.Items.Add(item, item.IsDone)
         Next
@@ -785,6 +825,41 @@ Public Class MyDay_View
         Else
             MyDay_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
         End If
+    End Sub
+
+    Private Sub MyDay_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles MyDay_CheckedListBox.ItemCheck
+        If Not IsNothing(SelectedTaskItem) Then
+            DoneCheckChanged(e.NewValue = CheckState.Checked)
+        Else
+            Exit Sub
+        End If
+    End Sub
+
+    Private Sub CustomButton_Repeat_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.Click
+        If e.Button = MouseButtons.Left Then
+            Dim Repeat As New Repeat_Dialog With {.Repeat_SelectedTaskID = SelectedTaskItem.ID}
+
+            Repeat.ShowDialog()
+            Repeat.BringToFront()
+
+            If MyDay_CheckedListBox.Items.Count <> 0 Then
+                MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            Else
+                MyDay_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
+            End If
+
+            Repeat.Dispose()
+        ElseIf e.Button = MouseButtons.Right Then
+            'ShowContextMenuCentered(ContextMenuStrip1, CustomButton_AddReminder)
+        End If
+    End Sub
+
+    Private Sub CustomButton_DueDate_Click(sender As Object, e As EventArgs) Handles CustomButton_AddDueDate.Click
+
+    End Sub
+
+    Private Sub CustomButton_AddReminder_Click(sender As Object, e As EventArgs) Handles CustomButton_AddReminder.Click
+
     End Sub
 #End Region
 End Class

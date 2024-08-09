@@ -117,6 +117,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repeat_Dialog.Designer.vb">
+      <DependentUpon>Repeat_Dialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Repeat_Dialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views.vb" />
     <Compile Include="Reminder_Dialog.Designer.vb">
       <DependentUpon>Reminder_Dialog.vb</DependentUpon>
@@ -146,12 +152,6 @@
       <DependentUpon>DueDate_Dialog.vb</DependentUpon>
     </Compile>
     <Compile Include="DueDate_Dialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.vb">
-      <DependentUpon>Form1.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Important_View.Designer.vb">
@@ -223,9 +223,6 @@
     <EmbeddedResource Include="DueDate_Dialog.resx">
       <DependentUpon>DueDate_Dialog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Important_View.resx">
       <DependentUpon>Important_View.vb</DependentUpon>
     </EmbeddedResource>
@@ -243,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Planned_View.resx">
       <DependentUpon>Planned_View.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repeat_Dialog.resx">
+      <DependentUpon>Repeat_Dialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings_Dialog.resx">
       <DependentUpon>Settings_Dialog.vb</DependentUpon>

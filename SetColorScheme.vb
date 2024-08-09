@@ -92,6 +92,7 @@ Module SetColorScheme
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
             Case "Dark"
                 MainWindow.MyDayInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.MyDayInstance.MainTlp.BackColor = Color.FromKnownColor(KnownColor.Control)
                 MainWindow.MyDayInstance.MyDay_Label.ForeColor = Color.White
                 MainWindow.MyDayInstance.DayDate_Label.ForeColor = Color.White
                 MainWindow.MyDayInstance.Time_Label.ForeColor = Color.White

@@ -4,7 +4,7 @@
     Private startX As Integer
     Private startY As Integer
 
-    Public Reminder_SelectedTaskIndex As Integer
+    Public Reminder_SelectedTaskID As Integer
 
     Public NeedsDatePicker As Boolean
 
@@ -100,31 +100,31 @@
 #End Region
 
 #Region "Window Dragging Logic"
-    '    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
-    '        If e.Button = MouseButtons.Left Then
-    '            isDragging = True
-    '            startX = e.X
-    '            startY = e.Y
-    '        End If
-    '    End Sub
+    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            startX = e.X
+            startY = e.Y
+        End If
+    End Sub
 
-    '    Private Sub TableLayoutPanel2_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseMove
-    '        If isDragging Then
-    '            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
-    '            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
-    '        End If
-    '    End Sub
+    Private Sub TableLayoutPanel2_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseMove
+        If isDragging Then
+            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+        End If
+    End Sub
 
-    '    Private Sub TableLayoutPanel2_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseUp
-    '        If e.Button = MouseButtons.Left Then
-    '            isDragging = False
-    '        End If
-    '    End Sub
+    Private Sub TableLayoutPanel2_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
 #End Region ' Disabled
 
 #Region "Database Table"
     Private Sub LoadTable()
-        Dim query As String = "SELECT * FROM My_Day ORDER BY Task_Index"
+        Dim query As String = "SELECT * FROM Tasks"
         Try
             Using connection As New SqlCeConnection(connectionString)
                 Using command As New SqlCeCommand(query, connection)
@@ -146,11 +146,11 @@
 #Region "Reminder Settings Methods"
     Private Sub GetAlreadySetReminder() ' Sub to get if the reminder for the task is already set or not
         For Each row As DataRow In dt.Rows
-            If row("Task_Index") = Reminder_SelectedTaskIndex Then
-                If IsDBNull(row("Reminder_DateTime")) Then
+            If row("TaskID") = Reminder_SelectedTaskID Then
+                If IsDBNull(row("ReminderDateTime")) Then
                     AlreadySetReminder = Nothing
                 Else
-                    AlreadySetReminder = row("Reminder_DateTime")
+                    AlreadySetReminder = row("ReminderDateTime")
                 End If
                 Exit For
             End If
@@ -270,12 +270,12 @@
     End Sub
 
     Private Sub AddReminder(TimeSet As DateTime) ' The method to add the reminder to the database
-        Dim query As String = "UPDATE My_Day SET Reminder_DateTime = @Reminder_DateTime WHERE Task_Index = @TaskIndex"
+        Dim query As String = "UPDATE Tasks SET ReminderDateTime = @ReminderDateTime WHERE TaskID = @TaskID"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@Reminder_DateTime", TimeSet)
-                command.Parameters.AddWithValue("@TaskIndex", Reminder_SelectedTaskIndex)
+                command.Parameters.AddWithValue("@ReminderDateTime", TimeSet)
+                command.Parameters.AddWithValue("@TaskID", Reminder_SelectedTaskID)
 
                 Try
                     connection.Open()
@@ -292,6 +292,7 @@
                 End Try
             End Using
         End Using
+        Views.RefreshTasks()
     End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean ' Overriding the Enter Key to act as the set reminder button when reminder is open
