@@ -117,12 +117,18 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DueDate.vb" />
+    <Compile Include="ImageCache.vb" />
+    <Compile Include="TextPlaceholders.vb" />
+    <Compile Include="Reminder.vb" />
+    <Compile Include="Repeat.vb" />
     <Compile Include="Repeat_Dialog.Designer.vb">
       <DependentUpon>Repeat_Dialog.vb</DependentUpon>
     </Compile>
     <Compile Include="Repeat_Dialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Task.vb" />
     <Compile Include="Views.vb" />
     <Compile Include="Reminder_Dialog.Designer.vb">
       <DependentUpon>Reminder_Dialog.vb</DependentUpon>
@@ -213,21 +219,27 @@
   <ItemGroup>
     <EmbeddedResource Include="Reminder_Dialog.resx">
       <DependentUpon>Reminder_Dialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomButton_2.resx">
       <DependentUpon>CustomButton_2.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Repeated_View.resx">
       <DependentUpon>Repeated_View.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DueDate_Dialog.resx">
       <DependentUpon>DueDate_Dialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Important_View.resx">
       <DependentUpon>Important_View.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -237,9 +249,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MyDay_View.resx">
       <DependentUpon>MyDay_View.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Planned_View.resx">
       <DependentUpon>Planned_View.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Repeat_Dialog.resx">
       <DependentUpon>Repeat_Dialog.vb</DependentUpon>

@@ -53,10 +53,13 @@
     Private Sub RepeatInitialization()
         If AlreadySetRepeat <> Nothing Then
             Select Case AlreadySetRepeat
-                Case " sun  mon  tue  wed  thu  fri  sat "
-                    RadioButton2.Checked = True
+                Case Nothing
+                    RadioButton1.Checked = False
+                    RadioButton2.Checked = False
+                Case "sun mon tue wed thu fri sat"
+                    RadioButton1.Checked = True
                 Case Else
-                    RadioButton3.Checked = True
+                    RadioButton2.Checked = True
                     If AlreadySetRepeat.Contains("sun") Then
                         CheckBox1.Checked = True
                     End If
@@ -86,8 +89,8 @@
         Me.Close()
     End Sub
 
-    Private Sub RepeatTypeChanged_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged, RadioButton3.CheckedChanged
-        If RadioButton3.Checked Then
+    Private Sub RepeatTypeChanged_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton1.CheckedChanged, RadioButton2.CheckedChanged
+        If RadioButton2.Checked Then
             EnableOrDisableDays(State.Enable)
         Else
             EnableOrDisableDays(State.Disable)
@@ -115,70 +118,28 @@
         End Select
     End Sub
 
-    Private Sub SetRepeat(RepeatedDays As String)
-        Dim query As String
-        If String.IsNullOrEmpty(RepeatedDays) Then
-            query = "UPDATE Tasks SET RepeatedDays = NULL WHERE TaskID = @TaskID"
-        Else
-            query = "UPDATE Tasks SET RepeatedDays = @RepeatedDays WHERE TaskID = @TaskID"
-        End If
 
-        Using connection As New SqlCeConnection(connectionString)
-            Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@RepeatedDays", RepeatedDays)
-                command.Parameters.AddWithValue("@TaskID", Repeat_SelectedTaskID)
-
-                Try
-                    connection.Open()
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        'MessageBox.Show("Task description updated successfully.")
-                    Else
-                        MessageBox.Show("No task found with the specified index.")
-                    End If
-                Catch ex As SqlCeException
-                    MessageBox.Show("SQL CE Error: " & ex.Message)
-                Catch ex As Exception
-                    MessageBox.Show("Unexpected Error: " & ex.Message)
-                End Try
-            End Using
-        End Using
-        Views.RefreshTasks()
-    End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If RadioButton1.Checked Then
-            SetRepeat("")
+            Dim RepeatedDays As String = "sun mon tue wed thu fri sat"
+            Repeat.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
             Me.Close()
         ElseIf RadioButton2.Checked Then
-            Dim RepeatedDays As String = " sun  mon  tue  wed  thu  fri  sat "
-            SetRepeat(RepeatedDays)
-            Me.Close()
-        ElseIf RadioButton3.Checked Then
-            Dim RepeatedDays As String = ""
-            If CheckBox1.Checked Then
-                RepeatedDays = RepeatedDays + " sun "
-            End If
-            If CheckBox2.Checked Then
-                RepeatedDays = RepeatedDays + " mon "
-            End If
-            If CheckBox3.Checked Then
-                RepeatedDays = RepeatedDays + " tue "
-            End If
-            If CheckBox4.Checked Then
-                RepeatedDays = RepeatedDays + " wed "
-            End If
-            If CheckBox5.Checked Then
-                RepeatedDays = RepeatedDays + " thu "
-            End If
-            If CheckBox6.Checked Then
-                RepeatedDays = RepeatedDays + " fri "
-            End If
-            If CheckBox7.Checked Then
-                RepeatedDays = RepeatedDays + " sat "
-            End If
-            SetRepeat(RepeatedDays)
+            Dim days As New List(Of String)
+            If CheckBox1.Checked Then days.Add("sun")
+            If CheckBox2.Checked Then days.Add("mon")
+            If CheckBox3.Checked Then days.Add("tue")
+            If CheckBox4.Checked Then days.Add("wed")
+            If CheckBox5.Checked Then days.Add("thu")
+            If CheckBox6.Checked Then days.Add("fri")
+            If CheckBox7.Checked Then days.Add("sat")
+
+            Dim RepeatedDays As String = String.Join(" ", days)
+            Repeat.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
             Me.Close()
         End If
     End Sub
+
+
 End Class

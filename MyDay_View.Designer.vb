@@ -34,7 +34,7 @@ Partial Class MyDay_View
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.DayDate_Label = New System.Windows.Forms.Label()
         Me.Time_Label = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
         Me.MyDay_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
         Me.TaskTitle_TextBox = New System.Windows.Forms.TextBox()
@@ -54,18 +54,24 @@ Partial Class MyDay_View
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.TableLayoutPanel2.SuspendLayout()
+        Me.SubTlpTaskView_SubTlpMiddle.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Tlp_ImportantButton.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
+        Me.ContextMenuStrip2.SuspendLayout()
+        Me.ContextMenuStrip3.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainTlp
@@ -91,7 +97,7 @@ Partial Class MyDay_View
         Me.MainTlp_SubTlpTaskView.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpBottom, 0, 2)
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpTop, 0, 0)
-        Me.MainTlp_SubTlpTaskView.Controls.Add(Me.TableLayoutPanel2, 0, 1)
+        Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpMiddle, 0, 1)
         Me.MainTlp_SubTlpTaskView.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainTlp_SubTlpTaskView.Location = New System.Drawing.Point(0, 0)
         Me.MainTlp_SubTlpTaskView.Margin = New System.Windows.Forms.Padding(0)
@@ -218,19 +224,21 @@ Partial Class MyDay_View
         Me.Time_Label.TabIndex = 5
         Me.Time_Label.Text = "Time"
         '
-        'TableLayoutPanel2
+        'SubTlpTaskView_SubTlpMiddle
         '
-        Me.TableLayoutPanel2.ColumnCount = 1
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.MyDay_CheckedListBox, 0, 0)
-        Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 95)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(582, 293)
-        Me.TableLayoutPanel2.TabIndex = 6
+        Me.SubTlpTaskView_SubTlpMiddle.ColumnCount = 1
+        Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.SubTlpTaskView_SubTlpMiddle.Controls.Add(Me.MyDay_CheckedListBox, 0, 0)
+        Me.SubTlpTaskView_SubTlpMiddle.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SubTlpTaskView_SubTlpMiddle.Location = New System.Drawing.Point(6, 92)
+        Me.SubTlpTaskView_SubTlpMiddle.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.SubTlpTaskView_SubTlpMiddle.Name = "SubTlpTaskView_SubTlpMiddle"
+        Me.SubTlpTaskView_SubTlpMiddle.RowCount = 1
+        Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 299.0!))
+        Me.SubTlpTaskView_SubTlpMiddle.Size = New System.Drawing.Size(576, 299)
+        Me.SubTlpTaskView_SubTlpMiddle.TabIndex = 6
         '
         'MyDay_CheckedListBox
         '
@@ -242,7 +250,7 @@ Partial Class MyDay_View
         Me.MyDay_CheckedListBox.Location = New System.Drawing.Point(0, 0)
         Me.MyDay_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)
         Me.MyDay_CheckedListBox.Name = "MyDay_CheckedListBox"
-        Me.MyDay_CheckedListBox.Size = New System.Drawing.Size(582, 293)
+        Me.MyDay_CheckedListBox.Size = New System.Drawing.Size(576, 299)
         Me.MyDay_CheckedListBox.TabIndex = 8
         '
         'MainTlp_SubTlpTaskProperties
@@ -476,15 +484,17 @@ Partial Class MyDay_View
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.BackColor = System.Drawing.Color.White
+        Me.ContextMenuStrip1.BackColor = System.Drawing.SystemColors.Control
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(118, 26)
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(93, 26)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(117, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem1.Text = "Remove"
         '
         'ReminderTimer
@@ -494,6 +504,34 @@ Partial Class MyDay_View
         '
         Me.NotifyIcon1.Text = "NotifyIcon1"
         Me.NotifyIcon1.Visible = True
+        '
+        'ContextMenuStrip2
+        '
+        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2})
+        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip2.ShowImageMargin = False
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(93, 26)
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(92, 22)
+        Me.ToolStripMenuItem2.Text = "Remove"
+        '
+        'ContextMenuStrip3
+        '
+        Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3})
+        Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip3.ShowImageMargin = False
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(92, 22)
+        Me.ToolStripMenuItem3.Text = "Remove"
         '
         'MyDay_View
         '
@@ -513,13 +551,15 @@ Partial Class MyDay_View
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
-        Me.TableLayoutPanel2.ResumeLayout(False)
+        Me.SubTlpTaskView_SubTlpMiddle.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Tlp_ImportantButton.ResumeLayout(False)
         Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ContextMenuStrip2.ResumeLayout(False)
+        Me.ContextMenuStrip3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -552,6 +592,10 @@ Partial Class MyDay_View
     Friend WithEvents Panel1 As Panel
     Friend WithEvents TaskDescription_RichTextBox As RichTextBox
     Friend WithEvents TaskTitle_TextBox As TextBox
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents SubTlpTaskView_SubTlpMiddle As TableLayoutPanel
+    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents ContextMenuStrip3 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
     Friend WithEvents MyDay_CheckedListBox As CheckedListBox
 End Class

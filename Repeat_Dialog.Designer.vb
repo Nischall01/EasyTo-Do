@@ -29,7 +29,6 @@ Partial Class Repeat_Dialog
         Me.ReminderProperty_Icon = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.CloseReminder_Button = New System.Windows.Forms.Button()
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
         Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
@@ -51,23 +50,21 @@ Partial Class Repeat_Dialog
         '
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Button2, 0, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.Button2, 0, 5)
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel6, 0, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel3, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.RadioButton3, 0, 4)
         Me.TableLayoutPanel1.Controls.Add(Me.RadioButton2, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.RadioButton1, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.TableLayoutPanel2, 0, 4)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 7
+        Me.TableLayoutPanel1.RowCount = 6
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.12121!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.05361!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.45494!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 56.65236!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.80657!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.93325!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 64.26018!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(248, 360)
@@ -80,7 +77,7 @@ Partial Class Repeat_Dialog
         Me.Button2.FlatAppearance.BorderSize = 0
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Location = New System.Drawing.Point(86, 325)
+        Me.Button2.Location = New System.Drawing.Point(86, 326)
         Me.Button2.Margin = New System.Windows.Forms.Padding(0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
@@ -146,41 +143,29 @@ Partial Class Repeat_Dialog
         Me.CloseReminder_Button.Text = "X"
         Me.CloseReminder_Button.UseVisualStyleBackColor = False
         '
-        'RadioButton3
-        '
-        Me.RadioButton3.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.RadioButton3.Location = New System.Drawing.Point(100, 143)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(47, 30)
-        Me.RadioButton3.TabIndex = 2
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "Every..."
-        Me.RadioButton3.UseVisualStyleBackColor = True
-        '
         'RadioButton2
         '
         Me.RadioButton2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Location = New System.Drawing.Point(89, 113)
+        Me.RadioButton2.CheckAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.RadioButton2.Location = New System.Drawing.Point(100, 123)
         Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(69, 17)
-        Me.RadioButton2.TabIndex = 1
+        Me.RadioButton2.Size = New System.Drawing.Size(47, 30)
+        Me.RadioButton2.TabIndex = 2
         Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Everyday"
+        Me.RadioButton2.Text = "Every..."
         Me.RadioButton2.UseVisualStyleBackColor = True
         '
         'RadioButton1
         '
         Me.RadioButton1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Location = New System.Drawing.Point(98, 84)
+        Me.RadioButton1.Location = New System.Drawing.Point(89, 88)
         Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(51, 17)
-        Me.RadioButton1.TabIndex = 0
+        Me.RadioButton1.Size = New System.Drawing.Size(69, 17)
+        Me.RadioButton1.TabIndex = 1
         Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "None"
+        Me.RadioButton1.Text = "Everyday"
         Me.RadioButton1.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel2
@@ -197,14 +182,14 @@ Partial Class Repeat_Dialog
         Me.TableLayoutPanel2.Controls.Add(Me.CheckBox6, 2, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.CheckBox7, 1, 2)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 180)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 163)
         Me.TableLayoutPanel2.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 3
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(248, 134)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(248, 152)
         Me.TableLayoutPanel2.TabIndex = 3
         '
         'CheckBox2
@@ -212,7 +197,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox2.Location = New System.Drawing.Point(98, 6)
+        Me.CheckBox2.Location = New System.Drawing.Point(98, 9)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(49, 31)
         Me.CheckBox2.TabIndex = 1
@@ -224,7 +209,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox1.Location = New System.Drawing.Point(17, 6)
+        Me.CheckBox1.Location = New System.Drawing.Point(17, 9)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(47, 31)
         Me.CheckBox1.TabIndex = 0
@@ -236,7 +221,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox3.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox3.AutoSize = True
         Me.CheckBox3.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox3.Location = New System.Drawing.Point(180, 6)
+        Me.CheckBox3.Location = New System.Drawing.Point(180, 9)
         Me.CheckBox3.Name = "CheckBox3"
         Me.CheckBox3.Size = New System.Drawing.Size(52, 31)
         Me.CheckBox3.TabIndex = 2
@@ -248,7 +233,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox4.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox4.AutoSize = True
         Me.CheckBox4.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox4.Location = New System.Drawing.Point(7, 50)
+        Me.CheckBox4.Location = New System.Drawing.Point(7, 59)
         Me.CheckBox4.Name = "CheckBox4"
         Me.CheckBox4.Size = New System.Drawing.Size(68, 31)
         Me.CheckBox4.TabIndex = 3
@@ -260,7 +245,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox5.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox5.AutoSize = True
         Me.CheckBox5.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox5.Location = New System.Drawing.Point(95, 50)
+        Me.CheckBox5.Location = New System.Drawing.Point(95, 59)
         Me.CheckBox5.Name = "CheckBox5"
         Me.CheckBox5.Size = New System.Drawing.Size(55, 31)
         Me.CheckBox5.TabIndex = 4
@@ -272,7 +257,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox6.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox6.AutoSize = True
         Me.CheckBox6.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox6.Location = New System.Drawing.Point(186, 50)
+        Me.CheckBox6.Location = New System.Drawing.Point(186, 59)
         Me.CheckBox6.Name = "CheckBox6"
         Me.CheckBox6.Size = New System.Drawing.Size(39, 31)
         Me.CheckBox6.TabIndex = 5
@@ -284,7 +269,7 @@ Partial Class Repeat_Dialog
         Me.CheckBox7.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.CheckBox7.AutoSize = True
         Me.CheckBox7.CheckAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.CheckBox7.Location = New System.Drawing.Point(96, 95)
+        Me.CheckBox7.Location = New System.Drawing.Point(96, 110)
         Me.CheckBox7.Name = "CheckBox7"
         Me.CheckBox7.Size = New System.Drawing.Size(53, 31)
         Me.CheckBox7.TabIndex = 6
@@ -312,7 +297,6 @@ Partial Class Repeat_Dialog
     End Sub
 
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
-    Friend WithEvents RadioButton3 As RadioButton
     Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel

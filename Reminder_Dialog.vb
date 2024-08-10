@@ -269,31 +269,6 @@
         ToggleButton_AM_PM.Hide()
     End Sub
 
-    Private Sub AddReminder(TimeSet As DateTime) ' The method to add the reminder to the database
-        Dim query As String = "UPDATE Tasks SET ReminderDateTime = @ReminderDateTime WHERE TaskID = @TaskID"
-
-        Using connection As New SqlCeConnection(connectionString)
-            Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@ReminderDateTime", TimeSet)
-                command.Parameters.AddWithValue("@TaskID", Reminder_SelectedTaskID)
-
-                Try
-                    connection.Open()
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        'MessageBox.Show("Task description updated successfully.")
-                    Else
-                        MessageBox.Show("No task found with the specified index.")
-                    End If
-                Catch ex As SqlCeException
-                    MessageBox.Show("SQL CE Error: " & ex.Message)
-                Catch ex As Exception
-                    MessageBox.Show("Unexpected Error: " & ex.Message)
-                End Try
-            End Using
-        End Using
-        Views.RefreshTasks()
-    End Sub
 
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean ' Overriding the Enter Key to act as the set reminder button when reminder is open
         If keyData = Keys.Enter Then
@@ -374,34 +349,8 @@
         End If
 
         Dim TimeSet As New DateTime(CurrentDateTime.Year, CurrentDateTime.Month, CurrentDateTime.Day, SetHour, SetMinute, 0)
-
-        AddReminder(TimeSet)
-
+        Reminder.SetReminder(TimeSet, Reminder_SelectedTaskID)
         Me.Close()
     End Sub
-
-    'Private Sub AddReminder_Time__LocationChanged(sender As Object, e As EventArgs) Handles MyBase.LocationChanged
-    '    ' Ensure the child form stays within the bounds of the parent form
-    '    Dim parentForm As Form = Me.Owner
-
-    '    If parentForm IsNot Nothing Then
-    '        Dim childBounds As Rectangle = Me.Bounds
-    '        Dim parentBounds As Rectangle = parentForm.Bounds
-
-    '        ' Check the boundaries and adjust the position if necessary
-    '        If childBounds.Left < parentBounds.Left Then
-    '            Me.Left = parentBounds.Left
-    '        End If
-    '        If childBounds.Top < parentBounds.Top Then
-    '            Me.Top = parentBounds.Top
-    '        End If
-    '        If childBounds.Right > parentBounds.Right Then
-    '            Me.Left = parentBounds.Right - Me.Width
-    '        End If
-    '        If childBounds.Bottom > parentBounds.Bottom Then
-    '            Me.Top = parentBounds.Bottom - Me.Height
-    '        End If
-    '    End If
-    'End Sub
 #End Region
 End Class

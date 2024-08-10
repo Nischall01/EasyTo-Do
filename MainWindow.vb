@@ -13,7 +13,7 @@ Public Class MainWindow
 
     ' Fields
     Private PfpLastEventTime As DateTime
-    Private DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
+    Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
     Private IsSidebarExpanded As Boolean
 
     ' Enums
@@ -42,8 +42,6 @@ Public Class MainWindow
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeForms()
         InitializeApp()
-
-
     End Sub
 #End Region
 
@@ -75,8 +73,16 @@ Public Class MainWindow
 #End Region
 
     '-----------------------------------------------------------------UI Appearance---------------------------------------------------------------
-
+#Region "UI Appearance"
     Private Sub LoadSettings()
+        SetColorSchemeFromSettings()
+        SetSidebarStateFromSettings()
+        SetTaskPropertiesSidebarStateFromSettings()
+        SetTimeFormatFromSettings()
+        SetProfileVisibilityFromSettings()
+    End Sub
+
+    Private Sub SetColorSchemeFromSettings()
         Select Case My.Settings.ColorScheme
             Case "Light"
                 SetColorScheme.Light()
@@ -88,28 +94,36 @@ Public Class MainWindow
                 SetColorScheme.Custom()
                 SettingsInstance.ColorScheme_Custom_RadioBtn.Checked = True
         End Select
+    End Sub
 
+    Private Sub SetSidebarStateFromSettings()
         Select Case My.Settings.SidebarOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton3.Checked = True
             Case "Collapsed"
                 SettingsInstance.RadioButton2.Checked = True
         End Select
+    End Sub
 
+    Private Sub SetTaskPropertiesSidebarStateFromSettings()
         Select Case My.Settings.TaskPropertiesSidebarOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton4.Checked = True
             Case "Collapsed"
                 SettingsInstance.RadioButton1.Checked = True
         End Select
+    End Sub
 
+    Private Sub SetTimeFormatFromSettings()
         Select Case My.Settings.TimeFormat
             Case "12"
                 SettingsInstance.RadioButton6.Checked = True
             Case "24"
                 SettingsInstance.RadioButton5.Checked = True
         End Select
+    End Sub
 
+    Private Sub SetProfileVisibilityFromSettings()
         Select Case My.Settings.IsPfpVisible
             Case True
                 SettingsInstance.CheckBox1.Checked = False
@@ -124,6 +138,48 @@ Public Class MainWindow
                 SettingsInstance.CheckBox2.Checked = True
         End Select
     End Sub
+
+    Private Sub HighlightActiveFormButton()
+        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
+        If activeForm Is MyDayInstance Then
+            CustomButton1.DisableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is RepeatedInstance Then
+            CustomButton2.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is ImportantInstance Then
+            CustomButton3.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is PlannedInstance Then
+            CustomButton4.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton5.EnableEffects()
+        ElseIf activeForm Is TasksInstance Then
+            CustomButton5.DisableEffects()
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+        Else
+            CustomButton1.EnableEffects()
+            CustomButton2.EnableEffects()
+            CustomButton3.EnableEffects()
+            CustomButton4.EnableEffects()
+            CustomButton5.EnableEffects()
+        End If
+    End Sub
+#End Region
 
     '----------------------------------------------------------------Form Management-------------------------------------------------------------------'
 #Region "Form Management"
@@ -489,47 +545,6 @@ Public Class MainWindow
         End If
     End Sub
 #End Region
-
-    Private Sub HighlightActiveFormButton()
-        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
-        If activeForm Is MyDayInstance Then
-            CustomButton1.DisableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is RepeatedInstance Then
-            CustomButton2.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is ImportantInstance Then
-            CustomButton3.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is PlannedInstance Then
-            CustomButton4.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is TasksInstance Then
-            CustomButton5.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-        Else
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        End If
-    End Sub
 
     '----------------------------------------------------------------Helper Methods-------------------------------------------------------------------'
 #Region "Helper Methods"

@@ -26,7 +26,7 @@ Partial Class Important_View
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.MainTlp_SubTlpTaskView = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox_AddNewTask = New System.Windows.Forms.TextBox()
+        Me.AddNewTask_TextBox = New System.Windows.Forms.TextBox()
         Me.Important_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
         Me.Important_Label = New System.Windows.Forms.Label()
@@ -97,7 +97,7 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.SubTlpTaskView_SubTlpBottom.Controls.Add(Me.TextBox_AddNewTask, 1, 0)
+        Me.SubTlpTaskView_SubTlpBottom.Controls.Add(Me.AddNewTask_TextBox, 1, 0)
         Me.SubTlpTaskView_SubTlpBottom.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpBottom.Location = New System.Drawing.Point(3, 394)
         Me.SubTlpTaskView_SubTlpBottom.Name = "SubTlpTaskView_SubTlpBottom"
@@ -106,18 +106,18 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpBottom.Size = New System.Drawing.Size(582, 64)
         Me.SubTlpTaskView_SubTlpBottom.TabIndex = 9
         '
-        'TextBox_AddNewTask
+        'AddNewTask_TextBox
         '
-        Me.TextBox_AddNewTask.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
-        Me.TextBox_AddNewTask.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-        Me.TextBox_AddNewTask.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
-        Me.TextBox_AddNewTask.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.TextBox_AddNewTask.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox_AddNewTask.ForeColor = System.Drawing.Color.White
-        Me.TextBox_AddNewTask.Location = New System.Drawing.Point(148, 3)
-        Me.TextBox_AddNewTask.Name = "TextBox_AddNewTask"
-        Me.TextBox_AddNewTask.Size = New System.Drawing.Size(285, 20)
-        Me.TextBox_AddNewTask.TabIndex = 3
+        Me.AddNewTask_TextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.AddNewTask_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
+        Me.AddNewTask_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
+        Me.AddNewTask_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.AddNewTask_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AddNewTask_TextBox.ForeColor = System.Drawing.Color.White
+        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(148, 3)
+        Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
+        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(285, 20)
+        Me.AddNewTask_TextBox.TabIndex = 3
         '
         'Important_CheckedListBox
         '
@@ -444,7 +444,7 @@ Partial Class Important_View
     Friend WithEvents Tlp_ImportantButton As TableLayoutPanel
     Friend WithEvents Button_Important As Button
     Friend WithEvents SubTlpTaskView_SubTlpBottom As TableLayoutPanel
-    Friend WithEvents TextBox_AddNewTask As TextBox
+    Friend WithEvents AddNewTask_TextBox As TextBox
     Friend WithEvents Important_CheckedListBox As CheckedListBox
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
     Friend WithEvents Important_Label As Label
