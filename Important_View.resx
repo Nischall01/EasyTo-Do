@@ -429,7 +429,7 @@
         QmCC
 </value>
   </data>
-  <data name="Button_Important.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Important_Button.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAJslJREFUeF7t
         3YtbVWX6xnH/O5Hy2BBNSqVZkU6gToQTaXmoyAOiRWZojuJV6IyHJtEK7aBOoZlZSkwhpagJTYEJGkqw

@@ -44,7 +44,7 @@ Partial Class Important_View
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TaskDescription_RichTextBox = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button_Important = New System.Windows.Forms.Button()
+        Me.Important_Button = New System.Windows.Forms.Button()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
@@ -379,7 +379,7 @@ Partial Class Important_View
         Me.Tlp_ImportantButton.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.Tlp_ImportantButton.ColumnCount = 1
         Me.Tlp_ImportantButton.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Tlp_ImportantButton.Controls.Add(Me.Button_Important, 0, 0)
+        Me.Tlp_ImportantButton.Controls.Add(Me.Important_Button, 0, 0)
         Me.Tlp_ImportantButton.Location = New System.Drawing.Point(80, 129)
         Me.Tlp_ImportantButton.Name = "Tlp_ImportantButton"
         Me.Tlp_ImportantButton.RowCount = 1
@@ -387,22 +387,22 @@ Partial Class Important_View
         Me.Tlp_ImportantButton.Size = New System.Drawing.Size(36, 36)
         Me.Tlp_ImportantButton.TabIndex = 11
         '
-        'Button_Important
+        'Important_Button
         '
-        Me.Button_Important.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button_Important.BackgroundImage = CType(resources.GetObject("Button_Important.BackgroundImage"), System.Drawing.Image)
-        Me.Button_Important.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button_Important.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Important.FlatAppearance.BorderSize = 0
-        Me.Button_Important.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_Important.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_Important.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_Important.Location = New System.Drawing.Point(3, 3)
-        Me.Button_Important.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button_Important.Name = "Button_Important"
-        Me.Button_Important.Size = New System.Drawing.Size(30, 30)
-        Me.Button_Important.TabIndex = 8
-        Me.Button_Important.UseVisualStyleBackColor = False
+        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Important_Button.BackgroundImage = CType(resources.GetObject("Important_Button.BackgroundImage"), System.Drawing.Image)
+        Me.Important_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Important_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Important_Button.FlatAppearance.BorderSize = 0
+        Me.Important_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Important_Button.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Important_Button.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Important_Button.Location = New System.Drawing.Point(3, 3)
+        Me.Important_Button.Margin = New System.Windows.Forms.Padding(2)
+        Me.Important_Button.Name = "Important_Button"
+        Me.Important_Button.Size = New System.Drawing.Size(30, 30)
+        Me.Important_Button.TabIndex = 8
+        Me.Important_Button.UseVisualStyleBackColor = False
         '
         'Important_View
         '
@@ -442,7 +442,7 @@ Partial Class Important_View
     Friend WithEvents Panel1 As Panel
     Friend WithEvents TaskDescription_RichTextBox As RichTextBox
     Friend WithEvents Tlp_ImportantButton As TableLayoutPanel
-    Friend WithEvents Button_Important As Button
+    Friend WithEvents Important_Button As Button
     Friend WithEvents SubTlpTaskView_SubTlpBottom As TableLayoutPanel
     Friend WithEvents AddNewTask_TextBox As TextBox
     Friend WithEvents Important_CheckedListBox As CheckedListBox

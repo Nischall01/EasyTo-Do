@@ -12,7 +12,6 @@ Public Class MyDay_View
     Private SelectedTaskItem As TaskItem
 
     Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
-
     Private IsTaskPropertiesVisible As Boolean = True
 
     <DllImport("user32.dll")>
@@ -20,7 +19,19 @@ Public Class MyDay_View
     End Function
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
-#Region "Initialization"
+#Region "On Load"
+
+    Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeMy_day()
+
+        ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
+        ReminderTimer.Start() ' Start the Timers
+
+        NotifyIcon1.Text = "EasyTo_do"
+        NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
+        NotifyIcon1.Visible = True
+    End Sub
+
     Private Sub InitializeMy_day()
         AddNewTask_TextBox.Focus()
         LoadTasksToMyDay()
@@ -36,22 +47,13 @@ Public Class MyDay_View
         DisableTaskProperties(True)
     End Sub
 
-    Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeMy_day()
-
-        ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
-        ReminderTimer.Start() ' Start the Timers
-
-        NotifyIcon1.Text = "EasyTo_do"
-        NotifyIcon1.Icon = My.Resources.EasyToDo_Icon
-        NotifyIcon1.Visible = True
-    End Sub
+#End Region
 
     Private Sub DisableTaskProperties(Disable As Boolean)
         If Disable Then
             TaskTitle_TextBox.Text = Nothing
             Label_TaskEntryDateTime.Text = Nothing
-            Button_Important.BackgroundImage = ImageCache.DisabledImportantIcon
+            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
 
             If My.Settings.ColorScheme = "Dark" Then
                 TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
@@ -63,7 +65,7 @@ Public Class MyDay_View
 
             Label_ADT.Enabled = False
             Label_TaskEntryDateTime.Enabled = False
-            Button_Important.Enabled = False
+            Important_Button.Enabled = False
 
             CustomButton_AddReminder.Enabled = False
             CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
@@ -85,138 +87,29 @@ Public Class MyDay_View
             TaskDescription_RichTextBox.Enabled = True
             Label_ADT.Enabled = True
             Label_TaskEntryDateTime.Enabled = True
-            Button_Important.Enabled = True
+            Important_Button.Enabled = True
             CustomButton_Repeat.Enabled = True
             CustomButton_AddDueDate.Enabled = True
             CustomButton_AddReminder.Enabled = True
             Button_DeleteTask.Enabled = True
         End If
     End Sub
-#End Region
-
-    '---------------------------------------------------------------------------------Data Handling---------------------------------------------------------------------------------------------'
-#Region "Data Handling"
-
-    Private Sub AddNewTaskToMyDay(NewTask As String)
-        Dim queryInsertTask As String = "INSERT INTO Tasks (Task, EntryDateTime, DueDate) VALUES (@Task, @EntryDateTime, @DueDate)"
-
-        Using connection As New SqlCeConnection(connectionString)
-            Using command As New SqlCeCommand(queryInsertTask, connection)
-                command.Parameters.AddWithValue("@Task", NewTask)
-                command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
-                command.Parameters.AddWithValue("@DueDate", DateTime.Today)
-
-                Try
-                    connection.Open()
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        ' Optionally notify success
-                        ' MessageBox.Show("Task added successfully.")
-                    Else
-                        MessageBox.Show("No rows were affected. The task might not have been added.")
-                    End If
-                Catch ex As SqlCeException
-                    MessageBox.Show("SQL CE Error: " & ex.Message)
-                Catch ex As Exception
-                    MessageBox.Show("Unexpected Error: " & ex.Message)
-                End Try
-            End Using
-        End Using
-
-        ' Reload the data to reflect changes
-        Views.RefreshTasks()
-    End Sub
-
-    Private Sub HardResetTableTasks()
-        Dim dropTableQuery As String = "DROP TABLE Tasks"
-        Dim createTableQuery As String = "
-                                            CREATE TABLE Tasks (
-                                            TaskID int IDENTITY(1,1) NOT NULL,
-                                            Task NVARCHAR (256) NOT NULL,Description NVARCHAR(4000) NULL,
-                                            IsDone bit NOT NULL DEFAULT 0,
-                                            IsImportant bit NOT NULL DEFAULT 0,
-                                            DueDate datetime NULL,Section NVARCHAR (256) NOT NULL,
-                                            EntryDateTime datetime NOT NULL,
-                                            IsRepeated bit NOT NULL DEFAULT 0,
-                                            RepeatedDays NVARCHAR (256) NULL);
-                                            ALTER TABLE [Tasks] 
-                                            ADD CONSTRAINT  [Tasks_PK] PRIMARY KEY ([TaskID]);
-                                         "
-        Using connection As New SqlCeConnection(connectionString)
-            Try
-                connection.Open()
-
-                ' Begin a transaction
-                Using transaction = connection.BeginTransaction()
-                    ' Drop the table if it exists
-                    Using dropCommand As New SqlCeCommand(dropTableQuery, connection, transaction)
-                        dropCommand.ExecuteNonQuery()
-                    End Using
-
-                    ' Recreate the table
-                    Using createCommand As New SqlCeCommand(createTableQuery, connection, transaction)
-                        createCommand.ExecuteNonQuery()
-                    End Using
-
-                    ' Commit the transaction
-                    transaction.Commit()
-                End Using
-
-            Catch ex As SqlCeException
-                ' Detailed SQL CE exception
-                MessageBox.Show("SQL CE Error: " & ex.Message)
-            Catch ex As Exception
-                ' General exception
-                MessageBox.Show("Unexpected Error: " & ex.Message)
-            Finally
-                connection.Close()
-            End Try
-        End Using
-
-        ' Reload the data to reflect changes
-        LoadTasksToMyDay()
-        DisableTaskProperties(True)
-    End Sub
-
-    Private Sub UpdateTaskDescription(taskIndex As Integer, newDescription As String)
-        Dim query As String = "UPDATE My_Day SET Task_Description = @NewDescription WHERE Task_Index = @TaskIndex"
-
-        Using connection As New SqlCeConnection(connectionString)
-            Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@NewDescription", newDescription)
-                command.Parameters.AddWithValue("@TaskIndex", taskIndex)
-
-                Try
-                    connection.Open()
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        'MessageBox.Show("Task description updated successfully.")
-                    Else
-                        MessageBox.Show("No task found with the specified index.")
-                    End If
-                Catch ex As SqlCeException
-                    MessageBox.Show("SQL CE Error: " & ex.Message)
-                Catch ex As Exception
-                    MessageBox.Show("Unexpected Error: " & ex.Message)
-                End Try
-            End Using
-        End Using
-
-        Views.RefreshTasks()
-
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = taskIndex
-            MyDay_CheckedListBox.Focus()
-        End If
-    End Sub
-#End Region
 
     '-----------------------------------------------------------------------------Task Handling------------------------------------------------------------------------------'
 #Region "Task Handling"
-    Private Sub ShowOrHideTaskProperties(Optional H As String = "Show")
-        If IsTaskPropertiesVisible And H = "Show" Then
+    Private Sub ShowOrHideTaskProperties(Optional Force As String = "Show")
+        If Force = "Show" Then
             MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 75
+            MainTlp.ColumnStyles(0).Width = 75%
+            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(1).Width = 25%
+            IsTaskPropertiesVisible = False
+            Exit Sub
+        End If
+
+        If IsTaskPropertiesVisible Then
+            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
+            MainTlp.ColumnStyles(0).Width = 75%
             MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(1).Width = 25%
             IsTaskPropertiesVisible = False
@@ -229,98 +122,20 @@ Public Class MyDay_View
         End If
     End Sub
 
-    Private Sub EnterTaskTo_My_Day_ChecklistBox()
-        Dim NewMy_DayTask As String = AddNewTask_TextBox.Text
-        If NewMy_DayTask Is String.Empty Then
-            Exit Sub
-        End If
-        MyDay_CheckedListBox.Items.Add(NewMy_DayTask)
-        Dim NewTaskId As Integer = Task.AddNewTasks.MyDay(NewMy_DayTask)
-
-        For i As Integer = 0 To MyDay_CheckedListBox.Items.Count - 1
-            If MyDay_CheckedListBox.Items(i).ID = NewTaskId Then
-                MyDay_CheckedListBox.SelectedIndex = i
-                Exit For
-            End If
-        Next
-
-        AddNewTask_TextBox.Clear()
-        AddNewTask_TextBox.Focus()
-    End Sub
-
-    Private Sub DoneCheckChanged(isChecked As Boolean)
-        Dim IsDone As Integer = If(isChecked, 1, 0)
-        Try
-            ' Update the database with the new 'Done' value
-            Dim query As String = "UPDATE Tasks SET IsDone = @IsDone WHERE TaskID = @TaskID"
-
-            Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    ' Use specific type for parameters
-                    command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
-                    command.Parameters.AddWithValue("@IsDone", IsDone)
-
-                    connection.Open()
-                    command.ExecuteNonQuery()
-                End Using
-            End Using
-        Catch ex As SqlCeException
-            MessageBox.Show("SQL CE Error: " & ex.Message)
-        Catch ex As Exception
-            MessageBox.Show("Unexpected Error: " & ex.Message)
-        End Try
-        Views.RefreshTasksWithException("MyDay")
-    End Sub
-
-    Private Sub ImportantCheckChanged(isChecked As Boolean)
-        'MsgBox("Task ID: " & TaskID)
-        'MsgBox("IsChecked: " & isChecked)
-
-        Dim IsImportant As Integer = If(isChecked, 1, 0)
-        Try
-            ' Update the database with the new 'Done' value
-            Dim query As String = "UPDATE Tasks SET IsImportant = @IsImportant WHERE TaskID = @TaskID"
-
-            Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@TaskID", SelectedTaskItem.ID)
-                    command.Parameters.AddWithValue("@IsImportant", IsImportant)
-
-                    connection.Open()
-                    command.ExecuteNonQuery()
-                    connection.Close()
-                End Using
-            End Using
-        Catch ex As Exception
-            MessageBox.Show("Error updating task status: " & ex.Message)
-        End Try
-
-        RefreshTasks()
-
-        ' Retain Focus after DataTable Reload
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            MyDay_CheckedListBox.Focus()
-        End If
-    End Sub
-
     Private Function IsTaskImportant() As Boolean
-        If SelectedTaskItem.ID < 0 Then
-            Return False
-        End If
-
-        ' Find the task in the DataTable
-        For Each row As DataRow In dt.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                ' Check if the task is marked as important
-                If Convert.ToInt16(row("IsImportant")) = 1 Then
-                    Return True
-                Else
-                    Return False
-                End If
+        Try
+            If SelectedTaskItem.ID <= 0 Then
+                Return False
             End If
-        Next
-        ' If no matching task is found
+
+            ' Find the task in the DataTable
+            Dim foundRow As DataRow = dt.Rows.Find(SelectedTaskItem.ID)
+            If foundRow IsNot Nothing Then
+                Return CBool(foundRow("IsImportant"))
+            End If
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
         Return False
     End Function
 
@@ -413,19 +228,29 @@ Public Class MyDay_View
     '-----------------------------------------------------------------Event Handlers---------------------------------------------------'
 #Region "Event Handlers"
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHideTaskProperties()
+        ShowOrHideTaskProperties("Hide")
     End Sub
 
-    Private Sub TextBox_AddNewTask_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
+    ' Key Down event to add a new task
+    Private Sub AddNewTask_TextBox_MouseDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            EnterTaskTo_My_Day_ChecklistBox()
+            Dim newTask As String = AddNewTask_TextBox.Text
+            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
 
-            '   IncrementCheckedListBoxHeight() ' Increment
+            Dim NewTaskId As Integer = Task.AddNewTasks.MyDay(newTask)
 
+            For i As Integer = 0 To MyDay_CheckedListBox.Items.Count - 1
+                If MyDay_CheckedListBox.Items(i).ID = NewTaskId Then
+                    MyDay_CheckedListBox.SelectedIndex = i
+                    Exit For
+                End If
+            Next
+
+            AddNewTask_TextBox.Clear()
         End If
     End Sub
 
-    Private Sub CheckedListBox_MyDay_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown
+    Private Sub MyDay_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
             ShowOrHideTaskProperties()
         End If
@@ -456,9 +281,9 @@ Public Class MyDay_View
             End If
 
             If IsTaskImportant() Then
-                Button_Important.BackgroundImage = ImageCache.CheckedImportantIcon
+                Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
-                Button_Important.BackgroundImage = ImageCache.UncheckedImportantIcon
+                Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
 
             If GetReminder() <> String.Empty Then
@@ -481,30 +306,35 @@ Public Class MyDay_View
         End If
     End Sub
 
-    Private Sub Button_Important_Click(sender As Object, e As EventArgs) Handles Button_Important.Click
-        If IsTaskImportant() Then
-            ImportantCheckChanged(CheckState.Unchecked)
+    ' Button event to change the 'IsImportant' status of the selected task
+    Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
+        If MyDay_CheckedListBox.Items.Count > 0 Then
+            If IsTaskImportant() Then
+                Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
+            Else
+                Task.ImportantCheckChanged(CheckState.Checked, SelectedTaskItem.ID)
+            End If
         Else
-            ImportantCheckChanged(CheckState.Checked)
+            LoseListItemFocus()
         End If
     End Sub
 
-    Private Sub Button_Important_MouseEnter(sender As Object, e As EventArgs) Handles Button_Important.MouseEnter
+    Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
         If IsTaskImportant() Then
             Exit Sub
         End If
-        Button_Important.BackgroundImage = ImageCache.CheckedImportantIcon
+        Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
     End Sub
 
-    Private Sub Button_Important1_MouseLeave(sender As Object, e As EventArgs) Handles Button_Important.MouseLeave
+    Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If IsTaskImportant() Then
             Exit Sub
         End If
-        Button_Important.BackgroundImage = ImageCache.UncheckedImportantIcon
+        Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        DeleteTask()
+        DeleteTaskInvoker()
     End Sub
 
     Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
@@ -518,7 +348,7 @@ Public Class MyDay_View
         End If
     End Sub
 
-    Private Sub RichTextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
+    Private Sub TaskDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
         ' Check if Enter key is pressed
         If e.KeyCode = Keys.Enter Then
             ' Check if Shift key is also pressed
@@ -527,12 +357,17 @@ Public Class MyDay_View
             Else
                 ' Prevent the default behavior
                 e.SuppressKeyPress = True
-                UpdateTaskDescription(MyDay_CheckedListBox.SelectedIndex, TaskDescription_RichTextBox.Text)
+                Task.UpdateDescription(TaskDescription_RichTextBox.Text, SelectedTaskItem.ID)
+
+                If MyDay_CheckedListBox.Items.Count > 0 Then
+                    Me.ActiveControl = Nothing
+                    MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
+                End If
             End If
         End If
     End Sub
 
-    Private Sub TextBox_AddNewTask_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
+    Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
         LoseListItemFocus()
         DisableTaskProperties(True)
     End Sub
@@ -664,6 +499,8 @@ Public Class MyDay_View
 
     Private Sub LoseListItemFocus()
         MyDay_CheckedListBox.SelectedIndex = -1
+        SelectedTaskIndex = Nothing
+        SelectedTaskItem = Nothing
     End Sub
 
     Private Sub MyDay_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MyDay_CheckedListBox.KeyDown
@@ -692,9 +529,9 @@ Public Class MyDay_View
                 End Using
             End Using
         End Using
+        dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
 
         MyDay_CheckedListBox.Items.Clear()
-
         For Each row As DataRow In dt.Rows
             If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
                 Dim RemindedTask As String = row("Task")
@@ -716,19 +553,25 @@ Public Class MyDay_View
     End Sub
 
 
-    Private Sub DeleteTask()
-        Task.DeleteTask(SelectedTaskItem.ID)
 
-        If MyDay_CheckedListBox.Items.Count <> 0 Then
-            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex - 1
-        Else
-            MyDay_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
+    'Task DeleteTask method invoker
+    Private Sub DeleteTaskInvoker()
+        If SelectedTaskItem IsNot Nothing AndAlso SelectedTaskItem.ID > 0 Then
+            Task.DeleteTask(SelectedTaskItem.ID)
+
+            If MyDay_CheckedListBox.Items.Count > 0 Then
+                MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex - 1
+            Else
+                LoseListItemFocus()
+            End If
         End If
     End Sub
 
+
+    ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub MyDay_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles MyDay_CheckedListBox.ItemCheck
         If Not IsNothing(SelectedTaskItem) Then
-            DoneCheckChanged(e.NewValue = CheckState.Checked)
+            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "MyDay")
         Else
             Exit Sub
         End If

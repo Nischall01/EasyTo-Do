@@ -31,10 +31,13 @@ Partial Class Planned_View
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
+        Me.CustomButton_AddDueDate = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TaskDescription_RichTextBox = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
-        Me.Button_Important = New System.Windows.Forms.Button()
+        Me.Important_Button = New System.Windows.Forms.Button()
         Me.MainTlp_SubTlpTaskView = New System.Windows.Forms.TableLayoutPanel()
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
         Me.AddNewTask_TextBox = New System.Windows.Forms.TextBox()
@@ -43,9 +46,6 @@ Partial Class Planned_View
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
         Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
         Me.Planned_CheckedListBox = New System.Windows.Forms.CheckedListBox()
-        Me.CustomButton_AddDueDate = New EasyTo_Do.CustomButton_2()
-        Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
-        Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
@@ -192,6 +192,63 @@ Partial Class Planned_View
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(190, 181)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.TabIndex = 10
         '
+        'CustomButton_AddDueDate
+        '
+        Me.CustomButton_AddDueDate.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddDueDate.ButtonText = "Add Due Date"
+        Me.CustomButton_AddDueDate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_AddDueDate.ForeColor = System.Drawing.Color.White
+        Me.CustomButton_AddDueDate.Icon = CType(resources.GetObject("CustomButton_AddDueDate.Icon"), System.Drawing.Image)
+        Me.CustomButton_AddDueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_AddDueDate.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddDueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_AddDueDate.Location = New System.Drawing.Point(0, 80)
+        Me.CustomButton_AddDueDate.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_AddDueDate.Name = "CustomButton_AddDueDate"
+        Me.CustomButton_AddDueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddDueDate.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddDueDate.TabIndex = 11
+        Me.CustomButton_AddDueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_AddDueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton_Repeat
+        '
+        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_Repeat.ButtonText = "Repeat"
+        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_Repeat.ForeColor = System.Drawing.Color.White
+        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
+        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
+        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
+        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_Repeat.TabIndex = 10
+        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton_AddReminder
+        '
+        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
+        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_AddReminder.ForeColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
+        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
+        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
+        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddReminder.TabIndex = 9
+        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
         'Panel1
         '
         Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
@@ -221,7 +278,7 @@ Partial Class Planned_View
         Me.Tlp_ImportantButton.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
         Me.Tlp_ImportantButton.ColumnCount = 1
         Me.Tlp_ImportantButton.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.Tlp_ImportantButton.Controls.Add(Me.Button_Important, 0, 0)
+        Me.Tlp_ImportantButton.Controls.Add(Me.Important_Button, 0, 0)
         Me.Tlp_ImportantButton.Location = New System.Drawing.Point(80, 129)
         Me.Tlp_ImportantButton.Name = "Tlp_ImportantButton"
         Me.Tlp_ImportantButton.RowCount = 1
@@ -229,22 +286,22 @@ Partial Class Planned_View
         Me.Tlp_ImportantButton.Size = New System.Drawing.Size(36, 36)
         Me.Tlp_ImportantButton.TabIndex = 11
         '
-        'Button_Important
+        'Important_Button
         '
-        Me.Button_Important.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
-        Me.Button_Important.BackgroundImage = CType(resources.GetObject("Button_Important.BackgroundImage"), System.Drawing.Image)
-        Me.Button_Important.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Button_Important.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Button_Important.FlatAppearance.BorderSize = 0
-        Me.Button_Important.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_Important.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_Important.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_Important.Location = New System.Drawing.Point(3, 3)
-        Me.Button_Important.Margin = New System.Windows.Forms.Padding(2)
-        Me.Button_Important.Name = "Button_Important"
-        Me.Button_Important.Size = New System.Drawing.Size(30, 30)
-        Me.Button_Important.TabIndex = 8
-        Me.Button_Important.UseVisualStyleBackColor = False
+        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Important_Button.BackgroundImage = CType(resources.GetObject("Important_Button.BackgroundImage"), System.Drawing.Image)
+        Me.Important_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Important_Button.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Important_Button.FlatAppearance.BorderSize = 0
+        Me.Important_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Important_Button.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Important_Button.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.Important_Button.Location = New System.Drawing.Point(3, 3)
+        Me.Important_Button.Margin = New System.Windows.Forms.Padding(2)
+        Me.Important_Button.Name = "Important_Button"
+        Me.Important_Button.Size = New System.Drawing.Size(30, 30)
+        Me.Important_Button.TabIndex = 8
+        Me.Important_Button.UseVisualStyleBackColor = False
         '
         'MainTlp_SubTlpTaskView
         '
@@ -363,63 +420,6 @@ Partial Class Planned_View
         Me.Planned_CheckedListBox.Size = New System.Drawing.Size(576, 299)
         Me.Planned_CheckedListBox.TabIndex = 10
         '
-        'CustomButton_AddDueDate
-        '
-        Me.CustomButton_AddDueDate.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddDueDate.ButtonText = "Add Due Date"
-        Me.CustomButton_AddDueDate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_AddDueDate.ForeColor = System.Drawing.Color.White
-        Me.CustomButton_AddDueDate.Icon = CType(resources.GetObject("CustomButton_AddDueDate.Icon"), System.Drawing.Image)
-        Me.CustomButton_AddDueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_AddDueDate.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddDueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_AddDueDate.Location = New System.Drawing.Point(0, 80)
-        Me.CustomButton_AddDueDate.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_AddDueDate.Name = "CustomButton_AddDueDate"
-        Me.CustomButton_AddDueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddDueDate.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_AddDueDate.TabIndex = 11
-        Me.CustomButton_AddDueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_AddDueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'CustomButton_Repeat
-        '
-        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_Repeat.ButtonText = "Repeat"
-        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_Repeat.ForeColor = System.Drawing.Color.White
-        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
-        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
-        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
-        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_Repeat.TabIndex = 10
-        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'CustomButton_AddReminder
-        '
-        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
-        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_AddReminder.ForeColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
-        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
-        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
-        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_AddReminder.TabIndex = 9
-        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
         'Planned_View
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -464,7 +464,7 @@ Partial Class Planned_View
     Friend WithEvents Panel1 As Panel
     Friend WithEvents TaskDescription_RichTextBox As RichTextBox
     Friend WithEvents Tlp_ImportantButton As TableLayoutPanel
-    Friend WithEvents Button_Important As Button
+    Friend WithEvents Important_Button As Button
     Friend WithEvents SubTlpTaskView_SubTlpMiddle As TableLayoutPanel
     Friend WithEvents Planned_CheckedListBox As CheckedListBox
 End Class

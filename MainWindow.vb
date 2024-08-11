@@ -524,24 +524,28 @@ Public Class MainWindow
     Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.Click
         If e.Button = MouseButtons.Left Then
             ShowForm(RepeatedInstance)
+            RepeatedInstance.AddNewTask_TextBox.Focus()
         End If
     End Sub
 
     Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.Click
         If e.Button = MouseButtons.Left Then
             ShowForm(ImportantInstance)
+            ImportantInstance.AddNewTask_TextBox.Focus()
         End If
     End Sub
 
     Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.Click
         If e.Button = MouseButtons.Left Then
             ShowForm(PlannedInstance)
+            PlannedInstance.AddNewTask_TextBox.Focus()
         End If
     End Sub
 
     Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.Click
         If e.Button = MouseButtons.Left Then
             ShowForm(TasksInstance)
+            TasksInstance.AddNewTask_TextBox.Focus()
         End If
     End Sub
 #End Region

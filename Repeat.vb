@@ -2,7 +2,7 @@
     Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Public Sub SetRepeat(RepeatedDays As String, Repeat_SelectedTaskID As Integer)
-        Dim query As String = "UPDATE Tasks SET IsRepeated = 1, RepeatedDays = @RepeatedDays WHERE TaskID = @TaskID"
+        Dim query As String = "UPDATE Tasks SET RepeatedDays = @RepeatedDays WHERE TaskID = @TaskID"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
@@ -28,7 +28,7 @@
     End Sub
 
     Public Sub RemoveRepeat(Repeat_SelectedTaskID As Integer)
-        Dim query As String = "UPDATE Tasks SET IsRepeated = 0, RepeatedDays = Null WHERE TaskID = @TaskID"
+        Dim query As String = "UPDATE Tasks SET RepeatedDays = Null WHERE TaskID = @TaskID"
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
