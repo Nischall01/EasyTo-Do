@@ -67,6 +67,7 @@ Public Class MainWindow
         LoadProfile()
         ' Initial Form
         ShowForm(MyDayInstance)
+        MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
         ' Load the Selected Appearance 
         LoadSettings()
     End Sub
@@ -514,39 +515,31 @@ Public Class MainWindow
 
     '--------------------------------------------------------------Button Click Events----------------------------------------------------------------'
 #Region "Button Click Events"
-    Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.Click
+    Private Sub HandleViewButtonClick(viewInstance As Object, checkListBox As CheckedListBox, textBox As TextBox, e As MouseEventArgs)
         If e.Button = MouseButtons.Left Then
-            ShowForm(MyDayInstance)
-            MyDayInstance.AddNewTask_TextBox.Focus()
+            ShowForm(viewInstance)
+            textBox.Focus()
         End If
     End Sub
 
-    Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.Click
-        If e.Button = MouseButtons.Left Then
-            ShowForm(RepeatedInstance)
-            RepeatedInstance.AddNewTask_TextBox.Focus()
-        End If
+    Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.MouseClick
+        HandleViewButtonClick(MyDayInstance, MyDayInstance.MyDay_CheckedListBox, MyDayInstance.AddNewTask_TextBox, e)
     End Sub
 
-    Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.Click
-        If e.Button = MouseButtons.Left Then
-            ShowForm(ImportantInstance)
-            ImportantInstance.AddNewTask_TextBox.Focus()
-        End If
+    Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.MouseClick
+        HandleViewButtonClick(RepeatedInstance, RepeatedInstance.Repeated_CheckedListBox, RepeatedInstance.AddNewTask_TextBox, e)
     End Sub
 
-    Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.Click
-        If e.Button = MouseButtons.Left Then
-            ShowForm(PlannedInstance)
-            PlannedInstance.AddNewTask_TextBox.Focus()
-        End If
+    Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.MouseClick
+        HandleViewButtonClick(ImportantInstance, ImportantInstance.Important_CheckedListBox, ImportantInstance.AddNewTask_TextBox, e)
     End Sub
 
-    Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.Click
-        If e.Button = MouseButtons.Left Then
-            ShowForm(TasksInstance)
-            TasksInstance.AddNewTask_TextBox.Focus()
-        End If
+    Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.MouseClick
+        HandleViewButtonClick(PlannedInstance, PlannedInstance.Planned_CheckedListBox, PlannedInstance.AddNewTask_TextBox, e)
+    End Sub
+
+    Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.MouseClick
+        HandleViewButtonClick(TasksInstance, TasksInstance.Tasks_CheckedListBox, TasksInstance.AddNewTask_TextBox, e)
     End Sub
 #End Region
 
@@ -570,7 +563,6 @@ Public Class MainWindow
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        MyDayInstance.MyDay_CheckedListBox.SelectedIndex = -1
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()

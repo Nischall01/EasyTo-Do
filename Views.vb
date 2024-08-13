@@ -1,4 +1,12 @@
 ﻿Module Views
+    Public Enum TaskPropertiesVisibility
+        Toggle
+        Show
+        Hide
+    End Enum
+
+    Public _isUiUpdating As Boolean = False
+
     ' Dictionary to map view names to their instances
     Private ReadOnly viewInstances As New Dictionary(Of String, Action) From {
         {"MyDay", Sub() MainWindow.MyDayInstance.LoadTasksToMyDay()},
@@ -8,19 +16,16 @@
         {"Tasks", Sub() MainWindow.TasksInstance.LoadTasksToTasks()}
     }
 
-    ' Refresh all tasks for all views
-    Sub RefreshTasks()
+    Public Sub RefreshTasks()
+        'MsgBox("Refresh Triggered")
+        _isUiUpdating = True
         For Each refreshAction In viewInstances.Values
-            refreshAction.Invoke()
+            Try
+                refreshAction.Invoke()
+            Catch ex As Exception
+                MessageBox.Show("An error occurred while refreshing tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         Next
-    End Sub
-
-    ' Refresh tasks for all views except the one specified
-    Sub RefreshTasksWithException(excludedView As String)
-        For Each viewName In viewInstances.Keys
-            If viewName <> excludedView Then
-                viewInstances(viewName).Invoke()
-            End If
-        Next
+        _isUiUpdating = False
     End Sub
 End Module

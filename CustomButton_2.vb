@@ -146,6 +146,7 @@
 
     ' Click event to handle button click
     Private Sub CustomButton_Click(sender As Object, e As EventArgs)
+        MyBase.OnMouseClick(e)
         MyBase.OnClick(e)
     End Sub
 

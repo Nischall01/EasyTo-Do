@@ -1,8 +1,6 @@
 ﻿Module Task
     Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
-    Private _isUpdating As Boolean = False
-
     ' Class with methods to add new task for each view
     Public Class AddNewTasks
 
@@ -12,12 +10,13 @@
 
             Try
                 Using connection As New SqlCeConnection(connectionString)
+                    connection.Open()
+
                     Using command As New SqlCeCommand(queryInsertTask, connection)
                         command.Parameters.AddWithValue("@Task", NewTask)
                         command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
                         command.Parameters.AddWithValue("@DueDate", DateTime.Today)
 
-                        connection.Open()
                         Dim rowsAffected As Integer = command.ExecuteNonQuery()
                         If rowsAffected > 0 Then
                             ' MessageBox.Show("Task added successfully.")
@@ -41,11 +40,12 @@
 
             Try
                 Using connection As New SqlCeConnection(connectionString)
+                    connection.Open()
+
                     Using command As New SqlCeCommand(queryInsertTask, connection)
                         command.Parameters.AddWithValue("@Task", NewTask)
                         command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
 
-                        connection.Open()
                         Dim rowsAffected As Integer = command.ExecuteNonQuery()
                         If rowsAffected > 0 Then
                             ' MessageBox.Show("Task added successfully.")
@@ -69,12 +69,13 @@
 
             Try
                 Using connection As New SqlCeConnection(connectionString)
+                    connection.Open()
+
                     Using command As New SqlCeCommand(queryInsertTask, connection)
                         command.Parameters.AddWithValue("@Task", NewTask)
                         command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
                         command.Parameters.AddWithValue("@IsImportant", 1)
 
-                        connection.Open()
                         Dim rowsAffected As Integer = command.ExecuteNonQuery()
                         If rowsAffected > 0 Then
                             ' MessageBox.Show("Task added successfully.")
@@ -98,12 +99,13 @@
 
             Try
                 Using connection As New SqlCeConnection(connectionString)
+                    connection.Open()
+
                     Using command As New SqlCeCommand(queryInsertTask, connection)
                         command.Parameters.AddWithValue("@Task", NewTask)
                         command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
                         command.Parameters.AddWithValue("@Section", "Planned")
 
-                        connection.Open()
                         Dim rowsAffected As Integer = command.ExecuteNonQuery()
                         If rowsAffected > 0 Then
                             ' MessageBox.Show("Task added successfully.")
@@ -126,12 +128,13 @@
             Dim queryInsertTask As String = "INSERT INTO Tasks (Task, EntryDateTime) VALUES (@Task, @EntryDateTime)"
             Try
                 Using connection As New SqlCeConnection(connectionString)
+                    connection.Open()
+
                     Using command As New SqlCeCommand(queryInsertTask, connection)
                         command.Parameters.AddWithValue("@Task", NewTask)
                         command.Parameters.AddWithValue("@EntryDateTime", DateTime.Now)
 
 
-                        connection.Open()
                         Dim rowsAffected As Integer = command.ExecuteNonQuery()
                         If rowsAffected > 0 Then
                             ' MessageBox.Show("Task added successfully.")
@@ -153,22 +156,18 @@
 
     ' Method to change IsDone status
     Public Sub DoneCheckChanged(CheckState As Boolean, SelectedTaskID As Integer, View As String)
-        ' Flag to prevent recursion
-
-        ' Return early if already updating
-        If _isUpdating Then Return
-
         Dim query As String = "UPDATE Tasks SET IsDone = @IsDone WHERE TaskID = @TaskID"
         Dim IsDone As Integer = If(CheckState, 1, 0)
 
         Try
             Using connection As New SqlCeConnection(connectionString)
+                connection.Open()
+
                 Using command As New SqlCeCommand(query, connection)
                     ' Use specific type for parameters
                     command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
                     command.Parameters.AddWithValue("@IsDone", IsDone)
 
-                    connection.Open()
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
                     If rowsAffected > 0 Then
                         ' MessageBox.Show("Task's importance updated successfully.")
@@ -182,43 +181,25 @@
         Catch ex As Exception
             MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
-
-        ' Set the flag to prevent recursion
-        _isUpdating = True
-
-        Select Case View
-            Case "MyDay"
-                Views.RefreshTasksWithException("MyDay")
-            Case "Repeated"
-                Views.RefreshTasksWithException("Repeated")
-            Case "Important"
-                Views.RefreshTasksWithException("Important")
-            Case "Planned"
-                Views.RefreshTasksWithException("Planned")
-            Case "Tasks"
-                Views.RefreshTasksWithException("Tasks")
-        End Select
-
-        ' Reset the flag after update
-        _isUpdating = False
+        Views.RefreshTasks()
+        'MsgBox("Done")
     End Sub
-
 
     ' Method to change IsImportant status
     Public Sub ImportantCheckChanged(CheckState As Boolean, SelectedTaskID As Integer)
         'MsgBox("Task ID: " & TaskID)
         'MsgBox("IsChecked: " & isChecked)
-
         Dim query As String = "UPDATE Tasks SET IsImportant = @IsImportant WHERE TaskID = @TaskID"
         Dim IsImportant As Integer = If(CheckState, 1, 0)
 
         Try
             Using connection As New SqlCeConnection(connectionString)
+
+                connection.Open()
                 Using command As New SqlCeCommand(query, connection)
                     command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
                     command.Parameters.AddWithValue("@IsImportant", IsImportant)
 
-                    connection.Open()
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
                     If rowsAffected > 0 Then
                         'MessageBox.Show("Task's importance updated successfully.")
@@ -241,17 +222,21 @@
 
         Try
             Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@NewDescription", NewDescription)
-                    command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
 
-                    connection.Open()
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-                    If rowsAffected > 0 Then
-                        'MessageBox.Show("Task description updated successfully.")
-                    Else
-                        MessageBox.Show("No task found with the specified ID.")
-                    End If
+                connection.Open()
+                Using transaction = connection.BeginTransaction()
+                    Using command As New SqlCeCommand(query, connection)
+                        command.Parameters.AddWithValue("@NewDescription", NewDescription)
+                        command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
+
+                        Dim rowsAffected As Integer = command.ExecuteNonQuery()
+                        If rowsAffected > 0 Then
+                            'MessageBox.Show("Task description updated successfully.")
+                        Else
+                            MessageBox.Show("No task found with the specified ID.")
+                        End If
+                    End Using
+                    transaction.Commit()
                 End Using
             End Using
         Catch ex As SqlCeException
@@ -268,11 +253,13 @@
 
         Try
             Using connection As New SqlCeConnection(connectionString)
+                connection.Open()
+
                 Using command As New SqlCeCommand(query, connection)
                     command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
 
-                    connection.Open()
                     Dim rowsAffected As Integer = command.ExecuteNonQuery()
+
                     If rowsAffected > 0 Then
                         'MessageBox.Show("Task deleted successfully.")
                     Else
@@ -281,9 +268,9 @@
                 End Using
             End Using
         Catch ex As SqlCeException
-        MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
-        MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
         Views.RefreshTasks()
     End Sub
@@ -297,9 +284,10 @@
 
         Try
             Using connection As New SqlCeConnection(connectionString)
+
+                connection.Open()
                 Using maxIdCommand As New SqlCeCommand(queryGetMaxId, connection)
 
-                    connection.Open()
                     newTaskId = maxIdCommand.ExecuteScalar()
                 End Using
             End Using
@@ -335,6 +323,7 @@
         Try
             Using connection As New SqlCeConnection(connectionString)
                 connection.Open()
+
                 ' Begin a transaction
                 Using transaction = connection.BeginTransaction()
                     ' Drop the table if it exists

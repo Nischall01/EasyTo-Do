@@ -14,6 +14,12 @@ Public Class Repeated_View
     ' Form on load 
     Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadTasksToRepeated()
+        Select Case My.Settings.TaskPropertiesSidebarOnStart
+            Case "Expanded"
+                ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
+            Case "Collapsed"
+                ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        End Select
     End Sub
 
 #End Region
@@ -27,20 +33,24 @@ Public Class Repeated_View
 
         Try
             Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    Using adapter As New SqlCeDataAdapter(command)
-                        connection.Open()
-                        adapter.Fill(dt)
+                connection.Open()
+                Using transaction = connection.BeginTransaction
+                    Using command As New SqlCeCommand(query, connection)
+                        Using adapter As New SqlCeDataAdapter(command)
+                            adapter.Fill(dt)
+                        End Using
                     End Using
+                    transaction.Commit()
                 End Using
             End Using
             dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-
             Repeated_CheckedListBox.Items.Clear()
+
             For Each row As DataRow In dt.Rows
                 Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
                 Repeated_CheckedListBox.Items.Add(item, item.IsDone)
             Next
+
         Catch ex As SqlCeException
             MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
@@ -85,45 +95,50 @@ Public Class Repeated_View
     ' CheckedListBox's selected index change event handler
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = Repeated_CheckedListBox.SelectedIndex
-        SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
 
-        If Repeated_CheckedListBox.SelectedIndex = -1 Then
-        Else
+        If SelectedTaskIndex <> -1 Then
+            SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
+
             ' Change important icon with respect to selected task
             If IsTaskImportant() Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
+        Else
+
         End If
     End Sub
 
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        DeleteTaskInvoker()
+        If Repeated_CheckedListBox.SelectedIndex <> -1 Then
+            DeleteTaskInvoker()
+        End If
     End Sub
 
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
-        If e.KeyValue = Keys.Delete Then
-            If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-                DeleteTaskInvoker()
-            End If
+        If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
+            DeleteTaskInvoker()
         End If
     End Sub
     ' }
 
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub Repeated_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Repeated_CheckedListBox.ItemCheck
-        If Not IsNothing(SelectedTaskItem) Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "Repeated")
-        Else
+        If Views._isUiUpdating Then
             Exit Sub
         End If
+
+        If SelectedTaskItem IsNot Nothing Then
+            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "Repeated")
+        End If
+        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     ' Button Click event to change the 'IsImportant' status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
-        If Repeated_CheckedListBox.Items.Count > 0 Then
+        If Repeated_CheckedListBox.SelectedIndex <> -1 Then
             If IsTaskImportant() Then
                 Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
             Else
@@ -135,43 +150,56 @@ Public Class Repeated_View
     End Sub
 
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHideTaskProperties("Hide")
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
     End Sub
 
     Private Sub Repeated_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Repeated_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
-            ShowOrHideTaskProperties()
+            ShowOrHideTaskProperties(TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
-        If IsTaskImportant() Then
-            Exit Sub
+        If Repeated_CheckedListBox.SelectedIndex <> -1 Then
+            If IsTaskImportant() Then
+                Exit Sub
+            End If
+            Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
         End If
-        Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
     End Sub
 
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
-        If IsTaskImportant() Then
-            Exit Sub
+        If Repeated_CheckedListBox.SelectedIndex <> -1 Then
+            If IsTaskImportant() Then
+                Exit Sub
+            End If
+            Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
         End If
-        Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
     End Sub
 #End Region
 
 #Region "Helper Methods"
 
-    'Task DeleteTask method invoker
+    ' Task.DeleteTask method invoker
     Private Sub DeleteTaskInvoker()
-        If SelectedTaskItem IsNot Nothing AndAlso SelectedTaskItem.ID > 0 Then
+        If SelectedTaskItem Is Nothing Then
+            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Exit Sub
+        End If
+
+        Try
             Task.DeleteTask(SelectedTaskItem.ID)
 
+            ' Adjust the selected task index after deletion
             If Repeated_CheckedListBox.Items.Count > 0 Then
-                Repeated_CheckedListBox.SelectedIndex = Math.Max(0, SelectedTaskIndex - 1)
-            Else
-                Repeated_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
+                If SelectedTaskIndex >= Repeated_CheckedListBox.Items.Count Then
+                    SelectedTaskIndex = Repeated_CheckedListBox.Items.Count - 1
+                End If
+                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
             End If
-        End If
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Function IsTaskImportant() As Boolean
@@ -191,36 +219,40 @@ Public Class Repeated_View
         Return False
     End Function
 
-    Private Sub ShowOrHideTaskProperties(Optional Force As String = "Show")
-        If Force = "Show" Then
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 75%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 25%
-            IsTaskPropertiesVisible = False
-            Exit Sub
-        End If
+    ' Show or hide the task properties panel
+    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+        Select Case action
+            Case TaskPropertiesVisibility.Show
+                IsTaskPropertiesVisible = True
+            Case TaskPropertiesVisibility.Hide
+                IsTaskPropertiesVisible = False
+            Case TaskPropertiesVisibility.Toggle
+                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
+        End Select
 
         If IsTaskPropertiesVisible Then
             MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(0).Width = 75%
             MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(1).Width = 25%
-            IsTaskPropertiesVisible = False
         Else
             MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(0).Width = 100%
             MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(1).Width = 0%
-            IsTaskPropertiesVisible = True
         End If
     End Sub
 
     Private Sub LoseListItemFocus()
+        Repeated_CheckedListBox.SelectedItem = Nothing
         Repeated_CheckedListBox.SelectedIndex = -1
-        SelectedTaskIndex = Nothing
-        SelectedTaskItem = Nothing
     End Sub
 
 #End Region
+
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left R")
+        'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
+    End Sub
 End Class

@@ -14,6 +14,12 @@ Public Class Important_View
     ' Form on load 
     Private Sub Important_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadTasksToImportant()
+        Select Case My.Settings.TaskPropertiesSidebarOnStart
+            Case "Expanded"
+                ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
+            Case "Collapsed"
+                ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        End Select
     End Sub
 
 #End Region
@@ -27,20 +33,24 @@ Public Class Important_View
 
         Try
             Using connection As New SqlCeConnection(connectionString)
-                Using command As New SqlCeCommand(query, connection)
-                    Using adapter As New SqlCeDataAdapter(command)
-                        connection.Open()
-                        adapter.Fill(dt)
+                connection.Open()
+                Using transaction = connection.BeginTransaction
+                    Using command As New SqlCeCommand(query, connection)
+                        Using adapter As New SqlCeDataAdapter(command)
+                            adapter.Fill(dt)
+                        End Using
                     End Using
+                    transaction.Commit()
                 End Using
             End Using
             dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-
             Important_CheckedListBox.Items.Clear()
+
             For Each row As DataRow In dt.Rows
                 Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
                 Important_CheckedListBox.Items.Add(item, item.IsDone)
             Next
+
         Catch ex As SqlCeException
             MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Catch ex As Exception
@@ -63,7 +73,9 @@ Public Class Important_View
             Dim newTask As String = AddNewTask_TextBox.Text
             If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
 
+            RemoveHandler Important_CheckedListBox.ItemCheck, AddressOf Important_CheckedListBox_ItemCheck
             Dim newTaskId As Integer = Task.AddNewTasks.Important(newTask)
+            AddHandler Important_CheckedListBox.ItemCheck, AddressOf Important_CheckedListBox_ItemCheck
 
             For i As Integer = 0 To Important_CheckedListBox.Items.Count - 1
                 If Important_CheckedListBox.Items(i).ID = newTaskId Then
@@ -79,142 +91,125 @@ Public Class Important_View
     ' CheckedListBox's selected index change event handler
     Private Sub Important_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Important_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = Important_CheckedListBox.SelectedIndex
-        SelectedTaskItem = CType(Important_CheckedListBox.SelectedItem, TaskItem)
 
-        If Important_CheckedListBox.SelectedIndex = -1 Then
+        If SelectedTaskIndex <> -1 Then
+            SelectedTaskItem = Important_CheckedListBox.SelectedItem
+            Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
         Else
-            ' Change important icon with respect to selected task
-            If IsTaskImportant() Then
-                Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
-            Else
-                Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
-            End If
         End If
     End Sub
 
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        DeleteTaskInvoker()
+        If Important_CheckedListBox.SelectedIndex <> -1 Then
+            DeleteTaskInvoker()
+        End If
     End Sub
 
     Private Sub Important_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Important_CheckedListBox.KeyDown
-        If e.KeyValue = Keys.Delete Then
-            If Important_CheckedListBox.SelectedIndex <> -1 Then
-                DeleteTaskInvoker()
-            End If
+        If e.KeyValue = Keys.Delete AndAlso Important_CheckedListBox.SelectedIndex <> -1 Then
+            DeleteTaskInvoker()
         End If
     End Sub
     ' }
 
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub Important_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Important_CheckedListBox.ItemCheck
-        If Not IsNothing(SelectedTaskItem) Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "Important")
-        Else
+        If Views._isUiUpdating Then
             Exit Sub
+        End If
+
+        'MsgBox("ItemCheck Triggered")
+        If SelectedTaskItem IsNot Nothing Then
+            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "Important")
+        End If
+        Important_CheckedListBox.SelectedIndex = SelectedTaskIndex
+    End Sub
+
+    Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+    End Sub
+
+    Private Sub Important_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Important_CheckedListBox.MouseDown
+        If e.Button = MouseButtons.Right Then
+            ShowOrHideTaskProperties(TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
     ' Button Click event to change the 'IsImportant' status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
-        If Important_CheckedListBox.Items.Count > 0 Then
-            If IsTaskImportant() Then
-                Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
-            Else
-                Task.ImportantCheckChanged(CheckState.Checked, SelectedTaskItem.ID)
+        If Important_CheckedListBox.Items.Count > 0 AndAlso SelectedTaskItem IsNot Nothing Then
+
+            Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
+            Important_CheckedListBox.SelectedIndex = SelectedTaskIndex - 1
+
+            If Important_CheckedListBox.Items.Count = 0 Then
+                SelectedTaskItem = Nothing
             End If
         Else
             LoseListItemFocus()
         End If
     End Sub
-
-    Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHideTaskProperties("Hide")
-    End Sub
-
-    Private Sub Important_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Important_CheckedListBox.MouseDown
-        If e.Button = MouseButtons.Right Then
-            ShowOrHideTaskProperties()
-        End If
-    End Sub
-
-    Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
-        If IsTaskImportant() Then
-            Exit Sub
-        End If
-        Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
-    End Sub
-
-    Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
-        If IsTaskImportant() Then
-            Exit Sub
-        End If
-        Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
-    End Sub
 #End Region
 
 #Region "Helper Methods"
 
-    'Task DeleteTask method invoker
+    ' Task.DeleteTask method invoker
     Private Sub DeleteTaskInvoker()
-        If SelectedTaskItem IsNot Nothing AndAlso SelectedTaskItem.ID > 0 Then
-            Task.DeleteTask(SelectedTaskItem.ID)
-
-            If Important_CheckedListBox.Items.Count > 0 Then
-                Important_CheckedListBox.SelectedIndex = Math.Max(0, SelectedTaskIndex - 1)
-            Else
-                Important_CheckedListBox_SelectedIndexChanged(Nothing, Nothing)
-            End If
-        End If
-    End Sub
-
-    Private Function IsTaskImportant() As Boolean
-        Try
-            If SelectedTaskItem.ID <= 0 Then
-                Return False
-            End If
-
-            ' Find the task in the DataTable
-            Dim foundRow As DataRow = dt.Rows.Find(SelectedTaskItem.ID)
-            If foundRow IsNot Nothing Then
-                Return CBool(foundRow("IsImportant"))
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-        Return False
-    End Function
-
-    Private Sub ShowOrHideTaskProperties(Optional Force As String = "Show")
-        If Force = "Show" Then
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 75%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 25%
-            IsTaskPropertiesVisible = False
+        If SelectedTaskItem Is Nothing Then
+            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
         End If
+
+        Try
+            Task.DeleteTask(SelectedTaskItem.ID)
+
+            ' Adjust the selected task index after deletion
+            If Important_CheckedListBox.Items.Count > 0 Then
+                If SelectedTaskIndex >= Important_CheckedListBox.Items.Count Then
+                    SelectedTaskIndex = Important_CheckedListBox.Items.Count - 1
+                End If
+                Important_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            End If
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    ' Show or hide the task properties panel
+    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+        Select Case action
+            Case TaskPropertiesVisibility.Show
+                IsTaskPropertiesVisible = True
+            Case TaskPropertiesVisibility.Hide
+                IsTaskPropertiesVisible = False
+            Case TaskPropertiesVisibility.Toggle
+                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
+        End Select
 
         If IsTaskPropertiesVisible Then
             MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(0).Width = 75%
             MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(1).Width = 25%
-            IsTaskPropertiesVisible = False
         Else
             MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(0).Width = 100%
             MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
             MainTlp.ColumnStyles(1).Width = 0%
-            IsTaskPropertiesVisible = True
         End If
     End Sub
 
     Private Sub LoseListItemFocus()
+        Important_CheckedListBox.SelectedItem = Nothing
         Important_CheckedListBox.SelectedIndex = -1
-        SelectedTaskIndex = Nothing
-        SelectedTaskItem = Nothing
     End Sub
 
 #End Region
+
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left I")
+        'MsgBox("I SelectedItemIndex = " & Important_CheckedListBox.SelectedIndex)
+    End Sub
 End Class

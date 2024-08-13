@@ -3,7 +3,13 @@
 
     'Method to set DueDate
     Public Sub SetDueDate(DateSet As DateTime, DueDate_SelectedTaskID As Integer)
-        Dim query As String = "UPDATE Tasks SET DueDate = @DueDate WHERE TaskID = @TaskID"
+        Dim query As String
+
+        If DateSet = DateTime.Today Then
+            query = "UPDATE Tasks SET DueDate = @DueDate WHERE TaskID = @TaskID"
+        Else
+            query = "UPDATE Tasks SET DueDate = @DueDate , Section = 'Planned' WHERE TaskID = @TaskID"
+        End If
 
         Using connection As New SqlCeConnection(connectionString)
             Using command As New SqlCeCommand(query, connection)
