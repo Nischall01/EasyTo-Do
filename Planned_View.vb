@@ -11,10 +11,11 @@ Public Class Planned_View
 
 #Region "On Load"
 
-    ' Form on load 
+    ' Form on load : Initializes the Repeated tasks view
     Private Sub Planned_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToPlanned()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        LoadTasksToPlannedView()
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -27,7 +28,7 @@ Public Class Planned_View
 #Region "Data Handling"
 
     ' Load planned tasks into the CheckedListBox.
-    Public Sub LoadTasksToPlanned()
+    Public Sub LoadTasksToPlannedView()
         dt.Clear()
         'Dim query As String = "SELECT * FROM Tasks WHERE DueDate IS NOT NULL ORDER BY DueDate;"
         Dim query As String = "SELECT * FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
@@ -71,25 +72,7 @@ Public Class Planned_View
     ' Add a new Task Event Handler
     Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            Dim newTask As String = AddNewTask_TextBox.Text
-            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
-
-            Dim NewTaskId As Integer = Task.AddNewTasks.Planned(newTask)
-
-            ' Prompt to add due date
-            Dim DueDate_DialogInstance As New DueDate_Dialog With {.DueDate_SelectedTaskID = NewTaskId}
-            DueDate_DialogInstance.ShowDialog()
-            DueDate_DialogInstance.BringToFront()
-            DueDate_DialogInstance.Dispose()
-
-            For i As Integer = 0 To Planned_CheckedListBox.Items.Count - 1
-                If Planned_CheckedListBox.Items(i).ID = NewTaskId Then
-                    Planned_CheckedListBox.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
-            AddNewTask_TextBox.Clear()
+            AddNewPlannedTask()
         End If
     End Sub
 
@@ -113,13 +96,13 @@ Public Class Planned_View
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Planned_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
 
     Private Sub Planned_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Planned_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Planned_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
     ' }
@@ -173,12 +156,42 @@ Public Class Planned_View
         Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
     End Sub
 
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left P")
+        'MsgBox("P SelectedItemIndex = " & Planned_CheckedListBox.SelectedIndex) '
+    End Sub
+
 #End Region
 
 #Region "Helper Methods"
 
+    ' Task.AddNewTasks.Planned method invoker
+    Private Sub AddNewPlannedTask()
+        Dim newTask As String = AddNewTask_TextBox.Text
+        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
+
+        Dim NewTaskId As Integer = Task.AddNewTasks.Planned(newTask) ' Add the new task to the database and get its ID
+
+        ' Prompt to add due date
+        Dim DueDate_DialogInstance As New DueDate_Dialog With {.DueDate_SelectedTaskID = NewTaskId}
+        DueDate_DialogInstance.ShowDialog()
+        DueDate_DialogInstance.BringToFront()
+        DueDate_DialogInstance.Dispose()
+
+        ' Select the newly added task
+        For i As Integer = 0 To Planned_CheckedListBox.Items.Count - 1
+            If Planned_CheckedListBox.Items(i).ID = NewTaskId Then
+                Planned_CheckedListBox.SelectedIndex = i
+                Exit For
+            End If
+        Next
+
+        AddNewTask_TextBox.Clear() ' Clear the input field
+    End Sub
+
     ' Task.DeleteTask method invoker
-    Private Sub DeleteTaskInvoker()
+    Private Sub DeleteSelectedTask()
         If SelectedTaskItem Is Nothing Then
             MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -247,9 +260,4 @@ Public Class Planned_View
 
 #End Region
 
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
-        'MsgBox("Left P")
-        'MsgBox("P SelectedItemIndex = " & Planned_CheckedListBox.SelectedIndex) '
-    End Sub
 End Class

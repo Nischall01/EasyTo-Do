@@ -66,9 +66,9 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel1.RowCount = 5
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.50929!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.34109!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 41.08527!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.308186!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.33786!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 40.31008!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.689922!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.8062!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(205, 258)
         Me.TableLayoutPanel1.TabIndex = 0
         '
@@ -81,14 +81,14 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel5, 0, 1)
         Me.TableLayoutPanel3.Controls.Add(Me.TableLayoutPanel4, 0, 0)
         Me.TableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 69)
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(0, 67)
         Me.TableLayoutPanel3.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
         Me.TableLayoutPanel3.RowCount = 3
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.23881!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 47.76119!))
         Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(205, 106)
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(205, 102)
         Me.TableLayoutPanel3.TabIndex = 3
         '
         'ToggleButton_AM_PM
@@ -97,7 +97,7 @@ Partial Class Reminder_Dialog
         Me.ToggleButton_AM_PM.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.ToggleButton_AM_PM.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToggleButton_AM_PM.ForeColor = System.Drawing.Color.Black
-        Me.ToggleButton_AM_PM.Location = New System.Drawing.Point(88, 74)
+        Me.ToggleButton_AM_PM.Location = New System.Drawing.Point(88, 70)
         Me.ToggleButton_AM_PM.Margin = New System.Windows.Forms.Padding(0)
         Me.ToggleButton_AM_PM.Name = "ToggleButton_AM_PM"
         Me.ToggleButton_AM_PM.Size = New System.Drawing.Size(29, 21)
@@ -119,12 +119,12 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel5.Controls.Add(Me.ComboBox1, 1, 0)
         Me.TableLayoutPanel5.Controls.Add(Me.Label1, 2, 0)
         Me.TableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(0, 33)
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(0, 31)
         Me.TableLayoutPanel5.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
         Me.TableLayoutPanel5.RowCount = 1
         Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(205, 30)
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(205, 28)
         Me.TableLayoutPanel5.TabIndex = 1
         '
         'ComboBox2
@@ -157,7 +157,7 @@ Partial Class Reminder_Dialog
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(96, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(10, 30)
+        Me.Label1.Size = New System.Drawing.Size(10, 28)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = ":"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -176,7 +176,7 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
         Me.TableLayoutPanel4.RowCount = 1
         Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(205, 33)
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(205, 31)
         Me.TableLayoutPanel4.TabIndex = 0
         '
         'RadioButton2
@@ -184,7 +184,7 @@ Partial Class Reminder_Dialog
         Me.RadioButton2.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton2.AutoSize = True
         Me.RadioButton2.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton2.Location = New System.Drawing.Point(132, 8)
+        Me.RadioButton2.Location = New System.Drawing.Point(132, 7)
         Me.RadioButton2.Name = "RadioButton2"
         Me.RadioButton2.Size = New System.Drawing.Size(43, 17)
         Me.RadioButton2.TabIndex = 1
@@ -196,7 +196,7 @@ Partial Class Reminder_Dialog
         Me.RadioButton1.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton1.AutoSize = True
         Me.RadioButton1.ForeColor = System.Drawing.Color.Black
-        Me.RadioButton1.Location = New System.Drawing.Point(29, 8)
+        Me.RadioButton1.Location = New System.Drawing.Point(29, 7)
         Me.RadioButton1.Name = "RadioButton1"
         Me.RadioButton1.Size = New System.Drawing.Size(43, 17)
         Me.RadioButton1.TabIndex = 0
@@ -215,7 +215,7 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(205, 32)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(205, 31)
         Me.TableLayoutPanel2.TabIndex = 2
         '
         'CloseReminder_Button
@@ -225,7 +225,7 @@ Partial Class Reminder_Dialog
         Me.CloseReminder_Button.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.CloseReminder_Button.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CloseReminder_Button.ForeColor = System.Drawing.Color.White
-        Me.CloseReminder_Button.Location = New System.Drawing.Point(90, 4)
+        Me.CloseReminder_Button.Location = New System.Drawing.Point(90, 3)
         Me.CloseReminder_Button.Margin = New System.Windows.Forms.Padding(0)
         Me.CloseReminder_Button.Name = "CloseReminder_Button"
         Me.CloseReminder_Button.Size = New System.Drawing.Size(24, 24)
@@ -241,12 +241,12 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel6.Controls.Add(Me.ReminderProperty_Icon, 0, 0)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 32)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 31)
         Me.TableLayoutPanel6.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 37)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(205, 36)
         Me.TableLayoutPanel6.TabIndex = 4
         '
         'ReminderProperty_Icon
@@ -268,12 +268,12 @@ Partial Class Reminder_Dialog
         Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel7.Controls.Add(Me.Button2, 0, 0)
         Me.TableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(0, 199)
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(0, 193)
         Me.TableLayoutPanel7.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
         Me.TableLayoutPanel7.RowCount = 1
         Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(205, 59)
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(205, 65)
         Me.TableLayoutPanel7.TabIndex = 2
         '
         'Button2
@@ -283,7 +283,7 @@ Partial Class Reminder_Dialog
         Me.Button2.FlatAppearance.BorderSize = 0
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Location = New System.Drawing.Point(65, 18)
+        Me.Button2.Location = New System.Drawing.Point(65, 21)
         Me.Button2.Margin = New System.Windows.Forms.Padding(0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
@@ -294,7 +294,7 @@ Partial Class Reminder_Dialog
         'DateTimePicker1
         '
         Me.DateTimePicker1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DateTimePicker1.Location = New System.Drawing.Point(3, 178)
+        Me.DateTimePicker1.Location = New System.Drawing.Point(3, 172)
         Me.DateTimePicker1.Name = "DateTimePicker1"
         Me.DateTimePicker1.Size = New System.Drawing.Size(199, 20)
         Me.DateTimePicker1.TabIndex = 5

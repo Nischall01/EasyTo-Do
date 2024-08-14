@@ -11,10 +11,11 @@ Public Class Important_View
 
 #Region "On Load"
 
-    ' Form on load 
+    ' Form on load : Initializes the Repeated tasks view
     Private Sub Important_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToImportant()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        LoadTasksToImportantView()
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -27,7 +28,7 @@ Public Class Important_View
 #Region "Data Handling"
 
     ' Load important tasks onto the CheckedListBox.
-    Public Sub LoadTasksToImportant()
+    Public Sub LoadTasksToImportantView()
         dt.Clear()
         Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1 ORDER BY EntryDateTime;"
 
@@ -70,21 +71,7 @@ Public Class Important_View
     ' KeyDown event to add a new task
     Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim newTask As String = AddNewTask_TextBox.Text
-            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
-
-            RemoveHandler Important_CheckedListBox.ItemCheck, AddressOf Important_CheckedListBox_ItemCheck
-            Dim newTaskId As Integer = Task.AddNewTasks.Important(newTask)
-            AddHandler Important_CheckedListBox.ItemCheck, AddressOf Important_CheckedListBox_ItemCheck
-
-            For i As Integer = 0 To Important_CheckedListBox.Items.Count - 1
-                If Important_CheckedListBox.Items(i).ID = newTaskId Then
-                    Important_CheckedListBox.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
-            AddNewTask_TextBox.Clear()
+            AddNewImportantTask()
         End If
     End Sub
 
@@ -102,13 +89,13 @@ Public Class Important_View
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Important_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
 
     Private Sub Important_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Important_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Important_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
     ' }
@@ -150,12 +137,37 @@ Public Class Important_View
             LoseListItemFocus()
         End If
     End Sub
+
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left I")
+        'MsgBox("I SelectedItemIndex = " & Important_CheckedListBox.SelectedIndex)
+    End Sub
+
 #End Region
 
 #Region "Helper Methods"
 
+    ' Task.AddNewTasks.Important method invoker
+    Private Sub AddNewImportantTask()
+        Dim newTask As String = AddNewTask_TextBox.Text
+        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
+
+        Dim newTaskId As Integer = Task.AddNewTasks.Important(newTask) ' Add the new task to the database and get its ID
+
+        ' Select the newly added task
+        For i As Integer = 0 To Important_CheckedListBox.Items.Count - 1
+            If Important_CheckedListBox.Items(i).ID = newTaskId Then
+                Important_CheckedListBox.SelectedIndex = i
+                Exit For
+            End If
+        Next
+
+        AddNewTask_TextBox.Clear() ' Clear the input field
+    End Sub
+
     ' Task.DeleteTask method invoker
-    Private Sub DeleteTaskInvoker()
+    Private Sub DeleteSelectedTask()
         If SelectedTaskItem Is Nothing Then
             MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -207,9 +219,4 @@ Public Class Important_View
 
 #End Region
 
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
-        'MsgBox("Left I")
-        'MsgBox("I SelectedItemIndex = " & Important_CheckedListBox.SelectedIndex)
-    End Sub
 End Class

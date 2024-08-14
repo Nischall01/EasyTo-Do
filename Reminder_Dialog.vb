@@ -96,6 +96,11 @@
             End If
             ComboBox2.SelectedItem = nearestFive.ToString("00")
         End If
+
+        If AlreadySetReminder <> Nothing Then
+            Dim AlreadySetReminderDate As New DateTime(AlreadySetReminder.Year, AlreadySetReminder.Month, AlreadySetReminder.Day)
+            DateTimePicker1.Value = AlreadySetReminderDate
+        End If
     End Sub
 #End Region
 
@@ -335,10 +340,13 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click ' The 'Set' reminder button Click
-        Dim SetHour As Integer
-        Dim SetMinute As Integer
-        SetHour = Integer.Parse(ComboBox1.Text)
-        SetMinute = Integer.Parse(ComboBox2.Text)
+        Dim selectedDate As DateTime = DateTimePicker1.Value
+
+        Dim SetYear As Integer = selectedDate.Year
+        Dim SetMonth As Integer = selectedDate.Month
+        Dim SetDay As Integer = selectedDate.Day
+        Dim SetHour As Integer = Integer.Parse(ComboBox1.Text)
+        Dim SetMinute As Integer = Integer.Parse(ComboBox2.Text)
 
         If IsSelectedTimeFormat12 Then
             If SetHour = 12 And IsAM Then
@@ -348,7 +356,8 @@
             End If
         End If
 
-        Dim TimeSet As New DateTime(CurrentDateTime.Year, CurrentDateTime.Month, CurrentDateTime.Day, SetHour, SetMinute, 0)
+        Dim TimeSet As New DateTime(SetYear, SetMonth, SetDay, SetHour, SetMinute, 0)
+
         Reminder.SetReminder(TimeSet, Reminder_SelectedTaskID)
         Me.Close()
     End Sub

@@ -11,10 +11,11 @@ Public Class Repeated_View
 
 #Region "On Load"
 
-    ' Form on load 
+    ' Form on load : Initializes the Repeated tasks view
     Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToRepeated()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        LoadTasksToRepeatedView()
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -27,7 +28,7 @@ Public Class Repeated_View
 #Region "Data Handling"
 
     ' Load important tasks onto the CheckedListBox.
-    Public Sub LoadTasksToRepeated()
+    Public Sub LoadTasksToRepeatedView()
         dt.Clear()
         Dim query As String = "SELECT * FROM Tasks WHERE RepeatedDays IS NOT NULL;"
 
@@ -62,69 +63,49 @@ Public Class Repeated_View
 
 #Region "Event Handlers"
 
+    ' Clear any selected task when entering the text box
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
         LoseListItemFocus()
-        'DisableTaskProperties(True)
     End Sub
 
-    ' KeyDown event to add a new task
-    Private Sub AddNewTask_TextBox_MouseDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
+    ' KeyDown event to add a new task when pressing the Enter key
+    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            Dim newTask As String = AddNewTask_TextBox.Text
-            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
-
-            Dim NewTaskId As Integer = Task.AddNewTasks.Repeated(newTask)
-
-            ' Prompt to add repeat frequency
-            Dim DueDate_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = NewTaskId}
-            DueDate_DialogInstance.ShowDialog()
-            DueDate_DialogInstance.BringToFront()
-            DueDate_DialogInstance.Dispose()
-
-            For i As Integer = 0 To Repeated_CheckedListBox.Items.Count - 1
-                If Repeated_CheckedListBox.Items(i).ID = NewTaskId Then
-                    Repeated_CheckedListBox.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
-            AddNewTask_TextBox.Clear()
+            AddNewRepeatedTask()
         End If
     End Sub
 
-    ' CheckedListBox's selected index change event handler
+    ' Event handler for changing the selected task in the CheckedListBox
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = Repeated_CheckedListBox.SelectedIndex
 
         If SelectedTaskIndex <> -1 Then
             SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
 
-            ' Change important icon with respect to selected task
+            ' Update the Important button icon based on the task's importance status
             If IsTaskImportant() Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
-        Else
-
         End If
     End Sub
 
-    ' Task delete event handlers {
+    ' Event handler for deleting a selected task when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
 
+    ' Event handler for deleting a selected task when the Delete key is pressed
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
-    ' }
 
-    ' Item Check event to change the 'IsDone' status of the selected task
+    ' ItemCheck event to update the 'IsDone' status of the selected task
     Private Sub Repeated_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Repeated_CheckedListBox.ItemCheck
         If Views._isUiUpdating Then
             Exit Sub
@@ -136,7 +117,7 @@ Public Class Repeated_View
         Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
-    ' Button Click event to change the 'IsImportant' status of the selected task
+    ' Click event for toggling the importance status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
             If IsTaskImportant() Then
@@ -144,21 +125,25 @@ Public Class Repeated_View
             Else
                 Task.ImportantCheckChanged(CheckState.Checked, SelectedTaskItem.ID)
             End If
+            Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
         Else
             LoseListItemFocus()
         End If
     End Sub
 
+    ' Click event for hiding the task properties panel
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
     End Sub
 
+    ' Right-click event to toggle the visibility of the task properties panel
     Private Sub Repeated_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Repeated_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
             ShowOrHideTaskProperties(TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
+    ' MouseEnter event to temporarily display the Important icon when hovering over the button
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
             If IsTaskImportant() Then
@@ -168,6 +153,7 @@ Public Class Repeated_View
         End If
     End Sub
 
+    ' MouseLeave event to revert the Important icon when the mouse leaves the button
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
             If IsTaskImportant() Then
@@ -176,12 +162,84 @@ Public Class Repeated_View
             Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
         End If
     End Sub
+
+    Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
+        If SelectedTaskItem Is Nothing Then
+            Exit Sub
+        End If
+        If e.Button = MouseButtons.Left Then
+            Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = False}
+
+            Reminder_DialogInstance.ShowDialog()
+            Reminder_DialogInstance.BringToFront()
+
+            If Repeated_CheckedListBox.Items.Count > 0 Then
+                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            End If
+
+            Reminder_DialogInstance.Dispose()
+        ElseIf e.Button = MouseButtons.Right Then
+            ShowContextMenuCentered(ContextMenuStrip1, CustomButton_AddReminder)
+        End If
+    End Sub
+
+    Private Sub CustomButton_Repeat_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
+        If SelectedTaskItem Is Nothing Then
+            Exit Sub
+        End If
+        If e.Button = MouseButtons.Left Then
+            Dim Repeat_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = SelectedTaskItem.ID}
+
+            Repeat_DialogInstance.ShowDialog()
+            Repeat_DialogInstance.BringToFront()
+
+            If Repeated_CheckedListBox.Items.Count > 0 Then
+                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            End If
+
+            Repeat_DialogInstance.Dispose()
+        ElseIf e.Button = MouseButtons.Right Then
+            ShowContextMenuCentered(ContextMenuStrip2, CustomButton_Repeat)
+        End If
+    End Sub
+
+    ' Clear selected task after leaving the View
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left R")
+        'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
+    End Sub
+
 #End Region
 
 #Region "Helper Methods"
 
+    ' Task.AddNewTasks.Repeated method invoker
+    Private Sub AddNewRepeatedTask()
+        Dim newTask As String = AddNewTask_TextBox.Text
+        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
+
+        Dim NewTaskId As Integer = Task.AddNewTasks.Repeated(newTask) ' Add the new task to the database and get its ID
+
+        ' Prompt to add repeat frequency
+        Dim DueDate_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = NewTaskId}
+        DueDate_DialogInstance.ShowDialog()
+        DueDate_DialogInstance.BringToFront()
+        DueDate_DialogInstance.Dispose()
+
+        ' Select the newly added task
+        For i As Integer = 0 To Repeated_CheckedListBox.Items.Count - 1
+            If Repeated_CheckedListBox.Items(i).ID = NewTaskId Then
+                Repeated_CheckedListBox.SelectedIndex = i
+                Exit For
+            End If
+        Next
+
+        AddNewTask_TextBox.Clear() ' Clear the input field
+    End Sub
+
     ' Task.DeleteTask method invoker
-    Private Sub DeleteTaskInvoker()
+    Private Sub DeleteSelectedTask()
         If SelectedTaskItem Is Nothing Then
             MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -202,6 +260,7 @@ Public Class Repeated_View
         End Try
     End Sub
 
+    ' Check if the selected task is important
     Private Function IsTaskImportant() As Boolean
         Try
             If SelectedTaskItem.ID <= 0 Then
@@ -243,16 +302,23 @@ Public Class Repeated_View
         End If
     End Sub
 
+    ' Lose CheckedListBox item selection/focus
     Private Sub LoseListItemFocus()
         Repeated_CheckedListBox.SelectedItem = Nothing
         Repeated_CheckedListBox.SelectedIndex = -1
     End Sub
 
+    Private Sub ShowContextMenuCentered(contextMenu As ContextMenuStrip, control As Control)
+        ' Calculate the center position of the control on the screen
+        Dim buttonCenterScreenPosition As Point = control.PointToScreen(New Point(control.Width / 2, control.Height / 2))
+
+        ' Calculate the location to show the ContextMenuStrip centered over the control
+        Dim contextMenuPosition As New Point(buttonCenterScreenPosition.X - (contextMenu.Width / 2), buttonCenterScreenPosition.Y - (contextMenu.Height / 2))
+
+        ' Show the ContextMenuStrip at the calculated position
+        contextMenu.Show(contextMenuPosition)
+    End Sub
+
 #End Region
 
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
-        'MsgBox("Left R")
-        'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
-    End Sub
 End Class

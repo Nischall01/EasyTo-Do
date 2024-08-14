@@ -525,12 +525,12 @@ Partial Class MyDay_View
         Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
         Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip3.ShowImageMargin = False
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(156, 48)
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(92, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(155, 22)
         Me.ToolStripMenuItem3.Text = "Remove"
         '
         'MyDay_View
@@ -541,7 +541,7 @@ Partial Class MyDay_View
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTlp)
         Me.Name = "MyDay_View"
-        Me.Text = "My Day"
+        Me.Text = "MyDay"
         Me.MainTlp.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskView.ResumeLayout(False)
         Me.SubTlpTaskView_SubTlpBottom.ResumeLayout(False)

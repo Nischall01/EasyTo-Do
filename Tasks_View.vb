@@ -12,10 +12,11 @@ Public Class Tasks_View
 
 #Region "On Load"
 
-    ' Form on load 
+    ' Form on load : Initializes the Repeated tasks view
     Private Sub Tasks_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToTasks() ' Load all tasks into the CheckedListBox
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        LoadTasksToTasksView()
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -28,7 +29,7 @@ Public Class Tasks_View
 #Region "Data Handling"
 
     ' Load tasks onto the CheckedListBox
-    Public Sub LoadTasksToTasks()
+    Public Sub LoadTasksToTasksView()
         dt.Clear()
         Dim query As String = "SELECT * FROM Tasks ORDER BY DueDate;"
 
@@ -70,22 +71,7 @@ Public Class Tasks_View
     ' Handle adding a new task when the Enter key is pressed
     Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyCode = Keys.Enter Then
-            Dim newTask As String = AddNewTask_TextBox.Text
-            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty
-
-            Dim newTaskId As Integer = Task.AddNewTasks.Tasks(newTask) ' Add the new task to the database
-
-
-            ' Select the newly added task in the CheckedListBox
-            For i As Integer = 0 To Tasks_CheckedListBox.Items.Count - 1
-                Dim taskItem = CType(Tasks_CheckedListBox.Items(i), TaskItem)
-                If taskItem.ID = newTaskId Then
-                    Tasks_CheckedListBox.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
-            AddNewTask_TextBox.Clear() ' Clear the input field
+            AddNewTasksTask()
         End If
     End Sub
 
@@ -153,23 +139,47 @@ Public Class Tasks_View
     ' Handle task deletion when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker() ' Invoke the task deletion method
+            DeleteSelectedTask() ' Invoke the task deletion method
         End If
     End Sub
 
     ' Handle task deletion using the Delete key
     Private Sub Tasks_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Tasks_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
+    End Sub
+
+    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        LoseListItemFocus()
+        'MsgBox("Left T")
+        'MsgBox("T SelectedItemIndex = " & Tasks_CheckedListBox.SelectedIndex)
     End Sub
 
 #End Region
 
 #Region "Helper Methods"
 
+    ' Task.AddNewTasks.Task method invoker
+    Private Sub AddNewTasksTask()
+        Dim newTask As String = AddNewTask_TextBox.Text
+        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
+
+        Dim newTaskId As Integer = Task.AddNewTasks.Tasks(newTask) ' Add the new task to the database and get its ID
+
+        ' Select the newly added task
+        For i As Integer = 0 To Tasks_CheckedListBox.Items.Count - 1
+            If Tasks_CheckedListBox.Items(i).ID = newTaskId Then
+                Tasks_CheckedListBox.SelectedIndex = i
+                Exit For
+            End If
+        Next
+
+        AddNewTask_TextBox.Clear() ' Clear the input field
+    End Sub
+
     ' Task.DeleteTask method invoker
-    Private Sub DeleteTaskInvoker()
+    Private Sub DeleteSelectedTask()
         If SelectedTaskItem Is Nothing Then
             MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -248,12 +258,7 @@ Public Class Tasks_View
         Tasks_CheckedListBox.SelectedItem = Nothing
         Tasks_CheckedListBox.SelectedIndex = -1
     End Sub
+
 #End Region
 
-
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
-        'MsgBox("Left T")
-        'MsgBox("T SelectedItemIndex = " & Tasks_CheckedListBox.SelectedIndex)
-    End Sub
 End Class

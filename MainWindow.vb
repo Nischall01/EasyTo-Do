@@ -13,8 +13,8 @@ Public Class MainWindow
 
     ' Fields
     Private PfpLastEventTime As DateTime
-    Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
     Private IsSidebarExpanded As Boolean
+    Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
     ' Enums
     Private Enum SidebarState
@@ -141,45 +141,30 @@ Public Class MainWindow
     End Sub
 
     Private Sub HighlightActiveFormButton()
-        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
-        If activeForm Is MyDayInstance Then
-            CustomButton1.DisableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is RepeatedInstance Then
-            CustomButton2.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is ImportantInstance Then
-            CustomButton3.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is PlannedInstance Then
-            CustomButton4.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton5.EnableEffects()
-        ElseIf activeForm Is TasksInstance Then
-            CustomButton5.DisableEffects()
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-        Else
-            CustomButton1.EnableEffects()
-            CustomButton2.EnableEffects()
-            CustomButton3.EnableEffects()
-            CustomButton4.EnableEffects()
-            CustomButton5.EnableEffects()
+        ' Array of View buttons
+        Dim ViewButtons() As CustomButton_2 = {CustomButton1, CustomButton2, CustomButton3, CustomButton4, CustomButton5}
+
+        ' Enable all buttons first
+        EnableAllButtons()
+
+        ' Get the active view
+        Dim activeView As Views.ViewName = Views.GetActiveViewName()
+
+        ' Index mapping from ViewName to button array
+        Dim buttonIndex As Integer = CType(activeView, Integer)
+        If buttonIndex >= 0 AndAlso buttonIndex < ViewButtons.Length Then
+            ViewButtons(buttonIndex).DisableEffects()
         End If
     End Sub
+
+    Private Sub EnableAllButtons()
+        CustomButton1.EnableEffects()
+        CustomButton2.EnableEffects()
+        CustomButton3.EnableEffects()
+        CustomButton4.EnableEffects()
+        CustomButton5.EnableEffects()
+    End Sub
+
 #End Region
 
     '----------------------------------------------------------------Form Management-------------------------------------------------------------------'

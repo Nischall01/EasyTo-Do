@@ -14,13 +14,14 @@ Public Class MyDay_View
     Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
     Private IsTaskPropertiesVisible As Boolean = True
 
-    <DllImport("user32.dll")>
-    Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
-    End Function
+    '<DllImport("user32.dll")>
+    'Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
+    'End Function
 
     '---------------------------------------------------------------------------------Initialization----------------------------------------------------------------------------------------'
 #Region "On Load"
 
+    ' Form on load : Initializes the Repeated tasks view
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeMy_day()
 
@@ -33,9 +34,9 @@ Public Class MyDay_View
     End Sub
 
     Private Sub InitializeMy_day()
-        AddNewTask_TextBox.Focus()
-        LoadTasksToMyDay()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        LoadTasksToMyDayView()
+
+        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -174,10 +175,19 @@ Public Class MyDay_View
                     Return String.Empty
                 Else
                     Dim reminderDateTime As DateTime = Convert.ToDateTime(row("ReminderDateTime"))
-                    If UserDefaultTimeFormat = "12" Then
-                        TaskReminder = reminderDateTime.ToString("hh:mm tt")
+
+                    If (reminderDateTime).Date = (DateTime.Today).Date Then
+                        If UserDefaultTimeFormat = "12" Then
+                            TaskReminder = reminderDateTime.ToString("hh:mm tt")
+                        Else
+                            TaskReminder = reminderDateTime.ToString("HH:mm")
+                        End If
                     Else
-                        TaskReminder = reminderDateTime.ToString("HH:mm")
+                        If UserDefaultTimeFormat = "12" Then
+                            TaskReminder = reminderDateTime.ToString("(dd/MM) hh:mm tt")
+                        Else
+                            TaskReminder = reminderDateTime.ToString("(dd/MM) HH:mm")
+                        End If
                     End If
                 End If
                 Exit For
@@ -232,21 +242,7 @@ Public Class MyDay_View
     ' Key Down event to add a new task
     Private Sub AddNewTask_TextBox_MouseDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            Dim newTask As String = AddNewTask_TextBox.Text
-            If String.IsNullOrWhiteSpace(newTask) Then Exit Sub
-
-            RemoveHandler MyDay_CheckedListBox.ItemCheck, AddressOf MyDay_CheckedListBox_ItemCheck
-            Dim NewTaskId As Integer = Task.AddNewTasks.MyDay(newTask)
-            AddHandler MyDay_CheckedListBox.ItemCheck, AddressOf MyDay_CheckedListBox_ItemCheck
-
-            For i As Integer = 0 To MyDay_CheckedListBox.Items.Count - 1
-                If MyDay_CheckedListBox.Items(i).ID = NewTaskId Then
-                    MyDay_CheckedListBox.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
-            AddNewTask_TextBox.Clear()
+            AddNewMyDayTask()
         End If
     End Sub
 
@@ -286,13 +282,13 @@ Public Class MyDay_View
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If MyDay_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker() ' Invoke the task deletion method
+            DeleteSelectedTask() ' Invoke the task deletion method
         End If
     End Sub
 
     Private Sub MyDay_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MyDay_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso MyDay_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteTaskInvoker()
+            DeleteSelectedTask()
         End If
     End Sub
 
@@ -383,9 +379,9 @@ Public Class MyDay_View
                 ' Convert both current time and reminder time to string in the same format
                 Dim currentTimeString As String = currentTime.ToString("yyyy-MM-dd HH:mm:ss")
                 Dim reminderTimeString As String = reminderTime.ToString("yyyy-MM-dd HH:mm:ss")
-                ' Compare the formatted date and time strings
-                If reminderTimeString = currentTimeString Then
 
+                ' Compare the formatted date and time strings
+                If currentTimeString = reminderTimeString Then
                     Dim ImportantTask As String = row("Task")
                     ImportantTask = ImportantTask.Substring(3)
                     ' Display reminder
@@ -422,7 +418,7 @@ Public Class MyDay_View
             MainWindow.TopMost = True
             System.Threading.Thread.Sleep(500)
             MainWindow.TopMost = False
-            SetForegroundWindow(MainWindow.Handle)
+            'SetForegroundWindow(MainWindow.Handle)
         End If
     End Sub
 
@@ -458,7 +454,7 @@ Public Class MyDay_View
 
 #Region "Data Handling (My Day Table)"
     ' Load tasks onto the Checked list Box.
-    Public Sub LoadTasksToMyDay()
+    Public Sub LoadTasksToMyDayView()
         dt.Clear()
         Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
 
@@ -480,12 +476,15 @@ Public Class MyDay_View
 
         For Each row As DataRow In dt.Rows
             If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
-                Dim RemindedTask As String = row("Task")
-                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
-                'row("Task") = RemindedTask + "  " + reminderDateTime.ToString("(hh:mmtt)").ToLower()
-                'row("Task") = "~" + "  " + RemindedTask
-                ' row("Task") = RemindedTask + "  " + "~"
+                Dim reminderDate As DateTime = row("ReminderDateTime")
+                If (reminderDate).Date = (DateTime.Today).Date Then
+                    Dim RemindedTask As String = row("Task")
+                    Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                    row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+                    'row("Task") = RemindedTask + "  " + reminderDateTime.ToString("(hh:mmtt)").ToLower()
+                    'row("Task") = "~" + "  " + RemindedTask
+                    ' row("Task") = RemindedTask + "  " + "~"
+                End If
             End If
 
             If row("IsImportant") Then
@@ -498,10 +497,26 @@ Public Class MyDay_View
         Next
     End Sub
 
+    ' Task.AddNewTasks.MyDay method invoker
+    Private Sub AddNewMyDayTask()
+        Dim newTask As String = AddNewTask_TextBox.Text
+        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
 
+        Dim NewTaskId As Integer = Task.AddNewTasks.MyDay(newTask) ' Add the new task to the database and get its ID
+
+        ' Select the newly added task
+        For i As Integer = 0 To MyDay_CheckedListBox.Items.Count - 1
+            If MyDay_CheckedListBox.Items(i).ID = NewTaskId Then
+                MyDay_CheckedListBox.SelectedIndex = i
+                Exit For
+            End If
+        Next
+
+        AddNewTask_TextBox.Clear() ' Clear the input field
+    End Sub
 
     ' Task.DeleteTask method invoker
-    Private Sub DeleteTaskInvoker()
+    Private Sub DeleteSelectedTask()
         If SelectedTaskItem Is Nothing Then
             MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Exit Sub
@@ -591,7 +606,7 @@ Public Class MyDay_View
 
     Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
         If e.Button = MouseButtons.Left Then
-            Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = False}
+            Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = True}
 
             Reminder_DialogInstance.ShowDialog()
             Reminder_DialogInstance.BringToFront()
@@ -674,5 +689,7 @@ Public Class MyDay_View
         'MsgBox("Left M")
         'MsgBox("M SelectedItemIndex = " & MyDay_CheckedListBox.SelectedIndex)
     End Sub
+
 #End Region
+
 End Class
