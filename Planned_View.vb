@@ -13,8 +13,6 @@ Public Class Planned_View
 
     ' Form on load : Initializes the Repeated tasks view
     Private Sub Planned_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        LoadTasksToPlannedView()
-
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
@@ -114,7 +112,7 @@ Public Class Planned_View
         End If
 
         If SelectedTaskItem IsNot Nothing Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID, "Planned")
+            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Planned_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -259,5 +257,51 @@ Public Class Planned_View
     End Sub
 
 #End Region
+
+    Public Sub DisableTaskProperties(Disable As Boolean)
+        If Disable Then
+            TaskTitle_TextBox.Text = Nothing
+            Label_TaskEntryDateTime.Text = Nothing
+            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                TaskDescription_RichTextBox.Hide()
+            End If
+            TaskTitle_TextBox.Enabled = False
+            TaskDescription_RichTextBox.Text = Nothing
+            TaskDescription_RichTextBox.Enabled = False
+
+            Label_ADT.Enabled = False
+            Label_TaskEntryDateTime.Enabled = False
+            Important_Button.Enabled = False
+
+            CustomButton_AddReminder.Enabled = False
+            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+
+            CustomButton_Repeat.Enabled = False
+            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+
+            CustomButton_AddDueDate.Enabled = False
+            CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
+
+            Button_DeleteTask.Enabled = False
+
+        Else
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                TaskDescription_RichTextBox.Show()
+            End If
+            TaskTitle_TextBox.Enabled = True
+            TaskDescription_RichTextBox.Enabled = True
+            Label_ADT.Enabled = True
+            Label_TaskEntryDateTime.Enabled = True
+            Important_Button.Enabled = True
+            CustomButton_Repeat.Enabled = True
+            CustomButton_AddDueDate.Enabled = True
+            CustomButton_AddReminder.Enabled = True
+            Button_DeleteTask.Enabled = True
+        End If
+    End Sub
 
 End Class

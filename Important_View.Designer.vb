@@ -38,7 +38,7 @@ Partial Class Important_View
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
-        Me.CustomButton_DueDate = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_AddDueDate = New EasyTo_Do.CustomButton_2()
         Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
         Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -278,7 +278,7 @@ Partial Class Important_View
         '
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ColumnCount = 1
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Controls.Add(Me.CustomButton_DueDate, 0, 2)
+        Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Controls.Add(Me.CustomButton_AddDueDate, 0, 2)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Controls.Add(Me.CustomButton_Repeat, 0, 1)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Controls.Add(Me.CustomButton_AddReminder, 0, 0)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Controls.Add(Me.Panel1, 0, 3)
@@ -293,24 +293,24 @@ Partial Class Important_View
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(190, 181)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.TabIndex = 10
         '
-        'CustomButton_DueDate
+        'CustomButton_AddDueDate
         '
-        Me.CustomButton_DueDate.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_DueDate.ButtonText = "Add Due Date"
-        Me.CustomButton_DueDate.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_DueDate.ForeColor = System.Drawing.Color.White
-        Me.CustomButton_DueDate.Icon = CType(resources.GetObject("CustomButton_DueDate.Icon"), System.Drawing.Image)
-        Me.CustomButton_DueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_DueDate.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_DueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_DueDate.Location = New System.Drawing.Point(0, 80)
-        Me.CustomButton_DueDate.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_DueDate.Name = "CustomButton_DueDate"
-        Me.CustomButton_DueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_DueDate.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_DueDate.TabIndex = 11
-        Me.CustomButton_DueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_DueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CustomButton_AddDueDate.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddDueDate.ButtonText = "Add Due Date"
+        Me.CustomButton_AddDueDate.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_AddDueDate.ForeColor = System.Drawing.Color.White
+        Me.CustomButton_AddDueDate.Icon = CType(resources.GetObject("CustomButton_AddDueDate.Icon"), System.Drawing.Image)
+        Me.CustomButton_AddDueDate.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_AddDueDate.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddDueDate.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_AddDueDate.Location = New System.Drawing.Point(0, 80)
+        Me.CustomButton_AddDueDate.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_AddDueDate.Name = "CustomButton_AddDueDate"
+        Me.CustomButton_AddDueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddDueDate.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddDueDate.TabIndex = 11
+        Me.CustomButton_AddDueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_AddDueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'CustomButton_Repeat
         '
@@ -436,7 +436,7 @@ Partial Class Important_View
     Friend WithEvents Button_CloseTaskProperties As Button
     Friend WithEvents Label_TaskEntryDateTime As Label
     Friend WithEvents SubTlpTaskProperties_SubTlpTaskFeatureButtons As TableLayoutPanel
-    Friend WithEvents CustomButton_DueDate As CustomButton_2
+    Friend WithEvents CustomButton_AddDueDate As CustomButton_2
     Friend WithEvents CustomButton_Repeat As CustomButton_2
     Friend WithEvents CustomButton_AddReminder As CustomButton_2
     Friend WithEvents Panel1 As Panel

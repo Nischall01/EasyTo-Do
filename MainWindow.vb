@@ -65,6 +65,7 @@ Public Class MainWindow
         End Select
         'Load the User Profile
         LoadProfile()
+        Views.RefreshTasks()
         ' Initial Form
         ShowForm(MyDayInstance)
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
