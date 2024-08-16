@@ -1,8 +1,10 @@
 ﻿Imports System.Data.SqlServerCe
+Imports System.Threading
 
 Public Class Planned_View
     Private connectionString As String = My.Settings.ConnectionString
-    Private dt As New DataTable()
+    Private PlannedDT As New DataTable()
+    Private PlannedDT_TaskTitleOnly As New DataTable()
 
     Private SelectedTaskIndex As Integer = -1
     Private SelectedTaskItem As TaskItem
@@ -24,38 +26,58 @@ Public Class Planned_View
 #End Region
 
 #Region "Data Handling"
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_Tasks()
+        PlannedDT.Clear()
+        PlannedDT_TaskTitleOnly.Clear()
+        Dim query As String = "SELECT * FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(PlannedDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(PlannedDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+        PlannedDT.PrimaryKey = New DataColumn() {PlannedDT.Columns("TaskID")}
+        PlannedDT_TaskTitleOnly.PrimaryKey = New DataColumn() {PlannedDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
 
     ' Load planned tasks into the CheckedListBox.
     Public Sub LoadTasksToPlannedView()
-        dt.Clear()
-        'Dim query As String = "SELECT * FROM Tasks WHERE DueDate IS NOT NULL ORDER BY DueDate;"
-        Dim query As String = "SELECT * FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
+        LoadTasksToDataTables_Tasks()
+        Planned_CheckedListBox.Items.Clear()
 
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                connection.Open()
-                Using transaction = connection.BeginTransaction
-                    Using command As New SqlCeCommand(query, connection)
-                        Using adapter As New SqlCeDataAdapter(command)
-                            adapter.Fill(dt)
-                        End Using
-                    End Using
-                    transaction.Commit()
-                End Using
-            End Using
-            dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-            Planned_CheckedListBox.Items.Clear()
+        For Each row As DataRow In PlannedDT.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
 
-            For Each row As DataRow In dt.Rows
-                Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
-                Planned_CheckedListBox.Items.Add(item, item.IsDone)
-            Next
+            If Not row.IsNull("DueDate") AndAlso TypeOf row("DueDate") Is DateTime Then
+                Dim PlannedTask As String = row("Task")
+                Dim reminderDueDate As DateTime = row.Field(Of DateTime)("DueDate")
+                row("Task") = reminderDueDate.ToString("(dd/MM)").ToLower() + "  " + PlannedTask
+            End If
 
-        Catch ex As SqlCeException
-            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+            If row("IsImportant") Then
+                Dim ImportantTask As String = "!" + "  " + row("Task")
+                row("Task") = ImportantTask
+            End If
+
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            Planned_CheckedListBox.Items.Add(item, item.IsDone)
+        Next
     End Sub
 
 #End Region
@@ -217,7 +239,7 @@ Public Class Planned_View
             End If
 
             ' Find the task in the DataTable
-            Dim foundRow As DataRow = dt.Rows.Find(SelectedTaskItem.ID)
+            Dim foundRow As DataRow = PlannedDT.Rows.Find(SelectedTaskItem.ID)
             If foundRow IsNot Nothing Then
                 Return CBool(foundRow("IsImportant"))
             End If

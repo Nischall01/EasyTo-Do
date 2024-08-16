@@ -31,7 +31,7 @@ Partial Class MyDay_View
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
         Me.MyDay_Label = New System.Windows.Forms.Label()
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.SubTlpTaskView_DateAndTimeHolder = New System.Windows.Forms.TableLayoutPanel()
         Me.DayDate_Label = New System.Windows.Forms.Label()
         Me.Time_Label = New System.Windows.Forms.Label()
         Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
@@ -63,7 +63,7 @@ Partial Class MyDay_View
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel1.SuspendLayout()
+        Me.SubTlpTaskView_DateAndTimeHolder.SuspendLayout()
         Me.SubTlpTaskView_SubTlpMiddle.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
@@ -148,7 +148,7 @@ Partial Class MyDay_View
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.2543!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.MyDay_Label, 1, 0)
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.TableLayoutPanel1, 2, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.SubTlpTaskView_DateAndTimeHolder, 2, 0)
         Me.SubTlpTaskView_SubTlpTop.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(3, 3)
         Me.SubTlpTaskView_SubTlpTop.Name = "SubTlpTaskView_SubTlpTop"
@@ -183,20 +183,20 @@ Partial Class MyDay_View
         Me.PictureBox_PanelIcon.TabIndex = 1
         Me.PictureBox_PanelIcon.TabStop = False
         '
-        'TableLayoutPanel1
+        'SubTlpTaskView_DateAndTimeHolder
         '
-        Me.TableLayoutPanel1.ColumnCount = 1
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.DayDate_Label, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Time_Label, 0, 1)
-        Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(373, 3)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 2
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(206, 80)
-        Me.TableLayoutPanel1.TabIndex = 2
+        Me.SubTlpTaskView_DateAndTimeHolder.ColumnCount = 1
+        Me.SubTlpTaskView_DateAndTimeHolder.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.SubTlpTaskView_DateAndTimeHolder.Controls.Add(Me.DayDate_Label, 0, 0)
+        Me.SubTlpTaskView_DateAndTimeHolder.Controls.Add(Me.Time_Label, 0, 1)
+        Me.SubTlpTaskView_DateAndTimeHolder.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SubTlpTaskView_DateAndTimeHolder.Location = New System.Drawing.Point(373, 3)
+        Me.SubTlpTaskView_DateAndTimeHolder.Name = "SubTlpTaskView_DateAndTimeHolder"
+        Me.SubTlpTaskView_DateAndTimeHolder.RowCount = 2
+        Me.SubTlpTaskView_DateAndTimeHolder.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.SubTlpTaskView_DateAndTimeHolder.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.SubTlpTaskView_DateAndTimeHolder.Size = New System.Drawing.Size(206, 80)
+        Me.SubTlpTaskView_DateAndTimeHolder.TabIndex = 2
         '
         'DayDate_Label
         '
@@ -525,12 +525,12 @@ Partial Class MyDay_View
         Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
         Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip3.ShowImageMargin = False
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(156, 48)
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
         '
         'ToolStripMenuItem3
         '
         Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
-        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem3.Text = "Remove"
         '
         'MyDay_View
@@ -549,8 +549,8 @@ Partial Class MyDay_View
         Me.SubTlpTaskView_SubTlpTop.ResumeLayout(False)
         Me.SubTlpTaskView_SubTlpTop.PerformLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel1.PerformLayout()
+        Me.SubTlpTaskView_DateAndTimeHolder.ResumeLayout(False)
+        Me.SubTlpTaskView_DateAndTimeHolder.PerformLayout()
         Me.SubTlpTaskView_SubTlpMiddle.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
@@ -586,7 +586,7 @@ Partial Class MyDay_View
     Friend WithEvents ReminderTimer As Timer
     Friend WithEvents NotifyIcon1 As NotifyIcon
     Friend WithEvents MyDay_Label As Label
-    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents SubTlpTaskView_DateAndTimeHolder As TableLayoutPanel
     Friend WithEvents DayDate_Label As Label
     Friend WithEvents Time_Label As Label
     Friend WithEvents Panel1 As Panel

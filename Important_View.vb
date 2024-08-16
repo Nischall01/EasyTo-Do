@@ -1,8 +1,10 @@
 ﻿Imports System.Data.SqlServerCe
+Imports System.Threading
 
 Public Class Important_View
     Private connectionString As String = My.Settings.ConnectionString
-    Private dt As New DataTable()
+    Private ImportantDT As New DataTable()
+    Private ImportantDT_TaskTitleOnly As New DataTable()
 
     Private SelectedTaskIndex As Integer = -1
     Private SelectedTaskItem As TaskItem
@@ -23,47 +25,123 @@ Public Class Important_View
 
 #End Region
 
-#Region "Data Handling"
+#Region "Data Loading Actions"
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_Important()
+        ImportantDT.Clear()
+        ImportantDT_TaskTitleOnly.Clear()
+        Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE IsImportant = 1;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(ImportantDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(ImportantDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+
+        ImportantDT.PrimaryKey = New DataColumn() {ImportantDT.Columns("TaskID")}
+        ImportantDT_TaskTitleOnly.PrimaryKey = New DataColumn() {ImportantDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
 
     ' Load important tasks onto the CheckedListBox.
     Public Sub LoadTasksToImportantView()
-        dt.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1 ORDER BY EntryDateTime;"
+        LoadTasksToDataTables_Important()
+        Important_CheckedListBox.Items.Clear()
 
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                connection.Open()
-                Using transaction = connection.BeginTransaction
-                    Using command As New SqlCeCommand(query, connection)
-                        Using adapter As New SqlCeDataAdapter(command)
-                            adapter.Fill(dt)
-                        End Using
-                    End Using
-                    transaction.Commit()
-                End Using
-            End Using
-            dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-            Important_CheckedListBox.Items.Clear()
+        For Each row As DataRow In ImportantDT.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
 
-            For Each row As DataRow In dt.Rows
-                Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
-                Important_CheckedListBox.Items.Add(item, item.IsDone)
-            Next
-
-        Catch ex As SqlCeException
-            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            Important_CheckedListBox.Items.Add(item, item.IsDone)
+        Next
     End Sub
-
 #End Region
 
-#Region "Event Handlers"
+    Public Sub DisableTaskProperties(Disable As Boolean)
+        If Disable Then
+            TaskTitle_TextBox.Text = Nothing
+            Label_TaskEntryDateTime.Text = Nothing
+            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
 
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                TaskDescription_RichTextBox.Hide()
+            End If
+            TaskTitle_TextBox.Enabled = False
+            TaskDescription_RichTextBox.Text = Nothing
+            TaskDescription_RichTextBox.Enabled = False
+
+            Label_ADT.Enabled = False
+            Label_TaskEntryDateTime.Enabled = False
+            Important_Button.Enabled = False
+
+            CustomButton_AddReminder.Enabled = False
+            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+
+            CustomButton_Repeat.Enabled = False
+            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+
+            CustomButton_AddDueDate.Enabled = False
+            CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
+
+            Button_DeleteTask.Enabled = False
+
+        Else
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                TaskDescription_RichTextBox.Show()
+            End If
+            TaskTitle_TextBox.Enabled = True
+            TaskDescription_RichTextBox.Enabled = True
+            Label_ADT.Enabled = True
+            Label_TaskEntryDateTime.Enabled = True
+            Important_Button.Enabled = True
+            CustomButton_Repeat.Enabled = True
+            CustomButton_AddDueDate.Enabled = True
+            CustomButton_AddReminder.Enabled = True
+            Button_DeleteTask.Enabled = True
+        End If
+    End Sub
+
+#Region "Event Handlers"
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        LoseListItemFocus()
-        'DisableTaskProperties(True)
+        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Important_Label.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        DisableTaskProperties(True)
     End Sub
 
     ' KeyDown event to add a new task
@@ -217,49 +295,4 @@ Public Class Important_View
 
 #End Region
 
-    Public Sub DisableTaskProperties(Disable As Boolean)
-        If Disable Then
-            TaskTitle_TextBox.Text = Nothing
-            Label_TaskEntryDateTime.Text = Nothing
-            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
-
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
-                TaskDescription_RichTextBox.Hide()
-            End If
-            TaskTitle_TextBox.Enabled = False
-            TaskDescription_RichTextBox.Text = Nothing
-            TaskDescription_RichTextBox.Enabled = False
-
-            Label_ADT.Enabled = False
-            Label_TaskEntryDateTime.Enabled = False
-            Important_Button.Enabled = False
-
-            CustomButton_AddReminder.Enabled = False
-            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
-
-            CustomButton_Repeat.Enabled = False
-            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
-
-            CustomButton_AddDueDate.Enabled = False
-            CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
-
-            Button_DeleteTask.Enabled = False
-
-        Else
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                TaskDescription_RichTextBox.Show()
-            End If
-            TaskTitle_TextBox.Enabled = True
-            TaskDescription_RichTextBox.Enabled = True
-            Label_ADT.Enabled = True
-            Label_TaskEntryDateTime.Enabled = True
-            Important_Button.Enabled = True
-            CustomButton_Repeat.Enabled = True
-            CustomButton_AddDueDate.Enabled = True
-            CustomButton_AddReminder.Enabled = True
-            Button_DeleteTask.Enabled = True
-        End If
-    End Sub
 End Class

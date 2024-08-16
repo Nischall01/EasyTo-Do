@@ -30,7 +30,6 @@ Public Class MainWindow
     Public PlannedInstance As New Planned_View()
     Public TasksInstance As New Tasks_View()
     Public SettingsInstance As New Settings_Dialog()
-
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 #Region "Constructor and Load"
     Public Sub New()

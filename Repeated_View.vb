@@ -2,7 +2,8 @@
 
 Public Class Repeated_View
     Private connectionString As String = My.Settings.ConnectionString
-    Private dt As New DataTable()
+    Private RepeatedDT As New DataTable()
+    Private RepeatedDT_TaskTitleOnly As New DataTable()
 
     Private SelectedTaskIndex As Integer = -1
     Private SelectedTaskItem As TaskItem
@@ -13,63 +14,189 @@ Public Class Repeated_View
 
     ' Form on load : Initializes the Repeated tasks view
     Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeRepeated()
+    End Sub
+
+    Private Sub InitializeRepeated()
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
             Case "Collapsed"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         End Select
-    End Sub
 
+        DisableTaskProperties(True)
+    End Sub
 #End Region
 
-#Region "Data Handling"
+#Region "Data Loading Actions"
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_Repeated()
+        RepeatedDT.Clear()
+        RepeatedDT_TaskTitleOnly.Clear()
+        Dim query As String = "SELECT * FROM Tasks WHERE RepeatedDays IS NOT NULL;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE RepeatedDays IS NOT NULL;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(RepeatedDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(RepeatedDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+
+        RepeatedDT.PrimaryKey = New DataColumn() {RepeatedDT.Columns("TaskID")}
+        RepeatedDT_TaskTitleOnly.PrimaryKey = New DataColumn() {RepeatedDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
+
 
     ' Load important tasks onto the CheckedListBox.
     Public Sub LoadTasksToRepeatedView()
-        dt.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE RepeatedDays IS NOT NULL;"
+        LoadTasksToDataTables_Repeated()
+        Repeated_CheckedListBox.Items.Clear()
 
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                connection.Open()
-                Using transaction = connection.BeginTransaction
-                    Using command As New SqlCeCommand(query, connection)
-                        Using adapter As New SqlCeDataAdapter(command)
-                            adapter.Fill(dt)
-                        End Using
-                    End Using
-                    transaction.Commit()
-                End Using
-            End Using
-            dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-            Repeated_CheckedListBox.Items.Clear()
+        For Each row As DataRow In RepeatedDT.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
 
-            For Each row As DataRow In dt.Rows
-                Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
-                Repeated_CheckedListBox.Items.Add(item, item.IsDone)
-            Next
+            If row("IsImportant") Then
+                Dim ImportantTask As String = "!" + "  " + row("Task")
+                row("Task") = ImportantTask
+            End If
 
-        Catch ex As SqlCeException
-            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            Repeated_CheckedListBox.Items.Add(item, item.IsDone)
+        Next
+    End Sub
+#End Region
+
+    Public Sub DisableTaskProperties(Disable As Boolean)
+        If Disable Then
+            TaskTitle_TextBox.Text = Nothing
+            Label_TaskEntryDateTime.Text = Nothing
+            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                TaskDescription_RichTextBox.Hide()
+            End If
+            TaskTitle_TextBox.Enabled = False
+            TaskDescription_RichTextBox.Text = Nothing
+            TaskDescription_RichTextBox.Enabled = False
+
+            Label_ADT.Enabled = False
+            Label_TaskEntryDateTime.Enabled = False
+            Important_Button.Enabled = False
+
+            CustomButton_AddReminder.Enabled = False
+            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+
+            CustomButton_Repeat.Enabled = False
+            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+
+            Button_DeleteTask.Enabled = False
+
+        Else
+            If My.Settings.ColorScheme = "Dark" Then
+                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                TaskDescription_RichTextBox.Show()
+            End If
+            TaskTitle_TextBox.Enabled = True
+            TaskDescription_RichTextBox.Enabled = True
+            Label_ADT.Enabled = True
+            Label_TaskEntryDateTime.Enabled = True
+            Important_Button.Enabled = True
+            CustomButton_Repeat.Enabled = True
+            CustomButton_AddReminder.Enabled = True
+            Button_DeleteTask.Enabled = True
+        End If
     End Sub
 
-#End Region
+    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+        Select Case action
+            Case TaskPropertiesVisibility.Show
+                IsTaskPropertiesVisible = True
+            Case TaskPropertiesVisibility.Hide
+                IsTaskPropertiesVisible = False
+            Case TaskPropertiesVisibility.Toggle
+                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
+        End Select
+        UtilityMethods.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
+    End Sub
 
 #Region "Event Handlers"
 
-    ' Clear any selected task when entering the text box
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        LoseListItemFocus()
+        UtilityMethods.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Repeated_Label.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        DisableTaskProperties(True)
+    End Sub
+
+    Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
+        If My.Settings.ColorScheme = "Dark" Then
+            TaskDescription_RichTextBox.ForeColor = Color.White
+        ElseIf My.Settings.ColorScheme = "Light" Then
+            TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
+        End If
+        If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then
+            TaskDescription_RichTextBox.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub TaskDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
+        ' Check if Enter key is pressed
+        If e.KeyCode = Keys.Enter Then
+            ' Check if Shift key is also pressed
+            If e.Shift Then
+                ' Allow default behavior (new line)
+            Else
+                ' Prevent the default behavior
+                e.SuppressKeyPress = True
+                Task.UpdateDescription(TaskDescription_RichTextBox.Text, SelectedTaskItem.ID)
+
+                If Repeated_CheckedListBox.Items.Count > 0 Then
+                    Me.ActiveControl = Nothing
+                    Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+                End If
+            End If
+        End If
     End Sub
 
     ' KeyDown event to add a new task when pressing the Enter key
     Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            AddNewRepeatedTask()
+            HelperMethods.AddNewTask(Me.AddNewTask_TextBox, Me.Repeated_CheckedListBox, ViewName.Repeated)
         End If
     End Sub
 
@@ -80,26 +207,59 @@ Public Class Repeated_View
         If SelectedTaskIndex <> -1 Then
             SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
 
-            ' Update the Important button icon based on the task's importance status
-            If IsTaskImportant() Then
+            DisableTaskProperties(False)
+            TaskTitle_TextBox.Text = HelperMethods.GetTaskString(SelectedTaskItem, RepeatedDT_TaskTitleOnly)
+
+            Label_TaskEntryDateTime.Text = HelperMethods.GetTaskEntryDateTimeString(SelectedTaskItem, RepeatedDT)
+
+            If HelperMethods.IsTaskImportant(SelectedTaskItem, RepeatedDT) Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
+
+            If HelperMethods.GetTaskDescriptionString(SelectedTaskItem, RepeatedDT) <> String.Empty Then
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Pink
+                ElseIf My.Settings.ColorScheme = "Light" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Black
+                End If
+                TaskDescription_RichTextBox.Text = HelperMethods.GetTaskDescriptionString(SelectedTaskItem, RepeatedDT)
+            Else
+                TaskDescription_RichTextBox.ForeColor = Color.Gray
+                TaskDescription_RichTextBox.Text = TextPlaceholders.Description
+            End If
+
+            Dim ReminderTime As String = HelperMethods.GetReminderString(SelectedTaskItem, RepeatedDT)
+            If ReminderTime <> String.Empty Then
+                CustomButton_AddReminder.ButtonText = ReminderTime
+            Else
+                CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+            End If
+
+            Dim RepeatFrequency As String = HelperMethods.GetRepeatString(SelectedTaskItem, RepeatedDT)
+            If RepeatFrequency <> String.Empty Then
+                CustomButton_Repeat.ButtonText = RepeatFrequency
+            Else
+                CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+            End If
+        Else
+            DisableTaskProperties(True)
+            TaskTitle_TextBox.Clear()
         End If
     End Sub
 
     ' Event handler for deleting a selected task when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+            HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox, ViewName.Repeated)
         End If
     End Sub
 
     ' Event handler for deleting a selected task when the Delete key is pressed
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+            HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox, ViewName.Repeated)
         End If
     End Sub
 
@@ -118,14 +278,14 @@ Public Class Repeated_View
     ' Click event for toggling the importance status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If IsTaskImportant() Then
+            If HelperMethods.IsTaskImportant(SelectedTaskItem, RepeatedDT) Then
                 Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
             Else
                 Task.ImportantCheckChanged(CheckState.Checked, SelectedTaskItem.ID)
             End If
             Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
         Else
-            LoseListItemFocus()
+            UtilityMethods.ClearListItemSelection(Repeated_CheckedListBox)
         End If
     End Sub
 
@@ -144,7 +304,7 @@ Public Class Repeated_View
     ' MouseEnter event to temporarily display the Important icon when hovering over the button
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If IsTaskImportant() Then
+            If HelperMethods.IsTaskImportant(SelectedTaskItem, RepeatedDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
@@ -154,7 +314,7 @@ Public Class Repeated_View
     ' MouseLeave event to revert the Important icon when the mouse leaves the button
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If IsTaskImportant() Then
+            If HelperMethods.IsTaskImportant(SelectedTaskItem, RepeatedDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
@@ -203,161 +363,10 @@ Public Class Repeated_View
 
     ' Clear selected task after leaving the View
     Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
+        UtilityMethods.ClearListItemSelection(Repeated_CheckedListBox)
         'MsgBox("Left R")
         'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
     End Sub
 
 #End Region
-
-#Region "Helper Methods"
-
-    ' Task.AddNewTasks.Repeated method invoker
-    Private Sub AddNewRepeatedTask()
-        Dim newTask As String = AddNewTask_TextBox.Text
-        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
-
-        Dim NewTaskId As Integer = Task.AddNewTasks.Repeated(newTask) ' Add the new task to the database and get its ID
-
-        ' Prompt to add repeat frequency
-        Dim DueDate_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = NewTaskId}
-        DueDate_DialogInstance.ShowDialog()
-        DueDate_DialogInstance.BringToFront()
-        DueDate_DialogInstance.Dispose()
-
-        ' Select the newly added task
-        For i As Integer = 0 To Repeated_CheckedListBox.Items.Count - 1
-            If Repeated_CheckedListBox.Items(i).ID = NewTaskId Then
-                Repeated_CheckedListBox.SelectedIndex = i
-                Exit For
-            End If
-        Next
-
-        AddNewTask_TextBox.Clear() ' Clear the input field
-    End Sub
-
-    ' Task.DeleteTask method invoker
-    Private Sub DeleteSelectedTask()
-        If SelectedTaskItem Is Nothing Then
-            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Try
-            Task.DeleteTask(SelectedTaskItem.ID)
-
-            ' Adjust the selected task index after deletion
-            If Repeated_CheckedListBox.Items.Count > 0 Then
-                If SelectedTaskIndex >= Repeated_CheckedListBox.Items.Count Then
-                    SelectedTaskIndex = Repeated_CheckedListBox.Items.Count - 1
-                End If
-                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ' Check if the selected task is important
-    Private Function IsTaskImportant() As Boolean
-        Try
-            If SelectedTaskItem.ID <= 0 Then
-                Return False
-            End If
-
-            ' Find the task in the DataTable
-            Dim foundRow As DataRow = dt.Rows.Find(SelectedTaskItem.ID)
-            If foundRow IsNot Nothing Then
-                Return CBool(foundRow("IsImportant"))
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-        Return False
-    End Function
-
-    ' Show or hide the task properties panel
-    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
-        Select Case action
-            Case TaskPropertiesVisibility.Show
-                IsTaskPropertiesVisible = True
-            Case TaskPropertiesVisibility.Hide
-                IsTaskPropertiesVisible = False
-            Case TaskPropertiesVisibility.Toggle
-                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
-        End Select
-
-        If IsTaskPropertiesVisible Then
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 75%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 25%
-        Else
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 100%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 0%
-        End If
-    End Sub
-
-    ' Lose CheckedListBox item selection/focus
-    Private Sub LoseListItemFocus()
-        Repeated_CheckedListBox.SelectedItem = Nothing
-        Repeated_CheckedListBox.SelectedIndex = -1
-    End Sub
-
-    Private Sub ShowContextMenuCentered(contextMenu As ContextMenuStrip, control As Control)
-        ' Calculate the center position of the control on the screen
-        Dim buttonCenterScreenPosition As Point = control.PointToScreen(New Point(control.Width / 2, control.Height / 2))
-
-        ' Calculate the location to show the ContextMenuStrip centered over the control
-        Dim contextMenuPosition As New Point(buttonCenterScreenPosition.X - (contextMenu.Width / 2), buttonCenterScreenPosition.Y - (contextMenu.Height / 2))
-
-        ' Show the ContextMenuStrip at the calculated position
-        contextMenu.Show(contextMenuPosition)
-    End Sub
-
-#End Region
-
-    Public Sub DisableTaskProperties(Disable As Boolean)
-        If Disable Then
-            TaskTitle_TextBox.Text = Nothing
-            Label_TaskEntryDateTime.Text = Nothing
-            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
-
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
-                TaskDescription_RichTextBox.Hide()
-            End If
-            TaskTitle_TextBox.Enabled = False
-            TaskDescription_RichTextBox.Text = Nothing
-            TaskDescription_RichTextBox.Enabled = False
-
-            Label_ADT.Enabled = False
-            Label_TaskEntryDateTime.Enabled = False
-            Important_Button.Enabled = False
-
-            CustomButton_AddReminder.Enabled = False
-            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
-
-            CustomButton_Repeat.Enabled = False
-            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
-
-            Button_DeleteTask.Enabled = False
-
-        Else
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                TaskDescription_RichTextBox.Show()
-            End If
-            TaskTitle_TextBox.Enabled = True
-            TaskDescription_RichTextBox.Enabled = True
-            Label_ADT.Enabled = True
-            Label_TaskEntryDateTime.Enabled = True
-            Important_Button.Enabled = True
-            CustomButton_Repeat.Enabled = True
-            CustomButton_AddReminder.Enabled = True
-            Button_DeleteTask.Enabled = True
-        End If
-    End Sub
 End Class

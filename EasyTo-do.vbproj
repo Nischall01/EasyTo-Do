@@ -120,6 +120,7 @@
     <Compile Include="DueDate.vb" />
     <Compile Include="HelperMethods.vb" />
     <Compile Include="ImageCache.vb" />
+    <Compile Include="MainDataTable.vb" />
     <Compile Include="TextPlaceholders.vb" />
     <Compile Include="Reminder.vb" />
     <Compile Include="Repeat.vb" />

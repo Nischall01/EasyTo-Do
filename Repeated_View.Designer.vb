@@ -428,12 +428,12 @@ Partial Class Repeated_View
         Me.ContextMenuStrip2.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip2.ShowImageMargin = False
-        Me.ContextMenuStrip2.Size = New System.Drawing.Size(156, 48)
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(93, 26)
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem2.Text = "Remove"
         '
         'Repeated_View

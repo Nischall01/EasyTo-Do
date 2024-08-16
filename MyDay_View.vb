@@ -7,6 +7,7 @@ Imports System.Threading
 Public Class MyDay_View
     Private connectionString As String = My.Settings.ConnectionString
     Private MyDayDT As New DataTable()
+    Private MyDayDT_TaskTitleOnly As New DataTable()
 
     Private SelectedTaskIndex As Integer = -1
     Private SelectedTaskItem As TaskItem
@@ -14,15 +15,11 @@ Public Class MyDay_View
     Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
     Private IsTaskPropertiesVisible As Boolean = True
 
-    '<DllImport("user32.dll")>
-    'Private Shared Function SetForegroundWindow(hWnd As IntPtr) As Boolean
-    'End Function
-
 #Region "On Load"
 
     ' Form on load : Initializes the Repeated tasks view
     Private Sub My_Day_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeMy_day()
+        InitializeMyDay()
 
         ReminderTimer.Interval = 1000 ' Set interval to 5 seconds
         ReminderTimer.Start() ' Start the Timers
@@ -32,7 +29,7 @@ Public Class MyDay_View
         NotifyIcon1.Visible = True
     End Sub
 
-    Private Sub InitializeMy_day()
+    Private Sub InitializeMyDay()
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
@@ -46,6 +43,60 @@ Public Class MyDay_View
     End Sub
 
 #End Region
+
+#Region "Data Loading Actions"
+
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_MyDay()
+        MyDayDT.Clear()
+        MyDayDT_TaskTitleOnly.Clear()
+        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(MyDayDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(MyDayDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+
+        MyDayDT.PrimaryKey = New DataColumn() {MyDayDT.Columns("TaskID")}
+        MyDayDT_TaskTitleOnly.PrimaryKey = New DataColumn() {MyDayDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
+
+    ' Load tasks onto the CheckedListBox.
+    Public Sub LoadTasksToMyDayView()
+        LoadTasksToDataTables_MyDay()
+        MyDay_CheckedListBox.Items.Clear()
+
+        For Each row As DataRow In MyDayDT.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
+
+            If row("IsImportant") Then
+                Dim ImportantTask As String = "!" + "  " + row("Task")
+                row("Task") = ImportantTask
+            End If
+
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            MyDay_CheckedListBox.Items.Add(item, item.IsDone)
+        Next
+    End Sub
+
+#End Region
+
 
     Public Sub DisableTaskProperties(Disable As Boolean)
         If Disable Then
@@ -75,7 +126,6 @@ Public Class MyDay_View
             CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
 
             Button_DeleteTask.Enabled = False
-
         Else
             If My.Settings.ColorScheme = "Dark" Then
                 TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
@@ -92,7 +142,7 @@ Public Class MyDay_View
             Button_DeleteTask.Enabled = True
         End If
     End Sub
-#Region "Task Handling"
+
     Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
         Select Case action
             Case TaskPropertiesVisibility.Show
@@ -105,100 +155,6 @@ Public Class MyDay_View
         UtilityMethods.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
     End Sub
 
-    Private Function GetTaskEntryDateTime() As String
-        Dim TaskEntryDateTime As String = String.Empty
-
-        For Each row As DataRow In MyDayDT.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                If UserDefaultTimeFormat = "12" Then
-                    TaskEntryDateTime = Convert.ToDateTime(row("EntryDateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
-                Else
-                    TaskEntryDateTime = Convert.ToDateTime(row("EntryDateTime")).ToString("yyyy-MM-dd  |  HH:mm")
-                End If
-                Exit For
-            End If
-        Next
-        Return TaskEntryDateTime
-    End Function
-
-    Private Function GetTaskDescription() As String
-        Dim TaskDescription As String = String.Empty
-
-        For Each row As DataRow In MyDayDT.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                TaskDescription = row("Description").ToString
-                Exit For
-            End If
-        Next
-        Return TaskDescription
-    End Function
-
-    Private Function GetReminder() As String
-        Dim TaskReminder As String = String.Empty
-
-        For Each row As DataRow In MyDayDT.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                If IsDBNull(row("ReminderDateTime")) Then
-                    Return String.Empty
-                Else
-                    Dim reminderDateTime As DateTime = Convert.ToDateTime(row("ReminderDateTime"))
-
-                    If (reminderDateTime).Date = (DateTime.Today).Date Then
-                        If UserDefaultTimeFormat = "12" Then
-                            TaskReminder = reminderDateTime.ToString("hh:mm tt")
-                        Else
-                            TaskReminder = reminderDateTime.ToString("HH:mm")
-                        End If
-                    Else
-                        If UserDefaultTimeFormat = "12" Then
-                            TaskReminder = reminderDateTime.ToString("(dd/MM) hh:mm tt")
-                        Else
-                            TaskReminder = reminderDateTime.ToString("(dd/MM) HH:mm")
-                        End If
-                    End If
-                End If
-                Exit For
-            End If
-        Next
-        Return TaskReminder
-    End Function
-
-    Private Function GetRepeat() As String
-        Dim TaskRepeat As String = String.Empty
-
-        For Each row As DataRow In MyDayDT.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                If IsDBNull(row("RepeatedDays")) Then
-                    Return String.Empty
-                Else
-                    If row("RepeatedDays") = "sun mon tue wed thu fri sat" Then
-                        TaskRepeat = "Everyday"
-                    Else
-                        TaskRepeat = "Every..."
-                    End If
-                End If
-                Exit For
-            End If
-        Next
-        Return TaskRepeat
-    End Function
-
-    Private Function GetDueDate() As String
-        Dim TaskDueDate As String = String.Empty
-
-        For Each row As DataRow In MyDayDT.Rows
-            If row("TaskID") = SelectedTaskItem.ID Then
-                If IsDBNull(row("DueDate")) Then
-                    Return String.Empty
-                Else
-                    TaskDueDate = row("DueDate")
-                End If
-                Exit For
-            End If
-        Next
-        Return TaskDueDate
-    End Function
-#End Region
 
 #Region "Event Handlers"
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
@@ -208,8 +164,8 @@ Public Class MyDay_View
     ' Key Down event to add a new task
     Private Sub AddNewTask_TextBox_MouseDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
-            AddNewTask(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
+            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+            HelperMethods.AddNewTask(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
         End If
     End Sub
 
@@ -265,7 +221,7 @@ Public Class MyDay_View
         End If
     End Sub
 
-    Private Sub RichTextBox1_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
+    Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
         If My.Settings.ColorScheme = "Dark" Then
             TaskDescription_RichTextBox.ForeColor = Color.White
         ElseIf My.Settings.ColorScheme = "Light" Then
@@ -296,29 +252,46 @@ Public Class MyDay_View
     End Sub
 
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
         DisableTaskProperties(True)
+    End Sub
+    Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
+    End Sub
+
+    Private Sub TableLayoutPanel1_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_DateAndTimeHolder.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
+    End Sub
+
+    Private Sub Time_Label_Click(sender As Object, e As EventArgs) Handles Time_Label.Click
+        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UtilityMethods.ClearListItemSelection(Me.MyDay_CheckedListBox)
     End Sub
 
     Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
@@ -370,7 +343,7 @@ Public Class MyDay_View
             NotifyIcon1.BalloonTipIcon = ToolTipIcon.None
             NotifyIcon1.BalloonTipText = message
         End If
-        NotifyIcon1.ShowBalloonTip(3000) ' 3000 milliseconds = 3 seconds
+        NotifyIcon1.ShowBalloonTip(5000) ' 3000 milliseconds = 5 seconds
     End Sub
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles NotifyIcon1.BalloonTipClicked
@@ -378,9 +351,6 @@ Public Class MyDay_View
             MainWindow.Activate()
             MainWindow.WindowState = FormWindowState.Normal
             MainWindow.TopMost = True
-            System.Threading.Thread.Sleep(500)
-            MainWindow.TopMost = False
-            'SetForegroundWindow(MainWindow.Handle)
         End If
     End Sub
 
@@ -389,29 +359,9 @@ Public Class MyDay_View
         NotifyIcon1.Dispose()
     End Sub
 
-    Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
-    End Sub
-
-    Private Sub TableLayoutPanel1_Click(sender As Object, e As EventArgs) Handles TableLayoutPanel1.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
-    End Sub
-
-    Private Sub Time_Label_Click(sender As Object, e As EventArgs) Handles Time_Label.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(MyDay_CheckedListBox)
-    End Sub
 #End Region
 
 #Region "Data Handling (My Day Table)"
-
-
-
 
     Private Sub MyDay_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MyDay_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = MyDay_CheckedListBox.SelectedIndex
@@ -420,20 +370,9 @@ Public Class MyDay_View
             SelectedTaskItem = MyDay_CheckedListBox.SelectedItem
 
             DisableTaskProperties(False)
-            TaskTitle_TextBox.Text = MyDay_CheckedListBox.SelectedItem.ToString()
-            Label_TaskEntryDateTime.Text = GetTaskEntryDateTime()
+            TaskTitle_TextBox.Text = HelperMethods.GetTaskString(SelectedTaskItem, MyDayDT_TaskTitleOnly)
 
-            If GetTaskDescription() <> String.Empty Then
-                If My.Settings.ColorScheme = "Dark" Then
-                    TaskDescription_RichTextBox.ForeColor = Color.Pink
-                ElseIf My.Settings.ColorScheme = "Light" Then
-                    TaskDescription_RichTextBox.ForeColor = Color.Black
-                End If
-                TaskDescription_RichTextBox.Text = GetTaskDescription()
-            Else
-                TaskDescription_RichTextBox.ForeColor = Color.Gray
-                TaskDescription_RichTextBox.Text = TextPlaceholders.Description
-            End If
+            Label_TaskEntryDateTime.Text = HelperMethods.GetTaskEntryDateTimeString(SelectedTaskItem, MyDayDT)
 
             If HelperMethods.IsTaskImportant(SelectedTaskItem, MyDayDT) Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
@@ -441,20 +380,35 @@ Public Class MyDay_View
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
 
-            If GetReminder() <> String.Empty Then
-                CustomButton_AddReminder.ButtonText = GetReminder()
+            If HelperMethods.GetTaskDescriptionString(SelectedTaskItem, MyDayDT) <> String.Empty Then
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Pink
+                ElseIf My.Settings.ColorScheme = "Light" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Black
+                End If
+                TaskDescription_RichTextBox.Text = HelperMethods.GetTaskDescriptionString(SelectedTaskItem, MyDayDT)
+            Else
+                TaskDescription_RichTextBox.ForeColor = Color.Gray
+                TaskDescription_RichTextBox.Text = TextPlaceholders.Description
+            End If
+
+            Dim ReminderTime As String = HelperMethods.GetReminderString(SelectedTaskItem, MyDayDT)
+            If ReminderTime <> String.Empty Then
+                CustomButton_AddReminder.ButtonText = ReminderTime
             Else
                 CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
             End If
 
-            If GetRepeat() <> String.Empty Then
-                CustomButton_Repeat.ButtonText = GetRepeat()
+            Dim RepeatFrequency As String = HelperMethods.GetRepeatString(SelectedTaskItem, MyDayDT)
+            If RepeatFrequency <> String.Empty Then
+                CustomButton_Repeat.ButtonText = RepeatFrequency
             Else
                 CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
             End If
 
-            If GetDueDate() <> String.Empty Then
-                CustomButton_AddDueDate.ButtonText = GetDueDate()
+            Dim ReminderDueDate As String = HelperMethods.GetDueDateString(SelectedTaskItem, MyDayDT)
+            If ReminderDueDate <> String.Empty Then
+                CustomButton_AddDueDate.ButtonText = ReminderDueDate
             Else
                 CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
             End If
@@ -467,9 +421,8 @@ Public Class MyDay_View
 
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub MyDay_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles MyDay_CheckedListBox.ItemCheck
-        If Views._isUiUpdating Or MyDay_CheckedListBox.SelectedIndex = -1 Then
-            Exit Sub
-        End If
+        If Views._isUiUpdating Or MyDay_CheckedListBox.SelectedIndex = -1 Then Exit Sub
+
         Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -500,23 +453,17 @@ Public Class MyDay_View
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
         Reminder.RemoveReminder(SelectedTaskItem.ID)
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
-        End If
+        MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
         Repeat.RemoveRepeat(SelectedTaskItem.ID)
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
-        End If
+        MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
         DueDate.RemoveDueDate(SelectedTaskItem.ID)
-        If MyDay_CheckedListBox.Items.Count > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
-        End If
+        MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
@@ -526,58 +473,4 @@ Public Class MyDay_View
     End Sub
 
 #End Region
-
-#Region "Data Loading Actions"
-
-    ' Load tasks onto the DataTable
-    Private Sub LoadTasksToDataTable_MyDay()
-        MyDayDT.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
-
-        Using connection As New SqlCeConnection(connectionString)
-            connection.Open()
-            Using transaction = connection.BeginTransaction
-                Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@Today", DateTime.Today)
-                    Using adapter As New SqlCeDataAdapter(command)
-                        adapter.Fill(MyDayDT)
-                    End Using
-                End Using
-                transaction.Commit()
-            End Using
-        End Using
-    End Sub
-
-
-    ' Load tasks onto the CheckedListBox.
-    Public Sub LoadTasksToMyDayView()
-        LoadTasksToDataTable_MyDay()
-
-        MyDayDT.PrimaryKey = New DataColumn() {MyDayDT.Columns("TaskID")}
-        MyDay_CheckedListBox.Items.Clear()
-
-        For Each row As DataRow In MyDayDT.Rows
-            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
-                Dim reminderDate As DateTime = row("ReminderDateTime")
-                If (reminderDate).Date = (DateTime.Today).Date Then
-                    Dim RemindedTask As String = row("Task")
-                    Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                    row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
-                    'row("Task") = RemindedTask + "  " + reminderDateTime.ToString("(hh:mmtt)").ToLower()
-                    'row("Task") = "~" + "  " + RemindedTask
-                    ' row("Task") = RemindedTask + "  " + "~"
-                End If
-            End If
-
-            If row("IsImportant") Then
-                Dim ImportantTask As String = "!" + "  " + row("Task")
-                row("Task") = ImportantTask
-            End If
-
-            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
-            MyDay_CheckedListBox.Items.Add(item, item.IsDone)
-        Next
-    End Sub
-#End Region
-
 End Class

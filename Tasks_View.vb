@@ -3,7 +3,8 @@ Imports System.Diagnostics
 
 Public Class Tasks_View
     Private connectionString As String = My.Settings.ConnectionString
-    Private dt As New DataTable()
+    Private TasksDT As New DataTable()
+    Private TasksDT_TaskTitleOnly As New DataTable()
 
     Private SelectedTaskIndex As Integer = -1
     Private SelectedTaskItem As TaskItem
@@ -24,39 +25,66 @@ Public Class Tasks_View
 
 #End Region
 
-#Region "Data Handling"
+#Region "Data Loading Actions"
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_Tasks()
+        TasksDT.Clear()
+        TasksDT_TaskTitleOnly.Clear()
+        Dim query As String = "SELECT * FROM Tasks ORDER BY DueDate;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks ORDER BY DueDate;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(TasksDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(TasksDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+
+        TasksDT.PrimaryKey = New DataColumn() {TasksDT.Columns("TaskID")}
+        TasksDT_TaskTitleOnly.PrimaryKey = New DataColumn() {TasksDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
 
     ' Load tasks onto the CheckedListBox
     Public Sub LoadTasksToTasksView()
-        dt.Clear()
-        Dim query As String = "SELECT * FROM Tasks ORDER BY DueDate;"
+        LoadTasksToDataTables_Tasks()
+        Tasks_CheckedListBox.Items.Clear()
 
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                connection.Open()
-                Using command As New SqlCeCommand(query, connection)
-                    Using adapter As New SqlCeDataAdapter(command)
-                        adapter.Fill(dt)
-                    End Using
-                End Using
-            End Using
-            dt.PrimaryKey = New DataColumn() {dt.Columns("TaskID")}
-            Tasks_CheckedListBox.Items.Clear()
+        For Each row As DataRow In TasksDT.Rows
+            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+                Dim RemindedTask As String = row("Task")
+                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
+                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
 
-            'Tasks_CheckedListBox.BeginUpdate() ' Begin update to prevent flickering
-            For Each row As DataRow In dt.Rows
-                Dim item As New TaskItem(row("Task"), row("TaskID"), CBool(row("IsDone")))
-                Tasks_CheckedListBox.Items.Add(item, item.IsDone)
-            Next
-            'Tasks_CheckedListBox.EndUpdate() ' End update after all items are added
+            If Not row.IsNull("DueDate") AndAlso TypeOf row("DueDate") Is DateTime Then
+                If row("DueDate") = DateTime.Today Then
+                    Dim PlannedTask As String = row("Task")
+                    row("Task") = "(Today)" + "  " + PlannedTask
+                Else
+                    Dim PlannedTask As String = row("Task")
+                    Dim reminderDueDate As DateTime = row.Field(Of DateTime)("DueDate")
+                    row("Task") = reminderDueDate.ToString("(dd/MM)").ToLower() + "  " + PlannedTask
+                End If
+            End If
 
-        Catch ex As SqlCeException
-            MessageBox.Show("An SQL error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
+                If row("IsImportant") Then
+                Dim ImportantTask As String = "!" + "  " + row("Task")
+                row("Task") = ImportantTask
+            End If
+
+            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            Tasks_CheckedListBox.Items.Add(item, item.IsDone)
+        Next
     End Sub
-
 #End Region
 
 #Region "Event Handlers"
@@ -208,7 +236,7 @@ Public Class Tasks_View
 
         Try
             ' Locate the task in the DataTable using the primary key
-            Dim foundRow As DataRow = dt.Rows.Find(SelectedTaskItem.ID)
+            Dim foundRow As DataRow = TasksDT.Rows.Find(SelectedTaskItem.ID)
             If foundRow IsNot Nothing AndAlso Not IsDBNull(foundRow("IsImportant")) Then
                 Return CBool(foundRow("IsImportant"))
             End If
