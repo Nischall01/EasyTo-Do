@@ -1,7 +1,4 @@
-﻿Imports System.Data.SqlServerCe
-Imports System.Threading
-
-Public Class Planned_View
+﻿Public Class Planned_View
     Private connectionString As String = My.Settings.ConnectionString
     Private PlannedDT As New DataTable()
     Private PlannedDT_TaskTitleOnly As New DataTable()

@@ -1,9 +1,6 @@
-﻿Imports System.Windows.Forms
-Imports System.Drawing
-'Imports System.Text.json
-Imports System.IO
-Imports Newtonsoft.Json
-Imports Newtonsoft.Json.Linq
+﻿Imports System.IO
+'Imports Newtonsoft.Json
+'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
     ' Constants

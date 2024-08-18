@@ -1,4 +1,35 @@
-﻿Module HelperMethods
+﻿Namespace Helper
+    Module UiHelpers
+        Public Sub RetainItemSelection(ByVal CLB As CheckedListBox, ByVal SelectedTaskIndex As Integer)
+            CLB.SelectedIndex = SelectedTaskIndex
+        End Sub
+
+        Public Sub ItemSelectionAfterTaskDeletion(ByVal CLB As CheckedListBox, ByVal SelectedTaskIndex As Integer, View As Views.ViewName)
+            ' Adjust the selected task index after deletion
+            If CLB.Items.Count > 0 Then
+                If SelectedTaskIndex >= CLB.Items.Count Then
+                    SelectedTaskIndex = CLB.Items.Count - 1
+                End If
+                CLB.SelectedIndex = SelectedTaskIndex
+            Else
+                Select Case View
+                    Case ViewName.MyDay
+                        MainWindow.MyDayInstance.DisableTaskProperties(True)
+                    Case ViewName.Repeated
+                        MainWindow.RepeatedInstance.DisableTaskProperties(True)
+                    Case ViewName.Important
+                        MainWindow.ImportantInstance.DisableTaskProperties(True)
+                    Case ViewName.Planned
+                        MainWindow.PlannedInstance.DisableTaskProperties(True)
+                    Case ViewName.Tasks
+                        MainWindow.TasksInstance.DisableTaskProperties(True)
+                End Select
+            End If
+        End Sub
+    End Module
+End Namespace
+
+Module HelperMethods
     '*' Add New Task
     Public Sub AddNewTask(TextBox As TextBox, CLB As CheckedListBox, View As Views.ViewName)
         Dim NewTaskId As Integer
@@ -27,33 +58,12 @@
     End Sub
 
     '*' Delete Task
-    Public Sub DeleteTask(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox, View As Views.ViewName)
+    Public Sub DeleteTask(SelectedTaskItem As TaskItem)
         Task.DeleteTask(SelectedTaskItem.ID)
-
-        ' Adjust the selected task index after deletion
-        If CLB.Items.Count > 0 Then
-            If SelectedTaskIndex >= CLB.Items.Count Then
-                SelectedTaskIndex = CLB.Items.Count - 1
-            End If
-            CLB.SelectedIndex = SelectedTaskIndex
-        Else
-            Select Case View
-                Case ViewName.MyDay
-                    MainWindow.MyDayInstance.DisableTaskProperties(True)
-                Case ViewName.Repeated
-                    MainWindow.RepeatedInstance.DisableTaskProperties(True)
-                Case ViewName.Important
-                    MainWindow.ImportantInstance.DisableTaskProperties(True)
-                Case ViewName.Planned
-                    MainWindow.PlannedInstance.DisableTaskProperties(True)
-                Case ViewName.Tasks
-                    MainWindow.TasksInstance.DisableTaskProperties(True)
-            End Select
-        End If
     End Sub
 
     '*' Add Reminder
-    Public Sub AddReminder(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
+    Public Sub ShowReminderDialog(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
         Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = True}
         Reminder_DialogInstance.ShowDialog()
         Reminder_DialogInstance.BringToFront()
@@ -63,7 +73,7 @@
     End Sub
 
     '*' Repeat Task
-    Public Sub RepeatTask(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
+    Public Sub ShowRepeatDialog(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
         Dim Repeat_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = SelectedTaskItem.ID}
         Repeat_DialogInstance.ShowDialog()
         Repeat_DialogInstance.BringToFront()
@@ -73,7 +83,7 @@
     End Sub
 
     '*' Add DueDate
-    Public Sub AddDueDate(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
+    Public Sub ShowDueDateDialog(SelectedTaskItem As TaskItem, SelectedTaskIndex As Integer, CLB As CheckedListBox)
         Dim ItemCountBeforeDueDateChange As Integer = CLB.Items.Count
 
         Dim DueDate_DialogInstance As New DueDate_Dialog With {.DueDate_SelectedTaskID = SelectedTaskItem.ID}

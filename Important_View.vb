@@ -1,7 +1,4 @@
-﻿Imports System.Data.SqlServerCe
-Imports System.Threading
-
-Public Class Important_View
+﻿Public Class Important_View
     Private connectionString As String = My.Settings.ConnectionString
     Private ImportantDT As New DataTable()
     Private ImportantDT_TaskTitleOnly As New DataTable()

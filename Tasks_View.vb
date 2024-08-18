@@ -1,7 +1,4 @@
-﻿Imports System.Data.SqlServerCe
-Imports System.Diagnostics
-
-Public Class Tasks_View
+﻿Public Class Tasks_View
     Private connectionString As String = My.Settings.ConnectionString
     Private TasksDT As New DataTable()
     Private TasksDT_TaskTitleOnly As New DataTable()
@@ -76,7 +73,7 @@ Public Class Tasks_View
                 End If
             End If
 
-                If row("IsImportant") Then
+            If row("IsImportant") Then
                 Dim ImportantTask As String = "!" + "  " + row("Task")
                 row("Task") = ImportantTask
             End If

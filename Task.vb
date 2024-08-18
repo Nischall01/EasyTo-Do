@@ -216,7 +216,66 @@
         Views.RefreshTasks()
     End Sub
 
-    'Method to update task description
+
+    ' Method to delete a task 
+    Public Sub DeleteTask(SelectedTaskID As Integer)
+        Dim query As String = "DELETE FROM Tasks WHERE TaskID = @TaskID"
+
+        Try
+            Using connection As New SqlCeConnection(connectionString)
+                connection.Open()
+
+                Using command As New SqlCeCommand(query, connection)
+                    command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
+
+                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
+
+                    If rowsAffected > 0 Then
+                        'MessageBox.Show("Task deleted successfully.")
+                    Else
+                        MessageBox.Show("No task found with the specified ID.")
+                    End If
+                End Using
+            End Using
+        Catch ex As SqlCeException
+            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        Views.RefreshTasks()
+    End Sub
+
+    Public Sub UpdateTitle(SelectedTaskID As Integer, NewTitle As String)
+        Dim query As String = "UPDATE Tasks SET Task = @NewTitle WHERE TaskID = @TaskID"
+
+        Try
+            Using connection As New SqlCeConnection(connectionString)
+
+                connection.Open()
+                Using transaction = connection.BeginTransaction()
+                    Using command As New SqlCeCommand(query, connection)
+                        command.Parameters.AddWithValue("@NewTitle", NewTitle)
+                        command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
+
+                        Dim rowsAffected As Integer = command.ExecuteNonQuery()
+                        If rowsAffected > 0 Then
+                            'MessageBox.Show("Task description updated successfully.")
+                        Else
+                            MessageBox.Show("No task found with the specified ID.")
+                        End If
+                    End Using
+                    transaction.Commit()
+                End Using
+            End Using
+        Catch ex As SqlCeException
+            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Catch ex As Exception
+            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+        Views.RefreshTasks()
+        'Method to update task description
+    End Sub
+
     Public Sub UpdateDescription(NewDescription As String, SelectedTaskID As Integer)
         Dim query As String = "UPDATE Tasks SET Description = @NewDescription WHERE TaskID = @TaskID"
 
@@ -245,34 +304,7 @@
             MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
         Views.RefreshTasks()
-    End Sub
-
-    ' Method to delete a task 
-    Public Sub DeleteTask(SelectedTaskID As Integer)
-        Dim query As String = "DELETE FROM Tasks WHERE TaskID = @TaskID"
-
-        Try
-            Using connection As New SqlCeConnection(connectionString)
-                connection.Open()
-
-                Using command As New SqlCeCommand(query, connection)
-                    command.Parameters.AddWithValue("@TaskID", SelectedTaskID)
-
-                    Dim rowsAffected As Integer = command.ExecuteNonQuery()
-
-                    If rowsAffected > 0 Then
-                        'MessageBox.Show("Task deleted successfully.")
-                    Else
-                        MessageBox.Show("No task found with the specified ID.")
-                    End If
-                End Using
-            End Using
-        Catch ex As SqlCeException
-            MessageBox.Show("A SQL error occurred: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while loading tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-        Views.RefreshTasks()
+        'Method to update task description
     End Sub
 
 #Region "Helper Methods"

@@ -1,6 +1,4 @@
-﻿Imports System.Data.SqlServerCe
-
-Public Class Repeated_View
+﻿Public Class Repeated_View
     Private connectionString As String = My.Settings.ConnectionString
     Private RepeatedDT As New DataTable()
     Private RepeatedDT_TaskTitleOnly As New DataTable()
@@ -252,14 +250,14 @@ Public Class Repeated_View
     ' Event handler for deleting a selected task when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox, ViewName.Repeated)
+            HelperMethods.DeleteTask(SelectedTaskItem)
         End If
     End Sub
 
     ' Event handler for deleting a selected task when the Delete key is pressed
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox, ViewName.Repeated)
+            HelperMethods.DeleteTask(SelectedTaskItem)
         End If
     End Sub
 
@@ -322,43 +320,29 @@ Public Class Repeated_View
     End Sub
 
     Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
-        If SelectedTaskItem Is Nothing Then
-            Exit Sub
-        End If
         If e.Button = MouseButtons.Left Then
-            Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = SelectedTaskItem.ID, .NeedsDatePicker = False}
-
-            Reminder_DialogInstance.ShowDialog()
-            Reminder_DialogInstance.BringToFront()
-
-            If Repeated_CheckedListBox.Items.Count > 0 Then
-                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            End If
-
-            Reminder_DialogInstance.Dispose()
+            HelperMethods.ShowReminderDialog(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
-            ShowContextMenuCentered(ContextMenuStrip1, CustomButton_AddReminder)
+            UtilityMethods.ShowContextMenuCentered(Me.ContextMenuStrip1, Me.CustomButton_AddReminder)
         End If
     End Sub
 
-    Private Sub CustomButton_Repeat_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
-        If SelectedTaskItem Is Nothing Then
-            Exit Sub
-        End If
+    Private Sub CustomButton_Repeat_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
         If e.Button = MouseButtons.Left Then
-            Dim Repeat_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = SelectedTaskItem.ID}
-
-            Repeat_DialogInstance.ShowDialog()
-            Repeat_DialogInstance.BringToFront()
-
-            If Repeated_CheckedListBox.Items.Count > 0 Then
-                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            End If
-
-            Repeat_DialogInstance.Dispose()
+            HelperMethods.ShowRepeatDialog(SelectedTaskItem, SelectedTaskIndex, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
-            ShowContextMenuCentered(ContextMenuStrip2, CustomButton_Repeat)
+            UtilityMethods.ShowContextMenuCentered(Me.ContextMenuStrip2, Me.CustomButton_Repeat)
         End If
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        TaskProperties.Reminder.RemoveReminder(SelectedTaskItem.ID)
+        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+    End Sub
+
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        TaskProperties.Repeat.RemoveRepeat(SelectedTaskItem.ID)
+        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     ' Clear selected task after leaving the View

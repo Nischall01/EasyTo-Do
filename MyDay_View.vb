@@ -1,10 +1,4 @@
-﻿Imports System.Windows.Forms
-Imports System.Data.SqlServerCe
-Imports System.Runtime.InteropServices
-Imports System.Runtime.CompilerServices
-Imports System.Threading
-
-Public Class MyDay_View
+﻿Public Class MyDay_View
     Private connectionString As String = My.Settings.ConnectionString
     Private MyDayDT As New DataTable()
     Private MyDayDT_TaskTitleOnly As New DataTable()
@@ -205,7 +199,8 @@ Public Class MyDay_View
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If MyDay_CheckedListBox.SelectedIndex <> -1 Or SelectedTaskItem IsNot Nothing Then
-            HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox, ViewName.MyDay)
+            HelperMethods.DeleteTask(SelectedTaskItem)
+            Helper.UiHelpers.ItemSelectionAfterTaskDeletion(MyDay_CheckedListBox, SelectedTaskIndex, ViewName.MyDay)
         Else
             MessageBox.Show("No task is Selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
@@ -214,12 +209,13 @@ Public Class MyDay_View
     Private Sub MyDay_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles MyDay_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete Then
             If MyDay_CheckedListBox.SelectedIndex <> -1 Or SelectedTaskItem IsNot Nothing Then
-                HelperMethods.DeleteTask(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox, ViewName.MyDay)
+                HelperMethods.DeleteTask(SelectedTaskItem)
             Else
                 MessageBox.Show("No task is Selected", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
         End If
     End Sub
+
 
     Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
         If My.Settings.ColorScheme = "Dark" Then
@@ -229,6 +225,18 @@ Public Class MyDay_View
         End If
         If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then
             TaskDescription_RichTextBox.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub TaskTitle_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskTitle_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If TaskTitle_TextBox.Text Is String.Empty Then
+                RefreshTasks()
+            Else
+                Task.UpdateTitle(SelectedTaskItem.ID, TaskTitle_TextBox.Text)
+            End If
+            Me.ActiveControl = Nothing
+            Helper.UiHelpers.RetainItemSelection(MyDay_CheckedListBox, SelectedTaskIndex)
         End If
     End Sub
 
@@ -427,42 +435,42 @@ Public Class MyDay_View
         MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
-    Private Sub CustomButton_AddReminder_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
+    Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
         If e.Button = MouseButtons.Left Then
-            HelperMethods.AddReminder(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
+            HelperMethods.ShowReminderDialog(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UtilityMethods.ShowContextMenuCentered(Me.ContextMenuStrip1, Me.CustomButton_AddReminder)
         End If
     End Sub
 
-    Private Sub CustomButton_Repeat_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
+    Private Sub CustomButton_Repeat_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
         If e.Button = MouseButtons.Left Then
-            HelperMethods.RepeatTask(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
+            HelperMethods.ShowRepeatDialog(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UtilityMethods.ShowContextMenuCentered(Me.ContextMenuStrip2, Me.CustomButton_Repeat)
         End If
     End Sub
 
-    Private Sub CustomButton_DueDate_Click(sender As Object, e As MouseEventArgs) Handles CustomButton_AddDueDate.MouseClick
+    Private Sub CustomButton_DueDate_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddDueDate.MouseClick
         If e.Button = MouseButtons.Left Then
-            HelperMethods.AddDueDate(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
+            HelperMethods.ShowDueDateDialog(SelectedTaskItem, SelectedTaskIndex, Me.MyDay_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UtilityMethods.ShowContextMenuCentered(Me.ContextMenuStrip3, Me.CustomButton_AddDueDate)
         End If
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        Reminder.RemoveReminder(SelectedTaskItem.ID)
+        TaskProperties.Reminder.RemoveReminder(SelectedTaskItem.ID)
         MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        Repeat.RemoveRepeat(SelectedTaskItem.ID)
+        TaskProperties.Repeat.RemoveRepeat(SelectedTaskItem.ID)
         MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
-        DueDate.RemoveDueDate(SelectedTaskItem.ID)
+        TaskProperties.DueDate.RemoveDueDate(SelectedTaskItem.ID)
         MyDay_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
 

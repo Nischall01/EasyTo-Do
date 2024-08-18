@@ -117,13 +117,11 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DueDate.vb" />
     <Compile Include="HelperMethods.vb" />
     <Compile Include="ImageCache.vb" />
     <Compile Include="MainDataTable.vb" />
+    <Compile Include="TaskProperties.vb" />
     <Compile Include="TextPlaceholders.vb" />
-    <Compile Include="Reminder.vb" />
-    <Compile Include="Repeat.vb" />
     <Compile Include="Repeat_Dialog.Designer.vb">
       <DependentUpon>Repeat_Dialog.vb</DependentUpon>
     </Compile>
