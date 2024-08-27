@@ -111,13 +111,13 @@
 
     ' Update the task's 'IsDone' status when the checked state changes
     Private Sub Tasks_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Tasks_CheckedListBox.ItemCheck
-        If Views._isUiUpdating Then
+        If ViewsManager.isUiUpdating Then
             Exit Sub
         End If
 
         'MsgBox("ItemCheck Triggered")
         If SelectedTaskItem IsNot Nothing Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -126,7 +126,7 @@
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Tasks_CheckedListBox.Items.Count > 0 AndAlso SelectedTaskItem IsNot Nothing Then
             Dim newImportanceStatus As CheckState = If(IsTaskImportant(), CheckState.Unchecked, CheckState.Checked)
-            Task.ImportantCheckChanged(newImportanceStatus, SelectedTaskItem.ID)
+            TaskManager.UpdateImportance(newImportanceStatus, SelectedTaskItem.ID)
             UpdateImportantButtonIcon()
 
             Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
@@ -188,7 +188,7 @@
         Dim newTask As String = AddNewTask_TextBox.Text
         If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
 
-        Dim newTaskId As Integer = Task.AddNewTasks.Tasks(newTask) ' Add the new task to the database and get its ID
+        Dim newTaskId As Integer = TaskCRUDHandler.AddNewTask.Tasks(newTask) ' Add the new task to the database and get its ID
 
         ' Select the newly added task
         For i As Integer = 0 To Tasks_CheckedListBox.Items.Count - 1
@@ -209,7 +209,7 @@
         End If
 
         Try
-            Task.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID)
 
             'Adjust the selected task index after deletion
             If Tasks_CheckedListBox.Items.Count > 0 Then
@@ -244,7 +244,7 @@
     End Function
 
     ' Show or hide the task properties panel
-    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+    Private Sub ShowOrHideTaskProperties(action As TaskPropertiesVisibility)
         Select Case action
             Case TaskPropertiesVisibility.Show
                 IsTaskPropertiesVisible = True

@@ -14,9 +14,9 @@
     Private Sub Important_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
+                ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Show)
             Case "Collapsed"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+                ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         End Select
     End Sub
 
@@ -116,28 +116,28 @@
 
 #Region "Event Handlers"
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Important_Label.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UtilityMethods.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
@@ -175,13 +175,13 @@
 
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub Important_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Important_CheckedListBox.ItemCheck
-        If Views._isUiUpdating Then
+        If ViewsManager.isUiUpdating Then
             Exit Sub
         End If
 
         'MsgBox("ItemCheck Triggered")
         If SelectedTaskItem IsNot Nothing Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Important_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -200,7 +200,7 @@
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Important_CheckedListBox.Items.Count > 0 AndAlso SelectedTaskItem IsNot Nothing Then
 
-            Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
+            TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTaskItem.ID)
             Important_CheckedListBox.SelectedIndex = SelectedTaskIndex - 1
 
             If Important_CheckedListBox.Items.Count = 0 Then
@@ -226,7 +226,7 @@
         Dim newTask As String = AddNewTask_TextBox.Text
         If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
 
-        Dim newTaskId As Integer = Task.AddNewTasks.Important(newTask) ' Add the new task to the database and get its ID
+        Dim newTaskId As Integer = TaskCRUDHandler.AddNewTask.Important(newTask) ' Add the new task to the database and get its ID
 
         ' Select the newly added task
         For i As Integer = 0 To Important_CheckedListBox.Items.Count - 1
@@ -247,7 +247,7 @@
         End If
 
         Try
-            Task.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID)
 
             ' Adjust the selected task index after deletion
             If Important_CheckedListBox.Items.Count > 0 Then
@@ -262,7 +262,7 @@
     End Sub
 
     ' Show or hide the task properties panel
-    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+    Private Sub ShowOrHideTaskProperties(action As TaskPropertiesVisibility)
         Select Case action
             Case TaskPropertiesVisibility.Show
                 IsTaskPropertiesVisible = True

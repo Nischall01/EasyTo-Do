@@ -17,15 +17,7 @@ Public Class DueDate_Dialog
         DueDateInitialization()
     End Sub
 
-    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
-        Me.Close()
-    End Sub
-
-    Private Sub DueDateInitialization()
-        MonthCalendar1.SetDate(AlreadySetDueDate)
-    End Sub
-
-#Region "Database and DataTables"
+#Region "Database DataTable"
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
@@ -43,8 +35,15 @@ Public Class DueDate_Dialog
             MessageBox.Show("An unexpected error occurred: " & ex.Message)
         End Try
     End Sub
+#End Region
 
+    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
+        Me.Close()
+    End Sub
 
+    Private Sub DueDateInitialization()
+        MonthCalendar1.SetDate(AlreadySetDueDate)
+    End Sub
 
     Private Sub GetAlreadySetDueDate()
         For Each row As DataRow In dt.Rows
@@ -61,8 +60,7 @@ Public Class DueDate_Dialog
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim SelectedDate As DateTime = MonthCalendar1.SelectionEnd
-        DueDate.SetDueDate(SelectedDate.Date, DueDate_SelectedTaskID)
+        TaskPropertiesCRUDHandler.SetDueDate(SelectedDate.Date, DueDate_SelectedTaskID)
         Me.Close()
     End Sub
-#End Region
 End Class

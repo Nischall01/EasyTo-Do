@@ -126,12 +126,12 @@
 
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Sub Planned_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Planned_CheckedListBox.ItemCheck
-        If Views._isUiUpdating Then
+        If ViewsManager.isUiUpdating Then
             Exit Sub
         End If
 
         If SelectedTaskItem IsNot Nothing Then
-            Task.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Planned_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -140,9 +140,9 @@
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Planned_CheckedListBox.Items.Count > 0 Then
             If IsTaskImportant() Then
-                Task.ImportantCheckChanged(CheckState.Unchecked, SelectedTaskItem.ID)
+                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTaskItem.ID)
             Else
-                Task.ImportantCheckChanged(CheckState.Checked, SelectedTaskItem.ID)
+                TaskManager.UpdateImportance(CheckState.Checked, SelectedTaskItem.ID)
             End If
         Else
             LoseListItemFocus()
@@ -188,7 +188,7 @@
         Dim newTask As String = AddNewTask_TextBox.Text
         If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
 
-        Dim NewTaskId As Integer = Task.AddNewTasks.Planned(newTask) ' Add the new task to the database and get its ID
+        Dim NewTaskId As Integer = TaskCRUDHandler.AddNewTask.Planned(newTask) ' Add the new task to the database and get its ID
 
         ' Prompt to add due date
         Dim DueDate_DialogInstance As New DueDate_Dialog With {.DueDate_SelectedTaskID = NewTaskId}
@@ -215,7 +215,7 @@
         End If
 
         Try
-            Task.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID)
 
             ' Adjust the selected task index after deletion
             If Planned_CheckedListBox.Items.Count > 0 Then
@@ -247,7 +247,7 @@
     End Function
 
     ' Show or hide the task properties panel
-    Private Sub ShowOrHideTaskProperties(action As Views.TaskPropertiesVisibility)
+    Private Sub ShowOrHideTaskProperties(action As TaskPropertiesVisibility)
         Select Case action
             Case TaskPropertiesVisibility.Show
                 IsTaskPropertiesVisible = True

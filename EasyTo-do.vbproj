@@ -117,10 +117,10 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HelperMethods.vb" />
+    <Compile Include="Enums.vb" />
+    <Compile Include="TaskManager.vb" />
     <Compile Include="ImageCache.vb" />
-    <Compile Include="MainDataTable.vb" />
-    <Compile Include="TaskProperties.vb" />
+    <Compile Include="TaskPropertiesCRUDHandler.vb" />
     <Compile Include="TextPlaceholders.vb" />
     <Compile Include="Repeat_Dialog.Designer.vb">
       <DependentUpon>Repeat_Dialog.vb</DependentUpon>
@@ -128,9 +128,9 @@
     <Compile Include="Repeat_Dialog.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Task.vb" />
-    <Compile Include="UtilityMethods.vb" />
-    <Compile Include="Views.vb" />
+    <Compile Include="TaskCRUDHandler.vb" />
+    <Compile Include="UiUtils.vb" />
+    <Compile Include="ViewsManager.vb" />
     <Compile Include="Reminder_Dialog.Designer.vb">
       <DependentUpon>Reminder_Dialog.vb</DependentUpon>
     </Compile>

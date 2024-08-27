@@ -123,7 +123,7 @@
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If RadioButton1.Checked Then
             Dim RepeatedDays As String = "sun mon tue wed thu fri sat"
-            Repeat.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
+            TaskPropertiesCRUDHandler.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
             Me.Close()
         ElseIf RadioButton2.Checked Then
             Dim days As New List(Of String)
@@ -136,7 +136,7 @@
             If CheckBox7.Checked Then days.Add("sat")
 
             Dim RepeatedDays As String = String.Join(" ", days)
-            Repeat.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
+            TaskPropertiesCRUDHandler.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
             Me.Close()
         End If
     End Sub

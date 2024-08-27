@@ -127,7 +127,7 @@
     End Sub
 #End Region ' Disabled
 
-#Region "Database Table"
+#Region "Database DataTable"
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
@@ -358,7 +358,7 @@
 
         Dim TimeSet As New DateTime(SetYear, SetMonth, SetDay, SetHour, SetMinute, 0)
 
-        Reminder.SetReminder(TimeSet, Reminder_SelectedTaskID)
+        TaskPropertiesCRUDHandler.SetReminder(TimeSet, Reminder_SelectedTaskID)
         Me.Close()
     End Sub
 #End Region

@@ -20,6 +20,21 @@ Public Class MainWindow
         Maximized
     End Enum
 
+    Public Enum TaskPropertiesVisibility
+        Toggle
+        Show
+        Hide
+    End Enum
+
+    Public Enum ViewName
+        MyDay
+        Repeated
+        Important
+        Planned
+        Tasks
+        None
+    End Enum
+
     ' Forms
     Public MyDayInstance As New MyDay_View()
     Public RepeatedInstance As New Repeated_View()
@@ -27,6 +42,8 @@ Public Class MainWindow
     Public PlannedInstance As New Planned_View()
     Public TasksInstance As New Tasks_View()
     Public SettingsInstance As New Settings_Dialog()
+
+    Public Shared isUiUpdating As Boolean = False
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 #Region "Constructor and Load"
     Public Sub New()
@@ -61,7 +78,7 @@ Public Class MainWindow
         End Select
         'Load the User Profile
         LoadProfile()
-        Views.RefreshTasks()
+        ViewsManager.RefreshTasks()
         ' Initial Form
         ShowForm(MyDayInstance)
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
@@ -145,7 +162,7 @@ Public Class MainWindow
         EnableAllButtons()
 
         ' Get the active view
-        Dim activeView As Views.ViewName = Views.GetActiveViewName()
+        Dim activeView As ViewName = ViewsManager.GetActiveViewName()
 
         ' Index mapping from ViewName to button array
         Dim buttonIndex As Integer = CType(activeView, Integer)
