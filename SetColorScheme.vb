@@ -1,6 +1,4 @@
-﻿Imports System.Xml
-
-Module SetColorScheme
+﻿Module SetColorScheme
 
 #Region "Scheme Methods"
     Public Sub Light()

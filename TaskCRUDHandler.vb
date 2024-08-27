@@ -1,6 +1,4 @@
-﻿Imports System.Runtime.CompilerServices
-
-Namespace TaskCRUDHandler
+﻿Namespace TaskCRUDHandler
     Module TaskCRUDHandler
         ' Shared connection string variable
         Private ReadOnly connectionString As String = My.Settings.ConnectionString
