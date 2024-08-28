@@ -116,28 +116,28 @@
 
 #Region "Event Handlers"
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
         ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
         ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Important_Label.Click
         ShowOrHideTaskProperties(Enums.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Important_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
@@ -162,13 +162,13 @@
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Important_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+
         End If
     End Sub
 
     Private Sub Important_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Important_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Important_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+
         End If
     End Sub
     ' }
@@ -181,7 +181,7 @@
 
         'MsgBox("ItemCheck Triggered")
         If SelectedTaskItem IsNot Nothing Then
-            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Important_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -237,28 +237,6 @@
         Next
 
         AddNewTask_TextBox.Clear() ' Clear the input field
-    End Sub
-
-    ' Task.DeleteTask method invoker
-    Private Sub DeleteSelectedTask()
-        If SelectedTaskItem Is Nothing Then
-            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Try
-            TaskManager.DeleteTask(SelectedTaskItem.ID)
-
-            ' Adjust the selected task index after deletion
-            If Important_CheckedListBox.Items.Count > 0 Then
-                If SelectedTaskIndex >= Important_CheckedListBox.Items.Count Then
-                    SelectedTaskIndex = Important_CheckedListBox.Items.Count - 1
-                End If
-                Important_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
     End Sub
 
     ' Show or hide the task properties panel

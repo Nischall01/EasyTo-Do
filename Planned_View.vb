@@ -113,13 +113,13 @@
     ' Task delete event handlers {
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Planned_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+
         End If
     End Sub
 
     Private Sub Planned_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Planned_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Planned_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
+
         End If
     End Sub
     ' }
@@ -131,7 +131,7 @@
         End If
 
         If SelectedTaskItem IsNot Nothing Then
-            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Planned_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -205,28 +205,6 @@
         Next
 
         AddNewTask_TextBox.Clear() ' Clear the input field
-    End Sub
-
-    ' Task.DeleteTask method invoker
-    Private Sub DeleteSelectedTask()
-        If SelectedTaskItem Is Nothing Then
-            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Exit Sub
-        End If
-
-        Try
-            TaskManager.DeleteTask(SelectedTaskItem.ID)
-
-            ' Adjust the selected task index after deletion
-            If Planned_CheckedListBox.Items.Count > 0 Then
-                If SelectedTaskIndex >= Planned_CheckedListBox.Items.Count Then
-                    SelectedTaskIndex = Planned_CheckedListBox.Items.Count - 1
-                End If
-                Planned_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
     End Sub
 
     Private Function IsTaskImportant() As Boolean

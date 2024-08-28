@@ -1,8 +1,8 @@
 ﻿Namespace UiUtils
     Module UiUtils
-        Public Sub ClearListItemSelection(clb As CheckedListBox)
-            clb.SelectedItem = Nothing
-            clb.SelectedIndex = -1
+        Public Sub TaskSelection_Clear(CLB As CheckedListBox)
+            CLB.SelectedItem = Nothing
+            CLB.SelectedIndex = -1
         End Sub
 
         Public Sub ShowContextMenuCentered(contextMenu As ContextMenuStrip, control As Control)
@@ -28,17 +28,21 @@
             End If
         End Sub
 
-        Public Sub RetainItemSelection(CLB As CheckedListBox, SelectedTaskIndex As Integer)
-            CLB.SelectedIndex = SelectedTaskIndex
+        Public Sub TaskSelection_Retain(CLB As CheckedListBox, TaskId As Integer)
+            For i As Integer = 0 To CLB.Items.Count - 1
+                If CLB.Items(i).ID = TaskId Then
+                    CLB.SelectedIndex = i
+                    Exit For
+                End If
+            Next
         End Sub
 
-        Public Sub ItemSelectionAfterTaskDeletion(CLB As CheckedListBox, SelectedTaskIndex As Integer, View As ViewName)
-            ' Adjust the selected task index after deletion
-            If CLB.Items.Count > 0 Then
-                If SelectedTaskIndex >= CLB.Items.Count Then
-                    SelectedTaskIndex = CLB.Items.Count - 1
+        Public Sub TaskSelection_Shift(CLB As CheckedListBox, TaskIndex As Integer, View As ViewName)
+            If CLB.Items.Count <> 0 Then
+                If TaskIndex >= CLB.Items.Count Then
+                    TaskIndex = CLB.Items.Count - 1
                 End If
-                CLB.SelectedIndex = SelectedTaskIndex
+                CLB.SelectedIndex = TaskIndex
             Else
                 Select Case View
                     Case ViewName.MyDay

@@ -1,4 +1,6 @@
-﻿Public Class Repeated_View
+﻿Imports EasyTo_Do.UiUtils
+
+Public Class Repeated_View
     Private connectionString As String = My.Settings.ConnectionString
     Private RepeatedDT As New DataTable()
     Private RepeatedDT_TaskTitleOnly As New DataTable()
@@ -9,6 +11,10 @@
     Private IsTaskPropertiesVisible As Boolean = True
 
 #Region "On Load"
+    Sub New()
+        InitializeComponent()
+        Me.KeyPreview = True
+    End Sub
 
     ' Form on load : Initializes the Repeated tasks view
     Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -136,28 +142,28 @@
 #Region "Event Handlers"
 
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        UiUtils.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
     Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Repeated_Label.Click
         ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
-        UiUtils.ClearListItemSelection(Me.Repeated_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
         DisableTaskProperties(True)
     End Sub
 
@@ -194,7 +200,9 @@
     ' KeyDown event to add a new task when pressing the Enter key
     Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
         If e.KeyValue = Keys.Enter Then
-            TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Repeated_CheckedListBox, ViewName.Repeated)
+            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+            Dim NewTaskId As Integer = TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Repeated_CheckedListBox, ViewName.MyDay)
+            TaskManager.ShowRepeatDialog(NewTaskId, Me.Repeated_CheckedListBox)
         End If
     End Sub
 
@@ -250,14 +258,14 @@
     ' Event handler for deleting a selected task when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            TaskManager.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
         End If
     End Sub
 
     ' Event handler for deleting a selected task when the Delete key is pressed
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            TaskManager.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
         End If
     End Sub
 
@@ -268,7 +276,7 @@
         End If
 
         If SelectedTaskItem IsNot Nothing Then
-            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -283,7 +291,7 @@
             End If
             Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
         Else
-            UiUtils.ClearListItemSelection(Repeated_CheckedListBox)
+            UiUtils.TaskSelection_Clear(Repeated_CheckedListBox)
         End If
     End Sub
 
@@ -321,7 +329,7 @@
 
     Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
         If e.Button = MouseButtons.Left Then
-            TaskManager.ShowReminderDialog(SelectedTaskItem.ID, SelectedTaskIndex, Me.Repeated_CheckedListBox)
+            TaskManager.ShowReminderDialog(SelectedTaskItem.ID, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip1, Me.CustomButton_AddReminder)
         End If
@@ -329,25 +337,26 @@
 
     Private Sub CustomButton_Repeat_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
         If e.Button = MouseButtons.Left Then
-            TaskManager.ShowRepeatDialog(SelectedTaskItem.ID, SelectedTaskIndex, Me.Repeated_CheckedListBox)
+            TaskManager.ShowRepeatDialog(SelectedTaskItem.ID, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip2, Me.CustomButton_Repeat)
         End If
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        TaskManager.RemoveReminder(SelectedTaskItem.ID)
-        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+        TaskManager.RemoveReminder(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex)
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        TaskManager.RemoveRepeat(SelectedTaskItem.ID)
-        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+        TaskManager.RemoveRepeat(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.MyDay)
+        If Repeated_CheckedListBox.Items.Count = 0 Then
+            Me.ActiveControl = AddNewTask_TextBox
+        End If
     End Sub
 
     ' Clear selected task after leaving the View
     Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        UiUtils.ClearListItemSelection(Repeated_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Repeated_CheckedListBox)
         'MsgBox("Left R")
         'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
     End Sub

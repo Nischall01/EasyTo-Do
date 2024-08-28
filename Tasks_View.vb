@@ -117,7 +117,7 @@
 
         'MsgBox("ItemCheck Triggered")
         If SelectedTaskItem IsNot Nothing Then
-            TaskManager.DoneCheckChanged(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
         End If
         Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
     End Sub
@@ -209,7 +209,7 @@
         End If
 
         Try
-            TaskManager.DeleteTask(SelectedTaskItem.ID)
+            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Tasks_CheckedListBox, SelectedTaskIndex, ViewName.Tasks)
 
             'Adjust the selected task index after deletion
             If Tasks_CheckedListBox.Items.Count > 0 Then

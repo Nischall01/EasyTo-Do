@@ -3,7 +3,7 @@
 Namespace TaskManager
     Module TaskManager
         '*' Add New Task
-        Public Sub AddNewTask(TextBox As TextBox, CLB As CheckedListBox, View As ViewName)
+        Public Function AddNewTask(TextBox As TextBox, CLB As CheckedListBox, View As ViewName)
             Dim NewTaskId As Integer
             Select Case View
                 Case ViewName.MyDay
@@ -17,76 +17,81 @@ Namespace TaskManager
                 Case ViewName.Tasks
                     NewTaskId = TaskCRUDHandler.AddNewTask.Tasks(TextBox.Text)
             End Select
-
-            ' Select the newly added task
-            For i As Integer = 0 To CLB.Items.Count - 1
-                If CLB.Items(i).ID = NewTaskId Then
-                    CLB.SelectedIndex = i
-                    Exit For
-                End If
-            Next
-
             TextBox.Clear()
-        End Sub
+            UiUtils.TaskSelection_Retain(CLB, NewTaskId)
+            Return NewTaskId
+        End Function
 
         '*' Delete Task
-        Public Sub DeleteTask(TaskID As Integer)
+        Public Sub DeleteTask(TaskID As Integer, CLB As CheckedListBox, TaskIndex As Integer, View As ViewName)
             TaskCRUDHandler.DeleteTask(TaskID)
+            UiUtils.TaskSelection_Shift(CLB, TaskIndex, View)
         End Sub
 
         '*' Add Reminder
-        Public Sub ShowReminderDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox)
+        Public Sub ShowReminderDialog(TaskID As Integer, CLB As CheckedListBox)
             Dim Reminder_DialogInstance = New Reminder_Dialog With {.Reminder_SelectedTaskID = TaskID, .NeedsDatePicker = True}
             Reminder_DialogInstance.ShowDialog()
             Reminder_DialogInstance.BringToFront()
             Reminder_DialogInstance.Dispose()
-
-            CLB.SelectedIndex = TaskIndex
+            UiUtils.TaskSelection_Retain(CLB, TaskID)
         End Sub
 
         '*' Remove Reminder
-        Public Sub RemoveReminder(TaskID As Integer)
+        Public Sub RemoveReminder(TaskID As Integer, CLB As CheckedListBox, TaskIndex As Integer)
             TaskPropertiesCRUDHandler.RemoveReminder(TaskID)
+            UiUtils.TaskSelection_Retain(CLB, TaskID)
         End Sub
 
         '*' Repeat Task
-        Public Sub ShowRepeatDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox)
-            Dim Repeat_DialogInstance As New Repeat_Dialog With {.Repeat_SelectedTaskID = TaskID}
+        Public Sub ShowRepeatDialog(TaskID As Integer, CLB As CheckedListBox)
+            Dim Repeat_DialogInstance = New Repeat_Dialog With {.Repeat_SelectedTaskID = TaskID}
             Repeat_DialogInstance.ShowDialog()
             Repeat_DialogInstance.BringToFront()
             Repeat_DialogInstance.Dispose()
-
-            CLB.SelectedIndex = TaskIndex
+            UiUtils.TaskSelection_Retain(CLB, TaskID)
         End Sub
 
         '*' Remove Repeat
-        Public Sub RemoveRepeat(TaskID As Integer)
+        Public Sub RemoveRepeat(TaskID As Integer, CLB As CheckedListBox, TaskIndex As Integer, View As ViewName)
+            Dim TaskCount As Integer = CLB.Items.Count
             TaskPropertiesCRUDHandler.RemoveRepeat(TaskID)
+            If CLB.Items.Count < TaskCount Then
+                UiUtils.TaskSelection_Shift(CLB, TaskIndex, View)
+            Else
+                UiUtils.TaskSelection_Retain(CLB, TaskID)
+            End If
         End Sub
 
         '*' Add DueDate
-        Public Sub ShowDueDateDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox)
-            Dim ItemCountBeforeDueDateChange As Integer = CLB.Items.Count
+        Public Sub ShowDueDateDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox, View As ViewName)
+            Dim TaskCountBeforeAddingDueDate As Integer = CLB.Items.Count
 
-            Dim DueDate_DialogInstance As New DueDate_Dialog With {.DueDate_SelectedTaskID = TaskID}
+            Dim DueDate_DialogInstance = New DueDate_Dialog With {.DueDate_SelectedTaskID = TaskID}
             DueDate_DialogInstance.ShowDialog()
             DueDate_DialogInstance.BringToFront()
             DueDate_DialogInstance.Dispose()
 
-            If CLB.Items.Count < ItemCountBeforeDueDateChange Then
-                CLB.SelectedIndex = TaskIndex - 1
+            If CLB.Items.Count < TaskCountBeforeAddingDueDate Then
+                UiUtils.TaskSelection_Shift(CLB, TaskIndex, View)
             Else
-                CLB.SelectedIndex = TaskIndex
+                UiUtils.TaskSelection_Retain(CLB, TaskID)
             End If
         End Sub
 
         '*' Remove DueDate
-        Public Sub RemoveDueDate(TaskID As Integer)
+        Public Sub RemoveDueDate(TaskID As Integer, CLB As CheckedListBox, TaskIndex As Integer, View As ViewName)
+            Dim TaskCountBeforeRemoval As Integer = CLB.Items.Count
             TaskPropertiesCRUDHandler.RemoveDueDate(TaskID)
+            If CLB.Items.Count < TaskCountBeforeRemoval Then
+                UiUtils.TaskSelection_Shift(CLB, TaskIndex, View)
+            Else
+                UiUtils.TaskSelection_Retain(CLB, TaskID)
+            End If
         End Sub
 
-        Public Sub DoneCheckChanged(CheckState As Boolean, TaskID As Integer)
-            TaskCRUDHandler.DoneCheckChanged(CheckState, TaskID)
+        Public Sub UpdateStatus(CheckState As Boolean, TaskID As Integer)
+            TaskCRUDHandler.UpdateStatus(CheckState, TaskID)
         End Sub
 
         Public Sub UpdateTitle(TaskID As Integer, NewTitle As String)

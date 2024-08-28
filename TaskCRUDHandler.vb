@@ -122,7 +122,7 @@
         End Sub
 
         ' Method to change IsDone status
-        Public Sub DoneCheckChanged(CheckState As Boolean, TaskID As Integer)
+        Public Sub UpdateStatus(CheckState As Boolean, TaskID As Integer)
             Dim query As String = "UPDATE Tasks SET IsDone = @IsDone WHERE TaskID = @TaskID"
             Dim IsDone As Integer = If(CheckState, 1, 0)
             Dim parameters As New Dictionary(Of String, Object) From
