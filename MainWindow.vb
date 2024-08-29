@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports EasyTo_Do.MyDay_View
 'Imports Newtonsoft.Json
 'Imports Newtonsoft.Json.Linq
 
@@ -18,21 +19,6 @@ Public Class MainWindow
         Collapsed
         Expanded
         Maximized
-    End Enum
-
-    Public Enum TaskPropertiesVisibility
-        Toggle
-        Show
-        Hide
-    End Enum
-
-    Public Enum ViewName
-        MyDay
-        Repeated
-        Important
-        Planned
-        Tasks
-        None
     End Enum
 
     ' Forms
@@ -159,7 +145,7 @@ Public Class MainWindow
         Dim ViewButtons() As CustomButton_2 = {CustomButton1, CustomButton2, CustomButton3, CustomButton4, CustomButton5}
 
         ' Enable all buttons first
-        EnableAllButtons()
+        EnableAllButtonsEffects()
 
         ' Get the active view
         Dim activeView As ViewName = ViewsManager.GetActiveViewName()
@@ -171,7 +157,7 @@ Public Class MainWindow
         End If
     End Sub
 
-    Private Sub EnableAllButtons()
+    Private Sub EnableAllButtonsEffects()
         CustomButton1.EnableEffects()
         CustomButton2.EnableEffects()
         CustomButton3.EnableEffects()
@@ -562,6 +548,19 @@ Public Class MainWindow
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim activeView As ViewName = ViewsManager.GetActiveViewName()
+        Select Case activeView
+            Case ViewName.MyDay
+                MyDayInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+            Case ViewName.Repeated
+                RepeatedInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+            Case ViewName.Important
+                ImportantInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+            Case ViewName.Planned
+                PlannedInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+            Case ViewName.Tasks
+                TasksInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+        End Select
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()

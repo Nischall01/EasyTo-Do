@@ -8,21 +8,46 @@
 
     Private IsTaskPropertiesVisible As Boolean = True
 
+
 #Region "On Load"
 
-    ' Form on load : Initializes the Repeated tasks view
-    Private Sub Tasks_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    ' Initializes the form components and enables key preview for handling keyboard events at the form level. '
+    Sub New()
+        InitializeComponent()
+        Me.KeyPreview = True
+    End Sub
+
+    ' Form on load : Initializes the Repeated tasks view. '
+    Private Sub Tasks_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        InitializeTasks()
+        InitializeReminder()
+    End Sub
+
+    ' Initializes the Repeated tasks view. '
+    Private Sub InitializeTasks()
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         End Select
+
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    Private Sub InitializeReminder()
+        ReminderTimer.Interval = 1000 ' Interval set to 1 seconds
+        ReminderTimer.Start() ' Start the Timer
+
+        ReminderNotification.Text = "EasyTo_do"
+        ReminderNotification.Icon = My.Resources.EasyToDo_Icon
+        ReminderNotification.Visible = True
     End Sub
 
 #End Region
 
 #Region "Data Loading Actions"
+
     ' Load tasks onto the DataTables
     Private Sub LoadTasksToDataTables_Tasks()
         TasksDT.Clear()
@@ -82,30 +107,208 @@
             Tasks_CheckedListBox.Items.Add(item, item.IsDone)
         Next
     End Sub
+
+#End Region
+
+#Region "Task Properties Sidebar Management"
+
+    ' Enum defining the different actions for managing the task properties sidebar.
+    Public Enum TaskPropertiesSidebarAction
+        DisableOnly
+        HideOnly
+        DisableAndHide
+    End Enum
+
+    ' This method allows external components to disable or hide the task properties sidebar.
+    Public Sub DisableAndHide_TaskPropertiesSidebar(Optional action As TaskPropertiesSidebarAction = TaskPropertiesSidebarAction.DisableAndHide)
+        Select Case action
+            Case TaskPropertiesSidebarAction.DisableOnly
+                EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+            Case TaskPropertiesSidebarAction.HideOnly
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+            Case TaskPropertiesSidebarAction.DisableAndHide
+                EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        End Select
+    End Sub
+
+    Private Sub EnableOrDisable_TaskPropertiesSidebar(State As TaskPropertiesState)
+        Select Case State
+            Case TaskPropertiesState.Disable
+                TaskTitle_TextBox.Text = Nothing
+                Label_TaskEntryDateTime.Text = Nothing
+                Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                    TaskDescription_RichTextBox.Hide()
+                End If
+                TaskTitle_TextBox.Enabled = False
+                TaskDescription_RichTextBox.Text = Nothing
+                TaskDescription_RichTextBox.Enabled = False
+
+                Label_ADT.Enabled = False
+                Label_TaskEntryDateTime.Enabled = False
+                Important_Button.Enabled = False
+
+                CustomButton_AddReminder.Enabled = False
+                CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+
+                CustomButton_Repeat.Enabled = False
+                CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+
+                Button_DeleteTask.Enabled = False
+            Case TaskPropertiesState.Enable
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                    TaskDescription_RichTextBox.Show()
+                End If
+                TaskTitle_TextBox.Enabled = True
+                TaskDescription_RichTextBox.Enabled = True
+                Label_ADT.Enabled = True
+                Label_TaskEntryDateTime.Enabled = True
+                Important_Button.Enabled = True
+                CustomButton_Repeat.Enabled = True
+                CustomButton_AddReminder.Enabled = True
+                Button_DeleteTask.Enabled = True
+        End Select
+    End Sub
+
+    Private Sub ShowOrHide_TaskPropertiesSidebar(action As TaskPropertiesVisibility)
+        Select Case action
+            Case TaskPropertiesVisibility.Show
+                IsTaskPropertiesVisible = True
+            Case TaskPropertiesVisibility.Hide
+                IsTaskPropertiesVisible = False
+            Case TaskPropertiesVisibility.Toggle
+                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
+        End Select
+        UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
+    End Sub
+
+#End Region
+
+#Region "Reminder"
+
+    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
+        CheckReminders()
+    End Sub
+
+    Private Sub CheckReminders()
+        Dim currentTime As DateTime = DateTime.Now
+
+        For Each row As DataRow In TasksDT.Rows
+            ' Check if the Reminder_DateTime column is not null
+            If row("ReminderDateTime") IsNot DBNull.Value Then
+                ' Directly cast to DateTime
+                Dim reminderTime As DateTime = row("ReminderDateTime")
+
+                ' Convert both current time and reminder time to string in the same format
+                Dim currentTimeString As String = currentTime.ToString("yyyy-MM-dd HH:mm:ss")
+                Dim reminderTimeString As String = reminderTime.ToString("yyyy-MM-dd HH:mm:ss")
+
+                ' Compare the formatted date and time strings
+                If currentTimeString = reminderTimeString Then
+                    Dim ImportantTask As String = row("Task")
+                    ImportantTask = ImportantTask.Substring(3)
+                    ' Display reminder
+                    If row("Description") IsNot DBNull.Value And row("IsImportant") = True Then
+                        ShowNotification(ImportantTask, True, row("Description"))
+                    ElseIf row("Description") IsNot DBNull.Value And row("IsImportant") = False Then
+                        ShowNotification(row("Task"), False, row("Description"))
+                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = True Then
+                        ShowNotification(ImportantTask, True)
+                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = False Then
+                        ShowNotification(row("Task"), False)
+                    End If
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub ShowNotification(title As String, IsImportant As Boolean, Optional message As String = " ")
+        ReminderNotification.BalloonTipTitle = title
+        If IsImportant Then
+            ReminderNotification.BalloonTipIcon = ToolTipIcon.Warning
+            ReminderNotification.BalloonTipText = message
+        Else
+            ReminderNotification.BalloonTipIcon = ToolTipIcon.None
+            ReminderNotification.BalloonTipText = message
+        End If
+        ReminderNotification.ShowBalloonTip(5000) ' 3000 milliseconds = 5 seconds
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles ReminderNotification.BalloonTipClicked
+        MainWindow.Activate()
+        MainWindow.WindowState = FormWindowState.Normal
+        MainWindow.TopMost = True
+    End Sub
+
 #End Region
 
 #Region "Event Handlers"
 
-    ' When the AddNewTask_TextBox gains focus
-    Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        LoseListItemFocus() ' Clear the selection and focus
-    End Sub
-
-    ' Handle adding a new task when the Enter key is pressed
-    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            AddNewTasksTask()
-        End If
-    End Sub
-
-    ' Update the selected task item when the selection changes
+    ' Event handler triggered when the user selects a task from the Planned_CheckedListBox.
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status, 
+    ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Tasks_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Tasks_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = Tasks_CheckedListBox.SelectedIndex
+
         If SelectedTaskIndex <> -1 Then
             SelectedTaskItem = Tasks_CheckedListBox.SelectedItem
 
-            ' Update the important icon based on the selected task's importance
-            UpdateImportantButtonIcon()
+            EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
+            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTaskItem.ID, TasksDT_TaskTitleOnly)
+
+            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTaskItem.ID, TasksDT)
+
+            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+                Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
+            Else
+                Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
+            End If
+
+            If TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, TasksDT) <> String.Empty Then
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Pink
+                ElseIf My.Settings.ColorScheme = "Light" Then
+                    TaskDescription_RichTextBox.ForeColor = Color.Black
+                End If
+                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, TasksDT)
+            Else
+                TaskDescription_RichTextBox.ForeColor = Color.Gray
+                TaskDescription_RichTextBox.Text = TextPlaceholders.Description
+            End If
+
+            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTaskItem.ID, TasksDT)
+            If ReminderTime <> String.Empty Then
+                CustomButton_AddReminder.ButtonText = ReminderTime
+            Else
+                CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+            End If
+
+            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTaskItem.ID, TasksDT)
+            If RepeatFrequency <> String.Empty Then
+                CustomButton_Repeat.ButtonText = RepeatFrequency
+            Else
+                CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+            End If
+        End If
+    End Sub
+
+    Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
+        UiUtils.TaskSelection_Clear(Me.Tasks_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    ' Add new task '
+    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+            TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Tasks_CheckedListBox, ViewName.Tasks)
+            If Tasks_CheckedListBox.Items.Count = 1 Then
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
+            End If
         End If
     End Sub
 
@@ -124,209 +327,75 @@
 
     ' Toggle the task's 'IsImportant' status when the important button is clicked
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
-        If Tasks_CheckedListBox.Items.Count > 0 AndAlso SelectedTaskItem IsNot Nothing Then
-            Dim newImportanceStatus As CheckState = If(IsTaskImportant(), CheckState.Unchecked, CheckState.Checked)
-            TaskManager.UpdateImportance(newImportanceStatus, SelectedTaskItem.ID)
-            UpdateImportantButtonIcon()
-
+        If Tasks_CheckedListBox.Items.Count > 0 Then
+            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTaskItem.ID)
+            Else
+                TaskManager.UpdateImportance(CheckState.Checked, SelectedTaskItem.ID)
+            End If
             Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
+        Else
+            UiUtils.TaskSelection_Clear(Me.Tasks_CheckedListBox)
         End If
     End Sub
 
     ' Hide task properties panel when the close button is clicked
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide) ' Hide the task properties panel
+        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide) ' Hide the task properties panel
     End Sub
 
     ' Show task properties panel on right-click
     Private Sub Tasks_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Tasks_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
-            ShowOrHideTaskProperties(TaskPropertiesVisibility.Toggle) ' Toggle the visibility of task properties
+            ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Toggle) ' Toggle the visibility of task properties
         End If
     End Sub
 
-    ' Change the important button icon on mouse enter
+    ' MouseEnter event to temporarily display the Important icon when hovering over the button
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
-        If Not IsTaskImportant() Then
+        If Tasks_CheckedListBox.SelectedIndex <> -1 Then
+            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+                Exit Sub
+            End If
             Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
         End If
     End Sub
 
-    ' Reset the important button icon on mouse leave
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
-        If Not IsTaskImportant() Then
+        If Tasks_CheckedListBox.SelectedIndex <> -1 Then
+            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+                Exit Sub
+            End If
             Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
         End If
     End Sub
 
-    ' Handle task deletion when the delete button is clicked
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        If Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask() ' Invoke the task deletion method
-        End If
-    End Sub
-
-    ' Handle task deletion using the Delete key
-    Private Sub Tasks_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Tasks_CheckedListBox.KeyDown
-        If e.KeyValue = Keys.Delete AndAlso Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            DeleteSelectedTask()
-        End If
-    End Sub
-
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        LoseListItemFocus()
-        'MsgBox("Left T")
-        'MsgBox("T SelectedItemIndex = " & Tasks_CheckedListBox.SelectedIndex)
-    End Sub
-
-#End Region
-
-#Region "Helper Methods"
-
-    ' Task.AddNewTasks.Task method invoker
-    Private Sub AddNewTasksTask()
-        Dim newTask As String = AddNewTask_TextBox.Text
-        If String.IsNullOrWhiteSpace(newTask) Then Exit Sub ' Ensure the task is not empty. If empty -> exit method
-
-        Dim newTaskId As Integer = TaskCRUDHandler.AddNewTask.Tasks(newTask) ' Add the new task to the database and get its ID
-
-        ' Select the newly added task
-        For i As Integer = 0 To Tasks_CheckedListBox.Items.Count - 1
-            If Tasks_CheckedListBox.Items(i).ID = newTaskId Then
-                Tasks_CheckedListBox.SelectedIndex = i
-                Exit For
-            End If
-        Next
-
-        AddNewTask_TextBox.Clear() ' Clear the input field
-    End Sub
-
-    ' Task.DeleteTask method invoker
-    Private Sub DeleteSelectedTask()
-        If SelectedTaskItem Is Nothing Then
-            MessageBox.Show("No task is selected to delete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        If Tasks_CheckedListBox.SelectedIndex = -1 Or Tasks_CheckedListBox.Items.Count = 0 Or SelectedTaskItem Is Nothing Then
             Exit Sub
         End If
-
-        Try
-            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Tasks_CheckedListBox, SelectedTaskIndex, ViewName.Tasks)
-
-            'Adjust the selected task index after deletion
-            If Tasks_CheckedListBox.Items.Count > 0 Then
-                If SelectedTaskIndex >= Tasks_CheckedListBox.Items.Count Then
-                    SelectedTaskIndex = Tasks_CheckedListBox.Items.Count - 1
-                End If
-                Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
-            Else
-
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    ' Check if the selected task is marked as important
-    Private Function IsTaskImportant() As Boolean
-        If SelectedTaskItem Is Nothing OrElse SelectedTaskItem.ID <= 0 Then
-            Return False
-        End If
-
-        Try
-            ' Locate the task in the DataTable using the primary key
-            Dim foundRow As DataRow = TasksDT.Rows.Find(SelectedTaskItem.ID)
-            If foundRow IsNot Nothing AndAlso Not IsDBNull(foundRow("IsImportant")) Then
-                Return CBool(foundRow("IsImportant"))
-            End If
-        Catch ex As Exception
-            MessageBox.Show("An error occurred while deleting the task: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-        Return False
-    End Function
-
-    ' Show or hide the task properties panel
-    Private Sub ShowOrHideTaskProperties(action As TaskPropertiesVisibility)
-        Select Case action
-            Case TaskPropertiesVisibility.Show
-                IsTaskPropertiesVisible = True
-            Case TaskPropertiesVisibility.Hide
-                IsTaskPropertiesVisible = False
-            Case TaskPropertiesVisibility.Toggle
-                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
-        End Select
-
-        If IsTaskPropertiesVisible Then
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 75%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 25%
-        Else
-            MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(0).Width = 100%
-            MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-            MainTlp.ColumnStyles(1).Width = 0%
+        TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Tasks_CheckedListBox, SelectedTaskIndex, ViewName.Tasks)
+        If Tasks_CheckedListBox.Items.Count = 0 Then
+            Me.ActiveControl = AddNewTask_TextBox
         End If
     End Sub
 
-    ' Update the important button icon based on the task's importance
-    Private Sub UpdateImportantButtonIcon()
-        If IsTaskImportant() Then
-            Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
-        Else
-            Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
+    Private Sub Me_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Delete Then
+            Button_DeleteTask.PerformClick()
         End If
     End Sub
 
-    ' Lose focus on the task list items
-    Private Sub LoseListItemFocus()
-        Tasks_CheckedListBox.SelectedItem = Nothing
-        Tasks_CheckedListBox.SelectedIndex = -1
+    Private Sub Tasks_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+        UiUtils.TaskSelection_Clear(Me.Tasks_CheckedListBox)
+        'MsgBox("Left Tasks view")
+        'MsgBox("SelectedItemIndex = " & Tasks_CheckedListBox.SelectedIndex)
+    End Sub
+
+    ' Dispose of the NotifyIcon when the form is closed
+    Private Sub Tasks_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ReminderNotification.Dispose()
     End Sub
 
 #End Region
-
-    Public Sub DisableTaskProperties(Disable As Boolean)
-        If Disable Then
-            TaskTitle_TextBox.Text = Nothing
-            Label_TaskEntryDateTime.Text = Nothing
-            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
-
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
-                TaskDescription_RichTextBox.Hide()
-            End If
-            TaskTitle_TextBox.Enabled = False
-            TaskDescription_RichTextBox.Text = Nothing
-            TaskDescription_RichTextBox.Enabled = False
-
-            Label_ADT.Enabled = False
-            Label_TaskEntryDateTime.Enabled = False
-            Important_Button.Enabled = False
-
-            CustomButton_AddReminder.Enabled = False
-            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
-
-            CustomButton_Repeat.Enabled = False
-            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
-
-            CustomButton_AddDueDate.Enabled = False
-            CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
-
-            Button_DeleteTask.Enabled = False
-
-        Else
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                TaskDescription_RichTextBox.Show()
-            End If
-            TaskTitle_TextBox.Enabled = True
-            TaskDescription_RichTextBox.Enabled = True
-            Label_ADT.Enabled = True
-            Label_TaskEntryDateTime.Enabled = True
-            Important_Button.Enabled = True
-            CustomButton_Repeat.Enabled = True
-            CustomButton_AddDueDate.Enabled = True
-            CustomButton_AddReminder.Enabled = True
-            Button_DeleteTask.Enabled = True
-        End If
-    End Sub
 End Class

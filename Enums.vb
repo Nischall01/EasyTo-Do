@@ -1,8 +1,14 @@
 ﻿Module Enums
+
     Public Enum TaskPropertiesVisibility
         Toggle
         Show
         Hide
+    End Enum
+
+    Public Enum TaskPropertiesState
+        Enable
+        Disable
     End Enum
 
     Public Enum ViewName
@@ -13,4 +19,5 @@
         Tasks
         None
     End Enum
+
 End Module

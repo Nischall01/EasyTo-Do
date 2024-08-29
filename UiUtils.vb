@@ -46,15 +46,15 @@
             Else
                 Select Case View
                     Case ViewName.MyDay
-                        MainWindow.MyDayInstance.DisableTaskProperties(True)
+                        MainWindow.MyDayInstance.DisableAndHide_TaskPropertiesSidebar()
                     Case ViewName.Repeated
-                        MainWindow.RepeatedInstance.DisableTaskProperties(True)
+                        MainWindow.RepeatedInstance.DisableAndHide_TaskPropertiesSidebar()
                     Case ViewName.Important
-                        MainWindow.ImportantInstance.DisableTaskProperties(True)
+                        MainWindow.ImportantInstance.DisableAndHide_TaskPropertiesSidebar()
                     Case ViewName.Planned
-                        MainWindow.PlannedInstance.DisableTaskProperties(True)
+                        MainWindow.PlannedInstance.DisableAndHide_TaskPropertiesSidebar()
                     Case ViewName.Tasks
-                        MainWindow.TasksInstance.DisableTaskProperties(True)
+                        MainWindow.TasksInstance.DisableAndHide_TaskPropertiesSidebar()
                 End Select
             End If
         End Sub

@@ -52,8 +52,7 @@ Partial Class MyDay_View
         Me.Important_Button = New System.Windows.Forms.Button()
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.ClockTimer = New System.Windows.Forms.Timer(Me.components)
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -499,13 +498,8 @@ Partial Class MyDay_View
         Me.ToolStripMenuItem1.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem1.Text = "Remove"
         '
-        'ReminderTimer
+        'ClockTimer
         '
-        '
-        'NotifyIcon1
-        '
-        Me.NotifyIcon1.Text = "NotifyIcon1"
-        Me.NotifyIcon1.Visible = True
         '
         'ContextMenuStrip2
         '
@@ -585,8 +579,7 @@ Partial Class MyDay_View
     Friend WithEvents Button_DeleteTask As Button
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
-    Friend WithEvents ReminderTimer As Timer
-    Friend WithEvents NotifyIcon1 As NotifyIcon
+    Friend WithEvents ClockTimer As Timer
     Friend WithEvents MyDay_Label As Label
     Friend WithEvents SubTlpTaskView_DateAndTimeHolder As TableLayoutPanel
     Friend WithEvents DayDate_Label As Label

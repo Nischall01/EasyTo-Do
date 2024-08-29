@@ -1,6 +1,4 @@
-﻿Imports System.Threading
-
-Namespace TaskManager
+﻿Namespace TaskManager
     Module TaskManager
         '*' Add New Task
         Public Function AddNewTask(TextBox As TextBox, CLB As CheckedListBox, View As ViewName)

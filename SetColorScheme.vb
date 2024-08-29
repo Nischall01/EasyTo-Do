@@ -4,7 +4,7 @@
     Public Sub Light()
         SetSideBarScheme("Light")
         SetMyDayColorScheme("Light")
-        SetDailyColorScheme("Light")
+        SetRepeatedColorScheme("Light")
         SetImportantColorScheme("Light")
         SetPlannedColorScheme("Light")
         SetTasksColorScheme("Light")
@@ -13,7 +13,7 @@
     Public Sub Dark()
         SetSideBarScheme("Dark")
         SetMyDayColorScheme("Dark")
-        SetDailyColorScheme("Dark")
+        SetRepeatedColorScheme("Dark")
         SetImportantColorScheme("Dark")
         SetPlannedColorScheme("Dark")
         SetTasksColorScheme("Dark")
@@ -22,7 +22,7 @@
     Public Sub Custom()
         SetSideBarScheme("Custom")
         SetMyDayColorScheme("Custom")
-        SetDailyColorScheme("Custom")
+        SetRepeatedColorScheme("Custom")
         SetImportantColorScheme("Custom")
         SetPlannedColorScheme("Custom")
         SetTasksColorScheme("Custom")
@@ -107,16 +107,33 @@
 
         End Select
     End Sub
-    Private Sub SetDailyColorScheme(Scheme As String)
+    Private Sub SetRepeatedColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
                 MainWindow.RepeatedInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
                 MainWindow.RepeatedInstance.Repeated_Label.ForeColor = Color.Black
+
+                MainWindow.RepeatedInstance.TaskTitle_TextBox.BackColor = Color.White
+                MainWindow.RepeatedInstance.TaskTitle_TextBox.ForeColor = Color.Black
+
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.Show()
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.BackColor = Color.White
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
+
                 MainWindow.RepeatedInstance.AddNewTask_TextBox.BackColor = Color.White
                 MainWindow.RepeatedInstance.AddNewTask_TextBox.ForeColor = Color.Black
             Case "Dark"
                 MainWindow.RepeatedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.RepeatedInstance.Repeated_Label.ForeColor = Color.White
+
+
+                MainWindow.RepeatedInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.RepeatedInstance.TaskTitle_TextBox.ForeColor = Color.White
+
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.Hide()
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.RepeatedInstance.TaskDescription_RichTextBox.ForeColor = Color.White
+
                 MainWindow.RepeatedInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.RepeatedInstance.AddNewTask_TextBox.ForeColor = Color.White
             Case "Custom"
@@ -128,11 +145,28 @@
             Case "Light"
                 MainWindow.ImportantInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
                 MainWindow.ImportantInstance.Important_Label.ForeColor = Color.Black
+
+                MainWindow.ImportantInstance.TaskTitle_TextBox.BackColor = Color.White
+                MainWindow.ImportantInstance.TaskTitle_TextBox.ForeColor = Color.Black
+
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.Show()
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.BackColor = Color.White
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
+
                 MainWindow.ImportantInstance.AddNewTask_TextBox.BackColor = Color.White
                 MainWindow.ImportantInstance.AddNewTask_TextBox.ForeColor = Color.Black
             Case "Dark"
                 MainWindow.ImportantInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.ImportantInstance.Important_Label.ForeColor = Color.White
+
+
+                MainWindow.ImportantInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.ImportantInstance.TaskTitle_TextBox.ForeColor = Color.White
+
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.Hide()
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.ImportantInstance.TaskDescription_RichTextBox.ForeColor = Color.White
+
                 MainWindow.ImportantInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.ImportantInstance.AddNewTask_TextBox.ForeColor = Color.White
             Case "Custom"
@@ -144,11 +178,28 @@
             Case "Light"
                 MainWindow.PlannedInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
                 MainWindow.PlannedInstance.Planned_Label.ForeColor = Color.Black
+
+                MainWindow.PlannedInstance.TaskTitle_TextBox.BackColor = Color.White
+                MainWindow.PlannedInstance.TaskTitle_TextBox.ForeColor = Color.Black
+
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.Show()
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.BackColor = Color.White
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
+
                 MainWindow.PlannedInstance.AddNewTask_TextBox.BackColor = Color.White
                 MainWindow.PlannedInstance.AddNewTask_TextBox.ForeColor = Color.Black
             Case "Dark"
                 MainWindow.PlannedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.PlannedInstance.Planned_Label.ForeColor = Color.White
+
+
+                MainWindow.PlannedInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.PlannedInstance.TaskTitle_TextBox.ForeColor = Color.White
+
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.Hide()
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.PlannedInstance.TaskDescription_RichTextBox.ForeColor = Color.White
+
                 MainWindow.PlannedInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.PlannedInstance.AddNewTask_TextBox.ForeColor = Color.White
             Case "Custom"
@@ -160,11 +211,28 @@
             Case "Light"
                 MainWindow.TasksInstance.MainTlp.BackColor = Color.FromArgb(255, 255, 255)
                 MainWindow.TasksInstance.Tasks_Label.ForeColor = Color.Black
+
+                MainWindow.TasksInstance.TaskTitle_TextBox.BackColor = Color.White
+                MainWindow.TasksInstance.TaskTitle_TextBox.ForeColor = Color.Black
+
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.Show()
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.BackColor = Color.White
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.ForeColor = Color.Black
+
                 MainWindow.TasksInstance.AddNewTask_TextBox.BackColor = Color.White
                 MainWindow.TasksInstance.AddNewTask_TextBox.ForeColor = Color.Black
             Case "Dark"
                 MainWindow.TasksInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.TasksInstance.Tasks_Label.ForeColor = Color.White
+
+
+                MainWindow.TasksInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.TasksInstance.TaskTitle_TextBox.ForeColor = Color.White
+
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.Hide()
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(40, 40, 40)
+                MainWindow.TasksInstance.TaskDescription_RichTextBox.ForeColor = Color.White
+
                 MainWindow.TasksInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
                 MainWindow.TasksInstance.AddNewTask_TextBox.ForeColor = Color.White
             Case "Custom"

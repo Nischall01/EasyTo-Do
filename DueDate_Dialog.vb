@@ -60,6 +60,12 @@ Public Class DueDate_Dialog
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Dim SelectedDate As DateTime = MonthCalendar1.SelectionEnd
+
+        If SelectedDate.ToString("yyyy-MM-dd") = "0001-01-01" Then
+            MsgBox("Can't pick today as the due date in Planned View." & vbCrLf & "Please use My Day View for that.")
+            Exit Sub
+        End If
+
         TaskPropertiesCRUDHandler.SetDueDate(SelectedDate.Date, DueDate_SelectedTaskID)
         Me.Close()
     End Sub

@@ -1,6 +1,4 @@
-﻿Imports EasyTo_Do.UiUtils
-
-Public Class Repeated_View
+﻿Public Class Repeated_View
     Private connectionString As String = My.Settings.ConnectionString
     Private RepeatedDT As New DataTable()
     Private RepeatedDT_TaskTitleOnly As New DataTable()
@@ -11,29 +9,34 @@ Public Class Repeated_View
     Private IsTaskPropertiesVisible As Boolean = True
 
 #Region "On Load"
+
+    ' Initializes the form components and enables key preview for handling keyboard events at the form level. '
     Sub New()
         InitializeComponent()
         Me.KeyPreview = True
     End Sub
 
-    ' Form on load : Initializes the Repeated tasks view
+    ' Form on load : Initializes the Repeated tasks view. '
     Private Sub Repeated_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeRepeated()
     End Sub
 
+    ' Initializes the Repeated tasks view. '
     Private Sub InitializeRepeated()
         Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Show)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
-                ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         End Select
 
-        DisableTaskProperties(True)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
+
 #End Region
 
 #Region "Data Loading Actions"
+
     ' Load tasks onto the DataTables
     Private Sub LoadTasksToDataTables_Repeated()
         RepeatedDT.Clear()
@@ -61,8 +64,7 @@ Public Class Repeated_View
         RepeatedDT_TaskTitleOnly.PrimaryKey = New DataColumn() {RepeatedDT_TaskTitleOnly.Columns("TaskID")}
     End Sub
 
-
-    ' Load important tasks onto the CheckedListBox.
+    ' Load repeated tasks onto the CheckedListBox.
     Public Sub LoadTasksToRepeatedView()
         LoadTasksToDataTables_Repeated()
         Repeated_CheckedListBox.Items.Clear()
@@ -83,51 +85,74 @@ Public Class Repeated_View
             Repeated_CheckedListBox.Items.Add(item, item.IsDone)
         Next
     End Sub
+
 #End Region
 
-    Public Sub DisableTaskProperties(Disable As Boolean)
-        If Disable Then
-            TaskTitle_TextBox.Text = Nothing
-            Label_TaskEntryDateTime.Text = Nothing
-            Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+#Region "Task Properties Sidebar Management"
 
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
-                TaskDescription_RichTextBox.Hide()
-            End If
-            TaskTitle_TextBox.Enabled = False
-            TaskDescription_RichTextBox.Text = Nothing
-            TaskDescription_RichTextBox.Enabled = False
+    ' Enum defining the different actions for managing the task properties sidebar.
+    Public Enum TaskPropertiesSidebarAction
+        DisableOnly
+        HideOnly
+        DisableAndHide
+    End Enum
 
-            Label_ADT.Enabled = False
-            Label_TaskEntryDateTime.Enabled = False
-            Important_Button.Enabled = False
-
-            CustomButton_AddReminder.Enabled = False
-            CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
-
-            CustomButton_Repeat.Enabled = False
-            CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
-
-            Button_DeleteTask.Enabled = False
-
-        Else
-            If My.Settings.ColorScheme = "Dark" Then
-                TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                TaskDescription_RichTextBox.Show()
-            End If
-            TaskTitle_TextBox.Enabled = True
-            TaskDescription_RichTextBox.Enabled = True
-            Label_ADT.Enabled = True
-            Label_TaskEntryDateTime.Enabled = True
-            Important_Button.Enabled = True
-            CustomButton_Repeat.Enabled = True
-            CustomButton_AddReminder.Enabled = True
-            Button_DeleteTask.Enabled = True
-        End If
+    ' This method allows external components to disable or hide the task properties sidebar.
+    Public Sub DisableAndHide_TaskPropertiesSidebar(Optional action As TaskPropertiesSidebarAction = TaskPropertiesSidebarAction.DisableAndHide)
+        Select Case action
+            Case TaskPropertiesSidebarAction.DisableOnly
+                EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+            Case TaskPropertiesSidebarAction.HideOnly
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+            Case TaskPropertiesSidebarAction.DisableAndHide
+                EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        End Select
     End Sub
 
-    Private Sub ShowOrHideTaskProperties(action As TaskPropertiesVisibility)
+    Private Sub EnableOrDisable_TaskPropertiesSidebar(State As TaskPropertiesState)
+        Select Case State
+            Case TaskPropertiesState.Disable
+                TaskTitle_TextBox.Text = Nothing
+                Label_TaskEntryDateTime.Text = Nothing
+                Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                    TaskDescription_RichTextBox.Hide()
+                End If
+                TaskTitle_TextBox.Enabled = False
+                TaskDescription_RichTextBox.Text = Nothing
+                TaskDescription_RichTextBox.Enabled = False
+
+                Label_ADT.Enabled = False
+                Label_TaskEntryDateTime.Enabled = False
+                Important_Button.Enabled = False
+
+                CustomButton_AddReminder.Enabled = False
+                CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
+
+                CustomButton_Repeat.Enabled = False
+                CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
+
+                Button_DeleteTask.Enabled = False
+            Case TaskPropertiesState.Enable
+                If My.Settings.ColorScheme = "Dark" Then
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                    TaskDescription_RichTextBox.Show()
+                End If
+                TaskTitle_TextBox.Enabled = True
+                TaskDescription_RichTextBox.Enabled = True
+                Label_ADT.Enabled = True
+                Label_TaskEntryDateTime.Enabled = True
+                Important_Button.Enabled = True
+                CustomButton_Repeat.Enabled = True
+                CustomButton_AddReminder.Enabled = True
+                Button_DeleteTask.Enabled = True
+        End Select
+    End Sub
+
+    Private Sub ShowOrHide_TaskPropertiesSidebar(action As TaskPropertiesVisibility)
         Select Case action
             Case TaskPropertiesVisibility.Show
                 IsTaskPropertiesVisible = True
@@ -139,81 +164,21 @@ Public Class Repeated_View
         UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
     End Sub
 
+#End Region
+
 #Region "Event Handlers"
 
-    Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
-        DisableTaskProperties(True)
-    End Sub
-
-    Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
-        DisableTaskProperties(True)
-    End Sub
-
-    Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
-        DisableTaskProperties(True)
-    End Sub
-
-    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Repeated_Label.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
-        Me.ActiveControl = Nothing
-        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
-        DisableTaskProperties(True)
-    End Sub
-
-    Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
-        If My.Settings.ColorScheme = "Dark" Then
-            TaskDescription_RichTextBox.ForeColor = Color.White
-        ElseIf My.Settings.ColorScheme = "Light" Then
-            TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
-        End If
-        If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then
-            TaskDescription_RichTextBox.Text = String.Empty
-        End If
-    End Sub
-
-    Private Sub TaskDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
-        ' Check if Enter key is pressed
-        If e.KeyCode = Keys.Enter Then
-            ' Check if Shift key is also pressed
-            If e.Shift Then
-                ' Allow default behavior (new line)
-            Else
-                ' Prevent the default behavior
-                e.SuppressKeyPress = True
-                TaskManager.UpdateDescription(TaskDescription_RichTextBox.Text, SelectedTaskItem.ID)
-
-                If Repeated_CheckedListBox.Items.Count > 0 Then
-                    Me.ActiveControl = Nothing
-                    Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
-                End If
-            End If
-        End If
-    End Sub
-
-    ' KeyDown event to add a new task when pressing the Enter key
-    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
-            Dim NewTaskId As Integer = TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Repeated_CheckedListBox, ViewName.MyDay)
-            TaskManager.ShowRepeatDialog(NewTaskId, Me.Repeated_CheckedListBox)
-        End If
-    End Sub
-
-    ' Event handler for changing the selected task in the CheckedListBox
+    ' Event handler triggered when the user selects a task from the Repeated_CheckedListBox.
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status, 
+    ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
+
         SelectedTaskIndex = Repeated_CheckedListBox.SelectedIndex
 
         If SelectedTaskIndex <> -1 Then
             SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
 
-            DisableTaskProperties(False)
+            EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
             TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTaskItem.ID, RepeatedDT_TaskTitleOnly)
 
             Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTaskItem.ID, RepeatedDT)
@@ -249,16 +214,99 @@ Public Class Repeated_View
             Else
                 CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
             End If
-        Else
-            DisableTaskProperties(True)
-            TaskTitle_TextBox.Clear()
         End If
     End Sub
 
-    ' Event handler for deleting a selected task when the delete button is clicked
+    Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
+        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
+        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Repeated_Label.Click
+        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        Me.ActiveControl = Nothing
+        UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
+    End Sub
+
+    Private Sub TaskTitle_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskTitle_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If TaskTitle_TextBox.Text Is String.Empty Then
+                ViewsManager.RefreshTasks()
+            Else
+                TaskManager.UpdateTitle(SelectedTaskItem.ID, TaskTitle_TextBox.Text)
+            End If
+            Me.ActiveControl = Nothing
+            UiUtils.TaskSelection_Retain(Me.Repeated_CheckedListBox, SelectedTaskItem.ID)
+        End If
+    End Sub
+
+    Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
+        If My.Settings.ColorScheme = "Dark" Then
+            TaskDescription_RichTextBox.ForeColor = Color.White
+        ElseIf My.Settings.ColorScheme = "Light" Then
+            TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
+        End If
+        If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then
+            TaskDescription_RichTextBox.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub TaskDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
+        ' Check if Enter key is pressed
+        If e.KeyCode = Keys.Enter Then
+            ' Check if Shift key is also pressed
+            If e.Shift Then
+                ' Allow default behavior (new line)
+            Else
+                ' Prevent the default behavior
+                e.SuppressKeyPress = True
+                TaskManager.UpdateDescription(SelectedTaskItem.ID, TaskDescription_RichTextBox.Text)
+                Me.ActiveControl = Nothing
+                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            End If
+        End If
+    End Sub
+
+    ' KeyDown event to add a new task when pressing the Enter key
+    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+            Dim NewTaskId As Integer = TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Repeated_CheckedListBox, ViewName.Repeated)
+            TaskManager.ShowRepeatDialog(NewTaskId, Me.Repeated_CheckedListBox)
+            If Repeated_CheckedListBox.Items.Count = 1 Then
+                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
+            End If
+        End If
+    End Sub
+
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
+        If Repeated_CheckedListBox.SelectedIndex = -1 Or Repeated_CheckedListBox.Items.Count = 0 Or SelectedTaskItem Is Nothing Then
+            Exit Sub
+        End If
+        TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
+        If Repeated_CheckedListBox.Items.Count = 0 Then
+            Me.ActiveControl = AddNewTask_TextBox
+        End If
+    End Sub
+
+    Private Sub Me_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        If e.KeyValue = Keys.Delete Then
+            Button_DeleteTask.PerformClick()
         End If
     End Sub
 
@@ -297,13 +345,13 @@ Public Class Repeated_View
 
     ' Click event for hiding the task properties panel
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHideTaskProperties(TaskPropertiesVisibility.Hide)
+        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
     End Sub
 
     ' Right-click event to toggle the visibility of the task properties panel
     Private Sub Repeated_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Repeated_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
-            ShowOrHideTaskProperties(TaskPropertiesVisibility.Toggle)
+            ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
@@ -355,10 +403,10 @@ Public Class Repeated_View
     End Sub
 
     ' Clear selected task after leaving the View
-    Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
+    Private Sub Repeated_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
         UiUtils.TaskSelection_Clear(Repeated_CheckedListBox)
-        'MsgBox("Left R")
-        'MsgBox("R SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
+        'MsgBox("Left Repeated view")
+        'MsgBox("SelectedItemIndex = " & Repeated_CheckedListBox.SelectedIndex)
     End Sub
 
 #End Region
