@@ -113,6 +113,22 @@
             Return CBool(foundRow("IsImportant"))
         End Function
 
+        '* Check if the selected task is repeated or not
+        Public Function IsTaskRepeated(TaskID As Integer, DT As DataTable) As Boolean
+            ' Find the row in the DataTable based on the TaskID
+            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+            ' If no row is found, return False
+            If foundRow Is Nothing Then Return False
+
+            ' Check if the "RepeatedDays" field is not DBNull
+            If Not IsDBNull(foundRow("RepeatedDays")) Then
+                Return True
+            Else
+                Return False
+            End If
+        End Function
+
         '*' Get Task
         Public Function GetTaskString(TaskID As Integer, DT As DataTable) As String
             Dim foundRow As DataRow = DT.Rows.Find(TaskID)

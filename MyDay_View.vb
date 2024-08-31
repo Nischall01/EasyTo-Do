@@ -52,7 +52,7 @@
 
         Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY ReminderDateTime;"
 
-        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY ReminderDateTime;"
 
         Using connection As New SqlCeConnection(connectionString)
             connection.Open()
@@ -65,6 +65,7 @@
             End Using
             Using command As New SqlCeCommand(queryTitleOnly, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
+                command.Parameters.AddWithValue("@TodayDay", TodayDay)
                 Using adapter As New SqlCeDataAdapter(command)
                     adapter.Fill(MyDayDT_TaskTitleOnly)
                 End Using
@@ -81,10 +82,15 @@
         MyDay_CheckedListBox.Items.Clear()
 
         For Each row As DataRow In MyDayDT.Rows
-            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
+            If Not row.IsNull("ReminderDateTime") Then
                 Dim RemindedTask As String = row("Task")
                 Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
                 row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+            End If
+
+            If Not row.IsNull("RepeatedDays") Then
+                Dim RepeatedTask As String = row("Task")
+                row("Task") = "(Repeated) " + RepeatedTask
             End If
 
             If row("IsImportant") Then
@@ -214,6 +220,12 @@
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
+            End If
+
+            If TaskManager.IsTaskRepeated(SelectedTaskItem.ID, MyDayDT) Then
+                CustomButton_AddDueDate.Enabled = False
+            Else
+                CustomButton_AddDueDate.Enabled = True
             End If
 
             If TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, MyDayDT) <> String.Empty Then
