@@ -56,29 +56,29 @@
                 Case Nothing
                     RadioButton1.Checked = False
                     RadioButton2.Checked = False
-                Case "sun mon tue wed thu fri sat"
+                Case "Sun Mon Tue Wed Thu Fri Sat"
                     RadioButton1.Checked = True
                 Case Else
                     RadioButton2.Checked = True
-                    If AlreadySetRepeat.Contains("sun") Then
+                    If AlreadySetRepeat.Contains("Sun") Then
                         CheckBox1.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("mon") Then
+                    If AlreadySetRepeat.Contains("Mon") Then
                         CheckBox2.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("tue") Then
+                    If AlreadySetRepeat.Contains("Tue") Then
                         CheckBox3.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("wed") Then
+                    If AlreadySetRepeat.Contains("Wed") Then
                         CheckBox4.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("thu") Then
+                    If AlreadySetRepeat.Contains("Thu") Then
                         CheckBox5.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("fri") Then
+                    If AlreadySetRepeat.Contains("Fri") Then
                         CheckBox6.Checked = True
                     End If
-                    If AlreadySetRepeat.Contains("sat") Then
+                    If AlreadySetRepeat.Contains("Sat") Then
                         CheckBox7.Checked = True
                     End If
             End Select
@@ -122,18 +122,18 @@
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If RadioButton1.Checked Then
-            Dim RepeatedDays As String = "sun mon tue wed thu fri sat"
+            Dim RepeatedDays As String = "Sun Mon Tue Wed Thu Fri Sat"
             TaskPropertiesCRUDHandler.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)
             Me.Close()
         ElseIf RadioButton2.Checked Then
             Dim days As New List(Of String)
-            If CheckBox1.Checked Then days.Add("sun")
-            If CheckBox2.Checked Then days.Add("mon")
-            If CheckBox3.Checked Then days.Add("tue")
-            If CheckBox4.Checked Then days.Add("wed")
-            If CheckBox5.Checked Then days.Add("thu")
-            If CheckBox6.Checked Then days.Add("fri")
-            If CheckBox7.Checked Then days.Add("sat")
+            If CheckBox1.Checked Then days.Add("Sun")
+            If CheckBox2.Checked Then days.Add("Mon")
+            If CheckBox3.Checked Then days.Add("Tue")
+            If CheckBox4.Checked Then days.Add("Wed")
+            If CheckBox5.Checked Then days.Add("Thu")
+            If CheckBox6.Checked Then days.Add("Fri")
+            If CheckBox7.Checked Then days.Add("Sat")
 
             Dim RepeatedDays As String = String.Join(" ", days)
             TaskPropertiesCRUDHandler.SetRepeat(RepeatedDays, Repeat_SelectedTaskID)

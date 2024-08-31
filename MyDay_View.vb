@@ -47,13 +47,18 @@
     Private Sub LoadTasksToDataTables_MyDay()
         MyDayDT.Clear()
         MyDayDT_TaskTitleOnly.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
+
+        Dim TodayDay As String = (DateTime.Today.DayOfWeek.ToString).Substring(0, 3)
+
+        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY ReminderDateTime;"
+
         Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today ORDER BY ReminderDateTime;"
 
         Using connection As New SqlCeConnection(connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
+                command.Parameters.AddWithValue("@TodayDay", TodayDay)
                 Using adapter As New SqlCeDataAdapter(command)
                     adapter.Fill(MyDayDT)
                 End Using

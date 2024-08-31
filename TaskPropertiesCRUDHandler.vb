@@ -108,7 +108,7 @@
 
         ' Method to set Repeat
         Public Sub SetRepeat(RepeatedDays As String, TaskID As Integer)
-            Dim query As String = "UPDATE Tasks SET RepeatedDays = @RepeatedDays WHERE TaskID = @TaskID"
+            Dim query As String = "UPDATE Tasks SET RepeatedDays = @RepeatedDays, Section = 'Repeated' WHERE TaskID = @TaskID"
             Dim parameters As New Dictionary(Of String, Object) From
             {
                 {"@TaskID", TaskID},
