@@ -21,7 +21,9 @@
     Private dt As New DataTable()
 
     Private connectionString As String = My.Settings.ConnectionString
+
 #Region "Form Load"
+
     Private Sub AddReminder_Time__Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
         LoadTable() ' Loads a Data Table to extract the state of reminders
@@ -102,9 +104,11 @@
             DateTimePicker1.Value = AlreadySetReminderDate
         End If
     End Sub
+
 #End Region
 
 #Region "Window Dragging Logic"
+
     Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
         If e.Button = MouseButtons.Left Then
             isDragging = True
@@ -125,9 +129,11 @@
             isDragging = False
         End If
     End Sub
+
 #End Region ' Disabled
 
 #Region "Database DataTable"
+
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
@@ -145,10 +151,11 @@
             MessageBox.Show("An unexpected error occurred: " & ex.Message)
         End Try
     End Sub
+
 #End Region
 
-
 #Region "Reminder Settings Methods"
+
     Private Sub GetAlreadySetReminder() ' Sub to get if the reminder for the task is already set or not
         For Each row As DataRow In dt.Rows
             If row("TaskID") = Reminder_SelectedTaskID Then
@@ -274,7 +281,6 @@
         ToggleButton_AM_PM.Hide()
     End Sub
 
-
     Protected Overrides Function ProcessCmdKey(ByRef msg As Message, keyData As Keys) As Boolean ' Overriding the Enter Key to act as the set reminder button when reminder is open
         If keyData = Keys.Enter Then
             Button2_Click(Nothing, Nothing) ' Emulating the 'Set' button click
@@ -292,9 +298,11 @@
         End If
         Return NearestUpperMultipleOf5FromCurrentMinute
     End Function
+
 #End Region
 
 #Region "Reimder Settings Button Events"
+
     Private Sub Button_CloseAddReminder_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
         Me.Close()
     End Sub
@@ -361,5 +369,7 @@
         TaskPropertiesCRUDHandler.SetReminder(TimeSet, Reminder_SelectedTaskID)
         Me.Close()
     End Sub
+
 #End Region
+
 End Class

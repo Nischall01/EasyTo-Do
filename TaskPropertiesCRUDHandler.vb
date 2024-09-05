@@ -1,5 +1,6 @@
 ﻿Namespace TaskPropertiesCRUDHandler
     Module TaskPropertiesCRUDHandler
+
         ' Shared connection string variable
         Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
@@ -139,9 +140,7 @@
             ViewsManager.RefreshTasks()
         End Sub
 
-
         '' Helper Methods ''
-
 
         'Method to execute Non-Query
         Private Function ExecuteQuery(query As String, parameters As Dictionary(Of String, Object)) As Integer
@@ -163,5 +162,6 @@
                 Return 0
             End Try
         End Function
+
     End Module
 End Namespace

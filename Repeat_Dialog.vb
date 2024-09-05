@@ -1,4 +1,5 @@
 ﻿Public Class Repeat_Dialog
+
     Enum State
         Enable
         Disable
@@ -118,8 +119,6 @@
         End Select
     End Sub
 
-
-
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         If RadioButton1.Checked Then
             Dim RepeatedDays As String = "Sun Mon Tue Wed Thu Fri Sat"
@@ -140,6 +139,5 @@
             Me.Close()
         End If
     End Sub
-
 
 End Class

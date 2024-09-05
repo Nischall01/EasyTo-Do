@@ -1,7 +1,4 @@
-﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Windows.Forms
-Imports EasyTo_do.My
+﻿Imports System.Drawing.Drawing2D
 
 Public Class CircularPictureBox
     Inherits PictureBox
@@ -75,4 +72,5 @@ Public Class CircularPictureBox
             Me.Width = Me.Height
         End If
     End Sub
+
 End Class

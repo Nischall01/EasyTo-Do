@@ -1,5 +1,6 @@
 ﻿Namespace TaskManager
     Module TaskManager
+
         '*' Add New Task
         Public Function AddNewTask(TextBox As TextBox, CLB As CheckedListBox, View As ViewName)
             Dim NewTaskId As Integer
@@ -209,5 +210,6 @@
             End If
             Return TaskEntryDateTime
         End Function
+
     End Module
 End Namespace

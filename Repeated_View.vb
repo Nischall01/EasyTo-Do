@@ -169,7 +169,7 @@
 #Region "Event Handlers"
 
     ' Event handler triggered when the user selects a task from the Repeated_CheckedListBox.
-    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status, 
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
     ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
 
@@ -410,4 +410,5 @@
     End Sub
 
 #End Region
+
 End Class

@@ -164,7 +164,7 @@
 #Region "Event Handlers"
 
     ' Event handler triggered when the user selects a task from the Planned_CheckedListBox.
-    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status, 
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
     ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Important_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Important_CheckedListBox.SelectedIndexChanged
         SelectedTaskIndex = Important_CheckedListBox.SelectedIndex
@@ -269,6 +269,7 @@
 
         End If
     End Sub
+
     ' }
 
     ' Item Check event to change the 'IsDone' status of the selected task
@@ -315,4 +316,5 @@
     End Sub
 
 #End Region
+
 End Class

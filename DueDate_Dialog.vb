@@ -1,6 +1,4 @@
-﻿Imports System.ComponentModel
-
-Public Class DueDate_Dialog
+﻿Public Class DueDate_Dialog
     Public DueDate_SelectedTaskID As Integer
 
     Private AlreadySetDueDate As Date
@@ -18,6 +16,7 @@ Public Class DueDate_Dialog
     End Sub
 
 #Region "Database DataTable"
+
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
@@ -35,6 +34,7 @@ Public Class DueDate_Dialog
             MessageBox.Show("An unexpected error occurred: " & ex.Message)
         End Try
     End Sub
+
 #End Region
 
     Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
@@ -69,4 +69,5 @@ Public Class DueDate_Dialog
         TaskPropertiesCRUDHandler.SetDueDate(SelectedDate.Date, DueDate_SelectedTaskID)
         Me.Close()
     End Sub
+
 End Class

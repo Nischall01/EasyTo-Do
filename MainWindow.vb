@@ -1,16 +1,19 @@
 ﻿Imports System.IO
-Imports EasyTo_Do.MyDay_View
+
 'Imports Newtonsoft.Json
 'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
+
     ' Constants
     Private Const CollapsedSidebarWidth As Integer = 50
+
     Private Const ExpandedSidebarWidth As Integer = 200
     Private Const MaxSidebarWidth As Integer = 333
 
     ' Fields
     Private PfpLastEventTime As DateTime
+
     Private IsSidebarExpanded As Boolean
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
@@ -21,8 +24,16 @@ Public Class MainWindow
         Maximized
     End Enum
 
+    ' Enum defining the different actions for managing the task properties sidebar.
+    Public Enum TaskPropertiesSidebarAction
+        DisableOnly
+        HideOnly
+        DisableAndHide
+    End Enum
+
     ' Forms
     Public MyDayInstance As New MyDay_View()
+
     Public RepeatedInstance As New Repeated_View()
     Public ImportantInstance As New Important_View()
     Public PlannedInstance As New Planned_View()
@@ -31,7 +42,9 @@ Public Class MainWindow
 
     Public Shared isUiUpdating As Boolean = False
     '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
+
 #Region "Constructor and Load"
+
     Public Sub New()
         InitializeComponent()
         Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
@@ -42,10 +55,13 @@ Public Class MainWindow
         InitializeForms()
         InitializeApp()
     End Sub
+
 #End Region
 
     '-------------------------------------------------------------Initialization Methods---------------------------------------------------------------'
+
 #Region "Initialization Methods"
+
     Private Sub InitializeForms()
         AddFormToPanel(MyDayInstance)
         AddFormToPanel(RepeatedInstance)
@@ -68,13 +84,16 @@ Public Class MainWindow
         ' Initial Form
         ShowForm(MyDayInstance)
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
-        ' Load the Selected Appearance 
+        ' Load the Selected Appearance
         LoadSettings()
     End Sub
+
 #End Region
 
     '-----------------------------------------------------------------UI Appearance---------------------------------------------------------------
+
 #Region "UI Appearance"
+
     Private Sub LoadSettings()
         SetColorSchemeFromSettings()
         SetSidebarStateFromSettings()
@@ -168,7 +187,9 @@ Public Class MainWindow
 #End Region
 
     '----------------------------------------------------------------Form Management-------------------------------------------------------------------'
+
 #Region "Form Management"
+
     Private Sub AddFormToPanel(form As Form)
         form.TopLevel = False
         form.FormBorderStyle = FormBorderStyle.None
@@ -191,10 +212,13 @@ Public Class MainWindow
         Next
         Return Nothing
     End Function
+
 #End Region
 
     '----------------------------------------------------------------Sidebar Methods-------------------------------------------------------------------'
+
 #Region "Sidebar Methods"
+
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
         If IsSidebarExpanded Then
             If e.SplitX < ExpandedSidebarWidth - 50 Then
@@ -296,10 +320,13 @@ Public Class MainWindow
             Username_Label.Hide()
         End If
     End Sub
+
 #End Region
 
     '----------------------------------------------------------------Profile Methods-------------------------------------------------------------------'
+
 #Region "Profile Methods"
+
     Private Sub LoadProfile()
         If GetPfpPath() = Nothing Then
             Pfp_MenuStripItem_Empty.Checked = True
@@ -343,10 +370,13 @@ Public Class MainWindow
     Private Function GetUsername() As String
         Return My.Settings.Username
     End Function
+
 #End Region
 
     '----Profile Context Menu Methods----'
+
 #Region "Profile Context Menu Methods"
+
     Private Sub Pfp_MenuStripItem_ChangePicture_Click(sender As Object, e As EventArgs) Handles Pfp_MenuStripItem_ChangePicture.Click
         Pfp_OpenFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp"
         Pfp_OpenFileDialog.Title = "Select an Image"
@@ -419,7 +449,6 @@ Public Class MainWindow
         Username_MenuStripItem_Empty.Enabled = False
         My.Settings.Username = Nothing
 
-
         ImBatman.Checked = False
         ImBatman.Enabled = True
     End Sub
@@ -450,10 +479,13 @@ Public Class MainWindow
         Pfp_CircularPictureBox.BorderStyle = BorderStyle.None
         Username_Label.BorderStyle = BorderStyle.None
     End Sub
+
 #End Region
 
     '----Username Events----'
+
 #Region "Username Events"
+
     Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Username_Label.MouseEnter
         If GetUsername() <> Nothing Then
             Username_Label.BorderStyle = BorderStyle.FixedSingle
@@ -469,10 +501,13 @@ Public Class MainWindow
     Private Sub Label1_MouseClick(sender As Object, e As MouseEventArgs) Handles Username_Label.MouseClick
         Username_ContextMenuStrip.Show(Username_Label, e.Location)
     End Sub
+
 #End Region
 
     '----Profile Picture Events----'
+
 #Region "Profile Picture Events"
+
     Private Sub Pfp_CircularPictureBox_MouseEnter(sender As Object, e As EventArgs) Handles Pfp_CircularPictureBox.MouseEnter
         If GetPfpPath() <> Nothing Then
             Dim now As DateTime = DateTime.Now
@@ -496,10 +531,13 @@ Public Class MainWindow
     Private Sub Pfp_CircularPictureBox_MouseClick(sender As Object, e As MouseEventArgs) Handles Pfp_CircularPictureBox.MouseClick
         Pfp_ContextMenuStrip.Show(Pfp_CircularPictureBox, e.Location)
     End Sub
+
 #End Region
 
     '--------------------------------------------------------------Button Click Events----------------------------------------------------------------'
+
 #Region "Button Click Events"
+
     Private Sub HandleViewButtonClick(viewInstance As Object, checkListBox As CheckedListBox, textBox As TextBox, e As MouseEventArgs)
         If e.Button = MouseButtons.Left Then
             ShowForm(viewInstance)
@@ -526,10 +564,13 @@ Public Class MainWindow
     Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.MouseClick
         HandleViewButtonClick(TasksInstance, TasksInstance.Tasks_CheckedListBox, TasksInstance.AddNewTask_TextBox, e)
     End Sub
+
 #End Region
 
     '----------------------------------------------------------------Helper Methods-------------------------------------------------------------------'
+
 #Region "Helper Methods"
+
     Private Sub Test_BackColors_Click(sender As Object, e As EventArgs) Handles Test_BackColors.Click
         Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
         If activeForm IsNot Nothing Then
@@ -565,5 +606,7 @@ Public Class MainWindow
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
     End Sub
+
 #End Region
+
 End Class

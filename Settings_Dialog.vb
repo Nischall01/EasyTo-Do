@@ -1,11 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports System.Threading
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-
-Imports System.IO
-Imports Newtonsoft.Json
-
-Public Class Settings_Dialog
+﻿Public Class Settings_Dialog
 
     Private TimeFormatAtStart As String
 
@@ -118,4 +111,5 @@ Public Class Settings_Dialog
             MainWindow.Username_Label.Show()
         End If
     End Sub
+
 End Class

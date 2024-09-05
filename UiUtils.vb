@@ -1,5 +1,6 @@
 ﻿Namespace UiUtils
     Module UiUtils
+
         Public Sub TaskSelection_Clear(CLB As CheckedListBox)
             CLB.SelectedItem = Nothing
             CLB.SelectedIndex = -1
@@ -58,5 +59,6 @@
                 End Select
             End If
         End Sub
+
     End Module
 End Namespace

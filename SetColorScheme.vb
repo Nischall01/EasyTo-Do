@@ -1,6 +1,7 @@
 ﻿Module SetColorScheme
 
 #Region "Scheme Methods"
+
     Public Sub Light()
         SetSideBarScheme("Light")
         SetMyDayColorScheme("Light")
@@ -27,9 +28,11 @@
         SetPlannedColorScheme("Custom")
         SetTasksColorScheme("Custom")
     End Sub
+
 #End Region
 
 #Region "Side Bar"
+
     Private Sub SetSideBarScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -68,9 +71,11 @@
                 MainWindow.Test_BackColors.Show()
         End Select
     End Sub
+
 #End Region
 
 #Region "Individual Panels"
+
     Private Sub SetMyDayColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -107,6 +112,7 @@
 
         End Select
     End Sub
+
     Private Sub SetRepeatedColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -126,7 +132,6 @@
                 MainWindow.RepeatedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.RepeatedInstance.Repeated_Label.ForeColor = Color.White
 
-
                 MainWindow.RepeatedInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.RepeatedInstance.TaskTitle_TextBox.ForeColor = Color.White
 
@@ -140,6 +145,7 @@
 
         End Select
     End Sub
+
     Private Sub SetImportantColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -159,7 +165,6 @@
                 MainWindow.ImportantInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.ImportantInstance.Important_Label.ForeColor = Color.White
 
-
                 MainWindow.ImportantInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.ImportantInstance.TaskTitle_TextBox.ForeColor = Color.White
 
@@ -173,6 +178,7 @@
 
         End Select
     End Sub
+
     Private Sub SetPlannedColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -192,7 +198,6 @@
                 MainWindow.PlannedInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.PlannedInstance.Planned_Label.ForeColor = Color.White
 
-
                 MainWindow.PlannedInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.PlannedInstance.TaskTitle_TextBox.ForeColor = Color.White
 
@@ -206,6 +211,7 @@
 
         End Select
     End Sub
+
     Private Sub SetTasksColorScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
@@ -225,7 +231,6 @@
                 MainWindow.TasksInstance.MainTlp.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.TasksInstance.Tasks_Label.ForeColor = Color.White
 
-
                 MainWindow.TasksInstance.TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                 MainWindow.TasksInstance.TaskTitle_TextBox.ForeColor = Color.White
 
@@ -239,6 +244,7 @@
 
         End Select
     End Sub
+
 #End Region
 
 End Module

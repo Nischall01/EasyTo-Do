@@ -11,7 +11,6 @@
             {ViewName.Tasks, Sub() MainWindow.TasksInstance.LoadTasksToTasksView()}
         }
 
-
         Public Sub RefreshTasks()
             isUiUpdating = True
 
@@ -62,5 +61,6 @@
                     Return ViewName.None
             End Select
         End Function
+
     End Module
 End Namespace

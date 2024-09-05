@@ -1,5 +1,6 @@
 ﻿Namespace TaskCRUDHandler
     Module TaskCRUDHandler
+
         ' Shared connection string variable
         Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
@@ -101,7 +102,7 @@
 
         End Class
 
-        ' Method to delete a task 
+        ' Method to delete a task
         Public Sub DeleteTask(TaskID As Integer)
             Dim queryDeleteTask As String = "DELETE FROM Tasks WHERE TaskID = @TaskID"
             Dim parameters As New Dictionary(Of String, Object) From
@@ -162,7 +163,7 @@
             Dim dropTableQuery As String = "DROP TABLE Tasks"
             Dim createTableQuery As String =
                                         "
-                                          CREATE TABLE Tasks 
+                                          CREATE TABLE Tasks
                                           (
                                               TaskID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
                                               Task NVARCHAR(256) NOT NULL,
@@ -196,11 +197,9 @@
             ViewsManager.RefreshTasks()
         End Sub
 
-
         '' Helper Methods ''
 
-
-        ' Method to retrieve the largest TaskID which is also most recent Task's ID 
+        ' Method to retrieve the largest TaskID which is also most recent Task's ID
         Private Function GetNewlyAddedTaskID()
             Dim newTaskId As Integer
             Dim queryGetMaxId As String = "SELECT MAX(TaskID) FROM Tasks"
@@ -262,5 +261,6 @@
                 Return 0
             End Try
         End Function
+
     End Module
 End Namespace

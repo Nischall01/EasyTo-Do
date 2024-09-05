@@ -202,7 +202,7 @@
 #Region "Event Handlers"
 
     ' Event handler triggered when the user selects a task from the Repeated_CheckedListBox.
-    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status, 
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
     ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub MyDay_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles MyDay_CheckedListBox.SelectedIndexChanged
 
@@ -329,7 +329,6 @@
         End If
     End Sub
 
-
     Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
         If My.Settings.ColorScheme = "Dark" Then
             TaskDescription_RichTextBox.ForeColor = Color.White
@@ -394,6 +393,7 @@
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
+
     Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
         ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
@@ -463,4 +463,5 @@
     End Sub
 
 #End Region
+
 End Class
