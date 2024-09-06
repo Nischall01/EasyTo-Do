@@ -179,7 +179,7 @@
             If foundRow Is Nothing OrElse IsDBNull(foundRow("RepeatedDays")) Then Return String.Empty
 
             Dim TaskRepeatFrequency As String
-            If foundRow("RepeatedDays") = "sun mon tue wed thu fri sat" Then
+            If foundRow("RepeatedDays") = "Sun Mon Tue Wed Thu Fri Sat" Then
                 TaskRepeatFrequency = "Everyday"
             Else
                 TaskRepeatFrequency = "Every..."

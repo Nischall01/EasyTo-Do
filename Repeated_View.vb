@@ -1,10 +1,12 @@
 ﻿Public Class Repeated_View
-    Private connectionString As String = My.Settings.ConnectionString
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
+
     Private RepeatedDT As New DataTable()
     Private RepeatedDT_TaskTitleOnly As New DataTable()
 
-    Private SelectedTaskIndex As Integer = -1
-    Private SelectedTaskItem As TaskItem
+    Private SelectedTask_Index As Integer
+    Private SelectedTask_Item As TaskItem
+    Private SelectedTask_ID As Integer
 
     Private IsTaskPropertiesVisible As Boolean = True
 
@@ -67,23 +69,30 @@
     ' Load repeated tasks onto the CheckedListBox.
     Public Sub LoadTasksToRepeatedView()
         LoadTasksToDataTables_Repeated()
+        Repeated_CheckedListBox.BeginUpdate() ' Prevent UI from redrawing until complete
         Repeated_CheckedListBox.Items.Clear()
 
         For Each row As DataRow In RepeatedDT.Rows
-            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
-                Dim RemindedTask As String = row("Task")
+            Dim taskName As String = row("Task").ToString()
+
+            If Not row.IsNull("ReminderDateTime") Then
                 Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+                taskName = $"{reminderDateTime:(hh:mmtt)} {taskName}".ToLower()
+            End If
+
+            If Not row.IsNull("RepeatedDays") Then
+                taskName = $"(Repeated) {taskName}"
             End If
 
             If row("IsImportant") Then
-                Dim ImportantTask As String = "!" + "  " + row("Task")
-                row("Task") = ImportantTask
+                taskName = $"! {taskName}"
             End If
 
-            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            Dim item As New TaskItem(taskName, row("TaskID"), row("IsDone"))
             Repeated_CheckedListBox.Items.Add(item, item.IsDone)
         Next
+
+        Repeated_CheckedListBox.EndUpdate() ' UI refresh happens once after all items are added
     End Sub
 
 #End Region
@@ -173,42 +182,43 @@
     ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
 
-        SelectedTaskIndex = Repeated_CheckedListBox.SelectedIndex
+        SelectedTask_Index = Repeated_CheckedListBox.SelectedIndex
 
-        If SelectedTaskIndex <> -1 Then
-            SelectedTaskItem = Repeated_CheckedListBox.SelectedItem
+        If SelectedTask_Index <> -1 Then
+            SelectedTask_Item = Repeated_CheckedListBox.SelectedItem
+            SelectedTask_ID = SelectedTask_Item.ID
 
             EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
-            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTaskItem.ID, RepeatedDT_TaskTitleOnly)
+            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTask_ID, RepeatedDT_TaskTitleOnly)
 
-            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTaskItem.ID, RepeatedDT)
+            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTask_ID, RepeatedDT)
 
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, RepeatedDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_ID, RepeatedDT) Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
 
-            If TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, RepeatedDT) <> String.Empty Then
+            If TaskManager.GetTaskDescriptionString(SelectedTask_ID, RepeatedDT) <> String.Empty Then
                 If My.Settings.ColorScheme = "Dark" Then
                     TaskDescription_RichTextBox.ForeColor = Color.Pink
                 ElseIf My.Settings.ColorScheme = "Light" Then
                     TaskDescription_RichTextBox.ForeColor = Color.Black
                 End If
-                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, RepeatedDT)
+                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTask_ID, RepeatedDT)
             Else
                 TaskDescription_RichTextBox.ForeColor = Color.Gray
                 TaskDescription_RichTextBox.Text = TextPlaceholders.Description
             End If
 
-            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTaskItem.ID, RepeatedDT)
+            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTask_ID, RepeatedDT)
             If ReminderTime <> String.Empty Then
                 CustomButton_AddReminder.ButtonText = ReminderTime
             Else
                 CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
             End If
 
-            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTaskItem.ID, RepeatedDT)
+            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTask_ID, RepeatedDT)
             If RepeatFrequency <> String.Empty Then
                 CustomButton_Repeat.ButtonText = RepeatFrequency
             Else
@@ -248,10 +258,10 @@
             If TaskTitle_TextBox.Text Is String.Empty Then
                 ViewsManager.RefreshTasks()
             Else
-                TaskManager.UpdateTitle(SelectedTaskItem.ID, TaskTitle_TextBox.Text)
+                TaskManager.UpdateTitle(SelectedTask_ID, TaskTitle_TextBox.Text)
             End If
             Me.ActiveControl = Nothing
-            UiUtils.TaskSelection_Retain(Me.Repeated_CheckedListBox, SelectedTaskItem.ID)
+            UiUtils.TaskSelection_Retain(Me.Repeated_CheckedListBox, SelectedTask_ID)
         End If
     End Sub
 
@@ -275,9 +285,9 @@
             Else
                 ' Prevent the default behavior
                 e.SuppressKeyPress = True
-                TaskManager.UpdateDescription(SelectedTaskItem.ID, TaskDescription_RichTextBox.Text)
+                TaskManager.UpdateDescription(SelectedTask_ID, TaskDescription_RichTextBox.Text)
                 Me.ActiveControl = Nothing
-                Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+                Repeated_CheckedListBox.SelectedIndex = SelectedTask_Index
             End If
         End If
     End Sub
@@ -295,10 +305,10 @@
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        If Repeated_CheckedListBox.SelectedIndex = -1 Or Repeated_CheckedListBox.Items.Count = 0 Or SelectedTaskItem Is Nothing Then
+        If Repeated_CheckedListBox.SelectedIndex = -1 Or Repeated_CheckedListBox.Items.Count = 0 Or SelectedTask_Item Is Nothing Then
             Exit Sub
         End If
-        TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
+        TaskManager.DeleteTask(SelectedTask_ID, Me.Repeated_CheckedListBox, SelectedTask_Index, ViewName.Repeated)
         If Repeated_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox
         End If
@@ -313,31 +323,37 @@
     ' Event handler for deleting a selected task when the Delete key is pressed
     Private Sub Repeated_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Repeated_CheckedListBox.KeyDown
         If e.KeyValue = Keys.Delete AndAlso Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.Repeated)
+            TaskManager.DeleteTask(SelectedTask_ID, Me.Repeated_CheckedListBox, SelectedTask_Index, ViewName.Repeated)
         End If
     End Sub
 
     ' ItemCheck event to update the 'IsDone' status of the selected task
-    Private Sub Repeated_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Repeated_CheckedListBox.ItemCheck
-        If ViewsManager.isUiUpdating Then
-            Exit Sub
-        End If
+    Private Async Sub Repeated_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Repeated_CheckedListBox.ItemCheck
+        If ViewsManager.isUiUpdating Or Repeated_CheckedListBox.SelectedIndex = -1 Then Exit Sub
 
-        If SelectedTaskItem IsNot Nothing Then
-            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+        ' Store the current index before making changes
+        Dim previousIndex As Integer = SelectedTask_Index
+
+        ' Update the task status based on the checkbox state
+        TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
+
+        ' Trigger flickering effect by deselecting and reselecting
+        If previousIndex > 0 Then
+            Repeated_CheckedListBox.SelectedIndex = -1
+            Await Task.Delay(85) ' Flicker delay
         End If
-        Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+        Repeated_CheckedListBox.SelectedIndex = previousIndex
     End Sub
 
     ' Click event for toggling the importance status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, RepeatedDT) Then
-                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTaskItem.ID)
+            If TaskManager.IsTaskImportant(SelectedTask_ID, RepeatedDT) Then
+                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTask_ID)
             Else
-                TaskManager.UpdateImportance(CheckState.Checked, SelectedTaskItem.ID)
+                TaskManager.UpdateImportance(CheckState.Checked, SelectedTask_ID)
             End If
-            Repeated_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            Repeated_CheckedListBox.SelectedIndex = SelectedTask_Index
         Else
             UiUtils.TaskSelection_Clear(Repeated_CheckedListBox)
         End If
@@ -358,7 +374,7 @@
     ' MouseEnter event to temporarily display the Important icon when hovering over the button
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, RepeatedDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_ID, RepeatedDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
@@ -368,7 +384,7 @@
     ' MouseLeave event to revert the Important icon when the mouse leaves the button
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If Repeated_CheckedListBox.SelectedIndex <> -1 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, RepeatedDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_ID, RepeatedDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
@@ -377,7 +393,7 @@
 
     Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
         If e.Button = MouseButtons.Left Then
-            TaskManager.ShowReminderDialog(SelectedTaskItem.ID, Me.Repeated_CheckedListBox)
+            TaskManager.ShowReminderDialog(SelectedTask_ID, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip1, Me.CustomButton_AddReminder)
         End If
@@ -385,18 +401,18 @@
 
     Private Sub CustomButton_Repeat_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
         If e.Button = MouseButtons.Left Then
-            TaskManager.ShowRepeatDialog(SelectedTaskItem.ID, Me.Repeated_CheckedListBox)
+            TaskManager.ShowRepeatDialog(SelectedTask_ID, Me.Repeated_CheckedListBox)
         ElseIf e.Button = MouseButtons.Right Then
             UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip2, Me.CustomButton_Repeat)
         End If
     End Sub
 
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        TaskManager.RemoveReminder(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex)
+        TaskManager.RemoveReminder(SelectedTask_ID, Me.Repeated_CheckedListBox, SelectedTask_Index)
     End Sub
 
     Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        TaskManager.RemoveRepeat(SelectedTaskItem.ID, Me.Repeated_CheckedListBox, SelectedTaskIndex, ViewName.MyDay)
+        TaskManager.RemoveRepeat(SelectedTask_ID, Me.Repeated_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
         If Repeated_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox
         End If

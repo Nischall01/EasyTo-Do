@@ -1,10 +1,11 @@
 ﻿Public Class Tasks_View
-    Private connectionString As String = My.Settings.ConnectionString
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
+
     Private TasksDT As New DataTable()
     Private TasksDT_TaskTitleOnly As New DataTable()
 
-    Private SelectedTaskIndex As Integer = -1
-    Private SelectedTaskItem As TaskItem
+    Private SelectedTask_Index As Integer
+    Private SelectedTask_Item As TaskItem
 
     Private IsTaskPropertiesVisible As Boolean = True
 
@@ -251,42 +252,42 @@
     ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
     ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Tasks_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Tasks_CheckedListBox.SelectedIndexChanged
-        SelectedTaskIndex = Tasks_CheckedListBox.SelectedIndex
+        SelectedTask_Index = Tasks_CheckedListBox.SelectedIndex
 
-        If SelectedTaskIndex <> -1 Then
-            SelectedTaskItem = Tasks_CheckedListBox.SelectedItem
+        If SelectedTask_Index <> -1 Then
+            SelectedTask_Item = Tasks_CheckedListBox.SelectedItem
 
             EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
-            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTaskItem.ID, TasksDT_TaskTitleOnly)
+            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTask_Item.ID, TasksDT_TaskTitleOnly)
 
-            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTaskItem.ID, TasksDT)
+            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTask_Item.ID, TasksDT)
 
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, TasksDT) Then
                 Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
             Else
                 Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
             End If
 
-            If TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, TasksDT) <> String.Empty Then
+            If TaskManager.GetTaskDescriptionString(SelectedTask_Item.ID, TasksDT) <> String.Empty Then
                 If My.Settings.ColorScheme = "Dark" Then
                     TaskDescription_RichTextBox.ForeColor = Color.Pink
                 ElseIf My.Settings.ColorScheme = "Light" Then
                     TaskDescription_RichTextBox.ForeColor = Color.Black
                 End If
-                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTaskItem.ID, TasksDT)
+                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTask_Item.ID, TasksDT)
             Else
                 TaskDescription_RichTextBox.ForeColor = Color.Gray
                 TaskDescription_RichTextBox.Text = TextPlaceholders.Description
             End If
 
-            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTaskItem.ID, TasksDT)
+            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTask_Item.ID, TasksDT)
             If ReminderTime <> String.Empty Then
                 CustomButton_AddReminder.ButtonText = ReminderTime
             Else
                 CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
             End If
 
-            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTaskItem.ID, TasksDT)
+            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTask_Item.ID, TasksDT)
             If RepeatFrequency <> String.Empty Then
                 CustomButton_Repeat.ButtonText = RepeatFrequency
             Else
@@ -318,21 +319,21 @@
         End If
 
         'MsgBox("ItemCheck Triggered")
-        If SelectedTaskItem IsNot Nothing Then
-            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTaskItem.ID)
+        If SelectedTask_Item IsNot Nothing Then
+            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_Item.ID)
         End If
-        Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
+        Tasks_CheckedListBox.SelectedIndex = SelectedTask_Index
     End Sub
 
     ' Toggle the task's 'IsImportant' status when the important button is clicked
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Tasks_CheckedListBox.Items.Count > 0 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
-                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTaskItem.ID)
+            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, TasksDT) Then
+                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTask_Item.ID)
             Else
-                TaskManager.UpdateImportance(CheckState.Checked, SelectedTaskItem.ID)
+                TaskManager.UpdateImportance(CheckState.Checked, SelectedTask_Item.ID)
             End If
-            Tasks_CheckedListBox.SelectedIndex = SelectedTaskIndex
+            Tasks_CheckedListBox.SelectedIndex = SelectedTask_Index
         Else
             UiUtils.TaskSelection_Clear(Me.Tasks_CheckedListBox)
         End If
@@ -353,7 +354,7 @@
     ' MouseEnter event to temporarily display the Important icon when hovering over the button
     Private Sub Important_Button_MouseEnter(sender As Object, e As EventArgs) Handles Important_Button.MouseEnter
         If Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, TasksDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
@@ -362,7 +363,7 @@
 
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If Tasks_CheckedListBox.SelectedIndex <> -1 Then
-            If TaskManager.IsTaskImportant(SelectedTaskItem.ID, TasksDT) Then
+            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, TasksDT) Then
                 Exit Sub
             End If
             Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
@@ -370,10 +371,10 @@
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
-        If Tasks_CheckedListBox.SelectedIndex = -1 Or Tasks_CheckedListBox.Items.Count = 0 Or SelectedTaskItem Is Nothing Then
+        If Tasks_CheckedListBox.SelectedIndex = -1 Or Tasks_CheckedListBox.Items.Count = 0 Or SelectedTask_Item Is Nothing Then
             Exit Sub
         End If
-        TaskManager.DeleteTask(SelectedTaskItem.ID, Me.Tasks_CheckedListBox, SelectedTaskIndex, ViewName.Tasks)
+        TaskManager.DeleteTask(SelectedTask_Item.ID, Me.Tasks_CheckedListBox, SelectedTask_Index, ViewName.Tasks)
         If Tasks_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox
         End If
