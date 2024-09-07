@@ -446,7 +446,7 @@ Partial Class Tasks_View
         Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
         Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip3.ShowImageMargin = False
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(156, 48)
         '
         'ToolStripMenuItem3
         '

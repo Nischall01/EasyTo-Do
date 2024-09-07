@@ -105,111 +105,182 @@
             TaskPropertiesCRUDHandler.UpdateDescription(TaskID, NewDescription)
         End Sub
 
-        '*" Check if Selected task is important or not
-        Public Function IsTaskImportant(TaskID As Integer, DT As DataTable) As Boolean
+        ' Retrieves detailed task information for a given TaskID from the provided DataTable and  returns a TaskProperties object.
+        Public Function GetTaskProperties(TaskID As Integer, DT As DataTable) As TaskProperties
             Dim foundRow As DataRow = DT.Rows.Find(TaskID)
 
-            If foundRow Is Nothing Then Return False
+            ' If no row is found, return Nothing
+            If foundRow Is Nothing Then Return Nothing
 
-            Return CBool(foundRow("IsImportant"))
-        End Function
+            ' Create a new TaskDetails object
+            ' Get DueDate
+            ' Get Title
+            ' Get TaskDescription
+            Dim taskProperties As New TaskProperties With {
+                .DueDate = If(IsDBNull(foundRow("DueDate")), String.Empty, CType(foundRow("DueDate"), String)),
+                .Title = If(IsDBNull(foundRow("Task")), String.Empty, CType(foundRow("Task"), String)),
+                .Description = If(IsDBNull(foundRow("Description")), String.Empty, CType(foundRow("Description"), String))
+            }
 
-        '* Check if the selected task is repeated or not
-        Public Function IsTaskRepeated(TaskID As Integer, DT As DataTable) As Boolean
-            ' Find the row in the DataTable based on the TaskID
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            ' If no row is found, return False
-            If foundRow Is Nothing Then Return False
-
-            ' Check if the "RepeatedDays" field is not DBNull
-            If Not IsDBNull(foundRow("RepeatedDays")) Then
-                Return True
+            ' Get TaskReminder
+            If IsDBNull(foundRow("ReminderDateTime")) Then
+                taskProperties.ReminderDateTime = String.Empty
             Else
-                Return False
-            End If
-        End Function
-
-        '*' Get Task
-        Public Function GetTaskString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("Task")) Then Return String.Empty
-
-            Return (foundRow("Task"))
-        End Function
-
-        '*' Get the task's description
-        Public Function GetTaskDescriptionString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("Description")) Then Return String.Empty
-
-            Return (foundRow("Description"))
-        End Function
-
-        '*' Get the task's reminder and return as string
-        Public Function GetReminderString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("ReminderDateTime")) Then Return String.Empty
-
-            Dim TaskReminder As String
-            Dim reminderDateTime As DateTime = Convert.ToDateTime(foundRow("ReminderDateTime"))
-            If (reminderDateTime).Date = (DateTime.Today).Date Then
-                If My.Settings.TimeFormat = "12" Then
-                    TaskReminder = reminderDateTime.ToString("hh:mm tt")
+                Dim reminderDateTime As DateTime = Convert.ToDateTime(foundRow("ReminderDateTime"))
+                If reminderDateTime.Date = DateTime.Today.Date Then
+                    If My.Settings.TimeFormat = "12" Then
+                        taskProperties.ReminderDateTime = reminderDateTime.ToString("hh:mm tt")
+                    Else
+                        taskProperties.ReminderDateTime = reminderDateTime.ToString("HH:mm")
+                    End If
                 Else
-                    TaskReminder = reminderDateTime.ToString("HH:mm")
-                End If
-            Else
-                If My.Settings.TimeFormat = "12" Then
-                    TaskReminder = reminderDateTime.ToString("(dd/MM) hh:mm tt")
-                Else
-                    TaskReminder = reminderDateTime.ToString("(dd/MM) HH:mm")
+                    If My.Settings.TimeFormat = "12" Then
+                        taskProperties.ReminderDateTime = reminderDateTime.ToString("(dd/MM) hh:mm tt")
+                    Else
+                        taskProperties.ReminderDateTime = reminderDateTime.ToString("(dd/MM) HH:mm")
+                    End If
                 End If
             End If
-            Return TaskReminder
-        End Function
 
-        '*' Get the task's repeat frequency and return the string
-        Public Function GetRepeatString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("RepeatedDays")) Then Return String.Empty
-
-            Dim TaskRepeatFrequency As String
-            If foundRow("RepeatedDays") = "Sun Mon Tue Wed Thu Fri Sat" Then
-                TaskRepeatFrequency = "Everyday"
+            ' Get TaskRepeatFrequency
+            If IsDBNull(foundRow("RepeatedDays")) Then
+                taskProperties.RepeatFrequency = String.Empty
+            ElseIf foundRow("RepeatedDays") = "Sun Mon Tue Wed Thu Fri Sat" Then
+                taskProperties.RepeatFrequency = "Everyday"
             Else
-                TaskRepeatFrequency = "Every..."
+                taskProperties.RepeatFrequency = "Every..."
             End If
-            Return TaskRepeatFrequency
-        End Function
 
-        '*' Get the task's DueDate and return as string
-        Public Function GetDueDateString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+            ' Check if Task is Important
+            taskProperties.IsImportant = Not IsDBNull(foundRow("IsImportant")) AndAlso CBool(foundRow("IsImportant"))
 
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("DueDate")) Then Return String.Empty
+            ' Check if Task is Repeated
+            taskProperties.IsRepeated = Not IsDBNull(foundRow("RepeatedDays"))
 
-            Return CType(foundRow("DueDate"), String)
-        End Function
-
-        '*' Get the task's EntryDateTime and return as string
-        Public Function GetTaskEntryDateTimeString(TaskID As Integer, DT As DataTable) As String
-            Dim foundRow As DataRow = DT.Rows.Find(TaskID)
-
-            If foundRow Is Nothing OrElse IsDBNull(foundRow("EntryDateTime")) Then Return String.Empty
-
-            Dim TaskEntryDateTime As String
-            If My.Settings.TimeFormat = "12" Then
-                TaskEntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+            ' Get TaskEntryDateTime
+            If IsDBNull(foundRow("EntryDateTime")) Then
+                taskProperties.EntryDateTime = String.Empty
             Else
-                TaskEntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  HH:mm")
+                If My.Settings.TimeFormat = "12" Then
+                    taskProperties.EntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+                Else
+                    taskProperties.EntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  HH:mm")
+                End If
             End If
-            Return TaskEntryDateTime
+
+            ' Return the populated TaskDetails object
+            Return taskProperties
         End Function
+
+#Region "Legacy Task Property Functions (Archived)"
+
+        ''*" Check if Selected task is important or not
+        'Public Function IsTaskImportant(TaskID As Integer, DT As DataTable) As Boolean
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing Then Return False
+
+        '    Return CBool(foundRow("IsImportant"))
+        'End Function
+
+        ''* Check if the selected task is repeated or not
+        'Public Function IsTaskRepeated(TaskID As Integer, DT As DataTable) As Boolean
+        '    ' Find the row in the DataTable based on the TaskID
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    ' If no row is found, return False
+        '    If foundRow Is Nothing Then Return False
+
+        '    ' Check if the "RepeatedDays" field is not DBNull
+        '    If Not IsDBNull(foundRow("RepeatedDays")) Then
+        '        Return True
+        '    Else
+        '        Return False
+        '    End If
+        'End Function
+
+        ''*' Get Task
+        'Public Function GetTaskString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("Task")) Then Return String.Empty
+
+        '    Return (foundRow("Task"))
+        'End Function
+
+        ''*' Get the task's description
+        'Public Function GetTaskDescriptionString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("Description")) Then Return String.Empty
+
+        '    Return (foundRow("Description"))
+        'End Function
+
+        ''*' Get the task's reminder and return as string
+        'Public Function GetReminderString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("ReminderDateTime")) Then Return String.Empty
+
+        '    Dim TaskReminder As String
+        '    Dim reminderDateTime As DateTime = Convert.ToDateTime(foundRow("ReminderDateTime"))
+        '    If (reminderDateTime).Date = (DateTime.Today).Date Then
+        '        If My.Settings.TimeFormat = "12" Then
+        '            TaskReminder = reminderDateTime.ToString("hh:mm tt")
+        '        Else
+        '            TaskReminder = reminderDateTime.ToString("HH:mm")
+        '        End If
+        '    Else
+        '        If My.Settings.TimeFormat = "12" Then
+        '            TaskReminder = reminderDateTime.ToString("(dd/MM) hh:mm tt")
+        '        Else
+        '            TaskReminder = reminderDateTime.ToString("(dd/MM) HH:mm")
+        '        End If
+        '    End If
+        '    Return TaskReminder
+        'End Function
+
+        ''*' Get the task's repeat frequency and return the string
+        'Public Function GetRepeatString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("RepeatedDays")) Then Return String.Empty
+
+        '    Dim TaskRepeatFrequency As String
+        '    If foundRow("RepeatedDays") = "Sun Mon Tue Wed Thu Fri Sat" Then
+        '        TaskRepeatFrequency = "Everyday"
+        '    Else
+        '        TaskRepeatFrequency = "Every..."
+        '    End If
+        '    Return TaskRepeatFrequency
+        'End Function
+
+        ''*' Get the task's DueDate and return as string
+        'Public Function GetDueDateString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("DueDate")) Then Return String.Empty
+
+        '    Return CType(foundRow("DueDate"), String)
+        'End Function
+
+        ''*' Get the task's EntryDateTime and return as string
+        'Public Function GetTaskEntryDateTimeString(TaskID As Integer, DT As DataTable) As String
+        '    Dim foundRow As DataRow = DT.Rows.Find(TaskID)
+
+        '    If foundRow Is Nothing OrElse IsDBNull(foundRow("EntryDateTime")) Then Return String.Empty
+
+        '    Dim TaskEntryDateTime As String
+        '    If My.Settings.TimeFormat = "12" Then
+        '        TaskEntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  hh:mm tt")
+        '    Else
+        '        TaskEntryDateTime = Convert.ToDateTime(foundRow("EntryDateTime")).ToString("yyyy-MM-dd  |  HH:mm")
+        '    End If
+        '    Return TaskEntryDateTime
+        'End Function
+
+#End Region
 
     End Module
 End Namespace

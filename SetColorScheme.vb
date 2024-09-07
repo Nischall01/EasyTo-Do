@@ -48,8 +48,8 @@
                 MainWindow.Username_Label.ForeColor = Color.Black
                 MainWindow.Test_BackColors.Hide()
 
-                MainWindow.Button1.FlatAppearance.MouseOverBackColor = Color.DarkGray
-                MainWindow.Button1.FlatAppearance.MouseDownBackColor = Color.Gray
+                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.DarkGray
+                MainWindow.Settings_Button.FlatAppearance.MouseDownBackColor = Color.Gray
             Case "Dark"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 
@@ -63,8 +63,8 @@
                 MainWindow.Username_Label.ForeColor = Color.White
                 MainWindow.Test_BackColors.Hide()
 
-                MainWindow.Button1.FlatAppearance.MouseOverBackColor = Color.DarkGray
-                MainWindow.Button1.FlatAppearance.MouseDownBackColor = Color.Gray
+                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.DarkGray
+                MainWindow.Settings_Button.FlatAppearance.MouseDownBackColor = Color.Gray
             Case "Custom"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 

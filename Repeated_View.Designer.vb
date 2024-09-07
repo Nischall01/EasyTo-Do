@@ -117,7 +117,7 @@ Partial Class Repeated_View
         Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(0)
         Me.TaskTitle_TextBox.Name = "TaskTitle_TextBox"
         Me.TaskTitle_TextBox.Size = New System.Drawing.Size(196, 20)
-        Me.TaskTitle_TextBox.TabIndex = 12
+        Me.TaskTitle_TextBox.TabIndex = 2
         Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Button_DeleteTask
@@ -135,7 +135,7 @@ Partial Class Repeated_View
         Me.Button_DeleteTask.Name = "Button_DeleteTask"
         Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
         Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
-        Me.Button_DeleteTask.TabIndex = 8
+        Me.Button_DeleteTask.TabIndex = 7
         Me.Button_DeleteTask.UseVisualStyleBackColor = False
         '
         'Label_ADT
@@ -148,7 +148,7 @@ Partial Class Repeated_View
         Me.Label_ADT.Location = New System.Drawing.Point(55, 65)
         Me.Label_ADT.Name = "Label_ADT"
         Me.Label_ADT.Size = New System.Drawing.Size(85, 11)
-        Me.Label_ADT.TabIndex = 2
+        Me.Label_ADT.TabIndex = 0
         Me.Label_ADT.Text = "Added Date and Time:"
         '
         'Button_CloseTaskProperties
@@ -162,7 +162,7 @@ Partial Class Repeated_View
         Me.Button_CloseTaskProperties.Margin = New System.Windows.Forms.Padding(0)
         Me.Button_CloseTaskProperties.Name = "Button_CloseTaskProperties"
         Me.Button_CloseTaskProperties.Size = New System.Drawing.Size(24, 24)
-        Me.Button_CloseTaskProperties.TabIndex = 0
+        Me.Button_CloseTaskProperties.TabIndex = 1
         Me.Button_CloseTaskProperties.Text = "X"
         Me.Button_CloseTaskProperties.UseVisualStyleBackColor = False
         '
@@ -176,7 +176,7 @@ Partial Class Repeated_View
         Me.Label_TaskEntryDateTime.Location = New System.Drawing.Point(92, 84)
         Me.Label_TaskEntryDateTime.Name = "Label_TaskEntryDateTime"
         Me.Label_TaskEntryDateTime.Size = New System.Drawing.Size(11, 14)
-        Me.Label_TaskEntryDateTime.TabIndex = 3
+        Me.Label_TaskEntryDateTime.TabIndex = 0
         Me.Label_TaskEntryDateTime.Text = "-"
         '
         'SubTlpTaskProperties_SubTlpTaskFeatureButtons
@@ -212,7 +212,7 @@ Partial Class Repeated_View
         Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
         Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_Repeat.TabIndex = 10
+        Me.CustomButton_Repeat.TabIndex = 5
         Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
@@ -231,7 +231,7 @@ Partial Class Repeated_View
         Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
         Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
         Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
-        Me.CustomButton_AddReminder.TabIndex = 9
+        Me.CustomButton_AddReminder.TabIndex = 4
         Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
@@ -255,7 +255,7 @@ Partial Class Repeated_View
         Me.TaskDescription_RichTextBox.Margin = New System.Windows.Forms.Padding(5, 10, 5, 10)
         Me.TaskDescription_RichTextBox.Name = "TaskDescription_RichTextBox"
         Me.TaskDescription_RichTextBox.Size = New System.Drawing.Size(182, 93)
-        Me.TaskDescription_RichTextBox.TabIndex = 13
+        Me.TaskDescription_RichTextBox.TabIndex = 6
         Me.TaskDescription_RichTextBox.Text = ""
         '
         'Tlp_ImportantButton
@@ -286,7 +286,7 @@ Partial Class Repeated_View
         Me.Important_Button.Margin = New System.Windows.Forms.Padding(2)
         Me.Important_Button.Name = "Important_Button"
         Me.Important_Button.Size = New System.Drawing.Size(30, 30)
-        Me.Important_Button.TabIndex = 8
+        Me.Important_Button.TabIndex = 3
         Me.Important_Button.UseVisualStyleBackColor = False
         '
         'MainTlp_SubTlpTaskView

@@ -4,10 +4,12 @@
     Private ImportantDT As New DataTable()
     Private ImportantDT_TaskTitleOnly As New DataTable()
 
-    Private SelectedTask_Index As Integer
     Private SelectedTask_Item As TaskItem
+    Private SelectedTask_Properties As TaskProperties
+    Private SelectedTask_Index As Integer
+    Private SelectedTask_ID As Integer
 
-    Private IsTaskPropertiesVisible As Boolean = True
+    Private IsTaskPropertiesVisible As Boolean
 
 #Region "On Load"
 
@@ -68,18 +70,26 @@
     ' Load important tasks onto the CheckedListBox.
     Public Sub LoadTasksToImportantView()
         LoadTasksToDataTables_Important()
+        Important_CheckedListBox.BeginUpdate() ' Prevent UI from redrawing until complete
         Important_CheckedListBox.Items.Clear()
 
         For Each row As DataRow In ImportantDT.Rows
-            If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
-                Dim RemindedTask As String = row("Task")
+            Dim taskName As String = row("Task").ToString()
+
+            If Not row.IsNull("ReminderDateTime") Then
                 Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                row("Task") = reminderDateTime.ToString("(hh:mmtt)").ToLower() + "  " + RemindedTask
+                taskName = $"{reminderDateTime:(hh:mmtt)} {taskName}"
             End If
 
-            Dim item As New TaskItem(row("Task"), row("TaskID"), row("IsDone") <> 0)
+            If Not row.IsNull("RepeatedDays") Then
+                taskName = $"(Repeated) {taskName}"
+            End If
+
+            Dim item As New TaskItem(taskName, row("TaskID"), row("IsDone") <> 0)
             Important_CheckedListBox.Items.Add(item, item.IsDone)
         Next
+
+        Important_CheckedListBox.EndUpdate() ' UI refresh happens once after all items are added
     End Sub
 
 #End Region
@@ -94,7 +104,7 @@
     End Enum
 
     ' This method allows external components to disable or hide the task properties sidebar.
-    Public Sub DisableAndHide_TaskPropertiesSidebar(Optional action As TaskPropertiesSidebarAction = TaskPropertiesSidebarAction.DisableAndHide)
+    Public Sub DisableHide_TaskPropertiesSidebar(Optional action As TaskPropertiesSidebarAction = TaskPropertiesSidebarAction.DisableAndHide)
         Select Case action
             Case TaskPropertiesSidebarAction.DisableOnly
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
@@ -131,6 +141,9 @@
                 CustomButton_Repeat.Enabled = False
                 CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
 
+                CustomButton_AddDueDate.Enabled = False
+                CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
+
                 Button_DeleteTask.Enabled = False
             Case TaskPropertiesState.Enable
                 If My.Settings.ColorScheme = "Dark" Then
@@ -138,12 +151,13 @@
                     TaskDescription_RichTextBox.Show()
                 End If
                 TaskTitle_TextBox.Enabled = True
-                TaskDescription_RichTextBox.Enabled = True
                 Label_ADT.Enabled = True
                 Label_TaskEntryDateTime.Enabled = True
                 Important_Button.Enabled = True
-                CustomButton_Repeat.Enabled = True
                 CustomButton_AddReminder.Enabled = True
+                CustomButton_Repeat.Enabled = True
+                CustomButton_AddDueDate.Enabled = True
+                TaskDescription_RichTextBox.Enabled = True
                 Button_DeleteTask.Enabled = True
         End Select
     End Sub
@@ -162,53 +176,71 @@
 
 #End Region
 
+    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
+    ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
+    Private Sub LoadSelectedTaskProperties()
+        SelectedTask_Properties = TaskManager.GetTaskProperties(SelectedTask_ID, ImportantDT)
+
+        If SelectedTask_Properties Is Nothing Then
+            ' Handle the case where task details are not found
+            MsgBox("Task details not found.")
+            Exit Sub
+        End If
+
+        ' Cache task details to avoid multiple lookups
+        Dim title As String = SelectedTask_Properties.Title
+        Dim entryDateTime As String = SelectedTask_Properties.EntryDateTime
+        Dim isImportant As Boolean = SelectedTask_Properties.IsImportant
+        Dim taskDescription As String = SelectedTask_Properties.Description
+        Dim reminderDateTime As String = SelectedTask_Properties.ReminderDateTime
+        Dim repeatFrequency As String = SelectedTask_Properties.RepeatFrequency
+        Dim isRepeated As Boolean = SelectedTask_Properties.IsRepeated
+        Dim dueDate As String = SelectedTask_Properties.DueDate
+
+        ' Enable task properties sidebar
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
+
+        ' Set task title
+        TaskTitle_TextBox.Text = title
+
+        ' Set task entry date and time
+        Label_TaskEntryDateTime.Text = entryDateTime
+
+        ' Update important icon
+        Important_Button.BackgroundImage = If(isImportant, ImageCache.CheckedImportantIcon, ImageCache.UncheckedImportantIcon)
+
+        ' Disable or enable due date button based on task repetition
+        CustomButton_AddDueDate.Enabled = Not isRepeated
+
+        ' Update task description
+        If String.IsNullOrEmpty(taskDescription) Then
+            TaskDescription_RichTextBox.ForeColor = Color.Gray
+            TaskDescription_RichTextBox.Text = TextPlaceholders.Description
+        Else
+            TaskDescription_RichTextBox.ForeColor = If(My.Settings.ColorScheme = "Dark", Color.Pink, Color.Black)
+            TaskDescription_RichTextBox.Text = taskDescription
+        End If
+
+        ' Update reminder button text
+        CustomButton_AddReminder.ButtonText = If(String.IsNullOrEmpty(reminderDateTime), TextPlaceholders.AddReminderButton, reminderDateTime)
+
+        ' Update repeat button text
+        CustomButton_Repeat.ButtonText = If(String.IsNullOrEmpty(repeatFrequency), TextPlaceholders.RepeatButton, repeatFrequency)
+
+        ' Update due date button text
+        CustomButton_AddDueDate.ButtonText = If(String.IsNullOrEmpty(dueDate), TextPlaceholders.DueDateButton, dueDate)
+    End Sub
+
 #Region "Event Handlers"
 
     ' Event handler triggered when the user selects a task from the Planned_CheckedListBox.
-    ' It updates the UI with the details of the selected task, including the task title, entry date/time, importance status,
-    ' description, reminder time, and repeat frequency. If no task is selected, the task properties are disabled and cleared.
     Private Sub Important_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Important_CheckedListBox.SelectedIndexChanged
         SelectedTask_Index = Important_CheckedListBox.SelectedIndex
 
         If SelectedTask_Index <> -1 Then
             SelectedTask_Item = Important_CheckedListBox.SelectedItem
-
-            EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Enable)
-            TaskTitle_TextBox.Text = TaskManager.GetTaskString(SelectedTask_Item.ID, ImportantDT_TaskTitleOnly)
-
-            Label_TaskEntryDateTime.Text = TaskManager.GetTaskEntryDateTimeString(SelectedTask_Item.ID, ImportantDT)
-
-            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, ImportantDT) Then
-                Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
-            Else
-                Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
-            End If
-
-            If TaskManager.GetTaskDescriptionString(SelectedTask_Item.ID, ImportantDT) <> String.Empty Then
-                If My.Settings.ColorScheme = "Dark" Then
-                    TaskDescription_RichTextBox.ForeColor = Color.Pink
-                ElseIf My.Settings.ColorScheme = "Light" Then
-                    TaskDescription_RichTextBox.ForeColor = Color.Black
-                End If
-                TaskDescription_RichTextBox.Text = TaskManager.GetTaskDescriptionString(SelectedTask_Item.ID, ImportantDT)
-            Else
-                TaskDescription_RichTextBox.ForeColor = Color.Gray
-                TaskDescription_RichTextBox.Text = TextPlaceholders.Description
-            End If
-
-            Dim ReminderTime As String = TaskManager.GetReminderString(SelectedTask_Item.ID, ImportantDT)
-            If ReminderTime <> String.Empty Then
-                CustomButton_AddReminder.ButtonText = ReminderTime
-            Else
-                CustomButton_AddReminder.ButtonText = TextPlaceholders.AddReminderButton
-            End If
-
-            Dim RepeatFrequency As String = TaskManager.GetRepeatString(SelectedTask_Item.ID, ImportantDT)
-            If RepeatFrequency <> String.Empty Then
-                CustomButton_Repeat.ButtonText = RepeatFrequency
-            Else
-                CustomButton_Repeat.ButtonText = TextPlaceholders.RepeatButton
-            End If
+            SelectedTask_ID = SelectedTask_Item.ID
+            LoadSelectedTaskProperties()
         End If
     End Sub
 
@@ -231,7 +263,7 @@
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
-    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles Important_Label.Click
+    Private Sub Important_Label_Click(sender As Object, e As EventArgs) Handles Important_Label.Click
         ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
@@ -253,7 +285,14 @@
         If Important_CheckedListBox.SelectedIndex = -1 Or Important_CheckedListBox.Items.Count = 0 Or SelectedTask_Item Is Nothing Then
             Exit Sub
         End If
-        TaskManager.DeleteTask(SelectedTask_Item.ID, Me.Important_CheckedListBox, SelectedTask_Index, ViewName.Important)
+
+        Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+        If result = DialogResult.Yes Then
+            TaskManager.DeleteTask(SelectedTask_ID, Me.Important_CheckedListBox, SelectedTask_Index, ViewName.Important)
+        Else
+            Exit Sub
+        End If
+
         If Important_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox
         End If
@@ -265,25 +304,22 @@
         End If
     End Sub
 
-    Private Sub Important_CheckedListBox_KeyDown(sender As Object, e As KeyEventArgs) Handles Important_CheckedListBox.KeyDown
-        If e.KeyValue = Keys.Delete AndAlso Important_CheckedListBox.SelectedIndex <> -1 Then
-
-        End If
-    End Sub
-
-    ' }
-
     ' Item Check event to change the 'IsDone' status of the selected task
-    Private Sub Important_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Important_CheckedListBox.ItemCheck
-        If ViewsManager.isUiUpdating Then
-            Exit Sub
-        End If
+    Private Async Sub Important_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Important_CheckedListBox.ItemCheck
+        If ViewsManager.isUiUpdating Or Important_CheckedListBox.SelectedIndex = -1 Then Exit Sub
 
-        'MsgBox("ItemCheck Triggered")
-        If SelectedTask_Item IsNot Nothing Then
-            TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_Item.ID)
+        ' Store the current index before making changes
+        Dim previousIndex As Integer = SelectedTask_Index
+
+        ' Update the task status based on the checkbox state
+        TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
+
+        ' Trigger flickering effect by deselecting and reselecting
+        If previousIndex > 0 Then
+            Important_CheckedListBox.SelectedIndex = -1
+            Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
         End If
-        Important_CheckedListBox.SelectedIndex = SelectedTask_Index
+        Important_CheckedListBox.SelectedIndex = previousIndex
     End Sub
 
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
@@ -296,24 +332,100 @@
         End If
     End Sub
 
+    Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick
+        If e.Button = MouseButtons.Left Then
+            TaskManager.ShowReminderDialog(SelectedTask_ID, Me.Important_CheckedListBox)
+        ElseIf e.Button = MouseButtons.Right Then
+            UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip1, Me.CustomButton_AddReminder)
+        End If
+    End Sub
+
+    Private Sub CustomButton_Repeat_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_Repeat.MouseClick
+        If e.Button = MouseButtons.Left Then
+            TaskManager.ShowRepeatDialog(SelectedTask_ID, Me.Important_CheckedListBox)
+        ElseIf e.Button = MouseButtons.Right Then
+            UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip2, Me.CustomButton_Repeat)
+        End If
+    End Sub
+
+    Private Sub CustomButton_DueDate_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddDueDate.MouseClick
+        If e.Button = MouseButtons.Left Then
+            TaskManager.ShowDueDateDialog(SelectedTask_ID, SelectedTask_Index, Me.Important_CheckedListBox, ViewName.MyDay)
+        ElseIf e.Button = MouseButtons.Right Then
+            UiUtils.ShowContextMenuCentered(Me.ContextMenuStrip3, Me.CustomButton_AddDueDate)
+        End If
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        TaskManager.RemoveReminder(SelectedTask_ID, Me.Important_CheckedListBox, SelectedTask_Index)
+    End Sub
+
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        TaskManager.RemoveRepeat(SelectedTask_ID, Me.Important_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
+    End Sub
+
+    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
+        TaskManager.RemoveDueDate(SelectedTask_ID, Me.Important_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
+    End Sub
+
     ' Button event to change the 'IsImportant' status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
         If Important_CheckedListBox.Items.Count > 0 Then
-            If TaskManager.IsTaskImportant(SelectedTask_Item.ID, ImportantDT) Then
-                TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTask_Item.ID)
-            Else
-                TaskManager.UpdateImportance(CheckState.Checked, SelectedTask_Item.ID)
+            TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTask_ID)
+            UiUtils.TaskSelection_Shift(Important_CheckedListBox, SelectedTask_Index, ViewName.Important)
+            If Important_CheckedListBox.Items.Count = 0 Then
+                UiUtils.TaskSelection_Clear(Important_CheckedListBox)
+                Me.ActiveControl = AddNewTask_TextBox
             End If
-            Important_CheckedListBox.SelectedIndex = SelectedTask_Index
         Else
-            UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
+            UiUtils.TaskSelection_Clear(Important_CheckedListBox)
+            Me.ActiveControl = AddNewTask_TextBox
         End If
     End Sub
 
     Private Sub Important_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
-        UiUtils.TaskSelection_Clear(Me.Important_CheckedListBox)
+        UiUtils.TaskSelection_Clear(Important_CheckedListBox)
         'MsgBox("Left Important view")
         'MsgBox("SelectedItemIndex = " & Important_CheckedListBox.SelectedIndex)
+    End Sub
+
+    Private Sub TaskTitle_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskTitle_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If TaskTitle_TextBox.Text Is String.Empty Then
+                ViewsManager.RefreshTasks()
+            Else
+                TaskManager.UpdateTitle(SelectedTask_ID, TaskTitle_TextBox.Text)
+            End If
+            Me.ActiveControl = Nothing
+            UiUtils.TaskSelection_Retain(Me.Important_CheckedListBox, SelectedTask_ID)
+        End If
+    End Sub
+
+    Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
+        If My.Settings.ColorScheme = "Dark" Then
+            TaskDescription_RichTextBox.ForeColor = Color.White
+        ElseIf My.Settings.ColorScheme = "Light" Then
+            TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
+        End If
+        If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then
+            TaskDescription_RichTextBox.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub TaskDescription_KeyDown(sender As Object, e As KeyEventArgs) Handles TaskDescription_RichTextBox.KeyDown
+        ' Check if Enter key is pressed
+        If e.KeyCode = Keys.Enter Then
+            ' Check if Shift key is also pressed
+            If e.Shift Then
+                ' Allow default behavior (new line)
+            Else
+                ' Prevent the default behavior
+                e.SuppressKeyPress = True
+                TaskManager.UpdateDescription(SelectedTask_ID, TaskDescription_RichTextBox.Text)
+                Me.ActiveControl = Nothing
+                Important_CheckedListBox.SelectedIndex = SelectedTask_Index
+            End If
+        End If
     End Sub
 
 #End Region

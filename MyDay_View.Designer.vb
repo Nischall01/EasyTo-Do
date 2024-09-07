@@ -136,7 +136,7 @@ Partial Class MyDay_View
         Me.AddNewTask_TextBox.Location = New System.Drawing.Point(148, 3)
         Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
         Me.AddNewTask_TextBox.Size = New System.Drawing.Size(285, 20)
-        Me.AddNewTask_TextBox.TabIndex = 3
+        Me.AddNewTask_TextBox.TabIndex = 0
         '
         'SubTlpTaskView_SubTlpTop
         '
@@ -165,7 +165,7 @@ Partial Class MyDay_View
         Me.MyDay_Label.Location = New System.Drawing.Point(78, 25)
         Me.MyDay_Label.Name = "MyDay_Label"
         Me.MyDay_Label.Size = New System.Drawing.Size(120, 36)
-        Me.MyDay_Label.TabIndex = 6
+        Me.MyDay_Label.TabIndex = 0
         Me.MyDay_Label.Text = "My Day"
         '
         'PictureBox_PanelIcon
@@ -207,7 +207,7 @@ Partial Class MyDay_View
         Me.DayDate_Label.Margin = New System.Windows.Forms.Padding(3)
         Me.DayDate_Label.Name = "DayDate_Label"
         Me.DayDate_Label.Size = New System.Drawing.Size(36, 17)
-        Me.DayDate_Label.TabIndex = 4
+        Me.DayDate_Label.TabIndex = 0
         Me.DayDate_Label.Text = "Date"
         '
         'Time_Label
@@ -220,7 +220,7 @@ Partial Class MyDay_View
         Me.Time_Label.Margin = New System.Windows.Forms.Padding(3)
         Me.Time_Label.Name = "Time_Label"
         Me.Time_Label.Size = New System.Drawing.Size(37, 17)
-        Me.Time_Label.TabIndex = 5
+        Me.Time_Label.TabIndex = 0
         Me.Time_Label.Text = "Time"
         '
         'SubTlpTaskView_SubTlpMiddle

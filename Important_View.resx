@@ -600,4 +600,13 @@
         LPq33347aG1tDdz7GugfA4i9MWP+D+x52uSXhQXWAAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="ContextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>21, 23</value>
+  </metadata>
+  <metadata name="ContextMenuStrip2.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>178, 23</value>
+  </metadata>
+  <metadata name="ContextMenuStrip3.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>335, 23</value>
+  </metadata>
 </root>

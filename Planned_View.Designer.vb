@@ -22,6 +22,7 @@ Partial Class Planned_View
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Planned_View))
         Me.MainTlp = New System.Windows.Forms.TableLayoutPanel()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
@@ -46,6 +47,12 @@ Partial Class Planned_View
         Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
         Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
         Me.Planned_CheckedListBox = New System.Windows.Forms.CheckedListBox()
+        Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
@@ -56,6 +63,9 @@ Partial Class Planned_View
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SubTlpTaskView_SubTlpMiddle.SuspendLayout()
+        Me.ContextMenuStrip1.SuspendLayout()
+        Me.ContextMenuStrip2.SuspendLayout()
+        Me.ContextMenuStrip3.SuspendLayout()
         Me.SuspendLayout()
         '
         'MainTlp
@@ -420,6 +430,49 @@ Partial Class Planned_View
         Me.Planned_CheckedListBox.Size = New System.Drawing.Size(576, 299)
         Me.Planned_CheckedListBox.TabIndex = 10
         '
+        'ContextMenuStrip1
+        '
+        Me.ContextMenuStrip1.BackColor = System.Drawing.SystemColors.Control
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1})
+        Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
+        Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip1.ShowImageMargin = False
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 48)
+        '
+        'ToolStripMenuItem1
+        '
+        Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem1.Text = "Remove"
+        '
+        'ContextMenuStrip2
+        '
+        Me.ContextMenuStrip2.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem2})
+        Me.ContextMenuStrip2.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip2.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip2.ShowImageMargin = False
+        Me.ContextMenuStrip2.Size = New System.Drawing.Size(93, 26)
+        '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(92, 22)
+        Me.ToolStripMenuItem2.Text = "Remove"
+        '
+        'ContextMenuStrip3
+        '
+        Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3})
+        Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
+        Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
+        Me.ContextMenuStrip3.ShowImageMargin = False
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
+        '
+        'ToolStripMenuItem3
+        '
+        Me.ToolStripMenuItem3.Name = "ToolStripMenuItem3"
+        Me.ToolStripMenuItem3.Size = New System.Drawing.Size(92, 22)
+        Me.ToolStripMenuItem3.Text = "Remove"
+        '
         'Planned_View
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -441,6 +494,9 @@ Partial Class Planned_View
         Me.SubTlpTaskView_SubTlpTop.PerformLayout()
         CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SubTlpTaskView_SubTlpMiddle.ResumeLayout(False)
+        Me.ContextMenuStrip1.ResumeLayout(False)
+        Me.ContextMenuStrip2.ResumeLayout(False)
+        Me.ContextMenuStrip3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -467,4 +523,10 @@ Partial Class Planned_View
     Friend WithEvents Important_Button As Button
     Friend WithEvents SubTlpTaskView_SubTlpMiddle As TableLayoutPanel
     Friend WithEvents Planned_CheckedListBox As CheckedListBox
+    Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ContextMenuStrip2 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents ContextMenuStrip3 As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
 End Class

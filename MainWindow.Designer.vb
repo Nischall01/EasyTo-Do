@@ -39,7 +39,7 @@ Partial Class MainWindow
         Me.Pfp_MenuStripItem_Default = New System.Windows.Forms.ToolStripMenuItem()
         Me.Test_BackColors = New System.Windows.Forms.Button()
         Me.Username_Label = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Settings_Button = New System.Windows.Forms.Button()
         Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
         Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
@@ -47,6 +47,8 @@ Partial Class MainWindow
         Me.ImBatman = New System.Windows.Forms.ToolStripMenuItem()
         Me.ColorDialog1 = New System.Windows.Forms.ColorDialog()
         Me.Pfp_OpenFileDialog = New System.Windows.Forms.OpenFileDialog()
+        Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
+        Me.ReminderNotification = New System.Windows.Forms.NotifyIcon(Me.components)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
@@ -73,8 +75,8 @@ Partial Class MainWindow
         '
         Me.SplitContainer1.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.SplitContainer1.Panel2.ForeColor = System.Drawing.Color.Black
-        Me.SplitContainer1.Size = New System.Drawing.Size(834, 511)
-        Me.SplitContainer1.SplitterDistance = 217
+        Me.SplitContainer1.Size = New System.Drawing.Size(934, 536)
+        Me.SplitContainer1.SplitterDistance = 243
         Me.SplitContainer1.SplitterWidth = 5
         Me.SplitContainer1.TabIndex = 0
         '
@@ -87,7 +89,7 @@ Partial Class MainWindow
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Pfp_CircularPictureBox, 0, 0)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Test_BackColors, 0, 3)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Username_Label, 0, 1)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Button1, 0, 4)
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Settings_Button, 0, 4)
         Me.MainSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSidebarTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.MainSidebarTableLayoutPanel.Name = "MainSidebarTableLayoutPanel"
@@ -97,7 +99,7 @@ Partial Class MainWindow
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 48.0!))
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 13.35953!))
         Me.MainSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 14.53831!))
-        Me.MainSidebarTableLayoutPanel.Size = New System.Drawing.Size(215, 509)
+        Me.MainSidebarTableLayoutPanel.Size = New System.Drawing.Size(241, 534)
         Me.MainSidebarTableLayoutPanel.TabIndex = 0
         '
         'SubSidebarTableLayoutPanel
@@ -111,7 +113,7 @@ Partial Class MainWindow
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton2, 0, 1)
         Me.SubSidebarTableLayoutPanel.Controls.Add(Me.CustomButton1, 0, 0)
         Me.SubSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SubSidebarTableLayoutPanel.Location = New System.Drawing.Point(3, 128)
+        Me.SubSidebarTableLayoutPanel.Location = New System.Drawing.Point(3, 134)
         Me.SubSidebarTableLayoutPanel.Name = "SubSidebarTableLayoutPanel"
         Me.SubSidebarTableLayoutPanel.RowCount = 5
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.20202!))
@@ -120,7 +122,7 @@ Partial Class MainWindow
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.20202!))
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 19.19192!))
         Me.SubSidebarTableLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(209, 236)
+        Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(235, 248)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
         '
         'CustomButton5
@@ -135,11 +137,11 @@ Partial Class MainWindow
         Me.CustomButton5.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton5.IconSize = New System.Drawing.Size(20, 20)
         Me.CustomButton5.LabelMargin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton5.Location = New System.Drawing.Point(0, 188)
+        Me.CustomButton5.Location = New System.Drawing.Point(0, 200)
         Me.CustomButton5.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton5.Name = "CustomButton5"
         Me.CustomButton5.PictureBoxSize = New System.Drawing.Size(20, 20)
-        Me.CustomButton5.Size = New System.Drawing.Size(209, 48)
+        Me.CustomButton5.Size = New System.Drawing.Size(235, 48)
         Me.CustomButton5.TabIndex = 10
         Me.CustomButton5.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton5.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -156,11 +158,11 @@ Partial Class MainWindow
         Me.CustomButton4.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton4.IconSize = New System.Drawing.Size(20, 20)
         Me.CustomButton4.LabelMargin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton4.Location = New System.Drawing.Point(0, 141)
+        Me.CustomButton4.Location = New System.Drawing.Point(0, 150)
         Me.CustomButton4.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.CustomButton4.Name = "CustomButton4"
         Me.CustomButton4.PictureBoxSize = New System.Drawing.Size(20, 20)
-        Me.CustomButton4.Size = New System.Drawing.Size(209, 45)
+        Me.CustomButton4.Size = New System.Drawing.Size(235, 48)
         Me.CustomButton4.TabIndex = 9
         Me.CustomButton4.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton4.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -177,11 +179,11 @@ Partial Class MainWindow
         Me.CustomButton3.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton3.IconSize = New System.Drawing.Size(20, 20)
         Me.CustomButton3.LabelMargin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton3.Location = New System.Drawing.Point(0, 94)
+        Me.CustomButton3.Location = New System.Drawing.Point(0, 100)
         Me.CustomButton3.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.CustomButton3.Name = "CustomButton3"
         Me.CustomButton3.PictureBoxSize = New System.Drawing.Size(20, 20)
-        Me.CustomButton3.Size = New System.Drawing.Size(209, 45)
+        Me.CustomButton3.Size = New System.Drawing.Size(235, 48)
         Me.CustomButton3.TabIndex = 8
         Me.CustomButton3.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton3.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -198,11 +200,11 @@ Partial Class MainWindow
         Me.CustomButton2.IconAnchor = System.Windows.Forms.AnchorStyles.None
         Me.CustomButton2.IconSize = New System.Drawing.Size(20, 20)
         Me.CustomButton2.LabelMargin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton2.Location = New System.Drawing.Point(0, 47)
+        Me.CustomButton2.Location = New System.Drawing.Point(0, 50)
         Me.CustomButton2.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.CustomButton2.Name = "CustomButton2"
         Me.CustomButton2.PictureBoxSize = New System.Drawing.Size(20, 20)
-        Me.CustomButton2.Size = New System.Drawing.Size(209, 45)
+        Me.CustomButton2.Size = New System.Drawing.Size(235, 48)
         Me.CustomButton2.TabIndex = 7
         Me.CustomButton2.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton2.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -223,7 +225,7 @@ Partial Class MainWindow
         Me.CustomButton1.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.CustomButton1.Name = "CustomButton1"
         Me.CustomButton1.PictureBoxSize = New System.Drawing.Size(23, 23)
-        Me.CustomButton1.Size = New System.Drawing.Size(209, 45)
+        Me.CustomButton1.Size = New System.Drawing.Size(235, 48)
         Me.CustomButton1.TabIndex = 6
         Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -234,7 +236,7 @@ Partial Class MainWindow
         Me.Pfp_CircularPictureBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.Pfp_CircularPictureBox.ContextMenuStrip = Me.Pfp_ContextMenuStrip
         Me.Pfp_CircularPictureBox.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Pfp_CircularPictureBox.Location = New System.Drawing.Point(79, 16)
+        Me.Pfp_CircularPictureBox.Location = New System.Drawing.Point(92, 20)
         Me.Pfp_CircularPictureBox.Margin = New System.Windows.Forms.Padding(0, 0, 0, 2)
         Me.Pfp_CircularPictureBox.Name = "Pfp_CircularPictureBox"
         Me.Pfp_CircularPictureBox.Size = New System.Drawing.Size(57, 57)
@@ -276,7 +278,7 @@ Partial Class MainWindow
         '
         Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Test_BackColors.Location = New System.Drawing.Point(46, 389)
+        Me.Test_BackColors.Location = New System.Drawing.Point(59, 408)
         Me.Test_BackColors.Name = "Test_BackColors"
         Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
         Me.Test_BackColors.TabIndex = 7
@@ -291,28 +293,28 @@ Partial Class MainWindow
         Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Username_Label.ForeColor = System.Drawing.Color.White
-        Me.Username_Label.Location = New System.Drawing.Point(76, 78)
+        Me.Username_Label.Location = New System.Drawing.Point(89, 82)
         Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
         Me.Username_Label.Name = "Username_Label"
         Me.Username_Label.Size = New System.Drawing.Size(62, 16)
         Me.Username_Label.TabIndex = 8
         Me.Username_Label.Text = "Username"
         '
-        'Button1
+        'Settings_Button
         '
-        Me.Button1.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button1.BackColor = System.Drawing.Color.Transparent
-        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
-        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button1.FlatAppearance.BorderSize = 0
-        Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
-        Me.Button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Location = New System.Drawing.Point(92, 456)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(30, 30)
-        Me.Button1.TabIndex = 9
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.Settings_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Settings_Button.BackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.BackgroundImage = CType(resources.GetObject("Settings_Button.BackgroundImage"), System.Drawing.Image)
+        Me.Settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Settings_Button.FlatAppearance.BorderSize = 0
+        Me.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Settings_Button.Location = New System.Drawing.Point(105, 479)
+        Me.Settings_Button.Name = "Settings_Button"
+        Me.Settings_Button.Size = New System.Drawing.Size(30, 30)
+        Me.Settings_Button.TabIndex = 9
+        Me.Settings_Button.UseVisualStyleBackColor = False
         '
         'Username_ContextMenuStrip
         '
@@ -347,18 +349,23 @@ Partial Class MainWindow
         Me.ImBatman.Size = New System.Drawing.Size(135, 22)
         Me.ImBatman.Text = "I'm Batman"
         '
+        'ReminderNotification
+        '
+        Me.ReminderNotification.Text = "ReminderNotification"
+        Me.ReminderNotification.Visible = True
+        '
         'MainWindow
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(834, 511)
+        Me.ClientSize = New System.Drawing.Size(934, 536)
         Me.Controls.Add(Me.SplitContainer1)
         Me.DoubleBuffered = True
         Me.HelpButton = True
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.MinimumSize = New System.Drawing.Size(850, 550)
+        Me.MinimumSize = New System.Drawing.Size(950, 575)
         Me.Name = "MainWindow"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "EasyTo-Do"
@@ -394,8 +401,10 @@ Partial Class MainWindow
     Friend WithEvents CustomButton3 As CustomButton_2
     Friend WithEvents CustomButton2 As CustomButton_2
     Friend WithEvents Username_Label As Label
-    Friend WithEvents Button1 As Button
+    Friend WithEvents Settings_Button As Button
     Friend WithEvents Pfp_MenuStripItem_Default As ToolStripMenuItem
     Friend WithEvents I As ToolStripMenuItem
     Friend WithEvents ImBatman As ToolStripMenuItem
+    Friend WithEvents ReminderTimer As Timer
+    Friend WithEvents ReminderNotification As NotifyIcon
 End Class

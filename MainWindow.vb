@@ -41,7 +41,6 @@ Public Class MainWindow
     Public SettingsInstance As New Settings_Dialog()
 
     Public Shared isUiUpdating As Boolean = False
-    '--------------------------------------------------------------------On Load-----------------------------------------------------------------------'
 
 #Region "Constructor and Load"
 
@@ -52,13 +51,10 @@ Public Class MainWindow
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        InitializeForms()
         InitializeApp()
     End Sub
 
 #End Region
-
-    '-------------------------------------------------------------Initialization Methods---------------------------------------------------------------'
 
 #Region "Initialization Methods"
 
@@ -71,6 +67,8 @@ Public Class MainWindow
     End Sub
 
     Private Sub InitializeApp()
+        ' Initialize all forms
+        InitializeForms()
         ' Initial state for sidebar is set as expanded
         Select Case My.Settings.SidebarOnStart
             Case "Expanded"
@@ -80,7 +78,9 @@ Public Class MainWindow
         End Select
         'Load the User Profile
         LoadProfile()
+        'Load the tasks
         ViewsManager.RefreshTasks()
+        ShowForm(TasksInstance)
         ' Initial Form
         ShowForm(MyDayInstance)
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
@@ -89,8 +89,6 @@ Public Class MainWindow
     End Sub
 
 #End Region
-
-    '-----------------------------------------------------------------UI Appearance---------------------------------------------------------------
 
 #Region "UI Appearance"
 
@@ -186,8 +184,6 @@ Public Class MainWindow
 
 #End Region
 
-    '----------------------------------------------------------------Form Management-------------------------------------------------------------------'
-
 #Region "Form Management"
 
     Private Sub AddFormToPanel(form As Form)
@@ -214,8 +210,6 @@ Public Class MainWindow
     End Function
 
 #End Region
-
-    '----------------------------------------------------------------Sidebar Methods-------------------------------------------------------------------'
 
 #Region "Sidebar Methods"
 
@@ -323,8 +317,6 @@ Public Class MainWindow
 
 #End Region
 
-    '----------------------------------------------------------------Profile Methods-------------------------------------------------------------------'
-
 #Region "Profile Methods"
 
     Private Sub LoadProfile()
@@ -372,8 +364,6 @@ Public Class MainWindow
     End Function
 
 #End Region
-
-    '----Profile Context Menu Methods----'
 
 #Region "Profile Context Menu Methods"
 
@@ -482,8 +472,6 @@ Public Class MainWindow
 
 #End Region
 
-    '----Username Events----'
-
 #Region "Username Events"
 
     Private Sub Label1_MouseEnter(sender As Object, e As EventArgs) Handles Username_Label.MouseEnter
@@ -503,8 +491,6 @@ Public Class MainWindow
     End Sub
 
 #End Region
-
-    '----Profile Picture Events----'
 
 #Region "Profile Picture Events"
 
@@ -534,11 +520,9 @@ Public Class MainWindow
 
 #End Region
 
-    '--------------------------------------------------------------Button Click Events----------------------------------------------------------------'
-
 #Region "Button Click Events"
 
-    Private Sub HandleViewButtonClick(viewInstance As Object, checkListBox As CheckedListBox, textBox As TextBox, e As MouseEventArgs)
+    Private Sub HandleViewButtonClick(viewInstance As Object, textBox As TextBox, e As MouseEventArgs)
         If e.Button = MouseButtons.Left Then
             ShowForm(viewInstance)
             textBox.Focus()
@@ -546,28 +530,26 @@ Public Class MainWindow
     End Sub
 
     Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.MouseClick
-        HandleViewButtonClick(MyDayInstance, MyDayInstance.MyDay_CheckedListBox, MyDayInstance.AddNewTask_TextBox, e)
+        HandleViewButtonClick(MyDayInstance, MyDayInstance.AddNewTask_TextBox, e)
     End Sub
 
     Private Sub CustomButton2_Click(sender As Object, e As MouseEventArgs) Handles CustomButton2.MouseClick
-        HandleViewButtonClick(RepeatedInstance, RepeatedInstance.Repeated_CheckedListBox, RepeatedInstance.AddNewTask_TextBox, e)
+        HandleViewButtonClick(RepeatedInstance, RepeatedInstance.AddNewTask_TextBox, e)
     End Sub
 
     Private Sub CustomButton3_Click(sender As Object, e As MouseEventArgs) Handles CustomButton3.MouseClick
-        HandleViewButtonClick(ImportantInstance, ImportantInstance.Important_CheckedListBox, ImportantInstance.AddNewTask_TextBox, e)
+        HandleViewButtonClick(ImportantInstance, ImportantInstance.AddNewTask_TextBox, e)
     End Sub
 
     Private Sub CustomButton4_Click(sender As Object, e As MouseEventArgs) Handles CustomButton4.MouseClick
-        HandleViewButtonClick(PlannedInstance, PlannedInstance.Planned_CheckedListBox, PlannedInstance.AddNewTask_TextBox, e)
+        HandleViewButtonClick(PlannedInstance, PlannedInstance.AddNewTask_TextBox, e)
     End Sub
 
     Private Sub CustomButton5_Click(sender As Object, e As MouseEventArgs) Handles CustomButton5.MouseClick
-        HandleViewButtonClick(TasksInstance, TasksInstance.Tasks_CheckedListBox, TasksInstance.AddNewTask_TextBox, e)
+        HandleViewButtonClick(TasksInstance, TasksInstance.AddNewTask_TextBox, e)
     End Sub
 
 #End Region
-
-    '----------------------------------------------------------------Helper Methods-------------------------------------------------------------------'
 
 #Region "Helper Methods"
 
@@ -588,19 +570,19 @@ Public Class MainWindow
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Settings_Button.Click
         Dim activeView As ViewName = ViewsManager.GetActiveViewName()
         Select Case activeView
             Case ViewName.MyDay
-                MyDayInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+                MyDayInstance.DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
             Case ViewName.Repeated
-                RepeatedInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+                RepeatedInstance.DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
             Case ViewName.Important
-                ImportantInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+                ImportantInstance.DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
             Case ViewName.Planned
-                PlannedInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+                PlannedInstance.DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
             Case ViewName.Tasks
-                TasksInstance.DisableAndHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
+                TasksInstance.DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
         End Select
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()

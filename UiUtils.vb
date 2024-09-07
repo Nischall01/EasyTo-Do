@@ -1,6 +1,8 @@
 ﻿Namespace UiUtils
     Module UiUtils
 
+        Public Const FilckerDelay As Integer = 70
+
         Public Sub TaskSelection_Clear(CLB As CheckedListBox)
             CLB.SelectedItem = Nothing
             CLB.SelectedIndex = -1
@@ -47,15 +49,20 @@
             Else
                 Select Case View
                     Case ViewName.MyDay
-                        MainWindow.MyDayInstance.DisableAndHide_TaskPropertiesSidebar()
+                        TaskSelection_Clear(CLB)
+                        MainWindow.MyDayInstance.DisableHide_TaskPropertiesSidebar()
                     Case ViewName.Repeated
-                        MainWindow.RepeatedInstance.DisableAndHide_TaskPropertiesSidebar()
+                        TaskSelection_Clear(CLB)
+                        MainWindow.RepeatedInstance.DisableHide_TaskPropertiesSidebar()
                     Case ViewName.Important
-                        MainWindow.ImportantInstance.DisableAndHide_TaskPropertiesSidebar()
+                        TaskSelection_Clear(CLB)
+                        MainWindow.ImportantInstance.DisableHide_TaskPropertiesSidebar()
                     Case ViewName.Planned
-                        MainWindow.PlannedInstance.DisableAndHide_TaskPropertiesSidebar()
+                        TaskSelection_Clear(CLB)
+                        MainWindow.PlannedInstance.DisableHide_TaskPropertiesSidebar()
                     Case ViewName.Tasks
-                        MainWindow.TasksInstance.DisableAndHide_TaskPropertiesSidebar()
+                        TaskSelection_Clear(CLB)
+                        MainWindow.TasksInstance.DisableHide_TaskPropertiesSidebar()
                 End Select
             End If
         End Sub
