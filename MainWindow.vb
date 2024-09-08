@@ -51,7 +51,61 @@ Public Class MainWindow
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        EnsureDatabaseExists("To_Do.sdf")
         InitializeApp()
+    End Sub
+
+#End Region
+
+#Region "Database Check"
+
+    Public Sub EnsureDatabaseExists(dbFilePath As String)
+        ' Check if the database file exists
+        If Not File.Exists(dbFilePath) Then
+            ' Create a new database and initialize tables
+            CreateDatabase(dbFilePath)
+        End If
+    End Sub
+
+    Private Sub CreateDatabase(dbFilePath As String)
+        Try
+            ' Connection string for SQL CE database creation
+            Dim connStr As String = $"Data Source={dbFilePath};"
+
+            ' Create the SQL CE engine and initialize the new database
+            Using engine As New SqlCeEngine(connStr)
+                engine.CreateDatabase()
+            End Using
+
+            ' Create tables in the new database
+            Using conn As New SqlCeConnection(connStr)
+                conn.Open()
+
+                ' SQL command to create the Tasks table
+                Dim createTableCmd As New SqlCeCommand("
+                CREATE TABLE Tasks (
+                    TaskID INT IDENTITY(1,1) PRIMARY KEY NOT NULL,
+                    Task NVARCHAR(256) NOT NULL,
+                    Description NVARCHAR(4000) NULL,
+                    IsDone BIT NOT NULL DEFAULT 0,
+                    IsImportant BIT NOT NULL DEFAULT 0,
+                    DueDate DATETIME NULL,
+                    Section NVARCHAR(256) NULL,
+                    EntryDateTime DATETIME NOT NULL,
+                    RepeatedDays NVARCHAR(256) NULL,
+                    ReminderDateTime DATETIME NULL
+                )", conn)
+
+                ' Execute the command to create the table
+                createTableCmd.ExecuteNonQuery()
+
+                conn.Close()
+            End Using
+
+            MessageBox.Show("No existing database found; A new one has been created successfully.", "Database Initialization", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Catch ex As Exception
+            MessageBox.Show($"Error creating database: {ex.Message}")
+        End Try
     End Sub
 
 #End Region

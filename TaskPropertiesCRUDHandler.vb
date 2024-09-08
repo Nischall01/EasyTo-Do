@@ -7,11 +7,20 @@
         ' Method to update task description
         Public Sub UpdateDescription(TaskID As Integer, NewDescription As String)
             Dim query As String = "UPDATE Tasks SET Description = @NewDescription WHERE TaskID = @TaskID"
-            Dim parameters As New Dictionary(Of String, Object) From
-                {
-                    {"@TaskID", TaskID},
-                    {"@NewDescription", NewDescription}
-                }
+
+            ' Initialize parameters dictionary
+            ' Add the TaskID parameter
+            Dim parameters As New Dictionary(Of String, Object) From {
+                {"@TaskID", TaskID}
+            }
+
+            ' Check if NewDescription is empty, and set to DBNull if so
+            If String.IsNullOrEmpty(NewDescription) Then
+                parameters.Add("@NewDescription", DBNull.Value)
+            Else
+                parameters.Add("@NewDescription", NewDescription)
+            End If
+
             Dim rowsAffected As Integer = ExecuteQuery(query, parameters)
             If rowsAffected > 0 Then
                 'MessageBox.Show("Task description updated successfully.")
