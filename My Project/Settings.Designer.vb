@@ -93,24 +93,24 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Expanded")>  _
-        Public Property SidebarOnStart() As String
+        Public Property SidebarStateOnStart() As String
             Get
-                Return CType(Me("SidebarOnStart"),String)
+                Return CType(Me("SidebarStateOnStart"),String)
             End Get
             Set
-                Me("SidebarOnStart") = value
+                Me("SidebarStateOnStart") = value
             End Set
         End Property
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Expanded")>  _
-        Public Property TaskPropertiesSidebarOnStart() As String
+        Public Property TaskPropertiesSidebarStateOnStart() As String
             Get
-                Return CType(Me("TaskPropertiesSidebarOnStart"),String)
+                Return CType(Me("TaskPropertiesSidebarStateOnStart"),String)
             End Get
             Set
-                Me("TaskPropertiesSidebarOnStart") = value
+                Me("TaskPropertiesSidebarStateOnStart") = value
             End Set
         End Property
         
@@ -183,6 +183,18 @@ Namespace My
             End Get
             Set
                 Me("ConnectionString") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property OnDeleteAskForConfirmation() As Boolean
+            Get
+                Return CType(Me("OnDeleteAskForConfirmation"),Boolean)
+            End Get
+            Set
+                Me("OnDeleteAskForConfirmation") = value
             End Set
         End Property
     End Class

@@ -1,11 +1,17 @@
 ﻿Public Class Repeat_Dialog
 
+    Private isDragging As Boolean = False
+    Private startX As Integer
+    Private startY As Integer
+
+    Public isCloseButtonDisabled As Boolean
+
     Enum State
         Enable
         Disable
     End Enum
 
-    Private connectionString As String = My.Settings.ConnectionString
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private dt As New DataTable()
 
@@ -18,7 +24,38 @@
         LoadTable()
         GetAlreadySetRepeat()
         RepeatInitialization()
+
+        If isCloseButtonDisabled Then
+            CloseRepeatedDialog_Button.Enabled = False
+        Else
+            CloseRepeatedDialog_Button.Enabled = True
+        End If
     End Sub
+
+#Region "Window Dragging Logic"
+
+    Private Sub TableLayoutPanel3_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel3.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            startX = e.X
+            startY = e.Y
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel3_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel3.MouseMove
+        If isDragging Then
+            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel3_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel3.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
+
+#End Region
 
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
@@ -86,7 +123,7 @@
         End If
     End Sub
 
-    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
+    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseRepeatedDialog_Button.Click
         Me.Close()
     End Sub
 

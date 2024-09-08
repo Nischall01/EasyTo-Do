@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ReminderProperty_Icon.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="DueDate_Icon.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAfNJREFUSEvtlj1LXEEUhjfaBPzIf5DAmiqliiHZImgd0CZ1EAsbtdBCU0rS5AtU
+        DgAACw4BQL7hQQAAAfNJREFUSEvtlj1LXEEUhjfaBPzIf5DAmiqliiHZImgd0CZ1EAsbtdBCU0rS5AtU
         LCSloCZrFZCAf8JKsLDSwkb8CAEx4/POnLsk2bt35+5lwcIHHvSeOfMedrnsTOme/3HOzeMne2wKvV9w
         zh7zw+ZuHMIT/IMvM3yGnbZPvdqjvd0+LAaaO3AarzAPk7b/b37hW+zw4VnQpKHiAr/juX9ybi3DZeyz
         /UJ7tFcZYtGHN4KGHtQn1Yay1T7ipm+IgN4t/GD/l1FZyuzyDWmwOIiiaqXCkLUTIt2AlephsRJ63C6m

@@ -31,7 +31,7 @@
 
     ' Initializes the MyDay tasks view. '
     Private Sub InitializeMyDay()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
+        Select Case My.Settings.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -91,7 +91,7 @@
 
             If Not row.IsNull("ReminderDateTime") Then
                 Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                taskName = $"{reminderDateTime:(hh:mmtt)} {taskName}"
+                taskName = $"{reminderDateTime:(hh:mmtt)}".ToLower & $" {taskName}"
             End If
 
             If Not row.IsNull("RepeatedDays") Then
@@ -328,12 +328,14 @@
             Exit Sub
         End If
 
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If result = DialogResult.Yes Then
-            TaskManager.DeleteTask(SelectedTask_ID, Me.MyDay_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
-        Else
-            Exit Sub
+        If My.Settings.OnDeleteAskForConfirmation Then
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If result <> DialogResult.Yes Then
+                Exit Sub
+            End If
         End If
+        TaskManager.DeleteTask(SelectedTask_ID, Me.MyDay_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
 
         If MyDay_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox

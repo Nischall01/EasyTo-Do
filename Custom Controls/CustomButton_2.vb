@@ -118,7 +118,7 @@
         If My.Settings.ColorScheme = "Dark" Then
             Me.BackColor = Color.FromArgb(50, 50, 50)
         Else
-            Me.BackColor = Color.FromArgb(225, 225, 225)
+            Me.BackColor = Color.FromArgb(170, 170, 170)
         End If
     End Sub
 

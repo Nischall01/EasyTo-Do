@@ -43,8 +43,8 @@
         End Sub
 
         '*' Repeat Task
-        Public Sub ShowRepeatDialog(TaskID As Integer, CLB As CheckedListBox)
-            Dim Repeat_DialogInstance = New Repeat_Dialog With {.Repeat_SelectedTaskID = TaskID}
+        Public Sub ShowRepeatDialog(TaskID As Integer, CLB As CheckedListBox, Optional IsCloseButtonDisabled As Boolean = False)
+            Dim Repeat_DialogInstance = New Repeat_Dialog With {.Repeat_SelectedTaskID = TaskID, .isCloseButtonDisabled = IsCloseButtonDisabled}
             Repeat_DialogInstance.ShowDialog()
             Repeat_DialogInstance.BringToFront()
             Repeat_DialogInstance.Dispose()
@@ -63,10 +63,10 @@
         End Sub
 
         '*' Add DueDate
-        Public Sub ShowDueDateDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox, View As ViewName)
+        Public Sub ShowDueDateDialog(TaskID As Integer, TaskIndex As Integer, CLB As CheckedListBox, View As ViewName, Optional IsCloseButtonDisabled As Boolean = False)
             Dim TaskCountBeforeAddingDueDate As Integer = CLB.Items.Count
 
-            Dim DueDate_DialogInstance = New DueDate_Dialog With {.DueDate_SelectedTaskID = TaskID}
+            Dim DueDate_DialogInstance = New DueDate_Dialog With {.DueDate_SelectedTaskID = TaskID, .isCloseButtonDisabled = IsCloseButtonDisabled}
             DueDate_DialogInstance.ShowDialog()
             DueDate_DialogInstance.BringToFront()
             DueDate_DialogInstance.Dispose()

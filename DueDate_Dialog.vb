@@ -1,11 +1,18 @@
 ﻿Public Class DueDate_Dialog
+
+    Private isDragging As Boolean = False
+    Private startX As Integer
+    Private startY As Integer
+
     Public DueDate_SelectedTaskID As Integer
+
+    Public isCloseButtonDisabled As Boolean
 
     Private AlreadySetDueDate As Date
 
     Private dt As New DataTable()
 
-    Private connectionString As String = My.Settings.ConnectionString
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private Sub DueDate_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
@@ -13,7 +20,38 @@
         LoadTable()
         GetAlreadySetDueDate()
         DueDateInitialization()
+
+        If isCloseButtonDisabled Then
+            CloseDueDateDialog_Button.Enabled = False
+        Else
+            CloseDueDateDialog_Button.Enabled = True
+        End If
     End Sub
+
+#Region "Window Dragging Logic"
+
+    Private Sub TableLayoutPanel2_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            startX = e.X
+            startY = e.Y
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel2_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseMove
+        If isDragging Then
+            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel2_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel2.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
+
+#End Region
 
 #Region "Database DataTable"
 
@@ -37,7 +75,7 @@
 
 #End Region
 
-    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
+    Private Sub CloseReminder_Button_Click(sender As Object, e As EventArgs) Handles CloseDueDateDialog_Button.Click
         Me.Close()
     End Sub
 

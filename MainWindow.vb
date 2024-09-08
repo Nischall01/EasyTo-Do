@@ -14,7 +14,7 @@ Public Class MainWindow
     ' Fields
     Private PfpLastEventTime As DateTime
 
-    Private IsSidebarExpanded As Boolean
+    Public IsSidebarExpanded As Boolean
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
     ' Enums
@@ -70,7 +70,7 @@ Public Class MainWindow
         ' Initialize all forms
         InitializeForms()
         ' Initial state for sidebar is set as expanded
-        Select Case My.Settings.SidebarOnStart
+        Select Case My.Settings.SidebarStateOnStart
             Case "Expanded"
                 SetSidebarState(SidebarState.Expanded)
             Case "Collapsed"
@@ -98,6 +98,7 @@ Public Class MainWindow
         SetTaskPropertiesSidebarStateFromSettings()
         SetTimeFormatFromSettings()
         SetProfileVisibilityFromSettings()
+        SetOnDeleteAskForConfirmationFromSettings()
     End Sub
 
     Private Sub SetColorSchemeFromSettings()
@@ -115,7 +116,7 @@ Public Class MainWindow
     End Sub
 
     Private Sub SetSidebarStateFromSettings()
-        Select Case My.Settings.SidebarOnStart
+        Select Case My.Settings.SidebarStateOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton3.Checked = True
             Case "Collapsed"
@@ -124,7 +125,7 @@ Public Class MainWindow
     End Sub
 
     Private Sub SetTaskPropertiesSidebarStateFromSettings()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart
+        Select Case My.Settings.TaskPropertiesSidebarStateOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton4.Checked = True
             Case "Collapsed"
@@ -154,6 +155,15 @@ Public Class MainWindow
                 SettingsInstance.CheckBox2.Checked = False
             Case False
                 SettingsInstance.CheckBox2.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetOnDeleteAskForConfirmationFromSettings()
+        Select Case My.Settings.OnDeleteAskForConfirmation
+            Case True
+                SettingsInstance.RadioButton7.Checked = True
+            Case False
+                SettingsInstance.RadioButton8.Checked = True
         End Select
     End Sub
 

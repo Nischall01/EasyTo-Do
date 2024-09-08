@@ -27,7 +27,7 @@
 
     ' Initializes the Repeated tasks view. '
     Private Sub InitializeTasks()
-        Select Case My.Settings.TaskPropertiesSidebarOnStart ' Sets the Task Properties initial sidebar state based on user setting
+        Select Case My.Settings.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -89,7 +89,7 @@
             ' Format reminder time
             If Not row.IsNull("ReminderDateTime") AndAlso TypeOf row("ReminderDateTime") Is DateTime Then
                 Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                taskName = $"{reminderDateTime:(hh:mmtt)}  {taskName}" ' Adds time in hh:mm tt format
+                taskName = $"{reminderDateTime:(hh:mmtt)}".ToLower & $" {taskName}"
             End If
 
             ' Format due date
@@ -99,7 +99,7 @@
                 If dueDate = DateTime.Today Then
                     taskName = $"(Today)  {taskName}"
                 Else
-                    taskName = $"{dueDate:(dd/MM)}  {taskName}" ' Adds due date in dd/MM format
+                    taskName = $"{dueDate:(dd/MM)} {taskName}" ' Adds due date in dd/MM format
                 End If
             End If
 
@@ -405,12 +405,14 @@
             Exit Sub
         End If
 
-        Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        If result = DialogResult.Yes Then
-            TaskManager.DeleteTask(SelectedTask_ID, Me.Tasks_CheckedListBox, SelectedTask_Index, ViewName.Tasks)
-        Else
-            Exit Sub
+        If My.Settings.OnDeleteAskForConfirmation Then
+            Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If result <> DialogResult.Yes Then
+                Exit Sub
+            End If
         End If
+        TaskManager.DeleteTask(SelectedTask_ID, Me.Tasks_CheckedListBox, SelectedTask_Index, ViewName.Tasks)
 
         If Tasks_CheckedListBox.Items.Count = 0 Then
             Me.ActiveControl = AddNewTask_TextBox

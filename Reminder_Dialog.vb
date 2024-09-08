@@ -20,7 +20,7 @@
 
     Private dt As New DataTable()
 
-    Private connectionString As String = My.Settings.ConnectionString
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
 #Region "Form Load"
 
@@ -130,7 +130,7 @@
         End If
     End Sub
 
-#End Region ' Disabled
+#End Region
 
 #Region "Database DataTable"
 
@@ -303,7 +303,7 @@
 
 #Region "Reimder Settings Button Events"
 
-    Private Sub Button_CloseAddReminder_Click(sender As Object, e As EventArgs) Handles CloseReminder_Button.Click
+    Private Sub Button_CloseAddReminder_Click(sender As Object, e As EventArgs) Handles CloseReminderDialog_Button.Click
         Me.Close()
     End Sub
 

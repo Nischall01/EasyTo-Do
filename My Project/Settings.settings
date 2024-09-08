@@ -11,10 +11,10 @@
     <Setting Name="ColorScheme" Type="System.String" Scope="User">
       <Value Profile="(Default)">Dark</Value>
     </Setting>
-    <Setting Name="SidebarOnStart" Type="System.String" Scope="User">
+    <Setting Name="SidebarStateOnStart" Type="System.String" Scope="User">
       <Value Profile="(Default)">Expanded</Value>
     </Setting>
-    <Setting Name="TaskPropertiesSidebarOnStart" Type="System.String" Scope="User">
+    <Setting Name="TaskPropertiesSidebarStateOnStart" Type="System.String" Scope="User">
       <Value Profile="(Default)">Expanded</Value>
     </Setting>
     <Setting Name="TimeFormat" Type="System.String" Scope="User">
@@ -34,6 +34,9 @@
     </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=To_Do.sdf;Persist Security Info=False;</Value>
+    </Setting>
+    <Setting Name="OnDeleteAskForConfirmation" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>
