@@ -90,7 +90,7 @@
                 Dim dueDate As DateTime = row.Field(Of DateTime)("DueDate")
 
                 If dueDate = DateTime.Today Then
-                    taskName = $"(Today)  {taskName}"
+                    taskName = $"(Today) {taskName}"
                 Else
                     taskName = $"{dueDate:(dd/MM)} {taskName}" ' Adds due date in dd/MM format
                 End If

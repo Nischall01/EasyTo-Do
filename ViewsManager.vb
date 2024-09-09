@@ -40,6 +40,8 @@
                 End If
             Next
 
+            MainWindow.CacheTasksWithReminder()
+
             isUiUpdating = False
         End Sub
 

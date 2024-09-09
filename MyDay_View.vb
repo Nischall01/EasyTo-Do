@@ -54,9 +54,9 @@
 
         Dim TodayDay As String = (DateTime.Today.DayOfWeek.ToString).Substring(0, 3)
 
-        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY ReminderDateTime;"
+        Dim query As String = "SELECT * FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY IsDone, ReminderDateTime;"
 
-        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY ReminderDateTime;"
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay as NVARCHAR) + '%' ORDER BY IsDone, ReminderDateTime;"
 
         Using connection As New SqlCeConnection(connectionString)
             connection.Open()
@@ -435,18 +435,14 @@
     Private Async Sub MyDay_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles MyDay_CheckedListBox.ItemCheck
         If ViewsManager.isUiUpdating Or MyDay_CheckedListBox.SelectedIndex = -1 Then Exit Sub
 
-        ' Store the current index before making changes
-        Dim previousIndex As Integer = SelectedTask_Index
-
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
+        ActiveControl = Me.AddNewTask_TextBox
+        Await Task.Delay(10)
+        e.NewValue = e.CurrentValue
+        ViewsManager.RefreshTasks()
+        Await Task.Delay(10)
 
-        ' Trigger flickering effect by deselecting and reselecting
-        If previousIndex > 0 Then
-            MyDay_CheckedListBox.SelectedIndex = -1
-            Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-        End If
-        MyDay_CheckedListBox.SelectedIndex = previousIndex
     End Sub
 
     Private Sub CustomButton_AddReminder_MouseClick(sender As Object, e As MouseEventArgs) Handles CustomButton_AddReminder.MouseClick

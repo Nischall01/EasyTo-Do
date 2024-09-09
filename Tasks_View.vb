@@ -97,7 +97,7 @@
                 Dim dueDate As DateTime = row.Field(Of DateTime)("DueDate")
 
                 If dueDate = DateTime.Today Then
-                    taskName = $"(Today)  {taskName}"
+                    taskName = $"(Today) {taskName}"
                 Else
                     taskName = $"{dueDate:(dd/MM)} {taskName}" ' Adds due date in dd/MM format
                 End If
@@ -196,64 +196,6 @@
                 IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
         End Select
         UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
-    End Sub
-
-#End Region
-
-#Region "Reminder"
-
-    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
-        CheckReminders()
-    End Sub
-
-    Private Sub CheckReminders()
-        Dim currentTime As DateTime = DateTime.Now
-
-        For Each row As DataRow In TasksDT.Rows
-            ' Check if the Reminder_DateTime column is not null
-            If row("ReminderDateTime") IsNot DBNull.Value Then
-                ' Directly cast to DateTime
-                Dim reminderTime As DateTime = row("ReminderDateTime")
-
-                ' Convert both current time and reminder time to string in the same format
-                Dim currentTimeString As String = currentTime.ToString("yyyy-MM-dd HH:mm:ss")
-                Dim reminderTimeString As String = reminderTime.ToString("yyyy-MM-dd HH:mm:ss")
-
-                ' Compare the formatted date and time strings
-                If currentTimeString = reminderTimeString Then
-                    Dim ImportantTask As String = row("Task")
-                    ImportantTask = ImportantTask.Substring(3)
-                    ' Display reminder
-                    If row("Description") IsNot DBNull.Value And row("IsImportant") = True Then
-                        ShowNotification(ImportantTask, True, row("Description"))
-                    ElseIf row("Description") IsNot DBNull.Value And row("IsImportant") = False Then
-                        ShowNotification(row("Task"), False, row("Description"))
-                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = True Then
-                        ShowNotification(ImportantTask, True)
-                    ElseIf row("Description") Is DBNull.Value And row("IsImportant") = False Then
-                        ShowNotification(row("Task"), False)
-                    End If
-                End If
-            End If
-        Next
-    End Sub
-
-    Private Sub ShowNotification(title As String, IsImportant As Boolean, Optional message As String = " ")
-        ReminderNotification.BalloonTipTitle = title
-        If IsImportant Then
-            ReminderNotification.BalloonTipIcon = ToolTipIcon.Warning
-            ReminderNotification.BalloonTipText = message
-        Else
-            ReminderNotification.BalloonTipIcon = ToolTipIcon.None
-            ReminderNotification.BalloonTipText = message
-        End If
-        ReminderNotification.ShowBalloonTip(5000) ' 3000 milliseconds = 5 seconds
-    End Sub
-
-    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles ReminderNotification.BalloonTipClicked
-        MainWindow.Activate()
-        MainWindow.WindowState = FormWindowState.Normal
-        MainWindow.TopMost = True
     End Sub
 
 #End Region

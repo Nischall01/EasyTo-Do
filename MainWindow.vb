@@ -1,9 +1,14 @@
 ﻿Imports System.IO
+Imports System.Threading
 
 'Imports Newtonsoft.Json
 'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
+
+    Private ReminderDT As New DataTable
+    Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
+    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     ' Constants
     Private Const CollapsedSidebarWidth As Integer = 50
@@ -42,7 +47,7 @@ Public Class MainWindow
 
     Public Shared isUiUpdating As Boolean = False
 
-#Region "Constructor and Load"
+#Region "Constructor and On Load"
 
     Public Sub New()
         InitializeComponent()
@@ -53,6 +58,109 @@ Public Class MainWindow
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnsureDatabaseExists("To_Do.sdf")
         InitializeApp()
+        InitializeReminder()
+    End Sub
+
+#End Region
+
+#Region "Reminder"
+
+    Private Sub InitializeReminder()
+        ReminderTimer.Interval = 1000 ' Interval set to 1 seconds
+        ReminderTimer.Start() ' Start the Timer
+
+        ReminderNotification.Text = "EasyTo_do"
+        ReminderNotification.Icon = My.Resources.EasyToDo_Icon
+        ReminderNotification.Visible = True
+    End Sub
+
+    Private Sub LoadTasksToReminderDT()
+        ReminderDT.Clear()
+
+        Dim query As String = "SELECT TaskID, Task, Description,IsImportant, ReminderDateTime FROM Tasks WHERE ReminderDateTime IS NOT NULL;"
+
+        Using connection As New SqlCeConnection(connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(ReminderDT)
+                End Using
+            End Using
+        End Using
+
+        ReminderDT.PrimaryKey = New DataColumn() {ReminderDT.Columns("TaskID")}
+    End Sub
+
+    Public Sub CacheTasksWithReminder()
+        LoadTasksToReminderDT()
+        For Each row As DataRow In ReminderDT.Rows
+            Dim TaskID As Integer = row("TaskID")
+            Dim TaskReminder As DateTime = row("ReminderDateTime")
+            ' Check for existing TaskID in the dictionary to avoid duplicates
+            If ReminderDictionary.ContainsKey(TaskID) Then
+                ReminderDictionary(TaskID) = TaskReminder
+            Else
+                ReminderDictionary.Add(TaskID, TaskReminder)
+            End If
+        Next
+    End Sub
+
+    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
+        CheckReminders()
+    End Sub
+
+    Private Sub CheckReminders()
+        Dim currentDateTime As DateTime = DateTime.Now
+
+        For Each task As KeyValuePair(Of Integer, DateTime) In ReminderDictionary
+
+            Dim taskID As Integer = task.Key
+            Dim reminderDateTime As DateTime = task.Value
+
+            Dim currentDateTimeString As String = currentDateTime.ToString("yyyy-MM-dd HH:mm:ss")
+            Dim reminderDateTimeString As String = reminderDateTime.ToString("yyyy-MM-dd HH:mm:ss")
+
+            If currentDateTimeString = reminderDateTimeString Then
+                Dim foundRow As DataRow = ReminderDT.Rows.Find(taskID)
+
+                If foundRow IsNot Nothing Then
+                    Dim TaskTitle As String = foundRow("Task")
+                    Dim TaskDescription As String
+                    If IsDBNull(foundRow("Description")) Then
+                        TaskDescription = " "
+                    Else
+                        TaskDescription = foundRow("Description")
+                    End If
+
+                    If foundRow("IsImportant") = True Then
+                        ShowNotification(TaskTitle, True, TaskDescription)
+                    Else
+                        ShowNotification(TaskTitle, False, TaskDescription)
+                    End If
+                Else
+                    ' Task not found
+                    MessageBox.Show("Task not found.")
+                End If
+            End If
+        Next
+    End Sub
+
+    Private Sub ShowNotification(title As String, IsImportant As Boolean, Optional Description As String = " ")
+        ReminderNotification.BalloonTipTitle = title
+        If IsImportant Then
+            ReminderNotification.BalloonTipIcon = ToolTipIcon.Warning
+            ReminderNotification.BalloonTipText = Description
+        Else
+            ReminderNotification.BalloonTipIcon = ToolTipIcon.None
+            ReminderNotification.BalloonTipText = Description
+        End If
+        ReminderNotification.ShowBalloonTip(5000) ' Hold for 5 seconds
+    End Sub
+
+    Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles ReminderNotification.BalloonTipClicked
+        Me.Activate()
+        Me.WindowState = FormWindowState.Normal
+        'Me.TopMost = True
     End Sub
 
 #End Region
