@@ -77,7 +77,7 @@ Public Class MainWindow
     Private Sub LoadTasksToReminderDT()
         ReminderDT.Clear()
 
-        Dim query As String = "SELECT TaskID, Task, Description,IsImportant, ReminderDateTime FROM Tasks WHERE ReminderDateTime IS NOT NULL;"
+        Dim query As String = "SELECT TaskID, Task, Description,IsImportant, ReminderDateTime FROM Tasks WHERE ReminderDateTime IS NOT NULL AND IsDone = 0;"
 
         Using connection As New SqlCeConnection(connectionString)
             connection.Open()
@@ -93,15 +93,31 @@ Public Class MainWindow
 
     Public Sub CacheTasksWithReminder()
         LoadTasksToReminderDT()
+
+        ' Create a temporary set to track existing TaskIDs
+        Dim currentTaskIDs As New HashSet(Of Integer)()
+
+        ' Update the dictionary with new or updated tasks
         For Each row As DataRow In ReminderDT.Rows
             Dim TaskID As Integer = row("TaskID")
             Dim TaskReminder As DateTime = row("ReminderDateTime")
-            ' Check for existing TaskID in the dictionary to avoid duplicates
+
+            ' Add or update the task in the dictionary
             If ReminderDictionary.ContainsKey(TaskID) Then
                 ReminderDictionary(TaskID) = TaskReminder
             Else
                 ReminderDictionary.Add(TaskID, TaskReminder)
             End If
+
+            ' Track the TaskID
+            currentTaskIDs.Add(TaskID)
+        Next
+
+        ' Remove tasks from the dictionary that are no longer in ReminderDT
+        Dim tasksToRemove As List(Of Integer) = ReminderDictionary.Keys.Except(currentTaskIDs).ToList()
+
+        For Each taskID As Integer In tasksToRemove
+            ReminderDictionary.Remove(taskID)
         Next
     End Sub
 
@@ -158,9 +174,10 @@ Public Class MainWindow
     End Sub
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles ReminderNotification.BalloonTipClicked
-        Me.Activate()
+        Me.TopMost = True
         Me.WindowState = FormWindowState.Normal
-        'Me.TopMost = True
+        Me.Activate()
+        Me.TopMost = False
     End Sub
 
 #End Region
@@ -261,6 +278,7 @@ Public Class MainWindow
         SetTimeFormatFromSettings()
         SetProfileVisibilityFromSettings()
         SetOnDeleteAskForConfirmationFromSettings()
+        SetSortingFromSettings()
     End Sub
 
     Private Sub SetColorSchemeFromSettings()
@@ -326,6 +344,15 @@ Public Class MainWindow
                 SettingsInstance.RadioButton7.Checked = True
             Case False
                 SettingsInstance.RadioButton8.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSortingFromSettings()
+        Select Case My.Settings.SortByCompletionStatus
+            Case True
+                SettingsInstance.RadioButton9.Checked = True
+            Case False
+                SettingsInstance.RadioButton10.Checked = True
         End Select
     End Sub
 

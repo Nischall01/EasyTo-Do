@@ -36,6 +36,10 @@
             RadioButton7.ForeColor = Color.Black
             RadioButton8.ForeColor = Color.Black
 
+            Label7.ForeColor = Color.Black
+            RadioButton9.ForeColor = Color.Black
+            RadioButton10.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
@@ -69,19 +73,15 @@
             RadioButton7.ForeColor = Color.White
             RadioButton8.ForeColor = Color.White
 
+            Label7.ForeColor = Color.White
+            RadioButton9.ForeColor = Color.White
+            RadioButton10.ForeColor = Color.White
+
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
         Else
             My.Settings.ColorScheme = "Custom"
             SetColorScheme.Custom()
-        End If
-    End Sub
-
-    Private Sub OnDeleteAskForConfirmation_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged, RadioButton8.CheckedChanged
-        If RadioButton7.Checked Then
-            My.Settings.OnDeleteAskForConfirmation = True
-        ElseIf RadioButton8.Checked Then
-            My.Settings.OnDeleteAskForConfirmation = False
         End If
     End Sub
 
@@ -107,6 +107,23 @@
         ElseIf RadioButton5.Checked Then
             My.Settings.TimeFormat = "24"
         End If
+    End Sub
+
+    Private Sub OnDeleteAskForConfirmation_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged, RadioButton8.CheckedChanged
+        If RadioButton7.Checked Then
+            My.Settings.OnDeleteAskForConfirmation = True
+        ElseIf RadioButton8.Checked Then
+            My.Settings.OnDeleteAskForConfirmation = False
+        End If
+    End Sub
+
+    Private Sub Sorting_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton9.CheckedChanged, RadioButton10.CheckedChanged
+        If RadioButton9.Checked Then
+            My.Settings.SortByCompletionStatus = True
+        ElseIf RadioButton10.Checked Then
+            My.Settings.SortByCompletionStatus = False
+        End If
+        ViewsManager.RefreshTasks()
     End Sub
 
     Private Sub TimeFormat_Clicked(sender As Object, e As EventArgs) Handles RadioButton6.Click, RadioButton5.Click

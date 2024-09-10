@@ -46,5 +46,8 @@
 
 </Value>
     </Setting>
+    <Setting Name="SortByCompletionStatus" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
