@@ -1,5 +1,4 @@
 ﻿Public Class Planned_View
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private PlannedDT As New DataTable()
     Private PlannedDT_TaskTitleOnly As New DataTable()
@@ -44,10 +43,25 @@
     Private Sub LoadTasksToDataTables_Planned()
         PlannedDT.Clear()
         PlannedDT_TaskTitleOnly.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
-        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE Section = 'Planned' ORDER BY DueDate;"
 
-        Using connection As New SqlCeConnection(connectionString)
+        Dim query As String
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks " &
+            "WHERE Section = 'Planned';"
+
+        If My.Settings.SortByCompletionStatus Then
+            query = "SELECT * FROM Tasks " &
+            "WHERE Section = 'Planned' " &
+            "ORDER BY IsDone ASC, " &
+            "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+            "ReminderDateTime, IsImportant DESC;"
+        Else
+            query = "SELECT * FROM Tasks " &
+            "WHERE Section = 'Planned' " &
+            "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+            "ReminderDateTime, IsImportant DESC;"
+        End If
+
+        Using connection As New SqlCeConnection(MainWindow.connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
@@ -294,12 +308,20 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        ' Trigger flickering effect by deselecting and reselecting
-        If previousIndex > 0 Then
-            Planned_CheckedListBox.SelectedIndex = -1
-            Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+        If My.Settings.SortByCompletionStatus Then
+            e.NewValue = e.CurrentValue ' Reset the checkbox state
+            ActiveControl = Me.AddNewTask_TextBox
+            Await Task.Delay(10) ' Small delay for smooth transition
+            ViewsManager.RefreshTasks()
+            Await Task.Delay(10)
+        Else
+            ' Trigger flickering effect by deselecting and reselecting
+            If previousIndex > 0 Then
+                Planned_CheckedListBox.SelectedIndex = -1
+                Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+            End If
+            Planned_CheckedListBox.SelectedIndex = previousIndex
         End If
-        Planned_CheckedListBox.SelectedIndex = previousIndex
     End Sub
 
     ' Button Click event to change the 'IsImportant' status of the selected task
@@ -310,7 +332,7 @@
             Else
                 TaskManager.UpdateImportance(CheckState.Checked, SelectedTask_ID)
             End If
-            Planned_CheckedListBox.SelectedIndex = SelectedTask_Index
+            UiUtils.TaskSelection_Retain(Planned_CheckedListBox, SelectedTask_ID)
         Else
             UiUtils.TaskSelection_Clear(Me.Planned_CheckedListBox)
         End If

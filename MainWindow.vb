@@ -5,10 +5,10 @@ Imports System.Threading
 'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
+    Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
+    Public Shared ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private ReminderDT As New DataTable
-    Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     ' Constants
     Private Const CollapsedSidebarWidth As Integer = 50
@@ -19,7 +19,7 @@ Public Class MainWindow
     ' Fields
     Private PfpLastEventTime As DateTime
 
-    Public IsSidebarExpanded As Boolean
+    Public Shared IsSidebarExpanded As Boolean
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
     ' Enums

@@ -1,5 +1,4 @@
 ﻿Public Class Important_View
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private ImportantDT As New DataTable()
     Private ImportantDT_TaskTitleOnly As New DataTable()
@@ -44,10 +43,25 @@
     Private Sub LoadTasksToDataTables_Important()
         ImportantDT.Clear()
         ImportantDT_TaskTitleOnly.Clear()
-        Dim query As String = "SELECT * FROM Tasks WHERE IsImportant = 1;"
-        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks WHERE IsImportant = 1;"
 
-        Using connection As New SqlCeConnection(connectionString)
+        Dim query As String
+        Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks " &
+            "WHERE IsImportant = 1;"
+
+        If My.Settings.SortByCompletionStatus Then
+            query = "SELECT * FROM Tasks " &
+            "WHERE IsImportant = 1 " &
+            "ORDER BY IsDone ASC, " &
+            "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+            "ReminderDateTime, IsImportant DESC;"
+        Else
+            query = "SELECT * FROM Tasks " &
+            "WHERE IsImportant = 1 " &
+            "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+            "ReminderDateTime, IsImportant DESC;"
+        End If
+
+        Using connection As New SqlCeConnection(MainWindow.connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
@@ -320,19 +334,26 @@
     ' Item Check event to change the 'IsDone' status of the selected task
     Private Async Sub Important_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Important_CheckedListBox.ItemCheck
         If ViewsManager.isUiUpdating Or Important_CheckedListBox.SelectedIndex = -1 Then Exit Sub
-
         ' Store the current index before making changes
         Dim previousIndex As Integer = SelectedTask_Index
 
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        ' Trigger flickering effect by deselecting and reselecting
-        If previousIndex > 0 Then
-            Important_CheckedListBox.SelectedIndex = -1
-            Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+        If My.Settings.SortByCompletionStatus Then
+            e.NewValue = e.CurrentValue ' Reset the checkbox state
+            ActiveControl = Me.AddNewTask_TextBox
+            Await Task.Delay(10) ' Small delay for smooth transition
+            ViewsManager.RefreshTasks()
+            Await Task.Delay(10)
+        Else
+            ' Trigger flickering effect by deselecting and reselecting
+            If previousIndex > 0 Then
+                Important_CheckedListBox.SelectedIndex = -1
+                Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+            End If
+            Important_CheckedListBox.SelectedIndex = previousIndex
         End If
-        Important_CheckedListBox.SelectedIndex = previousIndex
     End Sub
 
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
