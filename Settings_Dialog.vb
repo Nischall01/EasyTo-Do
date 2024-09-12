@@ -1,8 +1,38 @@
 ﻿Public Class Settings_Dialog
 
+    Private isDragging As Boolean = False
+    Private startX As Integer
+    Private startY As Integer
+
     Public Sub New()
         InitializeComponent()
+        Me.FormBorderStyle = FormBorderStyle.None
     End Sub
+
+#Region "Window Dragging Logic"
+
+    Private Sub TableLayoutPanel18_MouseDown(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel18.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            startX = e.X
+            startY = e.Y
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel18_MouseMove(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel18.MouseMove
+        If isDragging Then
+            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+        End If
+    End Sub
+
+    Private Sub TableLayoutPanel18_MouseUp(sender As Object, e As MouseEventArgs) Handles TableLayoutPanel18.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
+
+#End Region
 
     Private Sub ColorScheme_Changed(Sender As Object, e As EventArgs) Handles ColorScheme_Light_RadioBtn.CheckedChanged, ColorScheme_Dark_RadioBtn.CheckedChanged, ColorScheme_Custom_RadioBtn.CheckedChanged
         If ColorScheme_Light_RadioBtn.Checked Then
@@ -40,6 +70,10 @@
             RadioButton9.ForeColor = Color.Black
             RadioButton10.ForeColor = Color.Black
 
+            Label8.ForeColor = Color.Black
+            RadioButton12.ForeColor = Color.Black
+            RadioButton11.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
@@ -76,6 +110,10 @@
             Label7.ForeColor = Color.White
             RadioButton9.ForeColor = Color.White
             RadioButton10.ForeColor = Color.White
+
+            Label8.ForeColor = Color.White
+            RadioButton12.ForeColor = Color.White
+            RadioButton11.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
@@ -126,6 +164,15 @@
         ViewsManager.RefreshTasks()
     End Sub
 
+    Private Sub HideCompletedTasks_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton11.CheckedChanged, RadioButton12.CheckedChanged
+        If RadioButton11.Checked Then
+            My.Settings.HideCompletedTasks = True
+        ElseIf RadioButton12.Checked Then
+            My.Settings.HideCompletedTasks = False
+        End If
+        ViewsManager.RefreshTasks()
+    End Sub
+
     Private Sub TimeFormat_Clicked(sender As Object, e As EventArgs) Handles RadioButton6.Click, RadioButton5.Click
         MessageBox.Show("The time format change will take effect after restarting the application.", "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
@@ -151,6 +198,11 @@
                 MainWindow.Username_Label.Hide()
             End If
         End If
+    End Sub
+
+    Private Sub CloseRepeatedDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseRepeatedDialog_Button.Click
+        ActiveControl = Nothing
+        Me.Close()
     End Sub
 
 End Class

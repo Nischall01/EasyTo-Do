@@ -189,7 +189,7 @@ Namespace My
         <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=To_Do.sdf;Persist Security Info=False;"&Global.Microsoft.VisualBasic.ChrW(10)&Global.Microsoft.VisualBasic.ChrW(10))>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Data Source=To_Do.sdf;Persist Security Info=False;")>  _
         Public ReadOnly Property ConnectionString() As String
             Get
                 Return CType(Me("ConnectionString"),String)
@@ -205,6 +205,18 @@ Namespace My
             End Get
             Set
                 Me("SortByCompletionStatus") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property HideCompletedTasks() As Boolean
+            Get
+                Return CType(Me("HideCompletedTasks"),Boolean)
+            End Get
+            Set
+                Me("HideCompletedTasks") = value
             End Set
         End Property
     End Class

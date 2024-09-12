@@ -6,7 +6,6 @@ Imports System.Threading
 
 Public Class MainWindow
     Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
-    Public Shared ReadOnly connectionString As String = My.Settings.ConnectionString
 
     Private ReminderDT As New DataTable
 
@@ -279,6 +278,7 @@ Public Class MainWindow
         SetProfileVisibilityFromSettings()
         SetOnDeleteAskForConfirmationFromSettings()
         SetSortingFromSettings()
+        SetHideCompletedTasksFromSettings()
     End Sub
 
     Private Sub SetColorSchemeFromSettings()
@@ -353,6 +353,15 @@ Public Class MainWindow
                 SettingsInstance.RadioButton9.Checked = True
             Case False
                 SettingsInstance.RadioButton10.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetHideCompletedTasksFromSettings()
+        Select Case My.Settings.HideCompletedTasks
+            Case True
+                SettingsInstance.RadioButton11.Checked = True
+            Case False
+                SettingsInstance.RadioButton12.Checked = True
         End Select
     End Sub
 

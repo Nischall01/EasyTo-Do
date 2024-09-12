@@ -349,6 +349,9 @@ Partial Class MainWindow
         Me.ImBatman.Size = New System.Drawing.Size(135, 22)
         Me.ImBatman.Text = "I'm Batman"
         '
+        'ReminderTimer
+        '
+        '
         'ReminderNotification
         '
         Me.ReminderNotification.Text = "ReminderNotification"

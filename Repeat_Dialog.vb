@@ -19,8 +19,12 @@
 
     Private AlreadySetRepeat As String
 
-    Private Sub Repeat_Dialog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub New()
+        InitializeComponent()
         Me.FormBorderStyle = FormBorderStyle.None
+    End Sub
+
+    Private Sub Repeat_Dialog_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         LoadTable()
         GetAlreadySetRepeat()
         RepeatInitialization()

@@ -61,7 +61,7 @@
             "ReminderDateTime, IsImportant DESC;"
         End If
 
-        Using connection As New SqlCeConnection(MainWindow.connectionString)
+        Using connection As New SqlCeConnection(GlobalResources.connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
@@ -87,23 +87,23 @@
         Planned_CheckedListBox.Items.Clear()
 
         For Each row As DataRow In PlannedDT.Rows
-            Dim taskName As String = row("Task").ToString()
+            Dim taskDisplayName As String = row("Task").ToString()
 
             If Not row.IsNull("ReminderDateTime") Then
-                Dim reminderDateTime As DateTime = row.Field(Of DateTime)("ReminderDateTime")
-                taskName = $"{reminderDateTime:(hh:mmtt)}".ToLower & $" {taskName}"
+                Dim reminderDateTime As DateTime = row("ReminderDateTime")
+                taskDisplayName = $"{reminderDateTime:(hh:mmtt)}".ToLower & $" {taskDisplayName}"
             End If
 
             If Not row.IsNull("RepeatedDays") Then
-                taskName = $"(Repeated) {taskName}"
+                taskDisplayName = $"{taskDisplayName} {GlobalResources.repeatedTaskIndicator}"
             End If
 
             If row("IsImportant") Then
-                taskName = $"! {taskName}"
+                taskDisplayName = $"{GlobalResources.importantTaskIndicator} {taskDisplayName}"
             End If
 
-            Dim item As New TaskItem(taskName, row("TaskID"), row("IsDone"))
-            Planned_CheckedListBox.Items.Add(item, item.IsDone)
+            Dim taskItem As New TaskItem(taskDisplayName, row("TaskID"), row("IsDone"))
+            Planned_CheckedListBox.Items.Add(taskItem, taskItem.IsDone)
         Next
 
         Planned_CheckedListBox.EndUpdate() ' UI refresh happens once after all items are added
@@ -138,7 +138,7 @@
             Case TaskPropertiesState.Disable
                 TaskTitle_TextBox.Text = Nothing
                 Label_TaskEntryDateTime.Text = Nothing
-                Important_Button.BackgroundImage = ImageCache.DisabledImportantIcon
+                Important_Button.BackgroundImage = GlobalResources.DisabledImportantIcon
 
                 If My.Settings.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
@@ -224,7 +224,7 @@
         Label_TaskEntryDateTime.Text = entryDateTime
 
         ' Update important icon
-        Important_Button.BackgroundImage = If(isImportant, ImageCache.CheckedImportantIcon, ImageCache.UncheckedImportantIcon)
+        Important_Button.BackgroundImage = If(isImportant, GlobalResources.CheckedImportantIcon, GlobalResources.UncheckedImportantIcon)
 
         ' Disable or enable due date button based on task repetition
         CustomButton_AddDueDate.Enabled = Not isRepeated
@@ -349,7 +349,7 @@
             If SelectedTask_Properties.IsImportant Then
                 Exit Sub
             End If
-            Important_Button.BackgroundImage = ImageCache.CheckedImportantIcon
+            Important_Button.BackgroundImage = GlobalResources.CheckedImportantIcon
         End If
     End Sub
 
@@ -358,7 +358,7 @@
             If SelectedTask_Properties.IsImportant Then
                 Exit Sub
             End If
-            Important_Button.BackgroundImage = ImageCache.UncheckedImportantIcon
+            Important_Button.BackgroundImage = GlobalResources.UncheckedImportantIcon
         End If
     End Sub
 

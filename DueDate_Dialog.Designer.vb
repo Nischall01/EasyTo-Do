@@ -49,9 +49,9 @@ Partial Class DueDate_Dialog
         Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 4
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 37.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 85.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(249, 295)
         Me.TableLayoutPanel1.TabIndex = 0
@@ -63,7 +63,7 @@ Partial Class DueDate_Dialog
         Me.Button2.FlatAppearance.BorderSize = 0
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Location = New System.Drawing.Point(87, 261)
+        Me.Button2.Location = New System.Drawing.Point(87, 262)
         Me.Button2.Margin = New System.Windows.Forms.Padding(0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(75, 23)
@@ -73,17 +73,17 @@ Partial Class DueDate_Dialog
         '
         'TableLayoutPanel6
         '
-        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer), CType(CType(25, Byte), Integer))
         Me.TableLayoutPanel6.ColumnCount = 1
         Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel6.Controls.Add(Me.DueDate_Icon, 0, 0)
         Me.TableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 32)
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(0, 36)
         Me.TableLayoutPanel6.Margin = New System.Windows.Forms.Padding(0)
         Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
         Me.TableLayoutPanel6.RowCount = 1
         Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(249, 37)
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(249, 36)
         Me.TableLayoutPanel6.TabIndex = 5
         '
         'DueDate_Icon
@@ -110,7 +110,7 @@ Partial Class DueDate_Dialog
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 1
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(249, 32)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(249, 36)
         Me.TableLayoutPanel2.TabIndex = 1
         '
         'CloseDueDateDialog_Button
@@ -120,7 +120,7 @@ Partial Class DueDate_Dialog
         Me.CloseDueDateDialog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.CloseDueDateDialog_Button.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CloseDueDateDialog_Button.ForeColor = System.Drawing.Color.White
-        Me.CloseDueDateDialog_Button.Location = New System.Drawing.Point(112, 4)
+        Me.CloseDueDateDialog_Button.Location = New System.Drawing.Point(112, 6)
         Me.CloseDueDateDialog_Button.Margin = New System.Windows.Forms.Padding(0)
         Me.CloseDueDateDialog_Button.Name = "CloseDueDateDialog_Button"
         Me.CloseDueDateDialog_Button.Size = New System.Drawing.Size(24, 24)
@@ -132,7 +132,7 @@ Partial Class DueDate_Dialog
         'MonthCalendar1
         '
         Me.MonthCalendar1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.MonthCalendar1.Location = New System.Drawing.Point(11, 78)
+        Me.MonthCalendar1.Location = New System.Drawing.Point(11, 81)
         Me.MonthCalendar1.Name = "MonthCalendar1"
         Me.MonthCalendar1.TabIndex = 0
         '
