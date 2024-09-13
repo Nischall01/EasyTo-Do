@@ -20,8 +20,6 @@
 
     Private dt As New DataTable()
 
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
-
 #Region "Form Load"
 
     Private Sub AddReminder_Time__Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -137,7 +135,7 @@
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
-            Using connection As New SqlCeConnection(connectionString)
+            Using connection As New SqlCeConnection(SettingsCache.connectionString)
                 Using command As New SqlCeCommand(query, connection)
                     Using adapter As New SqlCeDataAdapter(command)
                         connection.Open()

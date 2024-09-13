@@ -26,7 +26,7 @@
 
     ' Initializes the Repeated tasks view. '
     Private Sub InitializeTasks()
-        Select Case My.Settings.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
+        Select Case SettingsCache.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -57,18 +57,25 @@
         Dim query As String
         Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks;"
 
-        If My.Settings.SortByCompletionStatus Then
+        If SettingsCache.HideCompletedTasks Then
             query = "SELECT * FROM Tasks " &
-            "ORDER BY IsDone ASC, " &
-            "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
-            "ReminderDateTime, IsImportant DESC;"
-        Else
-            query = "SELECT * FROM Tasks " &
+            "Where IsDone = 0 " & ' Filter to show only incomplete tasks
             "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
             "ReminderDateTime, IsImportant DESC;"
+        Else
+            If SettingsCache.SortByCompletionStatus Then
+                query = "SELECT * FROM Tasks " &
+                "ORDER BY IsDone ASC, " &
+                "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+                "ReminderDateTime, IsImportant DESC;"
+            Else
+                query = "SELECT * FROM Tasks " &
+                "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+                "ReminderDateTime, IsImportant DESC;"
+            End If
         End If
 
-        Using connection As New SqlCeConnection(GlobalResources.connectionString)
+        Using connection As New SqlCeConnection(SettingsCache.connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 command.Parameters.AddWithValue("@Today", DateTime.Today)
@@ -158,7 +165,7 @@
                 Label_TaskEntryDateTime.Text = Nothing
                 Important_Button.BackgroundImage = GlobalResources.DisabledImportantIcon
 
-                If My.Settings.ColorScheme = "Dark" Then
+                If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     TaskDescription_RichTextBox.Hide()
                 End If
@@ -181,7 +188,7 @@
 
                 Button_DeleteTask.Enabled = False
             Case TaskPropertiesState.Enable
-                If My.Settings.ColorScheme = "Dark" Then
+                If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                     TaskDescription_RichTextBox.Show()
                 End If
@@ -252,7 +259,7 @@
             TaskDescription_RichTextBox.ForeColor = Color.Gray
             TaskDescription_RichTextBox.Text = TextPlaceholders.Description
         Else
-            TaskDescription_RichTextBox.ForeColor = If(My.Settings.ColorScheme = "Dark", Color.Pink, Color.Black)
+            TaskDescription_RichTextBox.ForeColor = If(SettingsCache.ColorScheme = "Dark", Color.Pink, Color.Black)
             TaskDescription_RichTextBox.Text = taskDescription
         End If
 
@@ -290,9 +297,9 @@
         End If
     End Sub
 
-    ' Update the task's 'IsDone' status when the checked state changes
+    ' ItemCheck event to change the 'IsDone' status of the selected task
     Private Async Sub Tasks_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles Tasks_CheckedListBox.ItemCheck
-        If ViewsManager.isUiUpdating Or Tasks_CheckedListBox.SelectedIndex = -1 Then Exit Sub
+        If ViewsManager.isUiUpdating Then Exit Sub
 
         ' Store the current index before making changes
         Dim previousIndex As Integer = SelectedTask_Index
@@ -300,12 +307,11 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        If My.Settings.SortByCompletionStatus Then
-            e.NewValue = e.CurrentValue ' Reset the checkbox state
-            ActiveControl = Me.AddNewTask_TextBox
-            Await Task.Delay(10) ' Small delay for smooth transition
-            ViewsManager.RefreshTasks()
+        If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
             Await Task.Delay(10)
+            UiUtils.TaskSelection_Clear(Tasks_CheckedListBox)
+            ViewsManager.RefreshTasks()
+            Me.ActiveControl = Me.AddNewTask_TextBox
         Else
             ' Trigger flickering effect by deselecting and reselecting
             If previousIndex > 0 Then
@@ -366,7 +372,7 @@
             Exit Sub
         End If
 
-        If My.Settings.OnDeleteAskForConfirmation Then
+        If SettingsCache.onDeleteAskForConfirmation Then
             Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If result <> DialogResult.Yes Then
@@ -472,9 +478,9 @@
     End Sub
 
     Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
-        If My.Settings.ColorScheme = "Dark" Then
+        If SettingsCache.ColorScheme = "Dark" Then
             TaskDescription_RichTextBox.ForeColor = Color.White
-        ElseIf My.Settings.ColorScheme = "Light" Then
+        ElseIf SettingsCache.ColorScheme = "Light" Then
             TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
         End If
         If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then

@@ -12,8 +12,6 @@
 
     Private dt As New DataTable()
 
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
-
     Private Sub DueDate_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.FormBorderStyle = FormBorderStyle.None
 
@@ -58,7 +56,7 @@
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
-            Using connection As New SqlCeConnection(connectionString)
+            Using connection As New SqlCeConnection(SettingsCache.connectionString)
                 Using command As New SqlCeCommand(query, connection)
                     Using adapter As New SqlCeDataAdapter(command)
                         connection.Open()

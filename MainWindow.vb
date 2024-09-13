@@ -1,34 +1,35 @@
 ﻿Imports System.IO
-Imports System.Threading
 
 'Imports Newtonsoft.Json
 'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
-    Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
 
+    ' Reminder Variables
+
+    Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
     Private ReminderDT As New DataTable
 
     ' Constants
-    Private Const CollapsedSidebarWidth As Integer = 50
 
+    Private Const CollapsedSidebarWidth As Integer = 50
     Private Const ExpandedSidebarWidth As Integer = 200
     Private Const MaxSidebarWidth As Integer = 333
 
     ' Fields
-    Private PfpLastEventTime As DateTime
 
+    Private PfpLastEventTime As DateTime
     Public Shared IsSidebarExpanded As Boolean
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
     ' Enums
+
     Private Enum SidebarState
         Collapsed
         Expanded
         Maximized
     End Enum
 
-    ' Enum defining the different actions for managing the task properties sidebar.
     Public Enum TaskPropertiesSidebarAction
         DisableOnly
         HideOnly
@@ -36,8 +37,8 @@ Public Class MainWindow
     End Enum
 
     ' Forms
-    Public MyDayInstance As New MyDay_View()
 
+    Public MyDayInstance As New MyDay_View()
     Public RepeatedInstance As New Repeated_View()
     Public ImportantInstance As New Important_View()
     Public PlannedInstance As New Planned_View()
@@ -78,7 +79,7 @@ Public Class MainWindow
 
         Dim query As String = "SELECT TaskID, Task, Description,IsImportant, ReminderDateTime FROM Tasks WHERE ReminderDateTime IS NOT NULL AND IsDone = 0;"
 
-        Using connection As New SqlCeConnection(connectionString)
+        Using connection As New SqlCeConnection(SettingsCache.connectionString)
             connection.Open()
             Using command As New SqlCeCommand(query, connection)
                 Using adapter As New SqlCeDataAdapter(command)

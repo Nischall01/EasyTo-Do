@@ -1,9 +1,6 @@
 ﻿Namespace TaskPropertiesCRUDHandler
     Module TaskPropertiesCRUDHandler
 
-        ' Shared connection string variable
-        Private ReadOnly connectionString As String = My.Settings.ConnectionString
-
         ' Method to update task description
         Public Sub UpdateDescription(TaskID As Integer, NewDescription As String)
             Dim query As String = "UPDATE Tasks SET Description = @NewDescription WHERE TaskID = @TaskID"
@@ -154,7 +151,7 @@
         'Method to execute Non-Query
         Private Function ExecuteQuery(query As String, parameters As Dictionary(Of String, Object)) As Integer
             Try
-                Using connection As New SqlCeConnection(connectionString)
+                Using connection As New SqlCeConnection(SettingsCache.connectionString)
                     connection.Open()
                     Using command As New SqlCeCommand(query, connection)
                         For Each param In parameters

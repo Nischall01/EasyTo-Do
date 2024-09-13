@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.vb" />
+    <Compile Include="SettingsCache.vb" />
     <Compile Include="TaskProperties.vb" />
     <Compile Include="TaskManager.vb" />
     <Compile Include="GlobalResources .vb" />

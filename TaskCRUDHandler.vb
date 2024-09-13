@@ -1,9 +1,6 @@
 ﻿Namespace TaskCRUDHandler
     Module TaskCRUDHandler
 
-        ' Shared connection string variable
-        Private ReadOnly connectionString As String = My.Settings.ConnectionString
-
         ' Class with methods to add new task for each view
         Public Class AddNewTask
 
@@ -137,6 +134,9 @@
             Else
                 MessageBox.Show("No task was found with the specified ID. Please verify And try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
+
+            If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then Exit Sub
+
             ViewsManager.RefreshTasks()
         End Sub
 
@@ -178,7 +178,7 @@
                                           );
                                         "
             Try
-                Using connection As New SqlCeConnection(connectionString)
+                Using connection As New SqlCeConnection(SettingsCache.connectionString)
                     connection.Open()
                     ' Drop the table if it exists
                     Using dropCommand As New SqlCeCommand(dropTableQuery, connection)
@@ -204,7 +204,7 @@
             Dim newTaskId As Integer
             Dim queryGetMaxId As String = "SELECT MAX(TaskID) FROM Tasks"
             Try
-                Using connection As New SqlCeConnection(connectionString)
+                Using connection As New SqlCeConnection(SettingsCache.connectionString)
                     connection.Open()
                     Using maxIdCommand As New SqlCeCommand(queryGetMaxId, connection)
                         newTaskId = maxIdCommand.ExecuteScalar()
@@ -225,7 +225,7 @@
             Dim count As Integer
             Dim queryCountTasks As String = "SELECT COUNT(*) FROM Tasks"
             Try
-                Using connection As New SqlCeConnection(connectionString)
+                Using connection As New SqlCeConnection(SettingsCache.connectionString)
                     connection.Open()
                     Using countCommand As New SqlCeCommand(queryCountTasks, connection)
                         count = Convert.ToInt32(countCommand.ExecuteScalar())
@@ -244,7 +244,7 @@
         'Method to execute Non-Query
         Private Function ExecuteQuery(query As String, parameters As Dictionary(Of String, Object)) As Integer
             Try
-                Using connection As New SqlCeConnection(connectionString)
+                Using connection As New SqlCeConnection(SettingsCache.connectionString)
                     connection.Open()
                     Using command As New SqlCeCommand(query, connection)
                         For Each param In parameters

@@ -11,8 +11,6 @@
         Disable
     End Enum
 
-    Private ReadOnly connectionString As String = My.Settings.ConnectionString
-
     Private dt As New DataTable()
 
     Public Repeat_SelectedTaskID As Integer
@@ -64,7 +62,7 @@
     Private Sub LoadTable()
         Dim query As String = "SELECT * FROM Tasks"
         Try
-            Using connection As New SqlCeConnection(connectionString)
+            Using connection As New SqlCeConnection(SettingsCache.connectionString)
                 Using command As New SqlCeCommand(query, connection)
                     Using adapter As New SqlCeDataAdapter(command)
                         connection.Open()

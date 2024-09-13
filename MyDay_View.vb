@@ -1,4 +1,4 @@
-﻿Imports System.Drawing.Design
+﻿Imports System.Runtime.InteropServices
 
 Public Class MyDay_View
 
@@ -11,10 +11,6 @@ Public Class MyDay_View
     Private SelectedTask_Index As Integer
     Private SelectedTask_Item As TaskItem
     Private SelectedTask_Properties As TaskProperties
-    Private UserDefaultTimeFormat As String = My.Settings.TimeFormat
-
-    Private ReadOnly importantTaskIndicator As String = "[ ! ]"
-    Private ReadOnly repeatedTaskIndicator As String = "[R]"
 
 #Region "On Load"
 
@@ -26,7 +22,7 @@ Public Class MyDay_View
 
     ' Initializes the MyDay tasks view. '
     Private Sub InitializeMyDay()
-        Select Case My.Settings.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
+        Select Case SettingsCache.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
                 ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
@@ -49,6 +45,60 @@ Public Class MyDay_View
 #End Region
 
 #Region "Data Loading Actions"
+
+    ' Load tasks onto the DataTables
+    Private Sub LoadTasksToDataTables_MyDay()
+        MyDayDT.Clear()
+        MyDayDT_TaskTitleOnly.Clear()
+
+        Dim TodayDay As String = (DateTime.Today.DayOfWeek.ToString).Substring(0, 3)
+
+        Dim query As String
+        Dim queryTitleOnly As String = "Select TaskID, Task FROM Tasks " &
+            "WHERE DueDate = @Today Or RepeatedDays Like '%' + CAST(@TodayDay AS NVARCHAR) + '%';"
+
+        If SettingsCache.HideCompletedTasks Then
+            query = "SELECT * FROM Tasks " &
+            "WHERE (DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%') " &
+            "AND IsDone = 0 " & ' Filter to show only incomplete tasks
+            "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+            "ReminderDateTime, IsImportant DESC;"
+        Else
+            If SettingsCache.SortByCompletionStatus Then
+                query = "SELECT * FROM Tasks " &
+                "WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%' " &
+                "ORDER BY IsDone ASC, " &
+                "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+                "ReminderDateTime, IsImportant DESC;"
+            Else
+                query = "SELECT * FROM Tasks " &
+                "WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%' " &
+                "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
+                "ReminderDateTime, IsImportant DESC;"
+            End If
+        End If
+
+        Using connection As New SqlCeConnection(SettingsCache.connectionString)
+            connection.Open()
+            Using command As New SqlCeCommand(query, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                command.Parameters.AddWithValue("@TodayDay", TodayDay)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(MyDayDT)
+                End Using
+            End Using
+            Using command As New SqlCeCommand(queryTitleOnly, connection)
+                command.Parameters.AddWithValue("@Today", DateTime.Today)
+                command.Parameters.AddWithValue("@TodayDay", TodayDay)
+                Using adapter As New SqlCeDataAdapter(command)
+                    adapter.Fill(MyDayDT_TaskTitleOnly)
+                End Using
+            End Using
+        End Using
+
+        MyDayDT.PrimaryKey = New DataColumn() {MyDayDT.Columns("TaskID")}
+        MyDayDT_TaskTitleOnly.PrimaryKey = New DataColumn() {MyDayDT_TaskTitleOnly.Columns("TaskID")}
+    End Sub
 
     ' Load tasks onto the CheckedListBox.
     Public Sub LoadTasksToMyDayView()
@@ -78,60 +128,6 @@ Public Class MyDay_View
         Next
 
         MyDay_CheckedListBox.EndUpdate() ' UI refresh happens once after all items are added
-    End Sub
-
-    ' Load tasks onto the DataTables
-    Private Sub LoadTasksToDataTables_MyDay()
-        MyDayDT.Clear()
-        MyDayDT_TaskTitleOnly.Clear()
-
-        Dim TodayDay As String = (DateTime.Today.DayOfWeek.ToString).Substring(0, 3)
-
-        Dim query As String
-        Dim queryTitleOnly As String = "Select TaskID, Task FROM Tasks " &
-                               "WHERE DueDate = @Today Or RepeatedDays Like '%' + CAST(@TodayDay AS NVARCHAR) + '%';"
-
-        If My.Settings.HideCompletedTasks Then
-            query = "SELECT * FROM Tasks " &
-            "WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%' AND IsDone = 0" &
-            "ORDER BY " &
-            "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
-            "ReminderDateTime, IsImportant DESC;"
-        Else
-            If My.Settings.SortByCompletionStatus Then
-                query = "SELECT * FROM Tasks " &
-            "WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%' " &
-            "ORDER BY IsDone ASC, " &
-            "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
-            "ReminderDateTime, IsImportant DESC;"
-            Else
-                query = "SELECT * FROM Tasks " &
-            "WHERE DueDate = @Today OR RepeatedDays LIKE '%' + CAST(@TodayDay AS NVARCHAR) + '%' " &
-            "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
-            "ReminderDateTime, IsImportant DESC;"
-            End If
-        End If
-
-        Using connection As New SqlCeConnection(GlobalResources.connectionString)
-            connection.Open()
-            Using command As New SqlCeCommand(query, connection)
-                command.Parameters.AddWithValue("@Today", DateTime.Today)
-                command.Parameters.AddWithValue("@TodayDay", TodayDay)
-                Using adapter As New SqlCeDataAdapter(command)
-                    adapter.Fill(MyDayDT)
-                End Using
-            End Using
-            Using command As New SqlCeCommand(queryTitleOnly, connection)
-                command.Parameters.AddWithValue("@Today", DateTime.Today)
-                command.Parameters.AddWithValue("@TodayDay", TodayDay)
-                Using adapter As New SqlCeDataAdapter(command)
-                    adapter.Fill(MyDayDT_TaskTitleOnly)
-                End Using
-            End Using
-        End Using
-
-        MyDayDT.PrimaryKey = New DataColumn() {MyDayDT.Columns("TaskID")}
-        MyDayDT_TaskTitleOnly.PrimaryKey = New DataColumn() {MyDayDT_TaskTitleOnly.Columns("TaskID")}
     End Sub
 
 #End Region
@@ -165,7 +161,7 @@ Public Class MyDay_View
                 Label_TaskEntryDateTime.Text = Nothing
                 Important_Button.BackgroundImage = GlobalResources.DisabledImportantIcon
 
-                If My.Settings.ColorScheme = "Dark" Then
+                If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     TaskDescription_RichTextBox.Hide()
                 End If
@@ -188,7 +184,7 @@ Public Class MyDay_View
 
                 Button_DeleteTask.Enabled = False
             Case TaskPropertiesState.Enable
-                If My.Settings.ColorScheme = "Dark" Then
+                If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                     TaskDescription_RichTextBox.Show()
                 End If
@@ -221,7 +217,7 @@ Public Class MyDay_View
 #Region "Clock"
 
     Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ClockTimer.Tick
-        If UserDefaultTimeFormat = "12" Then
+        If SettingsCache.TimeFormat = "12" Then
             Time_Label.Text = DateTime.Now.ToString("hh:mm:ss tt")
         Else
             Time_Label.Text = DateTime.Now.ToString("HH:mm:ss")
@@ -271,7 +267,7 @@ Public Class MyDay_View
             TaskDescription_RichTextBox.ForeColor = Color.Gray
             TaskDescription_RichTextBox.Text = TextPlaceholders.Description
         Else
-            TaskDescription_RichTextBox.ForeColor = If(My.Settings.ColorScheme = "Dark", Color.Pink, Color.Black)
+            TaskDescription_RichTextBox.ForeColor = If(SettingsCache.ColorScheme = "Dark", Color.Pink, Color.Black)
             TaskDescription_RichTextBox.Text = taskDescription
         End If
 
@@ -313,7 +309,7 @@ Public Class MyDay_View
             Exit Sub
         End If
 
-        If My.Settings.OnDeleteAskForConfirmation Then
+        If SettingsCache.onDeleteAskForConfirmation Then
             Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If result <> DialogResult.Yes Then
@@ -391,9 +387,9 @@ Public Class MyDay_View
         End If
     End Sub
 
-    ' Item Check event to change the 'IsDone' status of the selected task
+    ' ItemCheck event to change the 'IsDone' status of the selected task
     Private Async Sub MyDay_CheckedListBox_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles MyDay_CheckedListBox.ItemCheck
-        If ViewsManager.isUiUpdating Or MyDay_CheckedListBox.SelectedIndex = -1 Then Exit Sub
+        If ViewsManager.isUiUpdating Then Exit Sub
 
         ' Store the current index before making changes
         Dim previousIndex As Integer = SelectedTask_Index
@@ -401,12 +397,13 @@ Public Class MyDay_View
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        If My.Settings.SortByCompletionStatus Then
-            e.NewValue = e.CurrentValue ' Reset the checkbox state
-            ActiveControl = Me.AddNewTask_TextBox
-            Await Task.Delay(10) ' Small delay for smooth transition
+        ' # Option 1
+
+        If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
+            Await Task.Delay(15)
+            UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
             ViewsManager.RefreshTasks()
-            Await Task.Delay(10)
+            Me.ActiveControl = Me.AddNewTask_TextBox
         Else
             ' Trigger flickering effect by deselecting and reselecting
             If previousIndex > 0 Then
@@ -416,6 +413,12 @@ Public Class MyDay_View
             MyDay_CheckedListBox.SelectedIndex = previousIndex
         End If
 
+        ' # Option 2
+
+        'Await Task.Delay(10)
+        'UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
+        'ViewsManager.RefreshTasks()
+        'Me.ActiveControl = Me.AddNewTask_TextBox
     End Sub
 
     Private Sub MyDay_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown
@@ -469,9 +472,9 @@ Public Class MyDay_View
     End Sub
 
     Private Sub TaskDescription_Enter(sender As Object, e As EventArgs) Handles TaskDescription_RichTextBox.Enter
-        If My.Settings.ColorScheme = "Dark" Then
+        If SettingsCache.ColorScheme = "Dark" Then
             TaskDescription_RichTextBox.ForeColor = Color.White
-        ElseIf My.Settings.ColorScheme = "Light" Then
+        ElseIf SettingsCache.ColorScheme = "Light" Then
             TaskDescription_RichTextBox.ForeColor = Color.FromArgb(69, 69, 69)
         End If
         If TaskDescription_RichTextBox.Text = TextPlaceholders.Description Then

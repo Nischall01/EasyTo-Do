@@ -718,11 +718,11 @@ Partial Class Settings_Dialog
         Me.Label7.BackColor = System.Drawing.Color.Transparent
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.White
-        Me.Label7.Location = New System.Drawing.Point(106, 4)
+        Me.Label7.Location = New System.Drawing.Point(34, 4)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(62, 18)
+        Me.Label7.Size = New System.Drawing.Size(206, 18)
         Me.Label7.TabIndex = 0
-        Me.Label7.Text = "Sorting"
+        Me.Label7.Text = "Sort by Completion Status"
         '
         'TableLayoutPanel16
         '
@@ -745,12 +745,12 @@ Partial Class Settings_Dialog
         Me.RadioButton10.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton10.AutoSize = True
         Me.RadioButton10.ForeColor = System.Drawing.Color.White
-        Me.RadioButton10.Location = New System.Drawing.Point(141, 4)
+        Me.RadioButton10.Location = New System.Drawing.Point(180, 4)
         Me.RadioButton10.Name = "RadioButton10"
-        Me.RadioButton10.Size = New System.Drawing.Size(118, 17)
+        Me.RadioButton10.Size = New System.Drawing.Size(39, 17)
         Me.RadioButton10.TabIndex = 3
         Me.RadioButton10.TabStop = True
-        Me.RadioButton10.Text = "DueDate/Reminder"
+        Me.RadioButton10.Text = "No"
         Me.RadioButton10.UseVisualStyleBackColor = True
         '
         'RadioButton9
@@ -758,12 +758,12 @@ Partial Class Settings_Dialog
         Me.RadioButton9.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.RadioButton9.AutoSize = True
         Me.RadioButton9.ForeColor = System.Drawing.Color.White
-        Me.RadioButton9.Location = New System.Drawing.Point(11, 4)
+        Me.RadioButton9.Location = New System.Drawing.Point(45, 4)
         Me.RadioButton9.Name = "RadioButton9"
-        Me.RadioButton9.Size = New System.Drawing.Size(110, 17)
+        Me.RadioButton9.Size = New System.Drawing.Size(43, 17)
         Me.RadioButton9.TabIndex = 2
         Me.RadioButton9.TabStop = True
-        Me.RadioButton9.Text = "Completion Status"
+        Me.RadioButton9.Text = "Yes"
         Me.RadioButton9.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel14

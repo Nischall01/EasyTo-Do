@@ -121,6 +121,7 @@
             My.Settings.ColorScheme = "Custom"
             SetColorScheme.Custom()
         End If
+        SettingsCache.UpdateSettingsCache()
     End Sub
 
     Private Sub Sidebar_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton3.CheckedChanged, RadioButton2.CheckedChanged
@@ -153,6 +154,7 @@
         ElseIf RadioButton8.Checked Then
             My.Settings.OnDeleteAskForConfirmation = False
         End If
+        SettingsCache.UpdateSettingsCache()
     End Sub
 
     Private Sub Sorting_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton9.CheckedChanged, RadioButton10.CheckedChanged
@@ -161,6 +163,7 @@
         ElseIf RadioButton10.Checked Then
             My.Settings.SortByCompletionStatus = False
         End If
+        SettingsCache.UpdateSettingsCache()
         ViewsManager.RefreshTasks()
     End Sub
 
@@ -170,6 +173,7 @@
         ElseIf RadioButton12.Checked Then
             My.Settings.HideCompletedTasks = False
         End If
+        SettingsCache.UpdateSettingsCache()
         ViewsManager.RefreshTasks()
     End Sub
 
