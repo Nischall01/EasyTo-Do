@@ -48,5 +48,17 @@
     <Setting Name="HideCompletedTasks" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="DefaultTaskFont" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Microsoft PhagsPa</Value>
+    </Setting>
+    <Setting Name="SelectedTaskFont" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Microsoft PhagsPa, 14pt</Value>
+    </Setting>
+    <Setting Name="IsTaskFontDefault" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="TasksSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

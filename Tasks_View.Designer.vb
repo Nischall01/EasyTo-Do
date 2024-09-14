@@ -424,16 +424,13 @@ Partial Class Tasks_View
         Me.Tasks_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.Tasks_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.Tasks_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Tasks_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Tasks_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Tasks_CheckedListBox.ForeColor = System.Drawing.Color.White
         Me.Tasks_CheckedListBox.Location = New System.Drawing.Point(0, 0)
         Me.Tasks_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)
         Me.Tasks_CheckedListBox.Name = "Tasks_CheckedListBox"
         Me.Tasks_CheckedListBox.Size = New System.Drawing.Size(576, 299)
         Me.Tasks_CheckedListBox.TabIndex = 10
-        '
-        'ReminderTimer
-        '
         '
         'ReminderNotification
         '
@@ -446,7 +443,7 @@ Partial Class Tasks_View
         Me.ContextMenuStrip3.Name = "ContextMenuStrip2"
         Me.ContextMenuStrip3.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip3.ShowImageMargin = False
-        Me.ContextMenuStrip3.Size = New System.Drawing.Size(156, 48)
+        Me.ContextMenuStrip3.Size = New System.Drawing.Size(93, 26)
         '
         'ToolStripMenuItem3
         '

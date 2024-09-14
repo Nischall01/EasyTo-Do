@@ -398,7 +398,7 @@ Partial Class Repeated_View
         Me.Repeated_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.Repeated_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.Repeated_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Repeated_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Repeated_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Repeated_CheckedListBox.ForeColor = System.Drawing.Color.White
         Me.Repeated_CheckedListBox.Location = New System.Drawing.Point(0, 0)
         Me.Repeated_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)

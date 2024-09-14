@@ -2,14 +2,14 @@
     Module ViewsManager
         Public isUiUpdating As Boolean = False
 
-        ' Dictionary to map view names to their instances
-        Private ReadOnly viewInstances As New Dictionary(Of String, Action) From {
-            {ViewName.MyDay, Sub() MainWindow.MyDayInstance.LoadTasksToMyDayView()},
-            {ViewName.Repeated, Sub() MainWindow.RepeatedInstance.LoadTasksToRepeatedView()},
-            {ViewName.Important, Sub() MainWindow.ImportantInstance.LoadTasksToImportantView()},
-            {ViewName.Planned, Sub() MainWindow.PlannedInstance.LoadTasksToPlannedView()},
-            {ViewName.Tasks, Sub() MainWindow.TasksInstance.LoadTasksToTasksView()}
-        }
+        ' Dictionary to map view names to their corresponding task-loading actions
+        Private ReadOnly viewLoadActions As New Dictionary(Of String, Action) From {
+    {ViewName.MyDay, Sub() MainWindow.MyDayInstance.LoadTasksToMyDayView()},
+    {ViewName.Repeated, Sub() MainWindow.RepeatedInstance.LoadTasksToRepeatedView()},
+    {ViewName.Important, Sub() MainWindow.ImportantInstance.LoadTasksToImportantView()},
+    {ViewName.Planned, Sub() MainWindow.PlannedInstance.LoadTasksToPlannedView()},
+    {ViewName.Tasks, Sub() MainWindow.TasksInstance.LoadTasksToTasksView()}
+}
 
         Public Sub RefreshTasks()
             isUiUpdating = True
@@ -18,9 +18,9 @@
             Dim activeViewName As ViewName = GetActiveViewName()
 
             ' Refresh the active view first
-            If viewInstances.ContainsKey(activeViewName) Then
+            If viewLoadActions.ContainsKey(activeViewName) Then
                 Try
-                    viewInstances(activeViewName).Invoke()
+                    viewLoadActions(activeViewName).Invoke()
                     'MsgBox("Refreshed " & activeViewName.ToString)
                 Catch ex As Exception
                     MessageBox.Show("An error occurred while refreshing the active view: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -28,11 +28,10 @@
             End If
 
             ' Refresh other views
-            Dim viewName As ViewName
-            For Each viewName In viewInstances.Keys
+            For Each viewName In viewLoadActions.Keys
                 If viewName <> activeViewName Then
                     Try
-                        viewInstances(viewName).Invoke()
+                        viewLoadActions(viewName).Invoke()
                         'MsgBox("Refreshed " & viewName.ToString)
                     Catch ex As Exception
                         MessageBox.Show("An error occurred while refreshing tasks: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)

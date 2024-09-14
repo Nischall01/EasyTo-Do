@@ -1,4 +1,6 @@
-﻿Public Class Settings_Dialog
+﻿Imports EasyTo_Do.My
+
+Public Class Settings_Dialog
 
     Private isDragging As Boolean = False
     Private startX As Integer
@@ -146,6 +148,7 @@
         ElseIf RadioButton5.Checked Then
             My.Settings.TimeFormat = "24"
         End If
+        SettingsCache.UpdateSettingsCache()
     End Sub
 
     Private Sub OnDeleteAskForConfirmation_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton7.CheckedChanged, RadioButton8.CheckedChanged
@@ -177,8 +180,55 @@
         ViewsManager.RefreshTasks()
     End Sub
 
-    Private Sub TimeFormat_Clicked(sender As Object, e As EventArgs) Handles RadioButton6.Click, RadioButton5.Click
-        MessageBox.Show("The time format change will take effect after restarting the application.", "Restart Required", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    Private Sub TasksSize_TrackBar_Scroll(sender As Object, e As EventArgs) Handles TasksSize_TrackBar.Scroll
+        Dim TrackBarValue As Integer = TasksSize_TrackBar.Value
+
+        My.Settings.TasksSize = TrackBarValue
+
+        Dim fontSize As Single = GetFontSizeFromValue(TasksSize_TrackBar.Value)
+
+        MainWindow.ChangeTasksSize(fontSize)
+    End Sub
+
+    Private Sub TasksFont_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton13.CheckedChanged, RadioButton14.CheckedChanged
+        If RadioButton13.Checked Then
+            SelectedFont_TextBox.Enabled = False
+            SelectTasksFont_Button.Enabled = False
+
+            Dim fontSize As Single = GetFontSizeFromValue(TasksSize_TrackBar.Value)
+            Dim DefaultFont As New Font(SettingsCache.DefaultTaskFont, fontSize)
+
+            MainWindow.ChangeTasksFont(DefaultFont)
+            SelectedFont_TextBox.Clear()
+
+            My.Settings.IsTaskFontDefault = True
+
+        ElseIf RadioButton14.Checked Then
+            SelectedFont_TextBox.Enabled = True
+            SelectTasksFont_Button.Enabled = True
+
+            MainWindow.ChangeTasksFont(SettingsCache.SelectedTaskFont)
+            SelectedFont_TextBox.Text = SettingsCache.SelectedTaskFont.Name
+
+            My.Settings.IsTaskFontDefault = False
+
+        End If
+    End Sub
+
+    Private Sub SelectTasksFont_Click(sender As Object, e As EventArgs) Handles SelectTasksFont_Button.Click
+        ' Load the saved font from My.Settings into FontDialog1 before showing it
+        FontDialog1.Font = SettingsCache.SelectedTaskFont
+        ' Show the FontDialog and check if the user clicked OK
+        If FontDialog1.ShowDialog() = DialogResult.OK Then
+            ' Retrieve the selected font from FontDialog1
+            Dim selectedFont As Font = FontDialog1.Font
+
+            SelectedFont_TextBox.Text = selectedFont.Name
+
+            MainWindow.ChangeTasksFont(selectedFont)
+            My.Settings.SelectedTaskFont = selectedFont
+            SettingsCache.UpdateSettingsCache()
+        End If
     End Sub
 
     Private Sub PfpSettings_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -203,6 +253,26 @@
             End If
         End If
     End Sub
+
+    ' Helper function to get the font size based on the input value
+    Private Function GetFontSizeFromValue(Value As Integer) As Single
+        Select Case Value
+            Case 0
+                Return 12.75F
+            Case 1
+                Return 13.0F
+            Case 2
+                Return 14.0F
+            Case 3
+                Return 15.0F
+            Case 4
+                Return 16.0F
+            Case 5
+                Return 17.0F
+            Case Else
+                Return 12.75F
+        End Select
+    End Function
 
     Private Sub CloseRepeatedDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseRepeatedDialog_Button.Click
         ActiveControl = Nothing

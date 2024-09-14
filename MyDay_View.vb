@@ -399,26 +399,26 @@ Public Class MyDay_View
 
         ' # Option 1
 
-        If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
-            Await Task.Delay(15)
-            UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
-            ViewsManager.RefreshTasks()
-            Me.ActiveControl = Me.AddNewTask_TextBox
-        Else
-            ' Trigger flickering effect by deselecting and reselecting
-            If previousIndex > 0 Then
-                MyDay_CheckedListBox.SelectedIndex = -1
-                Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-            End If
-            MyDay_CheckedListBox.SelectedIndex = previousIndex
-        End If
+        'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
+        '    Await Task.Delay(15)
+        '    UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
+        '    ViewsManager.RefreshTasks()
+        '    Me.ActiveControl = Me.AddNewTask_TextBox
+        'Else
+        '    ' Trigger flickering effect by deselecting and reselecting
+        '    If previousIndex > 0 Then
+        '        MyDay_CheckedListBox.SelectedIndex = -1
+        '        Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+        '    End If
+        '    MyDay_CheckedListBox.SelectedIndex = previousIndex
+        'End If
 
         ' # Option 2
 
-        'Await Task.Delay(10)
-        'UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
-        'ViewsManager.RefreshTasks()
-        'Me.ActiveControl = Me.AddNewTask_TextBox
+        Await Task.Delay(10)
+        UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
+        ViewsManager.RefreshTasks()
+        Me.ActiveControl = Me.AddNewTask_TextBox
     End Sub
 
     Private Sub MyDay_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown

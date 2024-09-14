@@ -349,19 +349,28 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
-            Await Task.Delay(10)
-            UiUtils.TaskSelection_Clear(Important_CheckedListBox)
-            ViewsManager.RefreshTasks()
-            Me.ActiveControl = Me.AddNewTask_TextBox
-        Else
-            ' Trigger flickering effect by deselecting and reselecting
-            If previousIndex > 0 Then
-                Important_CheckedListBox.SelectedIndex = -1
-                Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-            End If
-            Important_CheckedListBox.SelectedIndex = previousIndex
-        End If
+        ' # Option 1
+
+        'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
+        '    Await Task.Delay(10)
+        '    UiUtils.TaskSelection_Clear(Important_CheckedListBox)
+        '    ViewsManager.RefreshTasks()
+        '    Me.ActiveControl = Me.AddNewTask_TextBox
+        'Else
+        '    ' Trigger flickering effect by deselecting and reselecting
+        '    If previousIndex > 0 Then
+        '        Important_CheckedListBox.SelectedIndex = -1
+        '        Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+        '    End If
+        '    Important_CheckedListBox.SelectedIndex = previousIndex
+        'End If
+
+        ' # Option 2
+
+        Await Task.Delay(10)
+        UiUtils.TaskSelection_Clear(Important_CheckedListBox)
+        ViewsManager.RefreshTasks()
+        Me.ActiveControl = Me.AddNewTask_TextBox
     End Sub
 
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click

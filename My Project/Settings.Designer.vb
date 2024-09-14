@@ -219,6 +219,54 @@ Namespace My
                 Me("HideCompletedTasks") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Microsoft PhagsPa")>  _
+        Public Property DefaultTaskFont() As String
+            Get
+                Return CType(Me("DefaultTaskFont"),String)
+            End Get
+            Set
+                Me("DefaultTaskFont") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Microsoft PhagsPa, 14pt")>  _
+        Public Property SelectedTaskFont() As Global.System.Drawing.Font
+            Get
+                Return CType(Me("SelectedTaskFont"),Global.System.Drawing.Font)
+            End Get
+            Set
+                Me("SelectedTaskFont") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property IsTaskFontDefault() As Boolean
+            Get
+                Return CType(Me("IsTaskFontDefault"),Boolean)
+            End Get
+            Set
+                Me("IsTaskFontDefault") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property TasksSize() As Integer
+            Get
+                Return CType(Me("TasksSize"),Integer)
+            End Get
+            Set
+                Me("TasksSize") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -244,7 +244,7 @@ Partial Class MyDay_View
         Me.MyDay_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.MyDay_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.MyDay_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MyDay_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MyDay_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MyDay_CheckedListBox.ForeColor = System.Drawing.Color.White
         Me.MyDay_CheckedListBox.Location = New System.Drawing.Point(0, 0)
         Me.MyDay_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)

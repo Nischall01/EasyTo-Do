@@ -269,7 +269,7 @@ Public Class MainWindow
 
 #End Region
 
-#Region "UI Appearance"
+#Region "Settings"
 
     Private Sub LoadSettings()
         SetColorSchemeFromSettings()
@@ -280,6 +280,8 @@ Public Class MainWindow
         SetOnDeleteAskForConfirmationFromSettings()
         SetSortingFromSettings()
         SetHideCompletedTasksFromSettings()
+        SetTasksSizeFromSettings()
+        SetTasksFontFromSettings()
     End Sub
 
     Private Sub SetColorSchemeFromSettings()
@@ -366,6 +368,36 @@ Public Class MainWindow
         End Select
     End Sub
 
+    Private Sub SetTasksSizeFromSettings()
+        Select Case My.Settings.TasksSize
+            Case 0
+                SettingsInstance.TasksSize_TrackBar.Value = 0
+            Case 1
+                SettingsInstance.TasksSize_TrackBar.Value = 1
+            Case 2
+                SettingsInstance.TasksSize_TrackBar.Value = 2
+            Case 3
+                SettingsInstance.TasksSize_TrackBar.Value = 3
+            Case 4
+                SettingsInstance.TasksSize_TrackBar.Value = 4
+            Case 5
+                SettingsInstance.TasksSize_TrackBar.Value = 5
+        End Select
+    End Sub
+
+    Private Sub SetTasksFontFromSettings()
+        Select Case My.Settings.IsTaskFontDefault
+            Case True
+                SettingsInstance.RadioButton13.Checked = True
+            Case False
+                SettingsInstance.RadioButton14.Checked = True
+        End Select
+    End Sub
+
+#End Region
+
+#Region "UI Appearance"
+
     Private Sub HighlightActiveFormButton()
         ' Array of View buttons
         Dim ViewButtons() As CustomButton_2 = {CustomButton1, CustomButton2, CustomButton3, CustomButton4, CustomButton5}
@@ -389,6 +421,57 @@ Public Class MainWindow
         CustomButton3.EnableEffects()
         CustomButton4.EnableEffects()
         CustomButton5.EnableEffects()
+    End Sub
+
+    Public Sub ChangeTasksSize(fontSize As Single)
+
+        ' Dictionary to map view names to their corresponding CheckedListBox controls
+        Dim ViewsCheckedListBoxes As New Dictionary(Of String, CheckedListBox) From {
+    {ViewName.MyDay, MyDayInstance.MyDay_CheckedListBox},
+    {ViewName.Repeated, RepeatedInstance.Repeated_CheckedListBox},
+    {ViewName.Important, ImportantInstance.Important_CheckedListBox},
+    {ViewName.Planned, PlannedInstance.Planned_CheckedListBox},
+    {ViewName.Tasks, TasksInstance.Tasks_CheckedListBox}
+}
+
+        Dim activeViewName As ViewName = ViewsManager.GetActiveViewName()
+
+        If ViewsCheckedListBoxes.ContainsKey(activeViewName) Then
+            ViewsCheckedListBoxes(activeViewName).Font = New Font(ViewsCheckedListBoxes(activeViewName).Font.FontFamily, fontSize)
+        End If
+
+        ' Refresh other views
+        For Each viewName In ViewsCheckedListBoxes.Keys
+            If viewName <> activeViewName Then
+                ViewsCheckedListBoxes(viewName).Font = New Font(ViewsCheckedListBoxes(viewName).Font.FontFamily, fontSize)
+            End If
+        Next
+
+    End Sub
+
+    Public Sub ChangeTasksFont(NewFont As Font)
+
+        ' Dictionary to map view names to their corresponding CheckedListBox controls
+        Dim ViewsCheckedListBoxes As New Dictionary(Of String, CheckedListBox) From {
+    {ViewName.MyDay, MyDayInstance.MyDay_CheckedListBox},
+    {ViewName.Repeated, RepeatedInstance.Repeated_CheckedListBox},
+    {ViewName.Important, ImportantInstance.Important_CheckedListBox},
+    {ViewName.Planned, PlannedInstance.Planned_CheckedListBox},
+    {ViewName.Tasks, TasksInstance.Tasks_CheckedListBox}
+}
+
+        Dim activeViewName As ViewName = ViewsManager.GetActiveViewName()
+
+        If ViewsCheckedListBoxes.ContainsKey(activeViewName) Then
+            ViewsCheckedListBoxes(activeViewName).Font = NewFont
+        End If
+
+        ' Refresh other views
+        For Each viewName In ViewsCheckedListBoxes.Keys
+            If viewName <> activeViewName Then
+                ViewsCheckedListBoxes(viewName).Font = NewFont
+            End If
+        Next
     End Sub
 
 #End Region
@@ -779,7 +862,7 @@ Public Class MainWindow
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Settings_Button.Click
+    Private Sub Settings_Button_Click(sender As Object, e As EventArgs) Handles Settings_Button.Click
         Dim activeView As ViewName = ViewsManager.GetActiveViewName()
         Select Case activeView
             Case ViewName.MyDay

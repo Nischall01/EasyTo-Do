@@ -134,7 +134,7 @@ Partial Class Important_View
         Me.Important_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
         Me.Important_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.Important_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Important_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Important_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Important_CheckedListBox.ForeColor = System.Drawing.Color.White
         Me.Important_CheckedListBox.Location = New System.Drawing.Point(6, 92)
         Me.Important_CheckedListBox.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
@@ -421,12 +421,12 @@ Partial Class Important_View
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
         Me.ContextMenuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System
         Me.ContextMenuStrip1.ShowImageMargin = False
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(156, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(93, 26)
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(155, 22)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem1.Text = "Remove"
         '
         'ContextMenuStrip2

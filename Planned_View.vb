@@ -316,19 +316,28 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
-            Await Task.Delay(10)
-            UiUtils.TaskSelection_Clear(Planned_CheckedListBox)
-            ViewsManager.RefreshTasks()
-            Me.ActiveControl = Me.AddNewTask_TextBox
-        Else
-            ' Trigger flickering effect by deselecting and reselecting
-            If previousIndex > 0 Then
-                Planned_CheckedListBox.SelectedIndex = -1
-                Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-            End If
-            Planned_CheckedListBox.SelectedIndex = previousIndex
-        End If
+        ' # Option 1
+
+        'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
+        '    Await Task.Delay(10)
+        '    UiUtils.TaskSelection_Clear(Planned_CheckedListBox)
+        '    ViewsManager.RefreshTasks()
+        '    Me.ActiveControl = Me.AddNewTask_TextBox
+        'Else
+        '    ' Trigger flickering effect by deselecting and reselecting
+        '    If previousIndex > 0 Then
+        '        Planned_CheckedListBox.SelectedIndex = -1
+        '        Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
+        '    End If
+        '    Planned_CheckedListBox.SelectedIndex = previousIndex
+        'End If
+
+        ' # Option 2
+
+        Await Task.Delay(10)
+        UiUtils.TaskSelection_Clear(Planned_CheckedListBox)
+        ViewsManager.RefreshTasks()
+        Me.ActiveControl = Me.AddNewTask_TextBox
     End Sub
 
     ' Button Click event to change the 'IsImportant' status of the selected task

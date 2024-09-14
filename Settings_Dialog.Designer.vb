@@ -59,6 +59,9 @@ Partial Class Settings_Dialog
         Me.RadioButton6 = New System.Windows.Forms.RadioButton()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel13 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel22 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.TasksSize_TrackBar = New System.Windows.Forms.TrackBar()
         Me.TableLayoutPanel20 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel21 = New System.Windows.Forms.TableLayoutPanel()
@@ -74,6 +77,16 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel17 = New System.Windows.Forms.TableLayoutPanel()
         Me.RadioButton8 = New System.Windows.Forms.RadioButton()
         Me.RadioButton7 = New System.Windows.Forms.RadioButton()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.TableLayoutPanel25 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TableLayoutPanel26 = New System.Windows.Forms.TableLayoutPanel()
+        Me.SelectTasksFont_Button = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel27 = New System.Windows.Forms.TableLayoutPanel()
+        Me.RadioButton14 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton13 = New System.Windows.Forms.RadioButton()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.SelectedFont_TextBox = New System.Windows.Forms.TextBox()
+        Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel19.SuspendLayout()
         CType(Me.Repeated_Icon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,12 +106,18 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel12.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TableLayoutPanel13.SuspendLayout()
+        Me.TableLayoutPanel22.SuspendLayout()
+        CType(Me.TasksSize_TrackBar, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel20.SuspendLayout()
         Me.TableLayoutPanel21.SuspendLayout()
         Me.TableLayoutPanel15.SuspendLayout()
         Me.TableLayoutPanel16.SuspendLayout()
         Me.TableLayoutPanel14.SuspendLayout()
         Me.TableLayoutPanel17.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.TableLayoutPanel25.SuspendLayout()
+        Me.TableLayoutPanel26.SuspendLayout()
+        Me.TableLayoutPanel27.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -180,6 +199,7 @@ Partial Class Settings_Dialog
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(3, 75)
         Me.TabControl1.Name = "TabControl1"
@@ -196,7 +216,7 @@ Partial Class Settings_Dialog
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage1.Size = New System.Drawing.Size(320, 457)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Tab-1"
+        Me.TabPage1.Text = "Window"
         '
         'TableLayoutPanel2
         '
@@ -601,12 +621,13 @@ Partial Class Settings_Dialog
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(320, 457)
         Me.TabPage2.TabIndex = 1
-        Me.TabPage2.Text = "Tab-2"
+        Me.TabPage2.Text = "Task"
         '
         'TableLayoutPanel13
         '
         Me.TableLayoutPanel13.ColumnCount = 1
         Me.TableLayoutPanel13.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel22, 0, 3)
         Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel20, 0, 2)
         Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel15, 0, 1)
         Me.TableLayoutPanel13.Controls.Add(Me.TableLayoutPanel14, 0, 0)
@@ -621,6 +642,49 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel13.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.TableLayoutPanel13.Size = New System.Drawing.Size(314, 451)
         Me.TableLayoutPanel13.TabIndex = 3
+        '
+        'TableLayoutPanel22
+        '
+        Me.TableLayoutPanel22.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel22.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel22.ColumnCount = 1
+        Me.TableLayoutPanel22.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel22.Controls.Add(Me.Label9, 0, 0)
+        Me.TableLayoutPanel22.Controls.Add(Me.TasksSize_TrackBar, 0, 1)
+        Me.TableLayoutPanel22.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.TableLayoutPanel22.Location = New System.Drawing.Point(19, 285)
+        Me.TableLayoutPanel22.Name = "TableLayoutPanel22"
+        Me.TableLayoutPanel22.RowCount = 2
+        Me.TableLayoutPanel22.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.0!))
+        Me.TableLayoutPanel22.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.0!))
+        Me.TableLayoutPanel22.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel22.Size = New System.Drawing.Size(275, 60)
+        Me.TableLayoutPanel22.TabIndex = 9
+        '
+        'Label9
+        '
+        Me.Label9.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.White
+        Me.Label9.Location = New System.Drawing.Point(117, 4)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(41, 18)
+        Me.Label9.TabIndex = 0
+        Me.Label9.Text = "Size"
+        '
+        'TasksSize_TrackBar
+        '
+        Me.TasksSize_TrackBar.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TasksSize_TrackBar.LargeChange = 1
+        Me.TasksSize_TrackBar.Location = New System.Drawing.Point(38, 30)
+        Me.TasksSize_TrackBar.Maximum = 5
+        Me.TasksSize_TrackBar.Name = "TasksSize_TrackBar"
+        Me.TasksSize_TrackBar.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.TasksSize_TrackBar.Size = New System.Drawing.Size(199, 26)
+        Me.TasksSize_TrackBar.TabIndex = 8
+        Me.TasksSize_TrackBar.TickStyle = System.Windows.Forms.TickStyle.TopLeft
         '
         'TableLayoutPanel20
         '
@@ -646,11 +710,11 @@ Partial Class Settings_Dialog
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(52, 4)
+        Me.Label8.Location = New System.Drawing.Point(73, 4)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(171, 18)
+        Me.Label8.Size = New System.Drawing.Size(128, 18)
         Me.Label8.TabIndex = 0
-        Me.Label8.Text = "Hide completed tasks"
+        Me.Label8.Text = "Hide Completed"
         '
         'TableLayoutPanel21
         '
@@ -838,6 +902,128 @@ Partial Class Settings_Dialog
         Me.RadioButton7.Text = "Yes"
         Me.RadioButton7.UseVisualStyleBackColor = True
         '
+        'TabPage3
+        '
+        Me.TabPage3.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.TabPage3.Controls.Add(Me.TableLayoutPanel25)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Size = New System.Drawing.Size(320, 457)
+        Me.TabPage3.TabIndex = 2
+        Me.TabPage3.Text = "Font"
+        '
+        'TableLayoutPanel25
+        '
+        Me.TableLayoutPanel25.ColumnCount = 1
+        Me.TableLayoutPanel25.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel25.Controls.Add(Me.TableLayoutPanel26, 0, 0)
+        Me.TableLayoutPanel25.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel25.Location = New System.Drawing.Point(0, 0)
+        Me.TableLayoutPanel25.Name = "TableLayoutPanel25"
+        Me.TableLayoutPanel25.RowCount = 3
+        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel25.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel25.Size = New System.Drawing.Size(320, 457)
+        Me.TableLayoutPanel25.TabIndex = 4
+        '
+        'TableLayoutPanel26
+        '
+        Me.TableLayoutPanel26.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel26.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel26.ColumnCount = 1
+        Me.TableLayoutPanel26.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel26.Controls.Add(Me.SelectTasksFont_Button, 0, 3)
+        Me.TableLayoutPanel26.Controls.Add(Me.TableLayoutPanel27, 0, 1)
+        Me.TableLayoutPanel26.Controls.Add(Me.Label11, 0, 0)
+        Me.TableLayoutPanel26.Controls.Add(Me.SelectedFont_TextBox, 0, 2)
+        Me.TableLayoutPanel26.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.TableLayoutPanel26.Location = New System.Drawing.Point(12, 3)
+        Me.TableLayoutPanel26.Name = "TableLayoutPanel26"
+        Me.TableLayoutPanel26.RowCount = 4
+        Me.TableLayoutPanel26.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel26.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
+        Me.TableLayoutPanel26.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
+        Me.TableLayoutPanel26.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.TableLayoutPanel26.Size = New System.Drawing.Size(295, 146)
+        Me.TableLayoutPanel26.TabIndex = 10
+        '
+        'SelectTasksFont_Button
+        '
+        Me.SelectTasksFont_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.SelectTasksFont_Button.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.SelectTasksFont_Button.Location = New System.Drawing.Point(110, 115)
+        Me.SelectTasksFont_Button.Name = "SelectTasksFont_Button"
+        Me.SelectTasksFont_Button.Size = New System.Drawing.Size(75, 23)
+        Me.SelectTasksFont_Button.TabIndex = 1
+        Me.SelectTasksFont_Button.Text = "Select"
+        Me.SelectTasksFont_Button.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel27
+        '
+        Me.TableLayoutPanel27.ColumnCount = 2
+        Me.TableLayoutPanel27.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel27.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel27.Controls.Add(Me.RadioButton14, 1, 0)
+        Me.TableLayoutPanel27.Controls.Add(Me.RadioButton13, 0, 0)
+        Me.TableLayoutPanel27.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel27.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.TableLayoutPanel27.Location = New System.Drawing.Point(4, 40)
+        Me.TableLayoutPanel27.Name = "TableLayoutPanel27"
+        Me.TableLayoutPanel27.RowCount = 1
+        Me.TableLayoutPanel27.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel27.Size = New System.Drawing.Size(287, 36)
+        Me.TableLayoutPanel27.TabIndex = 2
+        '
+        'RadioButton14
+        '
+        Me.RadioButton14.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton14.AutoSize = True
+        Me.RadioButton14.ForeColor = System.Drawing.Color.White
+        Me.RadioButton14.Location = New System.Drawing.Point(185, 9)
+        Me.RadioButton14.Name = "RadioButton14"
+        Me.RadioButton14.Size = New System.Drawing.Size(60, 17)
+        Me.RadioButton14.TabIndex = 2
+        Me.RadioButton14.TabStop = True
+        Me.RadioButton14.Text = "Custom"
+        Me.RadioButton14.UseVisualStyleBackColor = True
+        '
+        'RadioButton13
+        '
+        Me.RadioButton13.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton13.AutoSize = True
+        Me.RadioButton13.ForeColor = System.Drawing.Color.White
+        Me.RadioButton13.Location = New System.Drawing.Point(42, 9)
+        Me.RadioButton13.Name = "RadioButton13"
+        Me.RadioButton13.Size = New System.Drawing.Size(59, 17)
+        Me.RadioButton13.TabIndex = 1
+        Me.RadioButton13.TabStop = True
+        Me.RadioButton13.Text = "Default"
+        Me.RadioButton13.UseVisualStyleBackColor = True
+        '
+        'Label11
+        '
+        Me.Label11.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.Transparent
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.ForeColor = System.Drawing.Color.White
+        Me.Label11.Location = New System.Drawing.Point(101, 9)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(93, 18)
+        Me.Label11.TabIndex = 0
+        Me.Label11.Text = "Tasks Font"
+        '
+        'SelectedFont_TextBox
+        '
+        Me.SelectedFont_TextBox.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.SelectedFont_TextBox.Location = New System.Drawing.Point(14, 84)
+        Me.SelectedFont_TextBox.Name = "SelectedFont_TextBox"
+        Me.SelectedFont_TextBox.ReadOnly = True
+        Me.SelectedFont_TextBox.Size = New System.Drawing.Size(267, 20)
+        Me.SelectedFont_TextBox.TabIndex = 0
+        Me.SelectedFont_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
         'Settings_Dialog
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -880,6 +1066,9 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel12.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         Me.TableLayoutPanel13.ResumeLayout(False)
+        Me.TableLayoutPanel22.ResumeLayout(False)
+        Me.TableLayoutPanel22.PerformLayout()
+        CType(Me.TasksSize_TrackBar, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel20.ResumeLayout(False)
         Me.TableLayoutPanel20.PerformLayout()
         Me.TableLayoutPanel21.ResumeLayout(False)
@@ -892,6 +1081,12 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel14.PerformLayout()
         Me.TableLayoutPanel17.ResumeLayout(False)
         Me.TableLayoutPanel17.PerformLayout()
+        Me.TabPage3.ResumeLayout(False)
+        Me.TableLayoutPanel25.ResumeLayout(False)
+        Me.TableLayoutPanel26.ResumeLayout(False)
+        Me.TableLayoutPanel26.PerformLayout()
+        Me.TableLayoutPanel27.ResumeLayout(False)
+        Me.TableLayoutPanel27.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -947,4 +1142,17 @@ Partial Class Settings_Dialog
     Friend WithEvents TableLayoutPanel21 As TableLayoutPanel
     Friend WithEvents RadioButton12 As RadioButton
     Friend WithEvents RadioButton11 As RadioButton
+    Friend WithEvents TasksSize_TrackBar As TrackBar
+    Friend WithEvents TableLayoutPanel22 As TableLayoutPanel
+    Friend WithEvents Label9 As Label
+    Friend WithEvents FontDialog1 As FontDialog
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents TableLayoutPanel25 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel26 As TableLayoutPanel
+    Friend WithEvents TableLayoutPanel27 As TableLayoutPanel
+    Friend WithEvents RadioButton14 As RadioButton
+    Friend WithEvents RadioButton13 As RadioButton
+    Friend WithEvents Label11 As Label
+    Friend WithEvents SelectTasksFont_Button As Button
+    Friend WithEvents SelectedFont_TextBox As TextBox
 End Class

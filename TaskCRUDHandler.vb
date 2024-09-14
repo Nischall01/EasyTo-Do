@@ -135,9 +135,9 @@
                 MessageBox.Show("No task was found with the specified ID. Please verify And try again.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             End If
 
-            If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then Exit Sub
+            'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then Exit Sub
 
-            ViewsManager.RefreshTasks()
+            'ViewsManager.RefreshTasks()
         End Sub
 
         ' Method to update task title
