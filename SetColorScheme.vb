@@ -1,5 +1,7 @@
 ﻿Module SetColorScheme
 
+    'Private Const DarkColor As
+
 #Region "Scheme Methods"
 
     Public Sub Light()

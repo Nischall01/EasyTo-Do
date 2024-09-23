@@ -117,26 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="Pfp_ContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>281, 17</value>
-  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Settings_Button.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
-        MAAA6mAAADqYAAAXcJy6UTwAAAAHdElNRQfoCQwQFR05kMc7AAACTUlEQVRIS7WVO04jQRCGRybwZkR7
-        F99hJbDwHRYbAX4kJGjvgIRIkHlESwAzkWfMcgJ8DgJyApBYGP6vphoNxoAGcEm/plyPv7urq9rRR3I+
-        GhmyNI1SB3qwf1n+iUSoibQucgM6NnyVJVXSDDSEv8KZAx1bOcbwoXggySvCUpZlP/VtCf+F3IHect+S
-        QKwt+KbgtBqPRgtCLDwKN7L90rcp3AlhAfSm+24EYslZcA5nLQlGOdkFgdcCRA/CpWo+ER6E3IE+wecx
-        xJITO4ezlgSjnByV3YSdGpL4LD8+OsiPD4cFpGObjhMencNZS4JRzmV9OXLYleFguJ8Pumt5b2PVgI6t
-        HCOQQ0nhcFbJuWp2UZBHYy6tqCtHt8S93Z38z/ZW3t9sPy+Ajg1fiLMc5TqHccJtw6IfNRkbQktoUl9K
-        wC4h6q7/vhJxIpw6Emz4DhWTxDH3MiHXORpw2iCq1dh5XTs4Ee6FWy6ROlMK33nS63cWe/12vYB02fAR
-        Qyw55DrHCZxw2wLZePxDRgbIjqtgu0yRBJwaca8dGdCLk5ifWHJCPlxwVltgINJuJzKgV1lgqkR3HHe6
-        RP1uZ3GwsVYH6GZ7XSIG8GWJ7JLTtCYjA8KTUOmSiSGWHHKdowGnXbK1qSAjp+Ft+XybKtc5jNPaNAhG
-        tdf3D1oQjHLO/amY+2PHdz7PdRALKJ6NFWHZ3paiM2i/sAB6y3zUvIglx1neESXOAsdmTsJfJrqVYhqV
-        hXajp21wmE4BHRu+Lwu9zMAwlWVge9HnMyWKngC+pmzr7SgyYAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="CustomButton5.Icon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAADs
@@ -1477,6 +1458,25 @@
         9yV0AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="Settings_Button.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
+        MAAA6mAAADqYAAAXcJy6UTwAAAAHdElNRQfoCQwQFR05kMc7AAACTUlEQVRIS7WVO04jQRCGRybwZkR7
+        F99hJbDwHRYbAX4kJGjvgIRIkHlESwAzkWfMcgJ8DgJyApBYGP6vphoNxoAGcEm/plyPv7urq9rRR3I+
+        GhmyNI1SB3qwf1n+iUSoibQucgM6NnyVJVXSDDSEv8KZAx1bOcbwoXggySvCUpZlP/VtCf+F3IHect+S
+        QKwt+KbgtBqPRgtCLDwKN7L90rcp3AlhAfSm+24EYslZcA5nLQlGOdkFgdcCRA/CpWo+ER6E3IE+wecx
+        xJITO4ezlgSjnByV3YSdGpL4LD8+OsiPD4cFpGObjhMencNZS4JRzmV9OXLYleFguJ8Pumt5b2PVgI6t
+        HCOQQ0nhcFbJuWp2UZBHYy6tqCtHt8S93Z38z/ZW3t9sPy+Ajg1fiLMc5TqHccJtw6IfNRkbQktoUl9K
+        wC4h6q7/vhJxIpw6Emz4DhWTxDH3MiHXORpw2iCq1dh5XTs4Ee6FWy6ROlMK33nS63cWe/12vYB02fAR
+        Qyw55DrHCZxw2wLZePxDRgbIjqtgu0yRBJwaca8dGdCLk5ifWHJCPlxwVltgINJuJzKgV1lgqkR3HHe6
+        RP1uZ3GwsVYH6GZ7XSIG8GWJ7JLTtCYjA8KTUOmSiSGWHHKdowGnXbK1qSAjp+Ft+XybKtc5jNPaNAhG
+        tdf3D1oQjHLO/amY+2PHdz7PdRALKJ6NFWHZ3paiM2i/sAB6y3zUvIglx1neESXOAsdmTsJfJrqVYhqV
+        hXajp21wmE4BHRu+Lwu9zMAwlWVge9HnMyWKngC+pmzr7SgyYAAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="Pfp_ContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>281, 17</value>
+  </metadata>
   <metadata name="Username_ContextMenuStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>438, 17</value>
   </metadata>

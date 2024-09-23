@@ -86,10 +86,10 @@ Partial Class MainWindow
         Me.MainSidebarTableLayoutPanel.ColumnCount = 1
         Me.MainSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.SubSidebarTableLayoutPanel, 0, 2)
-        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Pfp_CircularPictureBox, 0, 0)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Test_BackColors, 0, 3)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Username_Label, 0, 1)
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Settings_Button, 0, 4)
+        Me.MainSidebarTableLayoutPanel.Controls.Add(Me.Pfp_CircularPictureBox, 0, 0)
         Me.MainSidebarTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
         Me.MainSidebarTableLayoutPanel.Location = New System.Drawing.Point(0, 0)
         Me.MainSidebarTableLayoutPanel.Name = "MainSidebarTableLayoutPanel"

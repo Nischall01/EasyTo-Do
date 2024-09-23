@@ -20,14 +20,14 @@
         Public Sub ToggleTaskProperties(IsTaskPropertiesVisible As Boolean, MainTlp As TableLayoutPanel)
             If IsTaskPropertiesVisible Then
                 MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-                MainTlp.ColumnStyles(0).Width = 75%
+                MainTlp.ColumnStyles(0).Width = 79
                 MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-                MainTlp.ColumnStyles(1).Width = 25%
+                MainTlp.ColumnStyles(1).Width = 21
             Else
                 MainTlp.ColumnStyles(0).SizeType = SizeType.Percent
-                MainTlp.ColumnStyles(0).Width = 100%
+                MainTlp.ColumnStyles(0).Width = 100
                 MainTlp.ColumnStyles(1).SizeType = SizeType.Percent
-                MainTlp.ColumnStyles(1).Width = 0%
+                MainTlp.ColumnStyles(1).Width = 0
             End If
         End Sub
 

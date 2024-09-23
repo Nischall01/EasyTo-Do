@@ -12,7 +12,7 @@ Public Class MainWindow
 
     ' Constants
 
-    Private Const CollapsedSidebarWidth As Integer = 50
+    Private Const CollapsedSidebarWidth As Integer = 55
     Private Const ExpandedSidebarWidth As Integer = 200
     Private Const MaxSidebarWidth As Integer = 333
 
@@ -20,6 +20,7 @@ Public Class MainWindow
 
     Private PfpLastEventTime As DateTime
     Public Shared IsSidebarExpanded As Boolean
+
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
     ' Enums
@@ -480,7 +481,6 @@ Public Class MainWindow
 
     Private Sub AddFormToPanel(form As Form)
         form.TopLevel = False
-        form.FormBorderStyle = FormBorderStyle.None
         form.Dock = DockStyle.Fill
         SplitContainer1.Panel2.Controls.Add(form)
         form.Hide() ' Initially hide all forms
@@ -506,6 +506,7 @@ Public Class MainWindow
 #Region "Sidebar Methods"
 
     Private Sub SplitContainer1_SplitterMoved(sender As Object, e As SplitterEventArgs) Handles SplitContainer1.SplitterMoved
+
         If IsSidebarExpanded Then
             If e.SplitX < ExpandedSidebarWidth - 50 Then
                 SetSidebarState(SidebarState.Collapsed)
@@ -879,6 +880,10 @@ Public Class MainWindow
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
+    End Sub
+
+    Private Sub CustomButton5_Load(sender As Object, e As EventArgs) Handles CustomButton5.Load
+
     End Sub
 
 #End Region

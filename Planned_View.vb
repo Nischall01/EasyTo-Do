@@ -46,24 +46,24 @@
 
         Dim query As String
         Dim queryTitleOnly As String = "SELECT TaskID, Task FROM Tasks " &
-            "WHERE Section = 'Planned';"
+            "WHERE DueDate IS NOT NULL AND DueDate <> @Today;"
 
         If SettingsCache.HideCompletedTasks Then
             query = "SELECT * FROM Tasks " &
-            "WHERE Section = 'Planned' " &
+            "WHERE DueDate IS NOT NULL AND DueDate <> @Today " &
             "AND IsDone = 0 " & ' Filter to show only incomplete tasks
             "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
             "ReminderDateTime, IsImportant DESC;"
         Else
             If SettingsCache.SortByCompletionStatus Then
                 query = "SELECT * FROM Tasks " &
-                "WHERE Section = 'Planned' " &
+                "WHERE DueDate IS NOT NULL AND DueDate <> @Today " &
                 "ORDER BY IsDone ASC, " &
                 "CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
                 "ReminderDateTime, IsImportant DESC;"
             Else
                 query = "SELECT * FROM Tasks " &
-                "WHERE Section = 'Planned' " &
+                "WHERE DueDate IS NOT NULL AND DueDate <> @Today " &
                 "ORDER BY CASE WHEN ReminderDateTime IS NULL THEN 1 ELSE 0 END, " &
                 "ReminderDateTime, IsImportant DESC;"
             End If

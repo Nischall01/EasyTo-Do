@@ -479,6 +479,10 @@
         End If
     End Sub
 
+    Private Sub MainTlp_SubTlpTaskProperties_Paint(sender As Object, e As PaintEventArgs) Handles MainTlp_SubTlpTaskProperties.Paint
+
+    End Sub
+
 #End Region
 
 End Class

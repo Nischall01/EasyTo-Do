@@ -72,8 +72,8 @@ Partial Class Planned_View
         '
         Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainTlp.ColumnCount = 2
-        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
-        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.0!))
+        Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.0!))
         Me.MainTlp.Controls.Add(Me.MainTlp_SubTlpTaskProperties, 1, 0)
         Me.MainTlp.Controls.Add(Me.MainTlp_SubTlpTaskView, 0, 0)
         Me.MainTlp.Dock = System.Windows.Forms.DockStyle.Fill
@@ -97,7 +97,7 @@ Partial Class Planned_View
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons, 0, 5)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Tlp_ImportantButton, 0, 4)
         Me.MainTlp_SubTlpTaskProperties.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.MainTlp_SubTlpTaskProperties.Location = New System.Drawing.Point(588, 0)
+        Me.MainTlp_SubTlpTaskProperties.Location = New System.Drawing.Point(619, 0)
         Me.MainTlp_SubTlpTaskProperties.Margin = New System.Windows.Forms.Padding(0)
         Me.MainTlp_SubTlpTaskProperties.Name = "MainTlp_SubTlpTaskProperties"
         Me.MainTlp_SubTlpTaskProperties.RowCount = 7
@@ -108,7 +108,7 @@ Partial Class Planned_View
         Me.MainTlp_SubTlpTaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 55.0!))
         Me.MainTlp_SubTlpTaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.65657!))
         Me.MainTlp_SubTlpTaskProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 34.34343!))
-        Me.MainTlp_SubTlpTaskProperties.Size = New System.Drawing.Size(196, 461)
+        Me.MainTlp_SubTlpTaskProperties.Size = New System.Drawing.Size(165, 461)
         Me.MainTlp_SubTlpTaskProperties.TabIndex = 3
         '
         'TaskTitle_TextBox
@@ -120,7 +120,7 @@ Partial Class Planned_View
         Me.TaskTitle_TextBox.Location = New System.Drawing.Point(0, 38)
         Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(0)
         Me.TaskTitle_TextBox.Name = "TaskTitle_TextBox"
-        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(196, 20)
+        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(165, 20)
         Me.TaskTitle_TextBox.TabIndex = 12
         Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -135,7 +135,7 @@ Partial Class Planned_View
         Me.Button_DeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button_DeleteTask.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_DeleteTask.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_DeleteTask.Location = New System.Drawing.Point(81, 394)
+        Me.Button_DeleteTask.Location = New System.Drawing.Point(65, 394)
         Me.Button_DeleteTask.Name = "Button_DeleteTask"
         Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
         Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
@@ -149,7 +149,7 @@ Partial Class Planned_View
         Me.Label_ADT.BackColor = System.Drawing.Color.Transparent
         Me.Label_ADT.Font = New System.Drawing.Font("Leelawadee UI", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label_ADT.ForeColor = System.Drawing.Color.Snow
-        Me.Label_ADT.Location = New System.Drawing.Point(55, 65)
+        Me.Label_ADT.Location = New System.Drawing.Point(40, 65)
         Me.Label_ADT.Name = "Label_ADT"
         Me.Label_ADT.Size = New System.Drawing.Size(85, 11)
         Me.Label_ADT.TabIndex = 2
@@ -162,7 +162,7 @@ Partial Class Planned_View
         Me.Button_CloseTaskProperties.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.Button_CloseTaskProperties.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button_CloseTaskProperties.ForeColor = System.Drawing.Color.White
-        Me.Button_CloseTaskProperties.Location = New System.Drawing.Point(86, 7)
+        Me.Button_CloseTaskProperties.Location = New System.Drawing.Point(70, 7)
         Me.Button_CloseTaskProperties.Margin = New System.Windows.Forms.Padding(0)
         Me.Button_CloseTaskProperties.Name = "Button_CloseTaskProperties"
         Me.Button_CloseTaskProperties.Size = New System.Drawing.Size(24, 24)
@@ -177,7 +177,7 @@ Partial Class Planned_View
         Me.Label_TaskEntryDateTime.BackColor = System.Drawing.Color.Transparent
         Me.Label_TaskEntryDateTime.Font = New System.Drawing.Font("Microsoft YaHei", 6.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label_TaskEntryDateTime.ForeColor = System.Drawing.Color.Snow
-        Me.Label_TaskEntryDateTime.Location = New System.Drawing.Point(92, 84)
+        Me.Label_TaskEntryDateTime.Location = New System.Drawing.Point(77, 84)
         Me.Label_TaskEntryDateTime.Name = "Label_TaskEntryDateTime"
         Me.Label_TaskEntryDateTime.Size = New System.Drawing.Size(11, 14)
         Me.Label_TaskEntryDateTime.TabIndex = 3
@@ -199,7 +199,7 @@ Partial Class Planned_View
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40.0!))
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33.0!))
-        Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(190, 181)
+        Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(159, 181)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.TabIndex = 10
         '
         'CustomButton_AddDueDate
@@ -216,7 +216,7 @@ Partial Class Planned_View
         Me.CustomButton_AddDueDate.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_AddDueDate.Name = "CustomButton_AddDueDate"
         Me.CustomButton_AddDueDate.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddDueDate.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddDueDate.Size = New System.Drawing.Size(159, 40)
         Me.CustomButton_AddDueDate.TabIndex = 11
         Me.CustomButton_AddDueDate.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddDueDate.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -235,7 +235,7 @@ Partial Class Planned_View
         Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
         Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_Repeat.Size = New System.Drawing.Size(159, 40)
         Me.CustomButton_Repeat.TabIndex = 10
         Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -254,7 +254,7 @@ Partial Class Planned_View
         Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
         Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
         Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(190, 40)
+        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(159, 40)
         Me.CustomButton_AddReminder.TabIndex = 9
         Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -266,7 +266,7 @@ Partial Class Planned_View
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(3, 123)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(184, 55)
+        Me.Panel1.Size = New System.Drawing.Size(153, 55)
         Me.Panel1.TabIndex = 12
         '
         'TaskDescription_RichTextBox
@@ -278,7 +278,7 @@ Partial Class Planned_View
         Me.TaskDescription_RichTextBox.Location = New System.Drawing.Point(0, 0)
         Me.TaskDescription_RichTextBox.Margin = New System.Windows.Forms.Padding(5, 10, 5, 10)
         Me.TaskDescription_RichTextBox.Name = "TaskDescription_RichTextBox"
-        Me.TaskDescription_RichTextBox.Size = New System.Drawing.Size(182, 53)
+        Me.TaskDescription_RichTextBox.Size = New System.Drawing.Size(151, 53)
         Me.TaskDescription_RichTextBox.TabIndex = 13
         Me.TaskDescription_RichTextBox.Text = ""
         '
@@ -289,7 +289,7 @@ Partial Class Planned_View
         Me.Tlp_ImportantButton.ColumnCount = 1
         Me.Tlp_ImportantButton.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.Tlp_ImportantButton.Controls.Add(Me.Important_Button, 0, 0)
-        Me.Tlp_ImportantButton.Location = New System.Drawing.Point(80, 129)
+        Me.Tlp_ImportantButton.Location = New System.Drawing.Point(64, 129)
         Me.Tlp_ImportantButton.Name = "Tlp_ImportantButton"
         Me.Tlp_ImportantButton.RowCount = 1
         Me.Tlp_ImportantButton.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -325,56 +325,58 @@ Partial Class Planned_View
         Me.MainTlp_SubTlpTaskView.Margin = New System.Windows.Forms.Padding(0)
         Me.MainTlp_SubTlpTaskView.Name = "MainTlp_SubTlpTaskView"
         Me.MainTlp_SubTlpTaskView.RowCount = 3
-        Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
-        Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 65.0!))
         Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15.0!))
-        Me.MainTlp_SubTlpTaskView.Size = New System.Drawing.Size(588, 461)
+        Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75.0!))
+        Me.MainTlp_SubTlpTaskView.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.MainTlp_SubTlpTaskView.Size = New System.Drawing.Size(619, 461)
         Me.MainTlp_SubTlpTaskView.TabIndex = 0
         '
         'SubTlpTaskView_SubTlpBottom
         '
         Me.SubTlpTaskView_SubTlpBottom.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpBottom.ColumnCount = 3
-        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
-        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25.0!))
+        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.5!))
+        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 95.0!))
+        Me.SubTlpTaskView_SubTlpBottom.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 2.5!))
         Me.SubTlpTaskView_SubTlpBottom.Controls.Add(Me.AddNewTask_TextBox, 1, 0)
         Me.SubTlpTaskView_SubTlpBottom.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SubTlpTaskView_SubTlpBottom.Location = New System.Drawing.Point(3, 394)
+        Me.SubTlpTaskView_SubTlpBottom.Location = New System.Drawing.Point(0, 414)
+        Me.SubTlpTaskView_SubTlpBottom.Margin = New System.Windows.Forms.Padding(0)
         Me.SubTlpTaskView_SubTlpBottom.Name = "SubTlpTaskView_SubTlpBottom"
         Me.SubTlpTaskView_SubTlpBottom.RowCount = 1
         Me.SubTlpTaskView_SubTlpBottom.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTlpTaskView_SubTlpBottom.Size = New System.Drawing.Size(582, 64)
+        Me.SubTlpTaskView_SubTlpBottom.Size = New System.Drawing.Size(619, 47)
         Me.SubTlpTaskView_SubTlpBottom.TabIndex = 10
         '
         'AddNewTask_TextBox
         '
+        Me.AddNewTask_TextBox.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.AddNewTask_TextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
         Me.AddNewTask_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.AddNewTask_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
         Me.AddNewTask_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.AddNewTask_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.AddNewTask_TextBox.ForeColor = System.Drawing.Color.White
-        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(148, 3)
+        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(18, 13)
         Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
-        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(285, 20)
+        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(582, 20)
         Me.AddNewTask_TextBox.TabIndex = 3
         '
         'SubTlpTaskView_SubTlpTop
         '
         Me.SubTlpTaskView_SubTlpTop.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpTop.ColumnCount = 3
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.0!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.85911!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.2543!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Planned_Label, 1, 0)
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
         Me.SubTlpTaskView_SubTlpTop.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(3, 3)
+        Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(0, 0)
+        Me.SubTlpTaskView_SubTlpTop.Margin = New System.Windows.Forms.Padding(0)
         Me.SubTlpTaskView_SubTlpTop.Name = "SubTlpTaskView_SubTlpTop"
         Me.SubTlpTaskView_SubTlpTop.RowCount = 1
         Me.SubTlpTaskView_SubTlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTlpTaskView_SubTlpTop.Size = New System.Drawing.Size(582, 86)
+        Me.SubTlpTaskView_SubTlpTop.Size = New System.Drawing.Size(619, 69)
         Me.SubTlpTaskView_SubTlpTop.TabIndex = 6
         '
         'Planned_Label
@@ -383,7 +385,7 @@ Partial Class Planned_View
         Me.Planned_Label.AutoSize = True
         Me.Planned_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Planned_Label.ForeColor = System.Drawing.Color.White
-        Me.Planned_Label.Location = New System.Drawing.Point(78, 25)
+        Me.Planned_Label.Location = New System.Drawing.Point(52, 16)
         Me.Planned_Label.Name = "Planned_Label"
         Me.Planned_Label.Size = New System.Drawing.Size(127, 36)
         Me.Planned_Label.TabIndex = 6
@@ -395,7 +397,7 @@ Partial Class Planned_View
         Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox_PanelIcon.Enabled = False
         Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(35, 23)
+        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(9, 14)
         Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
         Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
@@ -409,25 +411,25 @@ Partial Class Planned_View
         Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpMiddle.Controls.Add(Me.Planned_CheckedListBox, 0, 0)
         Me.SubTlpTaskView_SubTlpMiddle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SubTlpTaskView_SubTlpMiddle.Location = New System.Drawing.Point(6, 92)
-        Me.SubTlpTaskView_SubTlpMiddle.Margin = New System.Windows.Forms.Padding(6, 0, 6, 0)
+        Me.SubTlpTaskView_SubTlpMiddle.Location = New System.Drawing.Point(0, 69)
+        Me.SubTlpTaskView_SubTlpMiddle.Margin = New System.Windows.Forms.Padding(0)
         Me.SubTlpTaskView_SubTlpMiddle.Name = "SubTlpTaskView_SubTlpMiddle"
         Me.SubTlpTaskView_SubTlpMiddle.RowCount = 1
         Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.SubTlpTaskView_SubTlpMiddle.Size = New System.Drawing.Size(576, 299)
+        Me.SubTlpTaskView_SubTlpMiddle.Size = New System.Drawing.Size(619, 345)
         Me.SubTlpTaskView_SubTlpMiddle.TabIndex = 11
         '
         'Planned_CheckedListBox
         '
-        Me.Planned_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.Planned_CheckedListBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.Planned_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.Planned_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Planned_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Planned_CheckedListBox.ForeColor = System.Drawing.Color.White
-        Me.Planned_CheckedListBox.Location = New System.Drawing.Point(0, 0)
-        Me.Planned_CheckedListBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.Planned_CheckedListBox.Location = New System.Drawing.Point(1, 0)
+        Me.Planned_CheckedListBox.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Planned_CheckedListBox.Name = "Planned_CheckedListBox"
-        Me.Planned_CheckedListBox.Size = New System.Drawing.Size(576, 299)
+        Me.Planned_CheckedListBox.Size = New System.Drawing.Size(617, 345)
         Me.Planned_CheckedListBox.TabIndex = 10
         '
         'ContextMenuStrip1
@@ -479,6 +481,7 @@ Partial Class Planned_View
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(784, 461)
         Me.Controls.Add(Me.MainTlp)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Name = "Planned_View"
         Me.Text = "Planned"
         Me.MainTlp.ResumeLayout(False)

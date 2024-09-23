@@ -1,6 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-
-Public Class MyDay_View
+﻿Public Class MyDay_View
 
     Private IsTaskPropertiesVisible As Boolean
     Private lastUpdatedMinute As Integer = -1
