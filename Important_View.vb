@@ -157,7 +157,8 @@
                 Important_Button.BackgroundImage = GlobalResources.DisabledImportantIcon
 
                 If SettingsCache.ColorScheme = "Dark" Then
-                    TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                    Important_Button.BackColor = Color.FromArgb(35, 35, 35)
                     TaskDescription_RichTextBox.Hide()
                 End If
                 TaskTitle_TextBox.Enabled = False
@@ -180,7 +181,8 @@
                 Button_DeleteTask.Enabled = False
             Case TaskPropertiesState.Enable
                 If SettingsCache.ColorScheme = "Dark" Then
-                    TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
+                    TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
+                    Important_Button.BackColor = Color.FromArgb(21, 21, 21)
                     TaskDescription_RichTextBox.Show()
                 End If
                 TaskTitle_TextBox.Enabled = True

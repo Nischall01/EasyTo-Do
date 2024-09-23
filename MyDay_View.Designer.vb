@@ -75,7 +75,7 @@ Partial Class MyDay_View
         '
         'MainTlp
         '
-        Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.MainTlp.BackColor = System.Drawing.Color.Transparent
         Me.MainTlp.ColumnCount = 2
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.0!))
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.0!))
@@ -92,7 +92,7 @@ Partial Class MyDay_View
         '
         'MainTlp_SubTlpTaskView
         '
-        Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.Transparent
+        Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.MainTlp_SubTlpTaskView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.MainTlp_SubTlpTaskView.ColumnCount = 1
         Me.MainTlp_SubTlpTaskView.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -144,8 +144,8 @@ Partial Class MyDay_View
         '
         Me.SubTlpTaskView_SubTlpTop.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpTop.ColumnCount = 3
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.0!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.0!))
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.MyDay_Label, 1, 0)
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
@@ -165,7 +165,7 @@ Partial Class MyDay_View
         Me.MyDay_Label.AutoSize = True
         Me.MyDay_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MyDay_Label.ForeColor = System.Drawing.Color.White
-        Me.MyDay_Label.Location = New System.Drawing.Point(52, 16)
+        Me.MyDay_Label.Location = New System.Drawing.Point(58, 16)
         Me.MyDay_Label.Name = "MyDay_Label"
         Me.MyDay_Label.Size = New System.Drawing.Size(120, 36)
         Me.MyDay_Label.TabIndex = 0
@@ -177,7 +177,7 @@ Partial Class MyDay_View
         Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox_PanelIcon.Enabled = False
         Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(9, 14)
+        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(15, 14)
         Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
         Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
@@ -238,7 +238,7 @@ Partial Class MyDay_View
         Me.SubTlpTaskView_SubTlpMiddle.Name = "SubTlpTaskView_SubTlpMiddle"
         Me.SubTlpTaskView_SubTlpMiddle.RowCount = 1
         Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 299.0!))
+        Me.SubTlpTaskView_SubTlpMiddle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 345.0!))
         Me.SubTlpTaskView_SubTlpMiddle.Size = New System.Drawing.Size(619, 345)
         Me.SubTlpTaskView_SubTlpMiddle.TabIndex = 6
         '
@@ -257,7 +257,7 @@ Partial Class MyDay_View
         '
         'MainTlp_SubTlpTaskProperties
         '
-        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer))
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
@@ -290,10 +290,10 @@ Partial Class MyDay_View
         Me.TaskTitle_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TaskTitle_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TaskTitle_TextBox.ForeColor = System.Drawing.Color.White
-        Me.TaskTitle_TextBox.Location = New System.Drawing.Point(0, 38)
-        Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.TaskTitle_TextBox.Location = New System.Drawing.Point(3, 38)
+        Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.TaskTitle_TextBox.Name = "TaskTitle_TextBox"
-        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(165, 20)
+        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(159, 20)
         Me.TaskTitle_TextBox.TabIndex = 2
         Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -471,7 +471,7 @@ Partial Class MyDay_View
         '
         'Important_Button
         '
-        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer))
         Me.Important_Button.BackgroundImage = CType(resources.GetObject("Important_Button.BackgroundImage"), System.Drawing.Image)
         Me.Important_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Important_Button.Dock = System.Windows.Forms.DockStyle.Fill

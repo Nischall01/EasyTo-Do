@@ -32,14 +32,14 @@ Partial Class MainWindow
         Me.CustomButton3 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton2 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton1 = New EasyTo_Do.CustomButton_2()
+        Me.Test_BackColors = New System.Windows.Forms.Button()
+        Me.Username_Label = New System.Windows.Forms.Label()
+        Me.Settings_Button = New System.Windows.Forms.Button()
         Me.Pfp_CircularPictureBox = New EasyTo_Do.CircularPictureBox()
         Me.Pfp_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Pfp_MenuStripItem_ChangePicture = New System.Windows.Forms.ToolStripMenuItem()
         Me.Pfp_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
         Me.Pfp_MenuStripItem_Default = New System.Windows.Forms.ToolStripMenuItem()
-        Me.Test_BackColors = New System.Windows.Forms.Button()
-        Me.Username_Label = New System.Windows.Forms.Label()
-        Me.Settings_Button = New System.Windows.Forms.Button()
         Me.Username_ContextMenuStrip = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.Username_MenuStripItem_ChangeName = New System.Windows.Forms.ToolStripMenuItem()
         Me.Username_MenuStripItem_Empty = New System.Windows.Forms.ToolStripMenuItem()
@@ -82,7 +82,7 @@ Partial Class MainWindow
         '
         'MainSidebarTableLayoutPanel
         '
-        Me.MainSidebarTableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.MainSidebarTableLayoutPanel.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
         Me.MainSidebarTableLayoutPanel.ColumnCount = 1
         Me.MainSidebarTableLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainSidebarTableLayoutPanel.Controls.Add(Me.SubSidebarTableLayoutPanel, 0, 2)
@@ -230,6 +230,48 @@ Partial Class MainWindow
         Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'Test_BackColors
+        '
+        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Test_BackColors.Location = New System.Drawing.Point(59, 408)
+        Me.Test_BackColors.Name = "Test_BackColors"
+        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
+        Me.Test_BackColors.TabIndex = 7
+        Me.Test_BackColors.Text = "Test BackColors"
+        Me.Test_BackColors.UseVisualStyleBackColor = True
+        '
+        'Username_Label
+        '
+        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Username_Label.AutoSize = True
+        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
+        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Username_Label.ForeColor = System.Drawing.Color.White
+        Me.Username_Label.Location = New System.Drawing.Point(89, 82)
+        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+        Me.Username_Label.Name = "Username_Label"
+        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
+        Me.Username_Label.TabIndex = 8
+        Me.Username_Label.Text = "Username"
+        '
+        'Settings_Button
+        '
+        Me.Settings_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Settings_Button.BackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.BackgroundImage = CType(resources.GetObject("Settings_Button.BackgroundImage"), System.Drawing.Image)
+        Me.Settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Settings_Button.FlatAppearance.BorderSize = 0
+        Me.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Settings_Button.Location = New System.Drawing.Point(105, 479)
+        Me.Settings_Button.Name = "Settings_Button"
+        Me.Settings_Button.Size = New System.Drawing.Size(30, 30)
+        Me.Settings_Button.TabIndex = 9
+        Me.Settings_Button.UseVisualStyleBackColor = False
+        '
         'Pfp_CircularPictureBox
         '
         Me.Pfp_CircularPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
@@ -273,48 +315,6 @@ Partial Class MainWindow
         Me.Pfp_MenuStripItem_Default.Name = "Pfp_MenuStripItem_Default"
         Me.Pfp_MenuStripItem_Default.Size = New System.Drawing.Size(155, 22)
         Me.Pfp_MenuStripItem_Default.Text = "Default"
-        '
-        'Test_BackColors
-        '
-        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Test_BackColors.Location = New System.Drawing.Point(59, 408)
-        Me.Test_BackColors.Name = "Test_BackColors"
-        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
-        Me.Test_BackColors.TabIndex = 7
-        Me.Test_BackColors.Text = "Test BackColors"
-        Me.Test_BackColors.UseVisualStyleBackColor = True
-        '
-        'Username_Label
-        '
-        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.Username_Label.AutoSize = True
-        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
-        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Username_Label.ForeColor = System.Drawing.Color.White
-        Me.Username_Label.Location = New System.Drawing.Point(89, 82)
-        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
-        Me.Username_Label.Name = "Username_Label"
-        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
-        Me.Username_Label.TabIndex = 8
-        Me.Username_Label.Text = "Username"
-        '
-        'Settings_Button
-        '
-        Me.Settings_Button.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Settings_Button.BackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.BackgroundImage = CType(resources.GetObject("Settings_Button.BackgroundImage"), System.Drawing.Image)
-        Me.Settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Settings_Button.FlatAppearance.BorderSize = 0
-        Me.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Settings_Button.Location = New System.Drawing.Point(105, 479)
-        Me.Settings_Button.Name = "Settings_Button"
-        Me.Settings_Button.Size = New System.Drawing.Size(30, 30)
-        Me.Settings_Button.TabIndex = 9
-        Me.Settings_Button.UseVisualStyleBackColor = False
         '
         'Username_ContextMenuStrip
         '

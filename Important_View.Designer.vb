@@ -71,7 +71,7 @@ Partial Class Important_View
         'MainTlp
         '
         Me.MainTlp.AccessibleDescription = "f"
-        Me.MainTlp.BackColor = System.Drawing.Color.FromArgb(CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer), CType(CType(35, Byte), Integer))
+        Me.MainTlp.BackColor = System.Drawing.Color.Transparent
         Me.MainTlp.ColumnCount = 2
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.0!))
         Me.MainTlp.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.0!))
@@ -87,6 +87,7 @@ Partial Class Important_View
         '
         'MainTlp_SubTlpTaskView
         '
+        Me.MainTlp_SubTlpTaskView.BackColor = System.Drawing.Color.FromArgb(CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer), CType(CType(28, Byte), Integer))
         Me.MainTlp_SubTlpTaskView.ColumnCount = 1
         Me.MainTlp_SubTlpTaskView.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskView.Controls.Add(Me.SubTlpTaskView_SubTlpBottom, 0, 2)
@@ -137,8 +138,8 @@ Partial Class Important_View
         '
         Me.SubTlpTaskView_SubTlpTop.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpTop.ColumnCount = 3
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.0!))
-        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 62.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.0!))
+        Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.0!))
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Important_Label, 1, 0)
         Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
@@ -157,7 +158,7 @@ Partial Class Important_View
         Me.Important_Label.AutoSize = True
         Me.Important_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Important_Label.ForeColor = System.Drawing.Color.White
-        Me.Important_Label.Location = New System.Drawing.Point(52, 16)
+        Me.Important_Label.Location = New System.Drawing.Point(58, 16)
         Me.Important_Label.Name = "Important_Label"
         Me.Important_Label.Size = New System.Drawing.Size(154, 36)
         Me.Important_Label.TabIndex = 6
@@ -169,7 +170,7 @@ Partial Class Important_View
         Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
         Me.PictureBox_PanelIcon.Enabled = False
         Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(9, 14)
+        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(15, 14)
         Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
         Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
         Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
@@ -197,7 +198,7 @@ Partial Class Important_View
         Me.Important_CheckedListBox.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.Important_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Important_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Important_CheckedListBox.ForeColor = System.Drawing.Color.White
+        Me.Important_CheckedListBox.ForeColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer))
         Me.Important_CheckedListBox.Location = New System.Drawing.Point(1, 0)
         Me.Important_CheckedListBox.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
         Me.Important_CheckedListBox.Name = "Important_CheckedListBox"
@@ -206,7 +207,7 @@ Partial Class Important_View
         '
         'MainTlp_SubTlpTaskProperties
         '
-        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer), CType(CType(30, Byte), Integer))
+        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer))
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
@@ -237,10 +238,10 @@ Partial Class Important_View
         Me.TaskTitle_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TaskTitle_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TaskTitle_TextBox.ForeColor = System.Drawing.Color.White
-        Me.TaskTitle_TextBox.Location = New System.Drawing.Point(0, 38)
-        Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.TaskTitle_TextBox.Location = New System.Drawing.Point(3, 38)
+        Me.TaskTitle_TextBox.Margin = New System.Windows.Forms.Padding(3, 0, 3, 0)
         Me.TaskTitle_TextBox.Name = "TaskTitle_TextBox"
-        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(165, 20)
+        Me.TaskTitle_TextBox.Size = New System.Drawing.Size(159, 20)
         Me.TaskTitle_TextBox.TabIndex = 12
         Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
@@ -418,7 +419,7 @@ Partial Class Important_View
         '
         'Important_Button
         '
-        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer), CType(CType(20, Byte), Integer))
+        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer))
         Me.Important_Button.BackgroundImage = CType(resources.GetObject("Important_Button.BackgroundImage"), System.Drawing.Image)
         Me.Important_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Important_Button.Dock = System.Windows.Forms.DockStyle.Fill
