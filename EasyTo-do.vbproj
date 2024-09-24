@@ -286,6 +286,9 @@
     <Content Include="bin\Debug\Defaults\DefaultPfp.png" />
     <Content Include="EasyToDo_Icon.ico" />
     <Content Include="Icons\calendar %283%29.png" />
+    <None Include="Resources\4-removebg-preview.png" />
+    <None Include="Resources\4.png" />
+    <None Include="Resources\output-onlinepngtools.png" />
     <None Include="Icons\EasyToDo_Icon.ico" />
     <Content Include="Icons\repeat %284%29.png" />
     <Content Include="Icons\sun %281%29.png" />
