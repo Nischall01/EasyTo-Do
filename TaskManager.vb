@@ -1,4 +1,6 @@
-﻿Namespace TaskManager
+﻿Imports ReaLTaiizor.Controls
+
+Namespace TaskManager
     Module TaskManager
 
         '*' Add New Task
@@ -20,6 +22,29 @@
             UiUtils.TaskSelection_Retain(CLB, NewTaskId)
             Return NewTaskId
         End Function
+
+#Region "Iffy"
+
+        Public Function AddNewTask2(TextBox As DungeonTextBox, CLB As CheckedListBox, View As ViewName)
+            Dim NewTaskId As Integer
+            Select Case View
+                Case ViewName.MyDay
+                    NewTaskId = TaskCRUDHandler.AddNewTask.MyDay(TextBox.Text)
+                Case ViewName.Repeated
+                    NewTaskId = TaskCRUDHandler.AddNewTask.Repeated(TextBox.Text)
+                Case ViewName.Important
+                    NewTaskId = TaskCRUDHandler.AddNewTask.Important(TextBox.Text)
+                Case ViewName.Planned
+                    NewTaskId = TaskCRUDHandler.AddNewTask.Planned(TextBox.Text)
+                Case ViewName.Tasks
+                    NewTaskId = TaskCRUDHandler.AddNewTask.Tasks(TextBox.Text)
+            End Select
+            TextBox.ResetText()
+            UiUtils.TaskSelection_Retain(CLB, NewTaskId)
+            Return NewTaskId
+        End Function
+
+#End Region
 
         '*' Delete Task
         Public Sub DeleteTask(TaskID As Integer, CLB As CheckedListBox, TaskIndex As Integer, View As ViewName)

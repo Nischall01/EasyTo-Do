@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports ReaLTaiizor.Controls
 
 'Imports Newtonsoft.Json
 'Imports Newtonsoft.Json.Linq
@@ -19,7 +20,9 @@ Public Class MainWindow
     ' Fields
 
     Private PfpLastEventTime As DateTime
+
     Public Shared IsSidebarExpanded As Boolean
+    Private IsTaskPropertiesVisible As Boolean
 
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
@@ -37,6 +40,12 @@ Public Class MainWindow
         DisableAndHide
     End Enum
 
+    Public Enum TaskPropertiesVisibility
+        Toggle
+        Show
+        Hide
+    End Enum
+
     ' Forms
 
     Public MyDayInstance As New MyDay_View()
@@ -47,6 +56,49 @@ Public Class MainWindow
     Public SettingsInstance As New Settings_Dialog()
 
     Public Shared isUiUpdating As Boolean = False
+
+    ' Dictionary to map view names to their corresponding task-loading actions
+    Private ReadOnly TaskPropertiesVisibilityActions As New Dictionary(Of String, Action) From {
+    {ViewName.MyDay, Sub() UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, MyDayInstance.MainTlp)},
+    {ViewName.Repeated, Sub() UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, RepeatedInstance.MainTlp)},
+    {ViewName.Important, Sub() UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, ImportantInstance.MainTlp)},
+    {ViewName.Planned, Sub() UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, PlannedInstance.MainTlp)},
+    {ViewName.Tasks, Sub() UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, TasksInstance.MainTlp)}
+}
+
+    Public Sub ShowOrHide_TaskPropertiesSidebar(action As TaskPropertiesVisibility)
+        Dim activeViewName As ViewName = ViewsManager.GetActiveViewName()
+
+        ' Adjust task properties visibility based on action
+        Select Case action
+            Case TaskPropertiesVisibility.Show
+                IsTaskPropertiesVisible = True
+            Case TaskPropertiesVisibility.Hide
+                IsTaskPropertiesVisible = False
+            Case TaskPropertiesVisibility.Toggle
+                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
+        End Select
+
+        ' Refresh the active view TaskPropertiesSidebar first
+        If TaskPropertiesVisibilityActions.ContainsKey(activeViewName) Then
+            Try
+                TaskPropertiesVisibilityActions(activeViewName).Invoke()
+            Catch ex As Exception
+                MessageBox.Show("An error occurred while refreshing the active view TaskPropertiesSidebar: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End If
+
+        ' Refresh other views TaskPropertiesSidebar
+        For Each viewName In TaskPropertiesVisibilityActions.Keys
+            If viewName <> activeViewName Then
+                Try
+                    TaskPropertiesVisibilityActions(viewName).Invoke()
+                Catch ex As Exception
+                    MessageBox.Show("An error occurred while refreshing TaskPropertiesSidebar: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
+            End If
+        Next
+    End Sub
 
 #Region "Constructor and On Load"
 
@@ -260,7 +312,6 @@ Public Class MainWindow
         LoadProfile()
         'Load the tasks
         ViewsManager.RefreshTasks()
-        ShowForm(TasksInstance)
         ' Initial Form
         ShowForm(MyDayInstance)
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
@@ -483,6 +534,7 @@ Public Class MainWindow
         form.TopLevel = False
         form.Dock = DockStyle.Fill
         SplitContainer1.Panel2.Controls.Add(form)
+        form.Show()
         form.Hide() ' Initially hide all forms
     End Sub
 
@@ -822,6 +874,17 @@ Public Class MainWindow
         End If
     End Sub
 
+#Region "Iffy"
+
+    Private Sub HandleViewButtonClick2(viewInstance As Object, textBox As DungeonTextBox, e As MouseEventArgs)
+        If e.Button = MouseButtons.Left Then
+            ShowForm(viewInstance)
+            textBox.Focus()
+        End If
+    End Sub
+
+#End Region
+
     Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.MouseClick
         HandleViewButtonClick(MyDayInstance, MyDayInstance.AddNewTask_TextBox, e)
     End Sub
@@ -847,11 +910,11 @@ Public Class MainWindow
 #Region "Helper Methods"
 
     Private Sub Test_BackColors_Click(sender As Object, e As EventArgs) Handles Test_BackColors.Click
-        Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
-        If activeForm IsNot Nothing Then
+        ' Dim activeForm As Form = GetActiveFormInPanel(SplitContainer1.Panel2)
+        If ActiveForm IsNot Nothing Then
             If ColorDialog1.ShowDialog() = DialogResult.OK Then
                 ' Safely access MainTableLayoutPanel if it exists
-                Dim mainTableLayoutPanel As Control = activeForm.Controls.Find("MainTlp", True).FirstOrDefault()
+                Dim mainTableLayoutPanel As Control = ActiveForm.Controls.Find("MainTlp", True).FirstOrDefault()
                 If mainTableLayoutPanel IsNot Nothing Then
                     mainTableLayoutPanel.BackColor = ColorDialog1.Color
                 Else
@@ -880,10 +943,6 @@ Public Class MainWindow
         SettingsInstance.ShowDialog()
         SettingsInstance.BringToFront()
         HighlightActiveFormButton()
-    End Sub
-
-    Private Sub CustomButton5_Load(sender As Object, e As EventArgs) Handles CustomButton5.Load
-
     End Sub
 
 #End Region

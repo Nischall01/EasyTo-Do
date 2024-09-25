@@ -22,9 +22,9 @@
     Private Sub InitializeMyDay()
         Select Case SettingsCache.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Show)
             Case "Collapsed"
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         End Select
 
         DayDate_Label.Text = DateTime.Now.ToString("dddd, MMMM dd")
@@ -145,10 +145,10 @@
             Case TaskPropertiesSidebarAction.DisableOnly
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
             Case TaskPropertiesSidebarAction.HideOnly
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
             Case TaskPropertiesSidebarAction.DisableAndHide
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         End Select
     End Sub
 
@@ -198,18 +198,6 @@
                 TaskDescription_RichTextBox.Enabled = True
                 Button_DeleteTask.Enabled = True
         End Select
-    End Sub
-
-    Private Sub ShowOrHide_TaskPropertiesSidebar(action As TaskPropertiesVisibility)
-        Select Case action
-            Case TaskPropertiesVisibility.Show
-                IsTaskPropertiesVisible = True
-            Case TaskPropertiesVisibility.Hide
-                IsTaskPropertiesVisible = False
-            Case TaskPropertiesVisibility.Toggle
-                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
-        End Select
-        UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
     End Sub
 
 #End Region
@@ -288,20 +276,9 @@
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
-    ' Add new task '
-    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
-        If e.KeyValue = Keys.Enter Then
-            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
-            TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
-            If MyDay_CheckedListBox.Items.Count = 1 Then
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
-            End If
-        End If
-    End Sub
-
     ' Close Task properties sidebar '
     Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
     End Sub
 
     Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
@@ -376,7 +353,7 @@
     End Sub
 
     Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
     End Sub
@@ -397,24 +374,6 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        ' # Option 1
-
-        'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
-        '    Await Task.Delay(15)
-        '    UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
-        '    ViewsManager.RefreshTasks()
-        '    Me.ActiveControl = Me.AddNewTask_TextBox
-        'Else
-        '    ' Trigger flickering effect by deselecting and reselecting
-        '    If previousIndex > 0 Then
-        '        MyDay_CheckedListBox.SelectedIndex = -1
-        '        Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-        '    End If
-        '    MyDay_CheckedListBox.SelectedIndex = previousIndex
-        'End If
-
-        ' # Option 2
-
         Await Task.Delay(10)
         UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
         ViewsManager.RefreshTasks()
@@ -423,7 +382,8 @@
 
     Private Sub MyDay_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles MyDay_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
-            ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Toggle)
+
+            MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
@@ -439,7 +399,7 @@
     End Sub
 
     Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
@@ -452,21 +412,21 @@
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub TableLayoutPanel1_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_DateAndTimeHolder.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
     End Sub
@@ -511,7 +471,7 @@
     End Sub
 
     Private Sub Time_Label_Click(sender As Object, e As EventArgs) Handles Time_Label.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
     End Sub
@@ -527,6 +487,33 @@
     Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
         TaskManager.RemoveDueDate(SelectedTask_ID, Me.MyDay_CheckedListBox, SelectedTask_Index, ViewName.MyDay)
     End Sub
+
+#End Region
+
+    ' Add New task
+    Private Sub AddNewTask_TextBox_KeyDown(sender As Object, e As KeyEventArgs) Handles AddNewTask_TextBox.KeyDown
+        If e.KeyValue = Keys.Enter Then
+            If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+            TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
+            If MyDay_CheckedListBox.Items.Count = 1 Then
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Show)
+            End If
+        End If
+    End Sub
+
+#Region "Iffy"
+
+    'Private Sub View_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+    '    If e.KeyValue = Keys.Enter Then
+    '        If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
+    '        TaskManager.AddNewTask2(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
+    '        If MyDay_CheckedListBox.Items.Count = 1 Then
+    '            MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Show)
+    '        End If
+
+    '        e.SuppressKeyPress = True
+    '    End If
+    'End Sub
 
 #End Region
 

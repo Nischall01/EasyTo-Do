@@ -32,8 +32,6 @@ Partial Class Repeated_View
         Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
-        Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
-        Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.TaskDescription_RichTextBox = New System.Windows.Forms.RichTextBox()
         Me.Tlp_ImportantButton = New System.Windows.Forms.TableLayoutPanel()
@@ -50,6 +48,8 @@ Partial Class Repeated_View
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CustomButton_Repeat = New EasyTo_Do.CustomButton_2()
+        Me.CustomButton_AddReminder = New EasyTo_Do.CustomButton_2()
         Me.MainTlp.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
@@ -82,7 +82,7 @@ Partial Class Repeated_View
         '
         'MainTlp_SubTlpTaskProperties
         '
-        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer))
+        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
@@ -109,6 +109,8 @@ Partial Class Repeated_View
         '
         'TaskTitle_TextBox
         '
+        Me.TaskTitle_TextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TaskTitle_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.TaskTitle_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.TaskTitle_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TaskTitle_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
@@ -196,44 +198,6 @@ Partial Class Repeated_View
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.Size = New System.Drawing.Size(159, 181)
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.TabIndex = 10
-        '
-        'CustomButton_Repeat
-        '
-        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_Repeat.ButtonText = "Repeat"
-        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_Repeat.ForeColor = System.Drawing.Color.White
-        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
-        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
-        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
-        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_Repeat.Size = New System.Drawing.Size(159, 40)
-        Me.CustomButton_Repeat.TabIndex = 5
-        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        '
-        'CustomButton_AddReminder
-        '
-        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
-        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.CustomButton_AddReminder.ForeColor = System.Drawing.Color.Transparent
-        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
-        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
-        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
-        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
-        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
-        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
-        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
-        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(159, 40)
-        Me.CustomButton_AddReminder.TabIndex = 4
-        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
-        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'Panel1
         '
@@ -384,6 +348,7 @@ Partial Class Repeated_View
         '
         'SubTlpTaskView_SubTlpMiddle
         '
+        Me.SubTlpTaskView_SubTlpMiddle.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.SubTlpTaskView_SubTlpMiddle.ColumnCount = 1
         Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpMiddle.Controls.Add(Me.Repeated_CheckedListBox, 0, 0)
@@ -403,10 +368,10 @@ Partial Class Repeated_View
         Me.Repeated_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Repeated_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Repeated_CheckedListBox.ForeColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.Repeated_CheckedListBox.Location = New System.Drawing.Point(1, 0)
-        Me.Repeated_CheckedListBox.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Repeated_CheckedListBox.Location = New System.Drawing.Point(5, 0)
+        Me.Repeated_CheckedListBox.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Repeated_CheckedListBox.Name = "Repeated_CheckedListBox"
-        Me.Repeated_CheckedListBox.Size = New System.Drawing.Size(617, 345)
+        Me.Repeated_CheckedListBox.Size = New System.Drawing.Size(609, 345)
         Me.Repeated_CheckedListBox.TabIndex = 10
         '
         'ContextMenuStrip1
@@ -438,6 +403,44 @@ Partial Class Repeated_View
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         Me.ToolStripMenuItem2.Size = New System.Drawing.Size(92, 22)
         Me.ToolStripMenuItem2.Text = "Remove"
+        '
+        'CustomButton_Repeat
+        '
+        Me.CustomButton_Repeat.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_Repeat.ButtonText = "Repeat"
+        Me.CustomButton_Repeat.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_Repeat.ForeColor = System.Drawing.Color.White
+        Me.CustomButton_Repeat.Icon = CType(resources.GetObject("CustomButton_Repeat.Icon"), System.Drawing.Image)
+        Me.CustomButton_Repeat.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_Repeat.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_Repeat.Location = New System.Drawing.Point(0, 40)
+        Me.CustomButton_Repeat.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_Repeat.Name = "CustomButton_Repeat"
+        Me.CustomButton_Repeat.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_Repeat.Size = New System.Drawing.Size(159, 40)
+        Me.CustomButton_Repeat.TabIndex = 5
+        Me.CustomButton_Repeat.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_Repeat.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        '
+        'CustomButton_AddReminder
+        '
+        Me.CustomButton_AddReminder.BackColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddReminder.ButtonText = "Add Reminder"
+        Me.CustomButton_AddReminder.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.CustomButton_AddReminder.ForeColor = System.Drawing.Color.Transparent
+        Me.CustomButton_AddReminder.Icon = CType(resources.GetObject("CustomButton_AddReminder.Icon"), System.Drawing.Image)
+        Me.CustomButton_AddReminder.IconAnchor = System.Windows.Forms.AnchorStyles.None
+        Me.CustomButton_AddReminder.IconSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.LabelMargin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+        Me.CustomButton_AddReminder.Location = New System.Drawing.Point(0, 0)
+        Me.CustomButton_AddReminder.Margin = New System.Windows.Forms.Padding(0)
+        Me.CustomButton_AddReminder.Name = "CustomButton_AddReminder"
+        Me.CustomButton_AddReminder.PictureBoxSize = New System.Drawing.Size(17, 17)
+        Me.CustomButton_AddReminder.Size = New System.Drawing.Size(159, 40)
+        Me.CustomButton_AddReminder.TabIndex = 4
+        Me.CustomButton_AddReminder.TextAnchor = System.Windows.Forms.AnchorStyles.Left
+        Me.CustomButton_AddReminder.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
         'Repeated_View
         '

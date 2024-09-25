@@ -86,7 +86,7 @@ Partial Class Planned_View
         '
         'MainTlp_SubTlpTaskProperties
         '
-        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer), CType(CType(39, Byte), Integer))
+        Me.MainTlp_SubTlpTaskProperties.BackColor = System.Drawing.Color.FromArgb(CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer), CType(CType(41, Byte), Integer))
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
@@ -113,6 +113,8 @@ Partial Class Planned_View
         '
         'TaskTitle_TextBox
         '
+        Me.TaskTitle_TextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest
+        Me.TaskTitle_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.TaskTitle_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer), CType(CType(40, Byte), Integer))
         Me.TaskTitle_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.TaskTitle_TextBox.Dock = System.Windows.Forms.DockStyle.Fill
@@ -408,6 +410,7 @@ Partial Class Planned_View
         '
         'SubTlpTaskView_SubTlpMiddle
         '
+        Me.SubTlpTaskView_SubTlpMiddle.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.SubTlpTaskView_SubTlpMiddle.ColumnCount = 1
         Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpMiddle.Controls.Add(Me.Planned_CheckedListBox, 0, 0)
@@ -427,10 +430,10 @@ Partial Class Planned_View
         Me.Planned_CheckedListBox.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Planned_CheckedListBox.Font = New System.Drawing.Font("Microsoft PhagsPa", 12.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Planned_CheckedListBox.ForeColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(237, Byte), Integer), CType(CType(236, Byte), Integer))
-        Me.Planned_CheckedListBox.Location = New System.Drawing.Point(1, 0)
-        Me.Planned_CheckedListBox.Margin = New System.Windows.Forms.Padding(1, 0, 1, 0)
+        Me.Planned_CheckedListBox.Location = New System.Drawing.Point(5, 0)
+        Me.Planned_CheckedListBox.Margin = New System.Windows.Forms.Padding(5, 0, 5, 0)
         Me.Planned_CheckedListBox.Name = "Planned_CheckedListBox"
-        Me.Planned_CheckedListBox.Size = New System.Drawing.Size(617, 345)
+        Me.Planned_CheckedListBox.Size = New System.Drawing.Size(609, 345)
         Me.Planned_CheckedListBox.TabIndex = 10
         '
         'ContextMenuStrip1

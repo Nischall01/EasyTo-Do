@@ -357,10 +357,14 @@
   </data>
   <data name="Button_DeleteTask.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAHZJREFUOE+V
-        jMEJwDAMA71EF+r+g3SL9qPSpJwS+UAg8Mm14jrOm6JzD3o0RlqOG7YevnI3ms+Q2InefJDUid7MLI/A
-        1h+FbkecnHTEyUlHnJx0xMlJR5ycdMTJSUecnHTEyUlHnJx0ZCv8iB92ozlDg1U0E1UPWz68BNGc0t4A
-        AAAASUVORK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAACxIAAAsSAdLdfvwAAAE8SURBVDhP7VSxTgJRELxSO38BG0sKSys6O9hNXs1foB8g
+        iaUljY2JjVLQGGuMicaK0l8wJiRUyCPknNlbz5PjAiGWTDK5ebuzc+/uci+pQhrC/ky1NxOZRNWUpGYt
+        bbf33LY5MNj1oHvoSzKK9D34wm2bA4MjhLz4MgfCXtnzZTVgOkfAOKfIAox/alk9Wq9Qw87PPCYDDHXe
+        lY+zJUfM8DjbXWfJsA07Hocv2mweTFUPbfuqd9Q//ArhKLZaxyR1sUcvZ6iZ4XG/QPMT7+Oaei5yioET
+        06oNkpo19kzDyxnqlSgG4vqO4YHVRZ5Jq6PGnuldYAm7wP8NhH6DvnX9SFKzxp7rtYEfMN34ci3o5Ywv
+        y+Au8GgT8AraDtVK0pN5H3y8DP7kMDxhYI53tepEyUkPvMNpCDUfB5LkG5JLCLhAOeEvAAAAAElFTkSu
+        QmCC
 </value>
   </data>
   <data name="CustomButton_AddDueDate.Icon" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

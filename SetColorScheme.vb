@@ -108,8 +108,8 @@
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(30, 30, 30)
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.ForeColor = Color.White
 
-                MainWindow.MyDayInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
-                MainWindow.MyDayInstance.AddNewTask_TextBox.ForeColor = Color.White
+                'MainWindow.MyDayInstance.AddNewTask_TextBox.ForeColor = Color.FromArgb(45, 45, 45)
+                'MainWindow.MyDayInstance.AddNewTask_TextBox.BackColor = Color.Black
             Case "Custom"
 
         End Select

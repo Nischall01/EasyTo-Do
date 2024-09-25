@@ -27,9 +27,9 @@
     Private Sub InitializePlanned()
         Select Case SettingsCache.TaskPropertiesSidebarStateOnStart ' Sets the Task Properties initial sidebar state based on user setting
             Case "Expanded"
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             Case "Collapsed"
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         End Select
 
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
@@ -134,10 +134,10 @@
             Case TaskPropertiesSidebarAction.DisableOnly
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
             Case TaskPropertiesSidebarAction.HideOnly
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
             Case TaskPropertiesSidebarAction.DisableAndHide
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         End Select
     End Sub
 
@@ -187,18 +187,6 @@
                 TaskDescription_RichTextBox.Enabled = True
                 Button_DeleteTask.Enabled = True
         End Select
-    End Sub
-
-    Private Sub ShowOrHide_TaskPropertiesSidebar(action As TaskPropertiesVisibility)
-        Select Case action
-            Case TaskPropertiesVisibility.Show
-                IsTaskPropertiesVisible = True
-            Case TaskPropertiesVisibility.Hide
-                IsTaskPropertiesVisible = False
-            Case TaskPropertiesVisibility.Toggle
-                IsTaskPropertiesVisible = Not IsTaskPropertiesVisible
-        End Select
-        UiUtils.ToggleTaskProperties(IsTaskPropertiesVisible, Me.MainTlp)
     End Sub
 
 #End Region
@@ -278,7 +266,7 @@
             Dim NewTaskId As Integer = TaskManager.AddNewTask(Me.AddNewTask_TextBox, Me.Planned_CheckedListBox, ViewName.Planned)
             TaskManager.ShowDueDateDialog(NewTaskId, SelectedTask_Index, Me.Planned_CheckedListBox, ViewName.Planned, True)
             If Planned_CheckedListBox.Items.Count = 1 Then
-                ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Show)
             End If
         End If
     End Sub
@@ -318,24 +306,6 @@
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
 
-        ' # Option 1
-
-        'If SettingsCache.HideCompletedTasks Or SettingsCache.SortByCompletionStatus Then
-        '    Await Task.Delay(10)
-        '    UiUtils.TaskSelection_Clear(Planned_CheckedListBox)
-        '    ViewsManager.RefreshTasks()
-        '    Me.ActiveControl = Me.AddNewTask_TextBox
-        'Else
-        '    ' Trigger flickering effect by deselecting and reselecting
-        '    If previousIndex > 0 Then
-        '        Planned_CheckedListBox.SelectedIndex = -1
-        '        Await Task.Delay(UiUtils.FilckerDelay) ' Flicker delay
-        '    End If
-        '    Planned_CheckedListBox.SelectedIndex = previousIndex
-        'End If
-
-        ' # Option 2
-
         Await Task.Delay(10)
         UiUtils.TaskSelection_Clear(Planned_CheckedListBox)
         ViewsManager.RefreshTasks()
@@ -358,7 +328,7 @@
 
     Private Sub Planned_CheckedListBox_MouseDown(sender As Object, e As MouseEventArgs) Handles Planned_CheckedListBox.MouseDown
         If e.Button = MouseButtons.Right Then
-            ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Toggle)
+            MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Toggle)
         End If
     End Sub
 
@@ -392,21 +362,21 @@
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.Planned_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.Planned_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub Planned_Label_Click(sender As Object, e As EventArgs) Handles Planned_Label.Click
-        ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+        MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.Planned_CheckedListBox)
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
@@ -457,6 +427,7 @@
             End If
             Me.ActiveControl = Nothing
             UiUtils.TaskSelection_Retain(Me.Planned_CheckedListBox, SelectedTask_ID)
+            e.SuppressKeyPress = True
         End If
     End Sub
 
