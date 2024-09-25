@@ -24,7 +24,7 @@ EasyTo-Do is a task management windows appliction designed especially for desk w
 
 # Download & Installation
 
-Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/latest) installer and run it. That's it 🎉️. It is EasyTo-Do.
+Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/latest) installer and install the app. That's it 🎉️. It is EasyTo-Do.
 
 # How to Use EasyTo-Do
 
