@@ -50,8 +50,8 @@
                 MainWindow.Username_Label.ForeColor = Color.Black
                 MainWindow.Test_BackColors.Hide()
 
-                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(84, 125, 109)
-                MainWindow.Settings_Button.FlatAppearance.MouseDownBackColor = Color.Gray
+                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(225, 225, 225)
+                MainWindow.Settings_Button.FlatAppearance.MouseDownBackColor = Color.FromArgb(127, 127, 127)
             Case "Dark"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 
@@ -65,7 +65,7 @@
                 MainWindow.Username_Label.ForeColor = Color.White
                 MainWindow.Test_BackColors.Hide()
 
-                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(84, 125, 109)
+                MainWindow.Settings_Button.FlatAppearance.MouseOverBackColor = Color.FromArgb(50, 50, 50)
                 MainWindow.Settings_Button.FlatAppearance.MouseDownBackColor = Color.Gray
             Case "Custom"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
@@ -108,8 +108,8 @@
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.BackColor = Color.FromArgb(30, 30, 30)
                 MainWindow.MyDayInstance.TaskDescription_RichTextBox.ForeColor = Color.White
 
-                'MainWindow.MyDayInstance.AddNewTask_TextBox.ForeColor = Color.FromArgb(45, 45, 45)
-                'MainWindow.MyDayInstance.AddNewTask_TextBox.BackColor = Color.Black
+                MainWindow.MyDayInstance.AddNewTask_TextBox.BackColor = Color.FromArgb(45, 45, 45)
+                MainWindow.MyDayInstance.AddNewTask_TextBox.ForeColor = Color.White
             Case "Custom"
 
         End Select

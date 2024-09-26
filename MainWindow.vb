@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Runtime.InteropServices
 Imports ReaLTaiizor.Controls
 
 'Imports Newtonsoft.Json
@@ -106,6 +107,9 @@ Public Class MainWindow
         InitializeComponent()
         Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
         Me.UpdateStyles()
+
+        Dim minWidth As Integer = Screen.PrimaryScreen.Bounds.Width / 2
+        Me.MinimumSize = New Size(minWidth, 575)
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
