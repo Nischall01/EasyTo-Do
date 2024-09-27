@@ -27,7 +27,7 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel19 = New System.Windows.Forms.TableLayoutPanel()
         Me.Repeated_Icon = New System.Windows.Forms.PictureBox()
         Me.TableLayoutPanel18 = New System.Windows.Forms.TableLayoutPanel()
-        Me.CloseRepeatedDialog_Button = New System.Windows.Forms.Button()
+        Me.CloseSettingsDialog_Button = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
@@ -155,12 +155,13 @@ Partial Class Settings_Dialog
         'Repeated_Icon
         '
         Me.Repeated_Icon.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Repeated_Icon.BackgroundImage = CType(resources.GetObject("Repeated_Icon.BackgroundImage"), System.Drawing.Image)
         Me.Repeated_Icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Repeated_Icon.Image = CType(resources.GetObject("Repeated_Icon.Image"), System.Drawing.Image)
         Me.Repeated_Icon.Location = New System.Drawing.Point(152, 4)
         Me.Repeated_Icon.Margin = New System.Windows.Forms.Padding(0)
         Me.Repeated_Icon.Name = "Repeated_Icon"
         Me.Repeated_Icon.Size = New System.Drawing.Size(30, 28)
+        Me.Repeated_Icon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
         Me.Repeated_Icon.TabIndex = 2
         Me.Repeated_Icon.TabStop = False
         '
@@ -169,7 +170,7 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel18.BackColor = System.Drawing.Color.FromArgb(CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer), CType(CType(10, Byte), Integer))
         Me.TableLayoutPanel18.ColumnCount = 1
         Me.TableLayoutPanel18.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel18.Controls.Add(Me.CloseRepeatedDialog_Button, 0, 0)
+        Me.TableLayoutPanel18.Controls.Add(Me.CloseSettingsDialog_Button, 0, 0)
         Me.TableLayoutPanel18.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel18.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel18.Margin = New System.Windows.Forms.Padding(0)
@@ -179,21 +180,21 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel18.Size = New System.Drawing.Size(334, 36)
         Me.TableLayoutPanel18.TabIndex = 8
         '
-        'CloseRepeatedDialog_Button
+        'CloseSettingsDialog_Button
         '
-        Me.CloseRepeatedDialog_Button.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.CloseRepeatedDialog_Button.BackColor = System.Drawing.Color.Transparent
-        Me.CloseRepeatedDialog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.CloseRepeatedDialog_Button.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CloseRepeatedDialog_Button.ForeColor = System.Drawing.Color.White
-        Me.CloseRepeatedDialog_Button.Location = New System.Drawing.Point(155, 6)
-        Me.CloseRepeatedDialog_Button.Margin = New System.Windows.Forms.Padding(0)
-        Me.CloseRepeatedDialog_Button.Name = "CloseRepeatedDialog_Button"
-        Me.CloseRepeatedDialog_Button.Size = New System.Drawing.Size(24, 24)
-        Me.CloseRepeatedDialog_Button.TabIndex = 4
-        Me.CloseRepeatedDialog_Button.TabStop = False
-        Me.CloseRepeatedDialog_Button.Text = "X"
-        Me.CloseRepeatedDialog_Button.UseVisualStyleBackColor = False
+        Me.CloseSettingsDialog_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.CloseSettingsDialog_Button.BackColor = System.Drawing.Color.Transparent
+        Me.CloseSettingsDialog_Button.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.CloseSettingsDialog_Button.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CloseSettingsDialog_Button.ForeColor = System.Drawing.Color.White
+        Me.CloseSettingsDialog_Button.Location = New System.Drawing.Point(155, 6)
+        Me.CloseSettingsDialog_Button.Margin = New System.Windows.Forms.Padding(0)
+        Me.CloseSettingsDialog_Button.Name = "CloseSettingsDialog_Button"
+        Me.CloseSettingsDialog_Button.Size = New System.Drawing.Size(24, 24)
+        Me.CloseSettingsDialog_Button.TabIndex = 4
+        Me.CloseSettingsDialog_Button.TabStop = False
+        Me.CloseSettingsDialog_Button.Text = "X"
+        Me.CloseSettingsDialog_Button.UseVisualStyleBackColor = False
         '
         'TabControl1
         '
@@ -1134,7 +1135,7 @@ Partial Class Settings_Dialog
     Friend WithEvents RadioButton8 As RadioButton
     Friend WithEvents RadioButton7 As RadioButton
     Friend WithEvents TableLayoutPanel18 As TableLayoutPanel
-    Friend WithEvents CloseRepeatedDialog_Button As Button
+    Friend WithEvents CloseSettingsDialog_Button As Button
     Friend WithEvents TableLayoutPanel19 As TableLayoutPanel
     Friend WithEvents Repeated_Icon As PictureBox
     Friend WithEvents TableLayoutPanel20 As TableLayoutPanel

@@ -1,4 +1,6 @@
-﻿Public Class MyDay_View
+﻿Imports System.Media
+
+Public Class MyDay_View
 
     Private IsTaskPropertiesVisible As Boolean
     Private lastUpdatedMinute As Integer = -1
@@ -157,12 +159,14 @@
             Case TaskPropertiesState.Disable
                 TaskTitle_TextBox.Text = Nothing
                 Label_TaskEntryDateTime.Text = Nothing
-                Important_Button.BackgroundImage = GlobalResources.DisabledImportantIcon
+                Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Disabled
 
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
-                    Important_Button.BackColor = Color.FromArgb(35, 35, 35)
+                    Important_Button.BackColor = Color.Transparent
                     TaskDescription_RichTextBox.Hide()
+                Else
+                    Important_Button.BackColor = Color.Transparent
                 End If
                 TaskTitle_TextBox.Enabled = False
                 TaskDescription_RichTextBox.Text = Nothing
@@ -181,12 +185,14 @@
                 CustomButton_AddDueDate.Enabled = False
                 CustomButton_AddDueDate.ButtonText = TextPlaceholders.DueDateButton
 
-                Button_DeleteTask.Enabled = False
+                DeleteTask_Button.Enabled = False
             Case TaskPropertiesState.Enable
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
                     TaskDescription_RichTextBox.Show()
+                Else
+                    Important_Button.BackColor = Color.FromArgb(234, 234, 234)
                 End If
                 TaskTitle_TextBox.Enabled = True
                 Label_ADT.Enabled = True
@@ -196,7 +202,7 @@
                 CustomButton_Repeat.Enabled = True
                 CustomButton_AddDueDate.Enabled = True
                 TaskDescription_RichTextBox.Enabled = True
-                Button_DeleteTask.Enabled = True
+                DeleteTask_Button.Enabled = True
         End Select
     End Sub
 
@@ -245,7 +251,11 @@
         Label_TaskEntryDateTime.Text = entryDateTime
 
         ' Update important icon
-        Important_Button.BackgroundImage = If(isImportant, GlobalResources.CheckedImportantIcon, GlobalResources.UncheckedImportantIcon)
+        If SettingsCache.ColorScheme = "Dark" Then
+            Important_Button.BackgroundImage = If(isImportant, GlobalResources.ImportantIcon_Checked, GlobalResources.ImportantIcon_Unchecked_White)
+        Else
+            Important_Button.BackgroundImage = If(isImportant, GlobalResources.ImportantIcon_Checked, GlobalResources.ImportantIcon_Unchecked_Black)
+        End If
 
         ' Disable or enable due date button based on task repetition
         CustomButton_AddDueDate.Enabled = Not isRepeated
@@ -276,12 +286,14 @@
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
-    ' Close Task properties sidebar '
-    Private Sub Button_CloseTaskProperties_Click(sender As Object, e As EventArgs) Handles Button_CloseTaskProperties.Click
+    ' Close Task properties sidebar
+    Private Sub CloseTaskProperties_Button_Click(sender As Object, e As EventArgs) Handles CloseTaskProperties_Button.Click
+        Me.ActiveControl = Nothing
         MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
     End Sub
 
-    Private Sub Button_DeleteTask_Click(sender As Object, e As EventArgs) Handles Button_DeleteTask.Click
+    Private Sub DeleteTask_Button_Click(sender As Object, e As EventArgs) Handles DeleteTask_Button.Click
+        ActiveControl = Nothing
         If MyDay_CheckedListBox.SelectedIndex = -1 Or MyDay_CheckedListBox.Items.Count = 0 Or SelectedTask_Item Is Nothing Then
             Exit Sub
         End If
@@ -326,7 +338,8 @@
 
     ' Button event to change the 'IsImportant' status of the selected task
     Private Sub Important_Button_Click(sender As Object, e As EventArgs) Handles Important_Button.Click
-        If MyDay_CheckedListBox.Items.Count > 0 Then
+        Me.ActiveControl = Nothing
+        If MyDay_CheckedListBox.Items.Count <> -1 Then
             If SelectedTask_Properties.IsImportant Then
                 TaskManager.UpdateImportance(CheckState.Unchecked, SelectedTask_ID)
             Else
@@ -342,14 +355,19 @@
         If SelectedTask_Properties.IsImportant Then
             Exit Sub
         End If
-        Important_Button.BackgroundImage = GlobalResources.CheckedImportantIcon
+        Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Checked
     End Sub
 
     Private Sub Important_Button_MouseLeave(sender As Object, e As EventArgs) Handles Important_Button.MouseLeave
         If SelectedTask_Properties.IsImportant Then
             Exit Sub
         End If
-        Important_Button.BackgroundImage = GlobalResources.UncheckedImportantIcon
+
+        If SettingsCache.ColorScheme = "Dark" Then
+            Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Unchecked_White
+        Else
+            Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Unchecked_Black
+        End If
     End Sub
 
     Private Sub Label_DayDate_Click(sender As Object, e As EventArgs) Handles DayDate_Label.Click
@@ -360,7 +378,7 @@
 
     Private Sub Me_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         If e.KeyValue = Keys.Delete Then
-            Button_DeleteTask.PerformClick()
+            DeleteTask_Button.PerformClick()
         End If
     End Sub
 
@@ -373,6 +391,10 @@
 
         ' Update the task status based on the checkbox state
         TaskManager.UpdateStatus(e.NewValue = CheckState.Checked, SelectedTask_ID)
+
+        If e.NewValue = CheckState.Checked Then
+            SFXPlayer.Play()
+        End If
 
         Await Task.Delay(10)
         UiUtils.TaskSelection_Clear(MyDay_CheckedListBox)
@@ -395,14 +417,16 @@
             SelectedTask_Item = MyDay_CheckedListBox.SelectedItem
             SelectedTask_ID = SelectedTask_Item.ID
             LoadSelectedTaskProperties()
+        Else
+            DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
         End If
     End Sub
 
-    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles MyDay_Label.Click
+    Private Sub MyDay_Label_Click(sender As Object, e As EventArgs) Handles MyDayView_Label.Click
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
         MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
-        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub MyDay_View_Leave(sender As Object, e As EventArgs) Handles MyBase.Leave
@@ -412,17 +436,17 @@
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpBottom_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpBottom.Click
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
         MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
-        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
         MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         Me.ActiveControl = Nothing
         UiUtils.TaskSelection_Clear(Me.MyDay_CheckedListBox)
-        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub TableLayoutPanel1_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_DateAndTimeHolder.Click
@@ -501,20 +525,16 @@
         End If
     End Sub
 
-#Region "Iffy"
+    Private Sub DeleteTask_Button_MouseEnter(sender As Object, e As EventArgs) Handles DeleteTask_Button.MouseEnter
+        DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Hover
+    End Sub
 
-    'Private Sub View_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
-    '    If e.KeyValue = Keys.Enter Then
-    '        If String.IsNullOrWhiteSpace(AddNewTask_TextBox.Text) Then Exit Sub
-    '        TaskManager.AddNewTask2(Me.AddNewTask_TextBox, Me.MyDay_CheckedListBox, ViewName.MyDay)
-    '        If MyDay_CheckedListBox.Items.Count = 1 Then
-    '            MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Show)
-    '        End If
-
-    '        e.SuppressKeyPress = True
-    '    End If
-    'End Sub
-
-#End Region
+    Private Sub DeleteTask_Button_MouseLeave(sender As Object, e As EventArgs) Handles DeleteTask_Button.MouseLeave
+        If SettingsCache.ColorScheme = "Dark" Then
+            DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
+        Else
+            DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
+        End If
+    End Sub
 
 End Class

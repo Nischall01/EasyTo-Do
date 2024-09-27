@@ -122,6 +122,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums.vb" />
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SettingsCache.vb" />
     <Compile Include="TaskProperties.vb" />
     <Compile Include="TaskManager.vb" />
@@ -181,11 +186,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="SetColorScheme.vb" />
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="MyDay_View.Designer.vb">
       <DependentUpon>MyDay_View.vb</DependentUpon>
     </Compile>
@@ -290,17 +290,37 @@
     <Content Include="bin\Debug\Defaults\DefaultPfp.png" />
     <Content Include="EasyToDo_Icon.ico" />
     <Content Include="Icons\calendar %283%29.png" />
-    <None Include="Resources\4-removebg-preview.png" />
-    <None Include="Resources\4.png" />
-    <None Include="Resources\output-onlinepngtools.png" />
+    <Content Include="Resources\Bling.wav" />
+    <None Include="Resources\SettingsIcon%28Black%29.png" />
+    <None Include="Resources\DueDateIcon%28Black%29.png" />
+    <None Include="Resources\DueDateIcon%28White%29.png" />
+    <Content Include="Resources\CloseIcon%28White%29.png" />
+    <Content Include="Resources\CloseIcon%28Black%29.png" />
+    <None Include="Resources\ReminderIcon%28Black%29.png" />
+    <None Include="Resources\ReminderIcon%28White%29.png" />
+    <None Include="Resources\DeleteIcon%28White%29.png" />
+    <None Include="Resources\DeleteIcon%28Hover%29.png" />
+    <Content Include="Resources\DeleteIcon%28Black%29.png" />
+    <Content Include="Resources\FullscreenIcon%28White%29.png" />
+    <Content Include="Resources\FullScreenIcon%28Black%29.png" />
+    <None Include="Resources\ImportantIcon%28Black%29.png" />
+    <None Include="Resources\ImportantIcon%28Disabled%29.png" />
+    <None Include="Resources\ImportantIcon%28White%29.png" />
+    <None Include="Resources\MinimizeIcon%28Black%29.png" />
+    <None Include="Resources\MinimizeIcon%28White%29.png" />
+    <Content Include="Resources\ImportantIcon%28HoverAndMark%29.png" />
+    <Content Include="Resources\ModeSwitch%28Dark%29.png" />
+    <None Include="Resources\RepeatIcon%28Black%29.png" />
+    <None Include="Resources\RepeatIcon%28White%29.png" />
+    <Content Include="Resources\RestoreIcon%28White%29.png" />
+    <Content Include="Resources\RestoreIcon%28Black%29.png" />
+    <Content Include="Resources\ModeSwitch%28Light%29.png" />
+    <None Include="Resources\SettingsIcon%28White%29.png" />
     <None Include="Icons\EasyToDo_Icon.ico" />
     <Content Include="Icons\repeat %284%29.png" />
     <Content Include="Icons\sun %281%29.png" />
     <Content Include="Icons\task %281%29.png" />
     <Content Include="Icons\warning %282%29.png" />
-    <None Include="Resources\3.png" />
-    <None Include="Resources\1.png" />
-    <None Include="Resources\2.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

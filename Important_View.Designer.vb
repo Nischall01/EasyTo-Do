@@ -29,15 +29,15 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpBottom = New System.Windows.Forms.TableLayoutPanel()
         Me.AddNewTask_TextBox = New System.Windows.Forms.TextBox()
         Me.SubTlpTaskView_SubTlpTop = New System.Windows.Forms.TableLayoutPanel()
-        Me.Important_Label = New System.Windows.Forms.Label()
-        Me.PictureBox_PanelIcon = New System.Windows.Forms.PictureBox()
+        Me.ImportantView_Label = New System.Windows.Forms.Label()
+        Me.ViewIcon_PictureBox = New System.Windows.Forms.PictureBox()
         Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
         Me.Important_CheckedListBox = New System.Windows.Forms.CheckedListBox()
         Me.MainTlp_SubTlpTaskProperties = New System.Windows.Forms.TableLayoutPanel()
         Me.TaskTitle_TextBox = New System.Windows.Forms.TextBox()
-        Me.Button_DeleteTask = New System.Windows.Forms.Button()
+        Me.DeleteTask_Button = New System.Windows.Forms.Button()
         Me.Label_ADT = New System.Windows.Forms.Label()
-        Me.Button_CloseTaskProperties = New System.Windows.Forms.Button()
+        Me.CloseTaskProperties_Button = New System.Windows.Forms.Button()
         Me.Label_TaskEntryDateTime = New System.Windows.Forms.Label()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons = New System.Windows.Forms.TableLayoutPanel()
         Me.CustomButton_AddDueDate = New EasyTo_Do.CustomButton_2()
@@ -57,7 +57,7 @@ Partial Class Important_View
         Me.MainTlp_SubTlpTaskView.SuspendLayout()
         Me.SubTlpTaskView_SubTlpBottom.SuspendLayout()
         Me.SubTlpTaskView_SubTlpTop.SuspendLayout()
-        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ViewIcon_PictureBox, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SubTlpTaskView_SubTlpMiddle.SuspendLayout()
         Me.MainTlp_SubTlpTaskProperties.SuspendLayout()
         Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons.SuspendLayout()
@@ -128,10 +128,11 @@ Partial Class Important_View
         Me.AddNewTask_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.AddNewTask_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
         Me.AddNewTask_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.AddNewTask_TextBox.Font = New System.Drawing.Font("Poppins", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddNewTask_TextBox.ForeColor = System.Drawing.Color.White
-        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(18, 13)
+        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(18, 10)
         Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
-        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(582, 20)
+        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(582, 27)
         Me.AddNewTask_TextBox.TabIndex = 3
         '
         'SubTlpTaskView_SubTlpTop
@@ -141,8 +142,8 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.0!))
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 61.0!))
         Me.SubTlpTaskView_SubTlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.0!))
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.Important_Label, 1, 0)
-        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.PictureBox_PanelIcon, 0, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.ImportantView_Label, 1, 0)
+        Me.SubTlpTaskView_SubTlpTop.Controls.Add(Me.ViewIcon_PictureBox, 0, 0)
         Me.SubTlpTaskView_SubTlpTop.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SubTlpTaskView_SubTlpTop.Location = New System.Drawing.Point(0, 0)
         Me.SubTlpTaskView_SubTlpTop.Margin = New System.Windows.Forms.Padding(0)
@@ -152,35 +153,35 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpTop.Size = New System.Drawing.Size(619, 69)
         Me.SubTlpTaskView_SubTlpTop.TabIndex = 6
         '
-        'Important_Label
+        'ImportantView_Label
         '
-        Me.Important_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.Important_Label.AutoSize = True
-        Me.Important_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Important_Label.ForeColor = System.Drawing.Color.White
-        Me.Important_Label.Location = New System.Drawing.Point(58, 16)
-        Me.Important_Label.Name = "Important_Label"
-        Me.Important_Label.Size = New System.Drawing.Size(154, 36)
-        Me.Important_Label.TabIndex = 6
-        Me.Important_Label.Text = "Important"
+        Me.ImportantView_Label.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.ImportantView_Label.AutoSize = True
+        Me.ImportantView_Label.Font = New System.Drawing.Font("Microsoft YaHei UI", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ImportantView_Label.ForeColor = System.Drawing.Color.White
+        Me.ImportantView_Label.Location = New System.Drawing.Point(58, 16)
+        Me.ImportantView_Label.Name = "ImportantView_Label"
+        Me.ImportantView_Label.Size = New System.Drawing.Size(154, 36)
+        Me.ImportantView_Label.TabIndex = 6
+        Me.ImportantView_Label.Text = "Important"
         '
-        'PictureBox_PanelIcon
+        'ViewIcon_PictureBox
         '
-        Me.PictureBox_PanelIcon.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.PictureBox_PanelIcon.BackColor = System.Drawing.Color.Transparent
-        Me.PictureBox_PanelIcon.Enabled = False
-        Me.PictureBox_PanelIcon.Image = CType(resources.GetObject("PictureBox_PanelIcon.Image"), System.Drawing.Image)
-        Me.PictureBox_PanelIcon.Location = New System.Drawing.Point(15, 14)
-        Me.PictureBox_PanelIcon.Margin = New System.Windows.Forms.Padding(0)
-        Me.PictureBox_PanelIcon.Name = "PictureBox_PanelIcon"
-        Me.PictureBox_PanelIcon.Size = New System.Drawing.Size(40, 40)
-        Me.PictureBox_PanelIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox_PanelIcon.TabIndex = 1
-        Me.PictureBox_PanelIcon.TabStop = False
+        Me.ViewIcon_PictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.ViewIcon_PictureBox.BackColor = System.Drawing.Color.Transparent
+        Me.ViewIcon_PictureBox.Enabled = False
+        Me.ViewIcon_PictureBox.Image = CType(resources.GetObject("ViewIcon_PictureBox.Image"), System.Drawing.Image)
+        Me.ViewIcon_PictureBox.Location = New System.Drawing.Point(15, 14)
+        Me.ViewIcon_PictureBox.Margin = New System.Windows.Forms.Padding(0)
+        Me.ViewIcon_PictureBox.Name = "ViewIcon_PictureBox"
+        Me.ViewIcon_PictureBox.Size = New System.Drawing.Size(40, 40)
+        Me.ViewIcon_PictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.ViewIcon_PictureBox.TabIndex = 1
+        Me.ViewIcon_PictureBox.TabStop = False
         '
         'SubTlpTaskView_SubTlpMiddle
         '
-        Me.SubTlpTaskView_SubTlpMiddle.BackColor = System.Drawing.Color.FromArgb(CType(CType(16, Byte), Integer), CType(CType(12, Byte), Integer), CType(CType(10, Byte), Integer))
+        Me.SubTlpTaskView_SubTlpMiddle.BackColor = System.Drawing.Color.Transparent
         Me.SubTlpTaskView_SubTlpMiddle.ColumnCount = 1
         Me.SubTlpTaskView_SubTlpMiddle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.SubTlpTaskView_SubTlpMiddle.Controls.Add(Me.Important_CheckedListBox, 0, 0)
@@ -212,9 +213,9 @@ Partial Class Important_View
         Me.MainTlp_SubTlpTaskProperties.ColumnCount = 1
         Me.MainTlp_SubTlpTaskProperties.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.TaskTitle_TextBox, 0, 1)
-        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Button_DeleteTask, 0, 6)
+        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.DeleteTask_Button, 0, 6)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Label_ADT, 0, 2)
-        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Button_CloseTaskProperties, 0, 0)
+        Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.CloseTaskProperties_Button, 0, 0)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Label_TaskEntryDateTime, 0, 3)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.SubTlpTaskProperties_SubTlpTaskFeatureButtons, 0, 5)
         Me.MainTlp_SubTlpTaskProperties.Controls.Add(Me.Tlp_ImportantButton, 0, 4)
@@ -248,23 +249,24 @@ Partial Class Important_View
         Me.TaskTitle_TextBox.TabIndex = 12
         Me.TaskTitle_TextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Button_DeleteTask
+        'DeleteTask_Button
         '
-        Me.Button_DeleteTask.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button_DeleteTask.BackColor = System.Drawing.Color.Transparent
-        Me.Button_DeleteTask.BackgroundImage = CType(resources.GetObject("Button_DeleteTask.BackgroundImage"), System.Drawing.Image)
-        Me.Button_DeleteTask.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button_DeleteTask.FlatAppearance.BorderSize = 0
-        Me.Button_DeleteTask.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer), CType(CType(50, Byte), Integer))
-        Me.Button_DeleteTask.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button_DeleteTask.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_DeleteTask.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button_DeleteTask.Location = New System.Drawing.Point(65, 394)
-        Me.Button_DeleteTask.Name = "Button_DeleteTask"
-        Me.Button_DeleteTask.Padding = New System.Windows.Forms.Padding(3)
-        Me.Button_DeleteTask.Size = New System.Drawing.Size(34, 34)
-        Me.Button_DeleteTask.TabIndex = 8
-        Me.Button_DeleteTask.UseVisualStyleBackColor = False
+        Me.DeleteTask_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.DeleteTask_Button.BackColor = System.Drawing.Color.Transparent
+        Me.DeleteTask_Button.BackgroundImage = CType(resources.GetObject("DeleteTask_Button.BackgroundImage"), System.Drawing.Image)
+        Me.DeleteTask_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.DeleteTask_Button.FlatAppearance.BorderSize = 0
+        Me.DeleteTask_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
+        Me.DeleteTask_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
+        Me.DeleteTask_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.DeleteTask_Button.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DeleteTask_Button.ForeColor = System.Drawing.SystemColors.ControlText
+        Me.DeleteTask_Button.Location = New System.Drawing.Point(72, 401)
+        Me.DeleteTask_Button.Name = "DeleteTask_Button"
+        Me.DeleteTask_Button.Padding = New System.Windows.Forms.Padding(3)
+        Me.DeleteTask_Button.Size = New System.Drawing.Size(21, 21)
+        Me.DeleteTask_Button.TabIndex = 8
+        Me.DeleteTask_Button.UseVisualStyleBackColor = False
         '
         'Label_ADT
         '
@@ -279,20 +281,20 @@ Partial Class Important_View
         Me.Label_ADT.TabIndex = 2
         Me.Label_ADT.Text = "Added Date and Time:"
         '
-        'Button_CloseTaskProperties
+        'CloseTaskProperties_Button
         '
-        Me.Button_CloseTaskProperties.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Button_CloseTaskProperties.BackColor = System.Drawing.Color.Transparent
-        Me.Button_CloseTaskProperties.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button_CloseTaskProperties.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button_CloseTaskProperties.ForeColor = System.Drawing.Color.White
-        Me.Button_CloseTaskProperties.Location = New System.Drawing.Point(70, 7)
-        Me.Button_CloseTaskProperties.Margin = New System.Windows.Forms.Padding(0)
-        Me.Button_CloseTaskProperties.Name = "Button_CloseTaskProperties"
-        Me.Button_CloseTaskProperties.Size = New System.Drawing.Size(24, 24)
-        Me.Button_CloseTaskProperties.TabIndex = 0
-        Me.Button_CloseTaskProperties.Text = "X"
-        Me.Button_CloseTaskProperties.UseVisualStyleBackColor = False
+        Me.CloseTaskProperties_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.CloseTaskProperties_Button.BackColor = System.Drawing.Color.Transparent
+        Me.CloseTaskProperties_Button.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.CloseTaskProperties_Button.Font = New System.Drawing.Font("Yu Gothic", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CloseTaskProperties_Button.ForeColor = System.Drawing.Color.White
+        Me.CloseTaskProperties_Button.Location = New System.Drawing.Point(70, 7)
+        Me.CloseTaskProperties_Button.Margin = New System.Windows.Forms.Padding(0)
+        Me.CloseTaskProperties_Button.Name = "CloseTaskProperties_Button"
+        Me.CloseTaskProperties_Button.Size = New System.Drawing.Size(24, 24)
+        Me.CloseTaskProperties_Button.TabIndex = 0
+        Me.CloseTaskProperties_Button.Text = "X"
+        Me.CloseTaskProperties_Button.UseVisualStyleBackColor = False
         '
         'Label_TaskEntryDateTime
         '
@@ -422,7 +424,7 @@ Partial Class Important_View
         '
         'Important_Button
         '
-        Me.Important_Button.BackColor = System.Drawing.Color.FromArgb(CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(21, Byte), Integer))
+        Me.Important_Button.BackColor = System.Drawing.Color.Transparent
         Me.Important_Button.BackgroundImage = CType(resources.GetObject("Important_Button.BackgroundImage"), System.Drawing.Image)
         Me.Important_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.Important_Button.Dock = System.Windows.Forms.DockStyle.Fill
@@ -495,7 +497,7 @@ Partial Class Important_View
         Me.SubTlpTaskView_SubTlpBottom.PerformLayout()
         Me.SubTlpTaskView_SubTlpTop.ResumeLayout(False)
         Me.SubTlpTaskView_SubTlpTop.PerformLayout()
-        CType(Me.PictureBox_PanelIcon, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ViewIcon_PictureBox, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SubTlpTaskView_SubTlpMiddle.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.ResumeLayout(False)
         Me.MainTlp_SubTlpTaskProperties.PerformLayout()
@@ -512,9 +514,9 @@ Partial Class Important_View
     Friend WithEvents MainTlp_SubTlpTaskView As TableLayoutPanel
     Friend WithEvents MainTlp_SubTlpTaskProperties As TableLayoutPanel
     Friend WithEvents TaskTitle_TextBox As TextBox
-    Friend WithEvents Button_DeleteTask As Button
+    Friend WithEvents DeleteTask_Button As Button
     Friend WithEvents Label_ADT As Label
-    Friend WithEvents Button_CloseTaskProperties As Button
+    Friend WithEvents CloseTaskProperties_Button As Button
     Friend WithEvents Label_TaskEntryDateTime As Label
     Friend WithEvents SubTlpTaskProperties_SubTlpTaskFeatureButtons As TableLayoutPanel
     Friend WithEvents CustomButton_AddDueDate As CustomButton_2
@@ -527,8 +529,8 @@ Partial Class Important_View
     Friend WithEvents SubTlpTaskView_SubTlpBottom As TableLayoutPanel
     Friend WithEvents AddNewTask_TextBox As TextBox
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
-    Friend WithEvents Important_Label As Label
-    Friend WithEvents PictureBox_PanelIcon As PictureBox
+    Friend WithEvents ImportantView_Label As Label
+    Friend WithEvents ViewIcon_PictureBox As PictureBox
     Friend WithEvents ContextMenuStrip1 As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip2 As ContextMenuStrip

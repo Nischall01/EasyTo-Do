@@ -28,7 +28,7 @@ Public Class CircularPictureBox
         PfpColorScheme = My.Settings.ColorScheme
         Select Case PfpColorScheme
             Case "Light"
-                PictureBoxBackColor = Color.White
+                PictureBoxBackColor = Color.FromArgb(225, 225, 225)
             Case "Dark"
                 PictureBoxBackColor = Color.FromArgb(30, 30, 30)
             Case "Custom"

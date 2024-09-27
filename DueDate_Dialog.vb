@@ -95,13 +95,16 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        ' Get the selected date from the MonthCalendar control
         Dim SelectedDate As DateTime = MonthCalendar1.SelectionEnd
 
-        If SelectedDate.ToString("yyyy-MM-dd") = "0001-01-01" Then
-            MsgBox("Can't pick today as the due date in Planned View." & vbCrLf & "Please use My Day View for that.")
+        ' Check if the selected date is before today's date
+        If SelectedDate.Date < DateTime.Today Then
+            MsgBox("The selected due date cannot be before today.")
             Exit Sub
         End If
 
+        ' If the date is valid, set the due date and close the form
         TaskPropertiesCRUDHandler.SetDueDate(SelectedDate.Date, DueDate_SelectedTaskID)
         Me.Close()
     End Sub

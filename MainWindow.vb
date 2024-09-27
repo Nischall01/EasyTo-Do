@@ -1,5 +1,7 @@
 ﻿Imports System.IO
+Imports System.Media
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Devices
 Imports ReaLTaiizor.Controls
 
 'Imports Newtonsoft.Json
@@ -7,7 +9,16 @@ Imports ReaLTaiizor.Controls
 
 Public Class MainWindow
 
-    ' Reminder Variables
+    'Custom titlebar variables
+
+    Public isMaximized As Boolean = False
+    Private CurrentNormalSize As Size
+
+    Private isDragging As Boolean = False
+    Private startX As Integer
+    Private startY As Integer
+
+    ' Reminder variables
 
     Private ReminderDictionary As New Dictionary(Of Integer, DateTime)
     Private ReminderDT As New DataTable
@@ -110,12 +121,16 @@ Public Class MainWindow
 
         Dim minWidth As Integer = Screen.PrimaryScreen.Bounds.Width / 2
         Me.MinimumSize = New Size(minWidth, 575)
+
+        'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnsureDatabaseExists("To_Do.sdf")
         InitializeApp()
         InitializeReminder()
+
+        '  Panel1.Hide()
     End Sub
 
 #End Region
@@ -343,13 +358,10 @@ Public Class MainWindow
     Private Sub SetColorSchemeFromSettings()
         Select Case My.Settings.ColorScheme
             Case "Light"
-                SetColorScheme.Light()
                 SettingsInstance.ColorScheme_Light_RadioBtn.Checked = True
             Case "Dark"
-                SetColorScheme.Dark()
                 SettingsInstance.ColorScheme_Dark_RadioBtn.Checked = True
             Case "Custom"
-                SetColorScheme.Custom()
                 SettingsInstance.ColorScheme_Custom_RadioBtn.Checked = True
         End Select
     End Sub
@@ -878,17 +890,6 @@ Public Class MainWindow
         End If
     End Sub
 
-#Region "Iffy"
-
-    Private Sub HandleViewButtonClick2(viewInstance As Object, textBox As DungeonTextBox, e As MouseEventArgs)
-        If e.Button = MouseButtons.Left Then
-            ShowForm(viewInstance)
-            textBox.Focus()
-        End If
-    End Sub
-
-#End Region
-
     Private Sub CustomButton1_Click(sender As Object, e As MouseEventArgs) Handles CustomButton1.MouseClick
         HandleViewButtonClick(MyDayInstance, MyDayInstance.AddNewTask_TextBox, e)
     End Sub
@@ -931,6 +932,7 @@ Public Class MainWindow
     End Sub
 
     Private Sub Settings_Button_Click(sender As Object, e As EventArgs) Handles Settings_Button.Click
+        ActiveControl = Nothing
         Dim activeView As ViewName = ViewsManager.GetActiveViewName()
         Select Case activeView
             Case ViewName.MyDay
@@ -950,5 +952,99 @@ Public Class MainWindow
     End Sub
 
 #End Region
+
+#Region "Custom Titlebar"
+
+    Private Sub TPanel1_MouseDown(sender As Object, e As MouseEventArgs) Handles Panel1.MouseDown
+        If e.Button = MouseButtons.Left Then
+            isDragging = True
+            startX = e.X
+            startY = e.Y
+        End If
+    End Sub
+
+    Private Sub Panel1_MouseMove(sender As Object, e As MouseEventArgs) Handles Panel1.MouseMove
+        If isDragging Then
+            If isMaximized = True Then
+                Button2.PerformClick()
+            End If
+            Dim currentPos = Me.PointToScreen(New Point(e.X, e.Y))
+            Me.Location = New Point(currentPos.X - startX, currentPos.Y - startY)
+        End If
+    End Sub
+
+    Private Sub Panel1_MouseUp(sender As Object, e As MouseEventArgs) Handles Panel1.MouseUp
+        If e.Button = MouseButtons.Left Then
+            isDragging = False
+        End If
+    End Sub
+
+    Private Sub Button1_MouseEnter(sender As Object, e As EventArgs) Handles Button1.MouseEnter
+        Button1.BackColor = Color.Red
+    End Sub
+
+    Private Sub Button1_MouseLeave(sender As Object, e As EventArgs) Handles Button1.MouseLeave
+        Button1.BackColor = Panel1.BackColor
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Me.ActiveControl = Nothing
+        Me.Close()
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.ActiveControl = Nothing
+
+        If isMaximized Then
+            Me.Size = CurrentNormalSize
+            Me.CenterToScreen()
+            isMaximized = False
+        Else
+            CurrentNormalSize = Me.Size
+            Dim ScreenWidth As Integer = Screen.PrimaryScreen.Bounds.Width - 1
+            Dim ScreenHeight As Integer = Screen.PrimaryScreen.Bounds.Height - 1
+            Me.Size = New Size(ScreenWidth, ScreenHeight)
+            Me.CenterToScreen()
+            isMaximized = True
+        End If
+
+        If My.Settings.ColorScheme = "Dark" Then
+            SetColorScheme.SetCustomTaskbarScheme("Dark")
+        Else
+            SetColorScheme.SetCustomTaskbarScheme("Light")
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Me.ActiveControl = Nothing
+        Me.WindowState = FormWindowState.Minimized
+    End Sub
+
+    Private Sub Panel1_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles Panel1.MouseDoubleClick
+        Button2.PerformClick()
+    End Sub
+
+    ' Override the CreateParams to hide the title bar without removing resizability
+    Protected Overrides ReadOnly Property CreateParams() As CreateParams
+        Get
+            Dim cp As CreateParams = MyBase.CreateParams
+            cp.Style = cp.Style And Not &HC00000 ' WS_CAPTION (removes the title bar)
+            Return cp
+        End Get
+    End Property
+
+#End Region
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Me.ActiveControl = Nothing
+        If SettingsInstance.ColorScheme_Dark_RadioBtn.Checked Then
+            SettingsInstance.ColorScheme_Light_RadioBtn.Checked = True
+            HighlightActiveFormButton()
+        Else
+            SettingsInstance.ColorScheme_Dark_RadioBtn.Checked = True
+            HighlightActiveFormButton()
+        End If
+
+    End Sub
 
 End Class

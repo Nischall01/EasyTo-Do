@@ -9,6 +9,7 @@ Public Class Settings_Dialog
     Public Sub New()
         InitializeComponent()
         Me.FormBorderStyle = FormBorderStyle.None
+        ColorScheme_Custom_RadioBtn.Enabled = False
     End Sub
 
 #Region "Window Dragging Logic"
@@ -42,6 +43,7 @@ Public Class Settings_Dialog
             Me.BackColor = Color.FromArgb(255, 255, 255)
             TabPage1.BackColor = Color.FromArgb(255, 255, 255)
             TabPage2.BackColor = Color.FromArgb(255, 255, 255)
+            TabPage3.BackColor = Color.FromArgb(255, 255, 255)
 
             Label1.ForeColor = Color.Black
             ColorScheme_Light_RadioBtn.ForeColor = Color.Black
@@ -76,6 +78,12 @@ Public Class Settings_Dialog
             RadioButton12.ForeColor = Color.Black
             RadioButton11.ForeColor = Color.Black
 
+            Label9.ForeColor = Color.Black
+
+            Label11.ForeColor = Color.Black
+            RadioButton13.ForeColor = Color.Black
+            RadioButton14.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
@@ -83,6 +91,7 @@ Public Class Settings_Dialog
             Me.BackColor = Color.FromArgb(35, 35, 35)
             TabPage1.BackColor = Color.FromArgb(35, 35, 35)
             TabPage2.BackColor = Color.FromArgb(35, 35, 35)
+            TabPage3.BackColor = Color.FromArgb(35, 35, 35)
 
             Label1.ForeColor = Color.White
             ColorScheme_Light_RadioBtn.ForeColor = Color.White
@@ -116,6 +125,12 @@ Public Class Settings_Dialog
             Label8.ForeColor = Color.White
             RadioButton12.ForeColor = Color.White
             RadioButton11.ForeColor = Color.White
+
+            Label9.ForeColor = Color.White
+
+            Label11.ForeColor = Color.White
+            RadioButton13.ForeColor = Color.White
+            RadioButton14.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
@@ -274,8 +289,7 @@ Public Class Settings_Dialog
         End Select
     End Function
 
-    Private Sub CloseRepeatedDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseRepeatedDialog_Button.Click
-        ActiveControl = Nothing
+    Private Sub CloseSettingsDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseSettingsDialog_Button.Click
         Me.Close()
     End Sub
 
