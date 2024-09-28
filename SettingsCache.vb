@@ -3,7 +3,6 @@
 
     Public ReadOnly connectionString As String = My.Settings.ConnectionString
     Public ReadOnly TaskPropertiesSidebarStateOnStart As String = My.Settings.TaskPropertiesSidebarStateOnStart
-    Public ReadOnly DefaultTaskFont As String = My.Settings.DefaultTaskFont
 
     Public onDeleteAskForConfirmation As Boolean = My.Settings.OnDeleteAskForConfirmation
     Public SortByCompletionStatus As Boolean = My.Settings.SortByCompletionStatus

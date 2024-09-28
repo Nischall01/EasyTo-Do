@@ -211,9 +211,8 @@ Public Class Settings_Dialog
             SelectTasksFont_Button.Enabled = False
 
             Dim fontSize As Single = GetFontSizeFromValue(TasksSize_TrackBar.Value)
-            Dim DefaultFont As New Font(SettingsCache.DefaultTaskFont, fontSize)
 
-            MainWindow.ChangeTasksFont(DefaultFont)
+            MainWindow.ChangeTasksFont(GlobalResources.DefaultFont)
             SelectedFont_TextBox.Clear()
 
             My.Settings.IsTaskFontDefault = True

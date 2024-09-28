@@ -222,18 +222,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("Microsoft PhagsPa")>  _
-        Public Property DefaultTaskFont() As String
-            Get
-                Return CType(Me("DefaultTaskFont"),String)
-            End Get
-            Set
-                Me("DefaultTaskFont") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("Microsoft PhagsPa, 14pt")>  _
         Public Property SelectedTaskFont() As Global.System.Drawing.Font
             Get

@@ -1,6 +1,10 @@
-﻿Imports System.Media
+﻿Imports System.Drawing.Text
+Imports System.Media
 
 Module GlobalResources
+    'Embedded Font
+
+    Public ReadOnly DefaultFont As New Font(MainWindow.PrivateFonts.Families(0), 13)
 
     ' Image cache variables
 

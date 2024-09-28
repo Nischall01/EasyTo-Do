@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Drawing.Text
+Imports System.IO
 Imports System.Media
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Devices
@@ -34,6 +35,8 @@ Public Class MainWindow
 
     Public Shared IsSidebarExpanded As Boolean
     Private IsTaskPropertiesVisible As Boolean
+
+    Public PrivateFonts As New PrivateFontCollection()
 
     Private ReadOnly DebounceDelay As TimeSpan = TimeSpan.FromMilliseconds(50)
 
@@ -111,10 +114,35 @@ Public Class MainWindow
         Next
     End Sub
 
+    Private Sub LoadCustomFont()
+        ' Get the font stream from embedded resources
+        Dim fontStream As Stream = Me.GetType().Assembly.GetManifestResourceStream("EasyTo_Do.Poppins-Regular.ttf")
+
+        If fontStream Is Nothing Then
+            MessageBox.Show("Font resource not found.")
+            Return
+        End If
+
+        ' Read the font data
+        Dim fontData As Byte() = New Byte(fontStream.Length - 1) {}
+        fontStream.Read(fontData, 0, CInt(fontStream.Length))
+
+        ' Allocate memory for the font and copy the data
+        Dim fontPtr As IntPtr = Marshal.AllocCoTaskMem(fontData.Length)
+        Marshal.Copy(fontData, 0, fontPtr, fontData.Length)
+
+        ' Add the font to the PrivateFontCollection
+        PrivateFonts.AddMemoryFont(fontPtr, fontData.Length)
+
+        ' Free the memory after use
+        Marshal.FreeCoTaskMem(fontPtr)
+    End Sub
+
 #Region "Constructor and On Load"
 
     Public Sub New()
         InitializeComponent()
+        LoadCustomFont()
         Me.SetStyle(ControlStyles.DoubleBuffer Or ControlStyles.OptimizedDoubleBuffer Or ControlStyles.AllPaintingInWmPaint, True)
         Me.UpdateStyles()
 
@@ -129,7 +157,7 @@ Public Class MainWindow
         InitializeApp()
         InitializeReminder()
 
-        '  Panel1.Hide()
+        'Panel1.Hide()
     End Sub
 
 #End Region
@@ -517,6 +545,8 @@ Public Class MainWindow
     End Sub
 
     Public Sub ChangeTasksFont(NewFont As Font)
+        Dim FontName As String = NewFont.Name
+        Dim NewFontFixedSize As New Font(FontName, 10)
 
         ' Dictionary to map view names to their corresponding CheckedListBox controls
         Dim ViewsCheckedListBoxes As New Dictionary(Of String, CheckedListBox) From {
@@ -527,16 +557,27 @@ Public Class MainWindow
     {ViewName.Tasks, TasksInstance.Tasks_CheckedListBox}
 }
 
+        ' Dictionary to map view names to their corresponding CheckedListBox controls
+        Dim ViewsAddNewTask_TextBoxes As New Dictionary(Of String, TextBox) From {
+    {ViewName.MyDay, MyDayInstance.AddNewTask_TextBox},
+    {ViewName.Repeated, RepeatedInstance.AddNewTask_TextBox},
+    {ViewName.Important, ImportantInstance.AddNewTask_TextBox},
+    {ViewName.Planned, PlannedInstance.AddNewTask_TextBox},
+    {ViewName.Tasks, TasksInstance.AddNewTask_TextBox}
+}
+
         Dim activeViewName As ViewName = ViewsManager.GetActiveViewName()
 
         If ViewsCheckedListBoxes.ContainsKey(activeViewName) Then
             ViewsCheckedListBoxes(activeViewName).Font = NewFont
+            ViewsAddNewTask_TextBoxes(activeViewName).Font = NewFontFixedSize
         End If
 
         ' Refresh other views
         For Each viewName In ViewsCheckedListBoxes.Keys
             If viewName <> activeViewName Then
                 ViewsCheckedListBoxes(viewName).Font = NewFont
+                ViewsAddNewTask_TextBoxes(viewName).Font = NewFontFixedSize
             End If
         Next
     End Sub
