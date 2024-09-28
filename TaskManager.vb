@@ -1,6 +1,4 @@
-﻿Imports ReaLTaiizor.Controls
-
-Namespace TaskManager
+﻿Namespace TaskManager
     Module TaskManager
 
         '*' Add New Task

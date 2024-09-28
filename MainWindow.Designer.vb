@@ -39,7 +39,6 @@ Partial Class MainWindow
         Me.ReminderNotification = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.MaterialDivider1 = New ReaLTaiizor.Controls.MaterialDivider()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -47,14 +46,14 @@ Partial Class MainWindow
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MainSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
         Me.SubSidebarTableLayoutPanel = New System.Windows.Forms.TableLayoutPanel()
-        Me.Test_BackColors = New System.Windows.Forms.Button()
-        Me.Username_Label = New System.Windows.Forms.Label()
-        Me.Settings_Button = New System.Windows.Forms.Button()
         Me.CustomButton5 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton4 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton3 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton2 = New EasyTo_Do.CustomButton_2()
         Me.CustomButton1 = New EasyTo_Do.CustomButton_2()
+        Me.Test_BackColors = New System.Windows.Forms.Button()
+        Me.Username_Label = New System.Windows.Forms.Label()
+        Me.Settings_Button = New System.Windows.Forms.Button()
         Me.Pfp_CircularPictureBox = New EasyTo_Do.CircularPictureBox()
         Me.Pfp_ContextMenuStrip.SuspendLayout()
         Me.Username_ContextMenuStrip.SuspendLayout()
@@ -141,7 +140,6 @@ Partial Class MainWindow
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(38, Byte), Integer), CType(CType(38, Byte), Integer), CType(CType(38, Byte), Integer))
         Me.Panel1.Controls.Add(Me.Button4)
-        Me.Panel1.Controls.Add(Me.MaterialDivider1)
         Me.Panel1.Controls.Add(Me.Label1)
         Me.Panel1.Controls.Add(Me.Button3)
         Me.Panel1.Controls.Add(Me.Button2)
@@ -155,9 +153,9 @@ Partial Class MainWindow
         '
         'Button4
         '
+        Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Button4.BackColor = System.Drawing.Color.Transparent
         Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button4.FlatAppearance.BorderSize = 0
         Me.Button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
@@ -173,19 +171,6 @@ Partial Class MainWindow
         Me.Button4.TabStop = False
         Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.Button4.UseVisualStyleBackColor = False
-        '
-        'MaterialDivider1
-        '
-        Me.MaterialDivider1.BackColor = System.Drawing.Color.Transparent
-        Me.MaterialDivider1.Depth = 0
-        Me.MaterialDivider1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.MaterialDivider1.ForeColor = System.Drawing.SystemColors.Control
-        Me.MaterialDivider1.Location = New System.Drawing.Point(730, 0)
-        Me.MaterialDivider1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER
-        Me.MaterialDivider1.Name = "MaterialDivider1"
-        Me.MaterialDivider1.Size = New System.Drawing.Size(20, 32)
-        Me.MaterialDivider1.TabIndex = 7
-        Me.MaterialDivider1.Text = "MaterialDivider1"
         '
         'Label1
         '
@@ -323,48 +308,6 @@ Partial Class MainWindow
         Me.SubSidebarTableLayoutPanel.Size = New System.Drawing.Size(227, 252)
         Me.SubSidebarTableLayoutPanel.TabIndex = 6
         '
-        'Test_BackColors
-        '
-        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Test_BackColors.Location = New System.Drawing.Point(55, 415)
-        Me.Test_BackColors.Name = "Test_BackColors"
-        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
-        Me.Test_BackColors.TabIndex = 7
-        Me.Test_BackColors.Text = "Test BackColors"
-        Me.Test_BackColors.UseVisualStyleBackColor = True
-        '
-        'Username_Label
-        '
-        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.Username_Label.AutoSize = True
-        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
-        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Username_Label.ForeColor = System.Drawing.Color.White
-        Me.Username_Label.Location = New System.Drawing.Point(85, 83)
-        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
-        Me.Username_Label.Name = "Username_Label"
-        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
-        Me.Username_Label.TabIndex = 8
-        Me.Username_Label.Text = "Username"
-        '
-        'Settings_Button
-        '
-        Me.Settings_Button.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Settings_Button.BackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.BackgroundImage = CType(resources.GetObject("Settings_Button.BackgroundImage"), System.Drawing.Image)
-        Me.Settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.Settings_Button.FlatAppearance.BorderSize = 0
-        Me.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
-        Me.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Settings_Button.Location = New System.Drawing.Point(105, 491)
-        Me.Settings_Button.Name = "Settings_Button"
-        Me.Settings_Button.Size = New System.Drawing.Size(23, 23)
-        Me.Settings_Button.TabIndex = 9
-        Me.Settings_Button.UseVisualStyleBackColor = False
-        '
         'CustomButton5
         '
         Me.CustomButton5.BackColor = System.Drawing.Color.Transparent
@@ -470,6 +413,48 @@ Partial Class MainWindow
         Me.CustomButton1.TextAnchor = System.Windows.Forms.AnchorStyles.Left
         Me.CustomButton1.TextFont = New System.Drawing.Font("Microsoft YaHei UI", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         '
+        'Test_BackColors
+        '
+        Me.Test_BackColors.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Test_BackColors.Font = New System.Drawing.Font("Microsoft YaHei UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Test_BackColors.Location = New System.Drawing.Point(55, 415)
+        Me.Test_BackColors.Name = "Test_BackColors"
+        Me.Test_BackColors.Size = New System.Drawing.Size(122, 23)
+        Me.Test_BackColors.TabIndex = 7
+        Me.Test_BackColors.Text = "Test BackColors"
+        Me.Test_BackColors.UseVisualStyleBackColor = True
+        '
+        'Username_Label
+        '
+        Me.Username_Label.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.Username_Label.AutoSize = True
+        Me.Username_Label.BackColor = System.Drawing.Color.Transparent
+        Me.Username_Label.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Username_Label.Font = New System.Drawing.Font("Microsoft YaHei", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Username_Label.ForeColor = System.Drawing.Color.White
+        Me.Username_Label.Location = New System.Drawing.Point(85, 83)
+        Me.Username_Label.Margin = New System.Windows.Forms.Padding(0, 3, 0, 0)
+        Me.Username_Label.Name = "Username_Label"
+        Me.Username_Label.Size = New System.Drawing.Size(62, 16)
+        Me.Username_Label.TabIndex = 8
+        Me.Username_Label.Text = "Username"
+        '
+        'Settings_Button
+        '
+        Me.Settings_Button.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Settings_Button.BackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.BackgroundImage = CType(resources.GetObject("Settings_Button.BackgroundImage"), System.Drawing.Image)
+        Me.Settings_Button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Settings_Button.FlatAppearance.BorderSize = 0
+        Me.Settings_Button.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
+        Me.Settings_Button.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Settings_Button.Location = New System.Drawing.Point(105, 491)
+        Me.Settings_Button.Name = "Settings_Button"
+        Me.Settings_Button.Size = New System.Drawing.Size(23, 23)
+        Me.Settings_Button.TabIndex = 9
+        Me.Settings_Button.UseVisualStyleBackColor = False
+        '
         'Pfp_CircularPictureBox
         '
         Me.Pfp_CircularPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Bottom
@@ -544,6 +529,5 @@ Partial Class MainWindow
     Friend WithEvents Button3 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Label1 As Label
-    Friend WithEvents MaterialDivider1 As ReaLTaiizor.Controls.MaterialDivider
     Friend WithEvents Button4 As Button
 End Class
