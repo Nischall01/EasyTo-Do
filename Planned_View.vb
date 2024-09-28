@@ -102,8 +102,15 @@
                 taskDisplayName = $"{reminderDateTime:(hh:mmtt)}".ToLower & $" {taskDisplayName}"
             End If
 
-            If Not row.IsNull("RepeatedDays") Then
-                taskDisplayName = $"{taskDisplayName} {GlobalResources.repeatedTaskIndicator}"
+            ' Format due date
+            If Not row.IsNull("DueDate") Then
+                Dim dueDate As DateTime = row("DueDate")
+
+                If dueDate = DateTime.Today Then
+                    taskDisplayName = $"(Today) {taskDisplayName}"
+                Else
+                    taskDisplayName = $"{dueDate:(dd/MM)} {taskDisplayName}" ' Adds due date in dd/MM format
+                End If
             End If
 
             If row("IsImportant") Then
