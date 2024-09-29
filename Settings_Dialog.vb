@@ -88,10 +88,10 @@ Public Class Settings_Dialog
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
 
-            Me.BackColor = Color.FromArgb(35, 35, 35)
-            TabPage1.BackColor = Color.FromArgb(35, 35, 35)
-            TabPage2.BackColor = Color.FromArgb(35, 35, 35)
-            TabPage3.BackColor = Color.FromArgb(35, 35, 35)
+            Me.BackColor = Color.FromArgb(15, 15, 15)
+            TabPage1.BackColor = Color.FromArgb(15, 15, 15)
+            TabPage2.BackColor = Color.FromArgb(15, 15, 15)
+            TabPage3.BackColor = Color.FromArgb(15, 15, 15)
 
             Label1.ForeColor = Color.White
             ColorScheme_Light_RadioBtn.ForeColor = Color.White
