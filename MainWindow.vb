@@ -2,17 +2,14 @@
 Imports System.IO
 Imports System.Media
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.Devices
-
-'Imports Newtonsoft.Json
-'Imports Newtonsoft.Json.Linq
 
 Public Class MainWindow
 
     'Custom titlebar variables
 
     Public isMaximized As Boolean = False
-    Private CurrentNormalSize As Size
+    Private CurrentNormalWindowSize As Size
+    Private LastSavedWindowSize As Size
 
     Private isDragging As Boolean = False
     Private startX As Integer
@@ -155,9 +152,64 @@ Public Class MainWindow
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         EnsureDatabaseExists("To_Do.sdf")
         InitializeApp()
+        If My.Settings.OnStartupCheckForUpdate Then
+            CheckForUpdate(1)
+        End If
+        If My.Settings.LastSavedWindowSize_Height <> 0 Or My.Settings.LastSavedWindowSize_Width <> 0 Then
+            Dim ScreenWidth As Integer = My.Settings.LastSavedWindowSize_Width
+            Dim ScreenHeight = My.Settings.LastSavedWindowSize_Height
+            If ScreenWidth = Screen.PrimaryScreen.Bounds.Width - 1 And ScreenHeight = Screen.PrimaryScreen.Bounds.Height - 1 Then
+                Button2.PerformClick()
+                Exit Sub
+            End If
+            Me.Size = New Size(ScreenWidth, ScreenHeight)
+            Me.CenterToScreen()
+        End If
         InitializeReminder()
 
         'Panel1.Hide()
+    End Sub
+
+#End Region
+
+#Region "Update"
+
+    Public Async Sub CheckForUpdate(PromptType As Integer)
+        Dim owner As String = "Nischall01"
+        Dim repo As String = "EasyTo-Do"
+
+        Try
+            ' Fetch the latest release and its tag asynchronously
+            Dim latestRelease As String = Await GitHubReleaseChecker.GetLatestReleaseAsync(owner, repo)
+            Dim latestRelease_Tag As String = Await GitHubReleaseChecker.GetLatestRelease_TagAsync(owner, repo)
+
+            If String.Compare(latestRelease_Tag, "Could not get the latest release.", StringComparison.OrdinalIgnoreCase) = 0 Then
+                MessageBox.Show("An error occurred while checking for updates." & vbCrLf & vbCrLf &
+                            "If this error persists, disable the 'On Startup: Check for update' setting under the 'Misc.' tab and open an issue on my GitHub repository.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            End If
+
+            ' Check if the latest release tag is different from the current version
+            If String.Compare(latestRelease_Tag, My.Settings.Version.ToString, StringComparison.OrdinalIgnoreCase) <> 0 Then
+                Dim result As DialogResult = MessageBox.Show(
+                $"New update available: {latestRelease}" & Environment.NewLine & vbCrLf & "Would you like to update?",
+                "Update Available",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Information
+            )
+                ' Handle the user's response
+                If result = DialogResult.Yes Then
+                    Process.Start("https://github.com/Nischall01/EasyTo-Do/releases/latest")
+                End If
+            Else
+                If PromptType = 1 Then
+                    Exit Sub
+                End If
+                MessageBox.Show("Your application is up to date.", "No Updates Available", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Error checking for updates: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
 #End Region
@@ -370,19 +422,20 @@ Public Class MainWindow
 #Region "Settings"
 
     Private Sub LoadSettings()
-        SetColorSchemeFromSettings()
-        SetSidebarStateFromSettings()
-        SetTaskPropertiesSidebarStateFromSettings()
-        SetTimeFormatFromSettings()
-        SetProfileVisibilityFromSettings()
-        SetOnDeleteAskForConfirmationFromSettings()
-        SetSortingFromSettings()
-        SetHideCompletedTasksFromSettings()
-        SetTasksSizeFromSettings()
-        SetTasksFontFromSettings()
+        SetSetting_ColorScheme()
+        SetSetting_SidebarState()
+        SetSetting_TaskPropertiesSidebarState()
+        SetSetting_TimeFormat()
+        SetSetting_ProfileVisibility()
+        SetSetting_OnDeleteAskForConfirmation()
+        SetSetting_Sorting()
+        SetSetting_HideCompletedTasks()
+        SetSetting_TasksSize()
+        SetSetting_TasksFont()
+        SetSetting_OnStartupCheckForUpdate()
     End Sub
 
-    Private Sub SetColorSchemeFromSettings()
+    Private Sub SetSetting_ColorScheme()
         Select Case My.Settings.ColorScheme
             Case "Light"
                 SettingsInstance.ColorScheme_Light_RadioBtn.Checked = True
@@ -393,7 +446,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetSidebarStateFromSettings()
+    Private Sub SetSetting_SidebarState()
         Select Case My.Settings.SidebarStateOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton3.Checked = True
@@ -402,7 +455,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetTaskPropertiesSidebarStateFromSettings()
+    Private Sub SetSetting_TaskPropertiesSidebarState()
         Select Case My.Settings.TaskPropertiesSidebarStateOnStart
             Case "Expanded"
                 SettingsInstance.RadioButton4.Checked = True
@@ -411,7 +464,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetTimeFormatFromSettings()
+    Private Sub SetSetting_TimeFormat()
         Select Case My.Settings.TimeFormat
             Case "12"
                 SettingsInstance.RadioButton6.Checked = True
@@ -420,7 +473,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetProfileVisibilityFromSettings()
+    Private Sub SetSetting_ProfileVisibility()
         Select Case My.Settings.IsPfpVisible
             Case True
                 SettingsInstance.CheckBox1.Checked = False
@@ -436,7 +489,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetOnDeleteAskForConfirmationFromSettings()
+    Private Sub SetSetting_OnDeleteAskForConfirmation()
         Select Case My.Settings.OnDeleteAskForConfirmation
             Case True
                 SettingsInstance.RadioButton7.Checked = True
@@ -445,7 +498,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetSortingFromSettings()
+    Private Sub SetSetting_Sorting()
         Select Case My.Settings.SortByCompletionStatus
             Case True
                 SettingsInstance.RadioButton9.Checked = True
@@ -454,7 +507,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetHideCompletedTasksFromSettings()
+    Private Sub SetSetting_HideCompletedTasks()
         Select Case My.Settings.HideCompletedTasks
             Case True
                 SettingsInstance.RadioButton11.Checked = True
@@ -463,7 +516,7 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetTasksSizeFromSettings()
+    Private Sub SetSetting_TasksSize()
         Select Case My.Settings.TasksSize
             Case 0
                 SettingsInstance.TasksSize_TrackBar.Value = 0
@@ -480,12 +533,21 @@ Public Class MainWindow
         End Select
     End Sub
 
-    Private Sub SetTasksFontFromSettings()
+    Private Sub SetSetting_TasksFont()
         Select Case My.Settings.IsTaskFontDefault
             Case True
                 SettingsInstance.RadioButton13.Checked = True
             Case False
                 SettingsInstance.RadioButton14.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSetting_OnStartupCheckForUpdate()
+        Select Case My.Settings.OnStartupCheckForUpdate
+            Case True
+                SettingsInstance.RadioButton19.Checked = True
+            Case False
+                SettingsInstance.RadioButton20.Checked = True
         End Select
     End Sub
 
@@ -1036,11 +1098,11 @@ Public Class MainWindow
         Me.ActiveControl = Nothing
 
         If isMaximized Then
-            Me.Size = CurrentNormalSize
+            Me.Size = CurrentNormalWindowSize
             Me.CenterToScreen()
             isMaximized = False
         Else
-            CurrentNormalSize = Me.Size
+            CurrentNormalWindowSize = Me.Size
             Dim ScreenWidth As Integer = Screen.PrimaryScreen.Bounds.Width - 1
             Dim ScreenHeight As Integer = Screen.PrimaryScreen.Bounds.Height - 1
             Me.Size = New Size(ScreenWidth, ScreenHeight)
@@ -1049,9 +1111,9 @@ Public Class MainWindow
         End If
 
         If My.Settings.ColorScheme = "Dark" Then
-            SetColorScheme.SetCustomTaskbarScheme("Dark")
+            SetColorScheme.SetCustomTitleBarScheme("Dark")
         Else
-            SetColorScheme.SetCustomTaskbarScheme("Light")
+            SetColorScheme.SetCustomTitleBarScheme("Light")
         End If
     End Sub
 
@@ -1085,6 +1147,19 @@ Public Class MainWindow
             HighlightActiveFormButton()
         End If
 
+    End Sub
+
+    Private Sub Help_Button_Click(sender As Object, e As EventArgs) Handles Help_Button.Click
+        Me.ActiveControl = Nothing
+        Help_Dialog.Show()
+    End Sub
+
+    Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ' Save the window size before closing
+        If Me.WindowState = FormWindowState.Normal Then
+            My.Settings.LastSavedWindowSize_Width = Me.Size.Width
+            My.Settings.LastSavedWindowSize_Height = Me.Size.Height
+        End If
     End Sub
 
 End Class

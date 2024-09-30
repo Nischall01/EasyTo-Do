@@ -23,6 +23,9 @@ Module GlobalResources
     Public ReadOnly SettingsIcon_Black As Image = My.Resources.SettingsIcon_Black_
     Public ReadOnly SettingsIcon_White As Image = My.Resources.SettingsIcon_White_
 
+    Public ReadOnly HelpIcon_Black As Image = My.Resources.HelpIcon_Black_
+    Public ReadOnly HelpIcon_White As Image = My.Resources.HelpIcon_White_
+
     Public ReadOnly ImportantIcon_Unchecked_Black As Image = My.Resources.ImportantIcon_Black_
     Public ReadOnly ImportantIcon_Unchecked_White As Image = My.Resources.ImportantIcon_White_
     Public ReadOnly ImportantIcon_Checked As Image = My.Resources.ImportantIcon_HoverAndMark_

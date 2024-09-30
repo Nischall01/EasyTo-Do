@@ -1,6 +1,4 @@
-﻿Imports EasyTo_Do.My
-
-Public Class Settings_Dialog
+﻿Public Class Settings_Dialog
 
     Private isDragging As Boolean = False
     Private startX As Integer
@@ -44,6 +42,7 @@ Public Class Settings_Dialog
             TabPage1.BackColor = Color.FromArgb(255, 255, 255)
             TabPage2.BackColor = Color.FromArgb(255, 255, 255)
             TabPage3.BackColor = Color.FromArgb(255, 255, 255)
+            TabPage4.BackColor = Color.FromArgb(255, 255, 255)
 
             Label1.ForeColor = Color.Black
             ColorScheme_Light_RadioBtn.ForeColor = Color.Black
@@ -84,14 +83,19 @@ Public Class Settings_Dialog
             RadioButton13.ForeColor = Color.Black
             RadioButton14.ForeColor = Color.Black
 
+            Label14.ForeColor = Color.Black
+            RadioButton20.ForeColor = Color.Black
+            RadioButton19.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
 
-            Me.BackColor = Color.FromArgb(15, 15, 15)
-            TabPage1.BackColor = Color.FromArgb(15, 15, 15)
-            TabPage2.BackColor = Color.FromArgb(15, 15, 15)
-            TabPage3.BackColor = Color.FromArgb(15, 15, 15)
+            Me.BackColor = Color.FromArgb(20, 20, 20)
+            TabPage1.BackColor = Color.FromArgb(20, 20, 20)
+            TabPage2.BackColor = Color.FromArgb(20, 20, 20)
+            TabPage3.BackColor = Color.FromArgb(20, 20, 20)
+            TabPage4.BackColor = Color.FromArgb(20, 20, 20)
 
             Label1.ForeColor = Color.White
             ColorScheme_Light_RadioBtn.ForeColor = Color.White
@@ -131,6 +135,10 @@ Public Class Settings_Dialog
             Label11.ForeColor = Color.White
             RadioButton13.ForeColor = Color.White
             RadioButton14.ForeColor = Color.White
+
+            Label14.ForeColor = Color.White
+            RadioButton20.ForeColor = Color.White
+            RadioButton19.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
@@ -243,6 +251,15 @@ Public Class Settings_Dialog
             My.Settings.SelectedTaskFont = selectedFont
             SettingsCache.UpdateSettingsCache()
         End If
+    End Sub
+
+    Private Sub OnStartupCheckForUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton20.CheckedChanged, RadioButton19.CheckedChanged
+        If RadioButton19.Checked Then
+            My.Settings.OnStartupCheckForUpdate = True
+        ElseIf RadioButton20.Checked Then
+            My.Settings.OnStartupCheckForUpdate = False
+        End If
+        SettingsCache.UpdateSettingsCache()
     End Sub
 
     Private Sub PfpSettings_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged

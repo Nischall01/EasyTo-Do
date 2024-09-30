@@ -11,7 +11,7 @@
         SetImportantColorScheme("Light")
         SetPlannedColorScheme("Light")
         SetTasksColorScheme("Light")
-        SetCustomTaskbarScheme("Light")
+        SetCustomTitleBarScheme("Light")
     End Sub
 
     Public Sub Dark()
@@ -21,7 +21,7 @@
         SetImportantColorScheme("Dark")
         SetPlannedColorScheme("Dark")
         SetTasksColorScheme("Dark")
-        SetCustomTaskbarScheme("Dark")
+        SetCustomTitleBarScheme("Dark")
     End Sub
 
     Public Sub Custom()
@@ -31,14 +31,14 @@
         SetImportantColorScheme("Custom")
         SetPlannedColorScheme("Custom")
         SetTasksColorScheme("Custom")
-        SetCustomTaskbarScheme("Custom")
+        SetCustomTitleBarScheme("Custom")
     End Sub
 
 #End Region
 
 #Region "Custom Taskbar"
 
-    Public Sub SetCustomTaskbarScheme(Scheme As String)
+    Public Sub SetCustomTitleBarScheme(Scheme As String)
         Select Case Scheme
             Case "Light"
 
@@ -96,6 +96,8 @@
                 MainWindow.Test_BackColors.Hide()
 
                 MainWindow.Settings_Button.BackgroundImage = GlobalResources.SettingsIcon_Black
+
+                MainWindow.Help_Button.BackgroundImage = GlobalResources.HelpIcon_Black
             Case "Dark"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 
@@ -111,6 +113,8 @@
                 MainWindow.Test_BackColors.Hide()
 
                 MainWindow.Settings_Button.BackgroundImage = GlobalResources.SettingsIcon_White
+
+                MainWindow.Help_Button.BackgroundImage = GlobalResources.HelpIcon_White
             Case "Custom"
                 MainWindow.Pfp_CircularPictureBox.Invalidate()
 

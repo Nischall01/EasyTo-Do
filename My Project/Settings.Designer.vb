@@ -255,6 +255,54 @@ Namespace My
                 Me("TasksSize") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("v1.0.0beta")>  _
+        Public Property Version() As String
+            Get
+                Return CType(Me("Version"),String)
+            End Get
+            Set
+                Me("Version") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property OnStartupCheckForUpdate() As Boolean
+            Get
+                Return CType(Me("OnStartupCheckForUpdate"),Boolean)
+            End Get
+            Set
+                Me("OnStartupCheckForUpdate") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("950")>  _
+        Public Property LastSavedWindowSize_Width() As Integer
+            Get
+                Return CType(Me("LastSavedWindowSize_Width"),Integer)
+            End Get
+            Set
+                Me("LastSavedWindowSize_Width") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("600")>  _
+        Public Property LastSavedWindowSize_Height() As Integer
+            Get
+                Return CType(Me("LastSavedWindowSize_Height"),Integer)
+            End Get
+            Set
+                Me("LastSavedWindowSize_Height") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
