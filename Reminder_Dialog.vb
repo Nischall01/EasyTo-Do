@@ -346,25 +346,42 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click ' The 'Set' reminder button Click
+        ' Get the selected date from DateTimePicker
         Dim selectedDate As DateTime = DateTimePicker1.Value
 
-        Dim SetYear As Integer = selectedDate.Year
-        Dim SetMonth As Integer = selectedDate.Month
-        Dim SetDay As Integer = selectedDate.Day
-        Dim SetHour As Integer = Integer.Parse(ComboBox1.Text)
-        Dim SetMinute As Integer = Integer.Parse(ComboBox2.Text)
+        ' Get the hour and minute from combo boxes and validate inputs
+        Dim SetHour, SetMinute As Integer
+        If Not Integer.TryParse(ComboBox1.Text, SetHour) OrElse Not Integer.TryParse(ComboBox2.Text, SetMinute) Then
+            MsgBox("Please enter valid hour and minute values.")
+            Exit Sub
+        End If
 
+        ' Adjust hour if 12-hour format is selected
         If IsSelectedTimeFormat12 Then
             If SetHour = 12 And IsAM Then
                 SetHour = 0 ' 12 AM should be 0 in 24-hour format
             ElseIf SetHour <> 12 And Not IsAM Then
-                SetHour += 12
+                SetHour += 12 ' Convert PM hour to 24-hour format
             End If
         End If
 
-        Dim TimeSet As New DateTime(SetYear, SetMonth, SetDay, SetHour, SetMinute, 0)
+        ' Create a new DateTime object with the selected date and time
+        Dim reminderTime As New DateTime(selectedDate.Year, selectedDate.Month, selectedDate.Day, SetHour, SetMinute, 0)
 
-        TaskPropertiesCRUDHandler.SetReminder(TimeSet, Reminder_SelectedTaskID)
+        ' Check if the reminder time is in the past
+        If reminderTime < DateTime.Now Then
+            MsgBox("Can't be living in the past dumbo.")
+
+NOTE: 'Change this is prod
+
+            'MsgBox("Reminder cannot be set for a past time.")
+            Exit Sub
+        End If
+
+        ' Set the reminder and pass the selected task ID
+        TaskPropertiesCRUDHandler.SetReminder(reminderTime, Reminder_SelectedTaskID)
+
+        ' Close the form after setting the reminder
         Me.Close()
     End Sub
 

@@ -47,7 +47,6 @@ Module GlobalResources
     Public ReadOnly importantTaskIndicator As String = "[ ! ]"
     Public ReadOnly repeatedTaskIndicator As String = "[R]"
 
-    Public ReadOnly sound_FilePath As String = "D:\_Programs\_Visual_Studio_Workspace\EasyTo-Do\Resources\Bling.wav"
-    Public SFXPlayer As New SoundPlayer(sound_FilePath)
+    Public SFXPlayer As New SoundPlayer(My.Resources.Bling)
 
 End Module
