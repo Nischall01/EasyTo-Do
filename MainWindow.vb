@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Text
 Imports System.IO
 Imports System.Media
+Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
 Imports System.Runtime.Remoting.Channels
 Imports System.Windows.Forms.Design
@@ -177,6 +178,18 @@ Public Class MainWindow
         Dim repo As String = "EasyTo-Do"
 
         Try
+            'Check If there Is an internet connection
+            If Not GitHubReleaseChecker.IsInternetAvailable() Then
+                If PromptType = 1 Then
+                    Exit Sub
+                ElseIf PromptType = 0 Then
+                    MessageBox.Show("Error checking for updates due to an internet connection issue." & vbCrLf & vbCrLf &
+                                "Ensure you're connected to the internet. If the issue persists, disable 'Check for updates on startup' in the 'Misc.' tab and report the issue on GitHub.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    Exit Sub
+                    Exit Sub
+                End If
+            End If
+
             ' Fetch the latest release and its tag asynchronously
             Dim latestRelease As String = Await GitHubReleaseChecker.GetLatestReleaseAsync(owner, repo)
             Dim latestRelease_Tag As String = Await GitHubReleaseChecker.GetLatestRelease_TagAsync(owner, repo)
@@ -184,6 +197,10 @@ Public Class MainWindow
             If String.Compare(latestRelease_Tag, "Could not get the latest release.", StringComparison.OrdinalIgnoreCase) = 0 Then
                 MessageBox.Show("An error occurred while checking for updates." & vbCrLf & vbCrLf &
                             "If this error persists, disable the 'On Startup: Check for update' setting under the 'Misc.' tab and open an issue on my GitHub repository.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Exit Sub
+            ElseIf String.Compare(latestRelease_Tag, "No internet connection.", StringComparison.OrdinalIgnoreCase) = 0 Then
+                MessageBox.Show("Error checking for updates due to an internet connection issue." & vbCrLf & vbCrLf &
+                                "Ensure you're connected to the internet. If the issue persists, disable 'Check for updates on startup' in the 'Misc.' tab and report the issue on GitHub.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Exit Sub
             End If
 
