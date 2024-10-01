@@ -38,7 +38,7 @@
 
 #Region "Custom Taskbar"
 
-    Public Sub SetCustomTitleBarScheme(Scheme As String)
+    Public Sub SetCustomTitleBarScheme(Scheme As String) ' Sub is little confusing as it also changes the restore/maximize icons, so extra logic than just theme change
         Select Case Scheme
             Case "Light"
 

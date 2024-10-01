@@ -2,6 +2,8 @@
 Imports System.IO
 Imports System.Media
 Imports System.Runtime.InteropServices
+Imports System.Runtime.Remoting.Channels
+Imports System.Windows.Forms.Design
 
 Public Class MainWindow
 
@@ -10,6 +12,7 @@ Public Class MainWindow
     Public isMaximized As Boolean = False
     Private CurrentNormalWindowSize As Size
     Private LastSavedWindowSize As Size
+    Private workingArea As Rectangle = Screen.GetWorkingArea(Me)
 
     Private isDragging As Boolean = False
     Private startX As Integer
@@ -25,6 +28,11 @@ Public Class MainWindow
     Private Const CollapsedSidebarWidth As Integer = 55
     Private Const ExpandedSidebarWidth As Integer = 200
     Private Const MaxSidebarWidth As Integer = 333
+
+    '  Vars for sidebar resizing logic
+
+    Private lastsidebarstate As SidebarState
+    Private WindowResized As Boolean = False
 
     ' Fields
 
@@ -154,16 +162,6 @@ Public Class MainWindow
         InitializeApp()
         If My.Settings.OnStartupCheckForUpdate Then
             CheckForUpdate(1)
-        End If
-        If My.Settings.LastSavedWindowSize_Height <> 0 Or My.Settings.LastSavedWindowSize_Width <> 0 Then
-            Dim ScreenWidth As Integer = My.Settings.LastSavedWindowSize_Width
-            Dim ScreenHeight = My.Settings.LastSavedWindowSize_Height
-            If ScreenWidth = Screen.PrimaryScreen.Bounds.Width - 1 And ScreenHeight = Screen.PrimaryScreen.Bounds.Height - 1 Then
-                Button2.PerformClick()
-                Exit Sub
-            End If
-            Me.Size = New Size(ScreenWidth, ScreenHeight)
-            Me.CenterToScreen()
         End If
         InitializeReminder()
 
@@ -415,6 +413,18 @@ Public Class MainWindow
         MyDayInstance.ActiveControl = MyDayInstance.AddNewTask_TextBox
         ' Load the Selected Appearance
         LoadSettings()
+
+        If My.Settings.LastSavedWindowSize_Height <> 0 Or My.Settings.LastSavedWindowSize_Width <> 0 Then
+            Dim ScreenWidth As Integer = workingArea.Width
+            Dim ScreenHeight = workingArea.Height
+
+            If My.Settings.LastSavedWindowSize_Width = ScreenWidth And My.Settings.LastSavedWindowSize_Height = ScreenHeight - 1 Then
+                Button2.PerformClick()
+                Exit Sub
+            End If
+            Me.Size = New Size(My.Settings.LastSavedWindowSize_Width, My.Settings.LastSavedWindowSize_Height)
+            Me.CenterToScreen()
+        End If
     End Sub
 
 #End Region
@@ -694,6 +704,14 @@ Public Class MainWindow
             ElseIf e.SplitX < CollapsedSidebarWidth Then
                 SetSidebarState(SidebarState.Collapsed)
             ElseIf e.SplitX > CollapsedSidebarWidth Then
+                If WindowResized Then
+                    WindowResized = False
+                    If lastsidebarstate = SidebarState.Collapsed Then
+                        SetSidebarState(SidebarState.Collapsed)
+                        Exit Sub
+                    End If
+                End If
+
                 If e.SplitX > MaxSidebarWidth Then
                     SetSidebarState(SidebarState.Maximized)
                 ElseIf e.SplitX < MaxSidebarWidth Then
@@ -717,16 +735,19 @@ Public Class MainWindow
                 IsSidebarExpanded = False
                 SplitContainer1.SplitterDistance = CollapsedSidebarWidth
                 CollapseButtons()
+                lastsidebarstate = SidebarState.Collapsed
 
             Case SidebarState.Expanded
                 IsSidebarExpanded = True
                 SplitContainer1.SplitterDistance = ExpandedSidebarWidth
                 ExpandButtons()
+                lastsidebarstate = SidebarState.Expanded
 
             Case SidebarState.Maximized
                 IsSidebarExpanded = True
                 SplitContainer1.SplitterDistance = MaxSidebarWidth
                 ExpandButtons()
+                lastsidebarstate = SidebarState.Maximized
         End Select
         ProfileMaximizeOrMinimize()
     End Sub
@@ -1055,7 +1076,24 @@ Public Class MainWindow
 
 #End Region
 
+    Private Sub Base_resize(sender As Object, e As EventArgs) Handles Me.Resize
+        workingArea = Screen.GetWorkingArea(Me)
+        If isMaximized = True Then
+            ResizeLogic()
+        End If
+        WindowResized = True
+    End Sub
+
 #Region "Custom Titlebar"
+
+    Private Sub ResizeLogic()
+        isMaximized = False
+        If My.Settings.ColorScheme = "Dark" Then
+            SetColorScheme.SetCustomTitleBarScheme("Dark") ' Sub is little confusing as it also changes the restore/maximize icons
+        Else
+            SetColorScheme.SetCustomTitleBarScheme("Light")
+        End If
+    End Sub
 
     Private Sub TPanel1_MouseDown(sender As Object, e As MouseEventArgs) Handles Panel1.MouseDown
         If e.Button = MouseButtons.Left Then
@@ -1098,16 +1136,15 @@ Public Class MainWindow
         Me.ActiveControl = Nothing
 
         If isMaximized Then
+            Me.WindowState = FormWindowState.Normal
             Me.Size = CurrentNormalWindowSize
             Me.CenterToScreen()
             isMaximized = False
         Else
             CurrentNormalWindowSize = Me.Size
-            Dim ScreenWidth As Integer = Screen.PrimaryScreen.Bounds.Width - 1
-            Dim ScreenHeight As Integer = Screen.PrimaryScreen.Bounds.Height - 1
-            Me.Size = New Size(ScreenWidth, ScreenHeight)
-            Me.CenterToScreen()
             isMaximized = True
+            SimulateMaximizedState()
+            Me.CenterToScreen()
         End If
 
         If My.Settings.ColorScheme = "Dark" Then
@@ -1115,6 +1152,26 @@ Public Class MainWindow
         Else
             SetColorScheme.SetCustomTitleBarScheme("Light")
         End If
+    End Sub
+
+    Private Sub SimulateMaximizedState()
+        ' Get the working area (excluding taskbar)
+        workingArea = Screen.GetWorkingArea(Me)
+
+        ' Set the form's size to the working area
+
+        Dim MaximizedWidth As Integer = workingArea.Size.Width
+        Dim MaximizedHeight As Integer = workingArea.Size.Height - 1
+        Me.Size = New Size(MaximizedWidth, MaximizedHeight)
+
+        ' Set the form's location to the top-left of the working area
+        Me.Location = workingArea.Location
+
+        ' Ensure the form has a sizable border to allow resizing
+        Me.FormBorderStyle = FormBorderStyle.Sizable
+
+        ' You can set a flag if you need to track this custom "maximized" state
+        isMaximized = True
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
@@ -1156,10 +1213,8 @@ Public Class MainWindow
 
     Private Sub MainForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ' Save the window size before closing
-        If Me.WindowState = FormWindowState.Normal Then
-            My.Settings.LastSavedWindowSize_Width = Me.Size.Width
-            My.Settings.LastSavedWindowSize_Height = Me.Size.Height
-        End If
+        My.Settings.LastSavedWindowSize_Width = Me.Size.Width
+        My.Settings.LastSavedWindowSize_Height = Me.Size.Height
     End Sub
 
 End Class

@@ -58,7 +58,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v1.0.0beta</Value>
+      <Value Profile="(Default)">v1.0.0</Value>
     </Setting>
     <Setting Name="OnStartupCheckForUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
