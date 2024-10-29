@@ -441,6 +441,9 @@ Partial Class Tasks_View
         Me.Tasks_CheckedListBox.Size = New System.Drawing.Size(609, 345)
         Me.Tasks_CheckedListBox.TabIndex = 12
         '
+        'ReminderTimer
+        '
+        '
         'ReminderNotification
         '
         Me.ReminderNotification.Text = "ReminderNotification"

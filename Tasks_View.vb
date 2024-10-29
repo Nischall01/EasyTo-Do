@@ -522,6 +522,10 @@
         End If
     End Sub
 
+    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
+
+    End Sub
+
 #End Region
 
 End Class

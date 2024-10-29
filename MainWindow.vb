@@ -186,7 +186,6 @@ Public Class MainWindow
                     MessageBox.Show("Error checking for updates due to an internet connection issue." & vbCrLf & vbCrLf &
                                 "Ensure you're connected to the internet. If the issue persists, disable 'Check for updates on startup' in the 'Misc.' tab and report the issue on GitHub.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
                     Exit Sub
-                    Exit Sub
                 End If
             End If
 
@@ -1112,7 +1111,7 @@ Public Class MainWindow
         End If
     End Sub
 
-    Private Sub TPanel1_MouseDown(sender As Object, e As MouseEventArgs) Handles Panel1.MouseDown
+    Private Sub Panel1_MouseDown(sender As Object, e As MouseEventArgs) Handles Panel1.MouseDown
         If e.Button = MouseButtons.Left Then
             isDragging = True
             startX = e.X
@@ -1153,13 +1152,13 @@ Public Class MainWindow
         Me.ActiveControl = Nothing
 
         If isMaximized Then
-            Me.WindowState = FormWindowState.Normal
-            Me.Size = CurrentNormalWindowSize
-            Me.CenterToScreen()
             isMaximized = False
+            Me.Size = CurrentNormalWindowSize
+            Me.WindowState = FormWindowState.Normal
+            Me.CenterToScreen()
         Else
-            CurrentNormalWindowSize = Me.Size
             isMaximized = True
+            CurrentNormalWindowSize = Me.Size
             SimulateMaximizedState()
             Me.CenterToScreen()
         End If
