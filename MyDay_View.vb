@@ -163,6 +163,11 @@ Public Class MyDay_View
 
                 DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Disabled
 
+                CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Disabled
+                CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Disabled
+                CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Disabled
+
+                'use select case
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                     Important_Button.BackColor = Color.Transparent
@@ -189,14 +194,24 @@ Public Class MyDay_View
 
                 DeleteTask_Button.Enabled = False
             Case TaskPropertiesState.Enable
+                'use select case
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
                     DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
+
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
+                    CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
+
                     TaskDescription_RichTextBox.Show()
                 Else
                     Important_Button.BackColor = Color.FromArgb(234, 234, 234)
                     DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
+
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
+                    CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
                 End If
                 TaskTitle_TextBox.Enabled = True
                 Label_ADT.Enabled = True
@@ -262,7 +277,18 @@ Public Class MyDay_View
         End If
 
         ' Disable or enable due date button based on task repetition
-        CustomButton_AddDueDate.Enabled = Not isRepeated
+        If isRepeated Then
+            CustomButton_AddDueDate.Enabled = False
+            CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Disabled
+        Else
+            CustomButton_AddDueDate.Enabled = True
+            If SettingsCache.ColorScheme = "Dark" Then
+
+                CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
+            Else
+                CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
+            End If
+        End If
 
         ' Update task description
         If String.IsNullOrEmpty(taskDescription) Then

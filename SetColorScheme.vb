@@ -153,11 +153,11 @@
                 MainWindow.MyDayInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.MyDayInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
+                'MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.MyDayInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
+                'MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
-                MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
+                'MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
             Case "Dark"
                 MainWindow.MyDayInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
@@ -184,11 +184,11 @@
                 MainWindow.MyDayInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.MyDayInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
+                'MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.MyDayInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
+                'MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
-                MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
+                'MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
 
             Case "Custom"
 

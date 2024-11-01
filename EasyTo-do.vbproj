@@ -339,6 +339,7 @@
     <None Include="Resources\DeleteIcon%28Hover%29.png" />
     <Content Include="Resources\DeleteIcon%28Black%29.png" />
     <None Include="Resources\DeleteIcon%28Disabled%29.png" />
+    <None Include="Resources\DueDateIcon%28Disabled%29.png" />
     <Content Include="Resources\FullscreenIcon%28White%29.png" />
     <Content Include="Resources\FullScreenIcon%28Black%29.png" />
     <None Include="Resources\ImportantIcon%28Black%29.png" />
@@ -353,6 +354,8 @@
     <Content Include="Resources\ModeSwitch%28Dark%29.png" />
     <None Include="Resources\RepeatIcon%28Black%29.png" />
     <None Include="Resources\RepeatIcon%28White%29.png" />
+    <None Include="Resources\ReminderIcon%28Disabled%29.png" />
+    <None Include="Resources\RepeatIcon%28Disabled%29.png" />
     <Content Include="Resources\RestoreIcon%28White%29.png" />
     <Content Include="Resources\RestoreIcon%28Black%29.png" />
     <Content Include="Resources\ModeSwitch%28Light%29.png" />

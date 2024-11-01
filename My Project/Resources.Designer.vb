@@ -142,6 +142,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property DueDateIcon_Disabled_() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("DueDateIcon_Disabled_", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property DueDateIcon_White_() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DueDateIcon_White_", resourceCulture)
@@ -302,6 +312,16 @@ Namespace My.Resources
         '''<summary>
         '''  Looks up a localized resource of type System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property ReminderIcon_Disabled_() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("ReminderIcon_Disabled_", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property ReminderIcon_White_() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("ReminderIcon_White_", resourceCulture)
@@ -315,6 +335,16 @@ Namespace My.Resources
         Friend ReadOnly Property RepeatIcon_Black_() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("RepeatIcon_Black_", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized resource of type System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property RepeatIcon_Disabled_() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("RepeatIcon_Disabled_", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

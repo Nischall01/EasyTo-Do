@@ -33,10 +33,13 @@ Module GlobalResources
 
     Public ReadOnly ReminderIcon_White As Image = My.Resources.ReminderIcon_White_
     Public ReadOnly ReminderIcon_Black As Image = My.Resources.ReminderIcon_Black_
+    Public ReadOnly ReminderIcon_Disabled As Image = My.Resources.ReminderIcon_Disabled_
     Public ReadOnly RepeatIcon_White As Image = My.Resources.RepeatIcon_White_
     Public ReadOnly RepeatIcon_Black As Image = My.Resources.RepeatIcon_Black_
+    Public ReadOnly RepeatIcon_Disabled As Image = My.Resources.RepeatIcon_Disabled_
     Public ReadOnly DueDateIcon_White As Image = My.Resources.DueDateIcon_White_
     Public ReadOnly DueDateIcon_Black As Image = My.Resources.DueDateIcon_Black_
+    Public ReadOnly DueDateIcon_Disabled As Image = My.Resources.DueDateIcon_Disabled_
 
     Public ReadOnly DeleteIcon_White As Image = My.Resources.DeleteIcon_White_
     Public ReadOnly DeleteIcon_Black As Image = My.Resources.DeleteIcon_Black_
