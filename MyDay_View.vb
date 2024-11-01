@@ -161,6 +161,8 @@ Public Class MyDay_View
                 Label_TaskEntryDateTime.Text = Nothing
                 Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Disabled
 
+                DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Disabled
+
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                     Important_Button.BackColor = Color.Transparent
@@ -190,9 +192,11 @@ Public Class MyDay_View
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
                     TaskDescription_RichTextBox.Show()
                 Else
                     Important_Button.BackColor = Color.FromArgb(234, 234, 234)
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
                 End If
                 TaskTitle_TextBox.Enabled = True
                 Label_ADT.Enabled = True
@@ -298,7 +302,7 @@ Public Class MyDay_View
             Exit Sub
         End If
 
-        If SettingsCache.onDeleteAskForConfirmation Then
+        If SettingsCache.OnDeleteAskForConfirmation Then
             Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If result <> DialogResult.Yes Then

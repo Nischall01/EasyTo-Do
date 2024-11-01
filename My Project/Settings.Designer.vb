@@ -303,6 +303,30 @@ Namespace My
                 Me("LastSavedWindowSize_Height") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property OnCloseRunInTheBackground() As String
+            Get
+                Return CType(Me("OnCloseRunInTheBackground"),String)
+            End Get
+            Set
+                Me("OnCloseRunInTheBackground") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property RunOnWindowsStartup() As String
+            Get
+                Return CType(Me("RunOnWindowsStartup"),String)
+            End Get
+            Set
+                Me("RunOnWindowsStartup") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

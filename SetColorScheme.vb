@@ -159,7 +159,6 @@
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
-                MainWindow.MyDayInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
             Case "Dark"
                 MainWindow.MyDayInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
                 MainWindow.MyDayInstance.MyDayView_Label.ForeColor = Color.White
@@ -191,7 +190,6 @@
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
 
-                MainWindow.MyDayInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
             Case "Custom"
 
         End Select

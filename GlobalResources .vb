@@ -41,6 +41,7 @@ Module GlobalResources
     Public ReadOnly DeleteIcon_White As Image = My.Resources.DeleteIcon_White_
     Public ReadOnly DeleteIcon_Black As Image = My.Resources.DeleteIcon_Black_
     Public ReadOnly DeleteIcon_Hover As Image = My.Resources.DeleteIcon_Hover_
+    Public ReadOnly DeleteIcon_Disabled As Image = My.Resources.DeleteIcon_Disabled_
 
     ' Indicators
 

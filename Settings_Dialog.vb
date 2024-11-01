@@ -1,4 +1,6 @@
-﻿Public Class Settings_Dialog
+﻿Imports System.IO
+
+Public Class Settings_Dialog
 
     Private isDragging As Boolean = False
     Private startX As Integer
@@ -87,6 +89,14 @@
             RadioButton20.ForeColor = Color.Black
             RadioButton19.ForeColor = Color.Black
 
+            Label10.ForeColor = Color.Black
+            RadioButton21.ForeColor = Color.Black
+            RadioButton22.ForeColor = Color.Black
+
+            Label12.ForeColor = Color.Black
+            RadioButton23.ForeColor = Color.Black
+            RadioButton24.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
@@ -139,6 +149,14 @@
             Label14.ForeColor = Color.White
             RadioButton20.ForeColor = Color.White
             RadioButton19.ForeColor = Color.White
+
+            Label10.ForeColor = Color.White
+            RadioButton21.ForeColor = Color.White
+            RadioButton22.ForeColor = Color.White
+
+            Label12.ForeColor = Color.White
+            RadioButton23.ForeColor = Color.White
+            RadioButton24.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
@@ -253,14 +271,32 @@
         End If
     End Sub
 
-    Private Sub OnStartupCheckForUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton20.CheckedChanged, RadioButton19.CheckedChanged
+    Private Sub OnStartupCheckForUpdate_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton19.CheckedChanged, RadioButton20.CheckedChanged
         If RadioButton19.Checked Then
             My.Settings.OnStartupCheckForUpdate = True
         ElseIf RadioButton20.Checked Then
             My.Settings.OnStartupCheckForUpdate = False
         End If
+    End Sub
+
+    Private Sub OnCloseRunInTheBackground_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton21.CheckedChanged, RadioButton22.CheckedChanged
+        If RadioButton21.Checked Then
+            My.Settings.OnCloseRunInTheBackground = True
+        ElseIf RadioButton22.Checked Then
+            My.Settings.OnCloseRunInTheBackground = False
+        End If
         SettingsCache.UpdateSettingsCache()
     End Sub
+
+    'Private Sub RunOnWindowsStartup_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton23.CheckedChanged, RadioButton24.CheckedChanged
+    '    If RadioButton23.Checked Then
+    '        My.Settings.RunOnWindowsStartup = True
+    '        SetStartup(True)
+    '    ElseIf RadioButton24.Checked Then
+    '        My.Settings.RunOnWindowsStartup = False
+    '        SetStartup(False)
+    '    End If
+    'End Sub
 
     Private Sub PfpSettings_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         If CheckBox1.Checked Then
@@ -304,6 +340,24 @@
                 Return 12.75F
         End Select
     End Function
+
+    'Private Sub SetStartup(runOnStartup As Boolean)
+    '    Dim startupFolder As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
+    '    Dim shortcutPath As String = Path.Combine(startupFolder, "EasyTo-Do.lnk")
+
+    '    If runOnStartup Then
+    '        ' Create a shortcut in the Startup folder
+    '        Dim shell As Object = CreateObject("WScript.Shell")
+    '        Dim shortcut As Object = shell.CreateShortcut(shortcutPath)
+    '        shortcut.TargetPath = Application.ExecutablePath
+    '        shortcut.Save()
+    '    Else
+    '        ' Delete the shortcut if it exists
+    '        If File.Exists(shortcutPath) Then
+    '            File.Delete(shortcutPath)
+    '        End If
+    '    End If
+    'End Sub
 
     Private Sub CloseSettingsDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseSettingsDialog_Button.Click
         Me.Close()

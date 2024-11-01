@@ -157,6 +157,7 @@ Partial Class MainWindow
         Me.Button4.Anchor = System.Windows.Forms.AnchorStyles.Right
         Me.Button4.BackColor = System.Drawing.Color.Transparent
         Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+        Me.Button4.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Button4.FlatAppearance.BorderSize = 0
         Me.Button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button4.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent

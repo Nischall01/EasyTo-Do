@@ -47,8 +47,6 @@ Partial Class Tasks_View
         Me.ViewIcon_PictureBox = New System.Windows.Forms.PictureBox()
         Me.SubTlpTaskView_SubTlpMiddle = New System.Windows.Forms.TableLayoutPanel()
         Me.Tasks_CheckedListBox = New System.Windows.Forms.CheckedListBox()
-        Me.ReminderTimer = New System.Windows.Forms.Timer(Me.components)
-        Me.ReminderNotification = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip3 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -441,14 +439,6 @@ Partial Class Tasks_View
         Me.Tasks_CheckedListBox.Size = New System.Drawing.Size(609, 345)
         Me.Tasks_CheckedListBox.TabIndex = 12
         '
-        'ReminderTimer
-        '
-        '
-        'ReminderNotification
-        '
-        Me.ReminderNotification.Text = "ReminderNotification"
-        Me.ReminderNotification.Visible = True
-        '
         'ContextMenuStrip3
         '
         Me.ContextMenuStrip3.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem3})
@@ -541,8 +531,6 @@ Partial Class Tasks_View
     Friend WithEvents SubTlpTaskView_SubTlpTop As TableLayoutPanel
     Friend WithEvents TasksView_Label As Label
     Friend WithEvents ViewIcon_PictureBox As PictureBox
-    Friend WithEvents ReminderTimer As Timer
-    Friend WithEvents ReminderNotification As NotifyIcon
     Friend WithEvents ContextMenuStrip3 As ContextMenuStrip
     Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
     Friend WithEvents ContextMenuStrip2 As ContextMenuStrip

@@ -1,10 +1,8 @@
 ﻿Imports System.Drawing.Text
 Imports System.IO
 Imports System.Media
-Imports System.Net.NetworkInformation
 Imports System.Runtime.InteropServices
-Imports System.Runtime.Remoting.Channels
-Imports System.Windows.Forms.Design
+Imports Microsoft.Win32
 
 Public Class MainWindow
 
@@ -339,6 +337,7 @@ Public Class MainWindow
     End Sub
 
     Private Sub NotifyIcon1_BalloonTipClicked(sender As Object, e As EventArgs) Handles ReminderNotification.BalloonTipClicked
+        Me.Show()
         Me.TopMost = True
         Me.WindowState = FormWindowState.Normal
         Me.Activate()
@@ -459,6 +458,26 @@ Public Class MainWindow
         SetSetting_TasksSize()
         SetSetting_TasksFont()
         SetSetting_OnStartupCheckForUpdate()
+        SetSetting_OnCloseRunInTheBackground()
+        SetSetting_RunOnWindowsStartup()
+    End Sub
+
+    Private Sub SetSetting_OnCloseRunInTheBackground()
+        Select Case My.Settings.OnCloseRunInTheBackground
+            Case True
+                SettingsInstance.RadioButton21.Checked = True
+            Case False
+                SettingsInstance.RadioButton22.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSetting_RunOnWindowsStartup()
+        Select Case My.Settings.RunOnWindowsStartup
+            Case True
+                SettingsInstance.RadioButton23.Checked = True
+            Case False
+                SettingsInstance.RadioButton24.Checked = True
+        End Select
     End Sub
 
     Private Sub SetSetting_ColorScheme()
@@ -1145,7 +1164,11 @@ Public Class MainWindow
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Me.ActiveControl = Nothing
-        Me.Close()
+        If SettingsCache.OnCloseRunInTheBackground Then
+            Me.Hide()
+        Else
+            Application.Exit()
+        End If
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -1231,6 +1254,40 @@ Public Class MainWindow
         ' Save the window size before closing
         My.Settings.LastSavedWindowSize_Width = Me.Size.Width
         My.Settings.LastSavedWindowSize_Height = Me.Size.Height
+    End Sub
+
+    Private Sub ReminderNotification_MouseClick(sender As Object, e As MouseEventArgs) Handles ReminderNotification.MouseClick
+        If e.Button = MouseButtons.Left Then
+            Me.Show()
+        Else
+            Application.Exit()
+        End If
+    End Sub
+
+    Private Sub Settings_Button_MouseEnter(sender As Object, e As EventArgs) Handles Settings_Button.MouseEnter
+        Settings_Button.BackgroundImage = My.Resources.SettingsIcon_Blue_
+    End Sub
+
+    Private Sub Settings_Button_MouseLeave(sender As Object, e As EventArgs) Handles Settings_Button.MouseLeave
+        Select Case SettingsCache.ColorScheme
+            Case "Dark"
+                Settings_Button.BackgroundImage = My.Resources.SettingsIcon_White_
+            Case "Light"
+                Settings_Button.BackgroundImage = My.Resources.SettingsIcon_Black_
+        End Select
+    End Sub
+
+    Private Sub Help_Button_MouseEnter(sender As Object, e As EventArgs) Handles Help_Button.MouseEnter
+        Help_Button.BackgroundImage = My.Resources.HelpIcon_Blue_
+    End Sub
+
+    Private Sub Helps_Button_MouseLeave(sender As Object, e As EventArgs) Handles Help_Button.MouseLeave
+        Select Case SettingsCache.ColorScheme
+            Case "Dark"
+                Help_Button.BackgroundImage = My.Resources.HelpIcon_White_
+            Case "Light"
+                Help_Button.BackgroundImage = My.Resources.HelpIcon_Black_
+        End Select
     End Sub
 
 End Class

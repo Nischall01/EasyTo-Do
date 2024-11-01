@@ -21,7 +21,6 @@
     ' Form on load : Initializes the Repeated tasks view. '
     Private Sub Tasks_View_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitializeTasks()
-        InitializeReminder()
     End Sub
 
     ' Initializes the Repeated tasks view. '
@@ -34,15 +33,6 @@
         End Select
 
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
-    End Sub
-
-    Private Sub InitializeReminder()
-        ReminderTimer.Interval = 1000 ' Interval set to 1 seconds
-        ReminderTimer.Start() ' Start the Timer
-
-        ReminderNotification.Text = "EasyTo_do"
-        ReminderNotification.Icon = My.Resources.EasyToDo_Icon
-        ReminderNotification.Visible = True
     End Sub
 
 #End Region
@@ -403,11 +393,6 @@
         'MsgBox("SelectedItemIndex = " & Tasks_CheckedListBox.SelectedIndex)
     End Sub
 
-    ' Dispose of the NotifyIcon when the form is closed
-    Private Sub Tasks_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
-        ReminderNotification.Dispose()
-    End Sub
-
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
         EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
         UiUtils.TaskSelection_Clear(Me.Tasks_CheckedListBox)
@@ -520,10 +505,6 @@
         Else
             DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
         End If
-    End Sub
-
-    Private Sub ReminderTimer_Tick(sender As Object, e As EventArgs) Handles ReminderTimer.Tick
-
     End Sub
 
 #End Region
