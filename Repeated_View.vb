@@ -131,10 +131,10 @@
             Case TaskPropertiesSidebarAction.DisableOnly
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
             Case TaskPropertiesSidebarAction.HideOnly
-                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
             Case TaskPropertiesSidebarAction.DisableAndHide
                 EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
-                MainWindow.ShowOrHide_TaskPropertiesSidebar(TaskPropertiesVisibility.Hide)
+                MainWindow.ShowOrHide_TaskPropertiesSidebar(MainWindow.TaskPropertiesVisibility.Hide)
         End Select
     End Sub
 
@@ -144,6 +144,10 @@
                 TaskTitle_TextBox.Text = Nothing
                 Label_TaskEntryDateTime.Text = Nothing
                 Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Disabled
+
+                DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Disabled
+                CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Disabled
+                CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Disabled
 
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
@@ -172,8 +176,18 @@
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
                     TaskDescription_RichTextBox.Show()
+
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
+
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 Else
                     Important_Button.BackColor = Color.FromArgb(234, 234, 234)
+
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
+
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 End If
                 TaskTitle_TextBox.Enabled = True
                 Label_ADT.Enabled = True
@@ -241,19 +255,20 @@
 
     ' Event handler triggered when the user selects a task from the Repeated_CheckedListBox.
     Private Sub Repeated_CheckedListBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Repeated_CheckedListBox.SelectedIndexChanged
-
         SelectedTask_Index = Repeated_CheckedListBox.SelectedIndex
 
         If SelectedTask_Index <> -1 Then
             SelectedTask_Item = Repeated_CheckedListBox.SelectedItem
             SelectedTask_ID = SelectedTask_Item.ID
             LoadSelectedTaskProperties()
+        Else
+            DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
         End If
     End Sub
 
     Private Sub AddNewTask_TextBox_Enter(sender As Object, e As EventArgs) Handles AddNewTask_TextBox.Enter
-        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
         UiUtils.TaskSelection_Clear(Me.Repeated_CheckedListBox)
+        EnableOrDisable_TaskPropertiesSidebar(TaskPropertiesState.Disable)
     End Sub
 
     Private Sub SubTlpTaskView_SubTlpTop_Click(sender As Object, e As EventArgs) Handles SubTlpTaskView_SubTlpTop.Click
@@ -333,7 +348,7 @@
         Me.ActiveControl = Nothing
         If Repeated_CheckedListBox.SelectedIndex = -1 Or Repeated_CheckedListBox.Items.Count = 0 Or SelectedTask_Item Is Nothing Then Exit Sub
 
-        If SettingsCache.onDeleteAskForConfirmation Then
+        If SettingsCache.OnDeleteAskForConfirmation Then
             Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If result <> DialogResult.Yes Then

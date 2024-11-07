@@ -153,11 +153,8 @@
                 MainWindow.MyDayInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.MyDayInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                'MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.MyDayInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                'MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
-                'MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
             Case "Dark"
                 MainWindow.MyDayInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
@@ -184,11 +181,8 @@
                 MainWindow.MyDayInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.MyDayInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                'MainWindow.MyDayInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.MyDayInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                'MainWindow.MyDayInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 MainWindow.MyDayInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
-                'MainWindow.MyDayInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
 
             Case "Custom"
 
@@ -220,11 +214,8 @@
                 MainWindow.RepeatedInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.RepeatedInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                MainWindow.RepeatedInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.RepeatedInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                MainWindow.RepeatedInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
 
-                MainWindow.RepeatedInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
             Case "Dark"
                 MainWindow.RepeatedInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
                 MainWindow.RepeatedInstance.RepeatedView_Label.ForeColor = Color.White
@@ -248,11 +239,8 @@
                 MainWindow.RepeatedInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.RepeatedInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                MainWindow.RepeatedInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.RepeatedInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                MainWindow.RepeatedInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
 
-                MainWindow.RepeatedInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
             Case "Custom"
 
         End Select
@@ -283,13 +271,9 @@
                 MainWindow.ImportantInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.ImportantInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                MainWindow.ImportantInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.ImportantInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                MainWindow.ImportantInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 MainWindow.ImportantInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
-                MainWindow.ImportantInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
-                MainWindow.ImportantInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
             Case "Dark"
                 MainWindow.ImportantInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
                 MainWindow.ImportantInstance.ImportantView_Label.ForeColor = Color.White
@@ -313,13 +297,8 @@
                 MainWindow.ImportantInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.ImportantInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                MainWindow.ImportantInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.ImportantInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                MainWindow.ImportantInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 MainWindow.ImportantInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
-                MainWindow.ImportantInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
-
-                MainWindow.ImportantInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
             Case "Custom"
 
         End Select
@@ -350,13 +329,9 @@
                 MainWindow.PlannedInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.PlannedInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                MainWindow.PlannedInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.PlannedInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                MainWindow.PlannedInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 MainWindow.PlannedInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
-                MainWindow.PlannedInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
-                MainWindow.PlannedInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
             Case "Dark"
                 MainWindow.PlannedInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
                 MainWindow.PlannedInstance.PlannedView_Label.ForeColor = Color.White
@@ -380,13 +355,9 @@
                 MainWindow.PlannedInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.PlannedInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                MainWindow.PlannedInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.PlannedInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                MainWindow.PlannedInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 MainWindow.PlannedInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
-                MainWindow.PlannedInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
 
-                MainWindow.PlannedInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
             Case "Custom"
 
         End Select
@@ -417,13 +388,12 @@
                 MainWindow.TasksInstance.Label_TaskEntryDateTime.ForeColor = Color.Black
 
                 MainWindow.TasksInstance.CustomButton_AddReminder.Label1.ForeColor = Color.Black
-                MainWindow.TasksInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
+                'MainWindow.TasksInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                 MainWindow.TasksInstance.CustomButton_Repeat.Label1.ForeColor = Color.Black
-                MainWindow.TasksInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
+                'MainWindow.TasksInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                 MainWindow.TasksInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.Black
-                MainWindow.TasksInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
+                'MainWindow.TasksInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
 
-                MainWindow.TasksInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
             Case "Dark"
                 MainWindow.TasksInstance.MainTlp_SubTlpTaskView.BackColor = Color.FromArgb(16, 12, 10)
                 MainWindow.TasksInstance.TasksView_Label.ForeColor = Color.White
@@ -447,13 +417,12 @@
                 MainWindow.TasksInstance.Label_TaskEntryDateTime.ForeColor = Color.White
 
                 MainWindow.TasksInstance.CustomButton_AddReminder.Label1.ForeColor = Color.White
-                MainWindow.TasksInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
+                'MainWindow.TasksInstance.CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                 MainWindow.TasksInstance.CustomButton_Repeat.Label1.ForeColor = Color.White
-                MainWindow.TasksInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
+                'MainWindow.TasksInstance.CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                 MainWindow.TasksInstance.CustomButton_AddDueDate.Label1.ForeColor = Color.White
-                MainWindow.TasksInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
+                'MainWindow.TasksInstance.CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
 
-                MainWindow.TasksInstance.DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
             Case "Custom"
 
         End Select

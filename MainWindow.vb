@@ -1290,4 +1290,8 @@ Public Class MainWindow
         End Select
     End Sub
 
+    Private Sub MainWindow_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        ReminderNotification.Dispose()
+    End Sub
+
 End Class

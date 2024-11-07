@@ -168,7 +168,7 @@ Partial Class MainWindow
         Me.Button4.Location = New System.Drawing.Point(714, 0)
         Me.Button4.Margin = New System.Windows.Forms.Padding(0)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(50, 32)
+        Me.Button4.Size = New System.Drawing.Size(45, 30)
         Me.Button4.TabIndex = 8
         Me.Button4.TabStop = False
         Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText

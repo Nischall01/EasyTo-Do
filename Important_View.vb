@@ -156,6 +156,11 @@
                 Label_TaskEntryDateTime.Text = Nothing
                 Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Disabled
 
+                DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Disabled
+                CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Disabled
+                CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Disabled
+                CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Disabled
+
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(40, 40, 40)
                     Important_Button.BackColor = Color.Transparent
@@ -186,8 +191,18 @@
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
                     TaskDescription_RichTextBox.Show()
+
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
+                    CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
                 Else
                     Important_Button.BackColor = Color.FromArgb(234, 234, 234)
+
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
+                    CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
+                    CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
+                    CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
                 End If
                 TaskTitle_TextBox.Enabled = True
                 Label_ADT.Enabled = True
@@ -268,6 +283,8 @@
             SelectedTask_Item = Important_CheckedListBox.SelectedItem
             SelectedTask_ID = SelectedTask_Item.ID
             LoadSelectedTaskProperties()
+        Else
+            DisableHide_TaskPropertiesSidebar(TaskPropertiesSidebarAction.DisableOnly)
         End If
     End Sub
 
@@ -314,7 +331,7 @@
             Exit Sub
         End If
 
-        If SettingsCache.onDeleteAskForConfirmation Then
+        If SettingsCache.OnDeleteAskForConfirmation Then
             Dim result As DialogResult = MessageBox.Show("Are you sure you want to proceed?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
 
             If result <> DialogResult.Yes Then

@@ -162,7 +162,6 @@ Public Class MyDay_View
                 Important_Button.BackgroundImage = GlobalResources.ImportantIcon_Disabled
 
                 DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Disabled
-
                 CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Disabled
                 CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Disabled
                 CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Disabled
@@ -198,8 +197,8 @@ Public Class MyDay_View
                 If SettingsCache.ColorScheme = "Dark" Then
                     TaskTitle_TextBox.BackColor = Color.FromArgb(30, 30, 30)
                     Important_Button.BackColor = Color.FromArgb(21, 21, 21)
-                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
 
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_White
                     CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_White
                     CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_White
                     CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_White
@@ -207,8 +206,8 @@ Public Class MyDay_View
                     TaskDescription_RichTextBox.Show()
                 Else
                     Important_Button.BackColor = Color.FromArgb(234, 234, 234)
-                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
 
+                    DeleteTask_Button.BackgroundImage = GlobalResources.DeleteIcon_Black
                     CustomButton_AddReminder.PictureBox1.Image = GlobalResources.ReminderIcon_Black
                     CustomButton_Repeat.PictureBox1.Image = GlobalResources.RepeatIcon_Black
                     CustomButton_AddDueDate.PictureBox1.Image = GlobalResources.DueDateIcon_Black
