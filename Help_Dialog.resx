@@ -117,29 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AboutTextBox.Text" xml:space="preserve">
-    <value>EasyTo-Do
-
-Version: 1.0.2
-
-Repository: https://github.com/Nischall01/EasyTo-Do
-
-Copyright © 2025 Nischal
-
-This software is provided free of charge for personal and commercial use.
-
-Redistribution of this software is only permitted if the software has been visibly or functionally modified in a way that clearly distinguishes it from the original version. Simple rebranding, repackaging, or minimal non-functional changes do not meet this requirement.
-
-Any redistributed version must:
-
-- Clearly credit the original author.
-
-- Include a note describing the visual or functional modifications.
-
-- Provide users with access to the modified source code if redistributed in compiled form.
-
-Unauthorized redistribution of the original or minimally altered software is strictly prohibited.</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Help_Icon.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -155,5 +132,30 @@ Unauthorized redistribution of the original or minimally altered software is str
         F0omZfQdYAE46aa+jpoK1Y8i7OOtPAHOAI8rH6Wy0QO2/gFSi0vvMvAW+Ah8cVNfJVla3VGbMMH8Bgfu
         rtdLcvSTAAAAAElFTkSuQmCC
 </value>
+  </data>
+  <data name="AboutTextBox.Text" xml:space="preserve">
+    <value>EasyTo-Do
+
+Version: 1.0.2
+
+Repository: https://github.com/Nischall01/EasyTo-Do
+
+© 2025 Nischall01. All rights reserved.
+
+This software is provided free of charge for personal and commercial use.
+
+Redistribution of this software is only permitted if it has been visibly or functionally modified in a way that clearly distinguishes it from the original version.
+Simple rebranding, repackaging, or minimal non-functional changes do not meet this requirement.
+
+Any redistributed version must:
+
+Clearly credit the original author.
+
+Include a note describing the visual or functional modifications.
+
+Provide users with access to the modified source code if redistributed in compiled form.
+
+Unauthorized redistribution of the original or minimally altered software is strictly prohibited.
+For full terms, see LICENSE.txt.</value>
   </data>
 </root>
