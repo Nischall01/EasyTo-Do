@@ -117,36 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutTextBox.Text" xml:space="preserve">
+    <value>EasyTo-Do
+
+Version: 1.0.2
+
+Repository: https://github.com/Nischall01/EasyTo-Do
+
+Copyright © 2025 Nischal
+
+This software is provided free of charge for personal and commercial use.
+
+Redistribution of this software is only permitted if the software has been visibly or functionally modified in a way that clearly distinguishes it from the original version. Simple rebranding, repackaging, or minimal non-functional changes do not meet this requirement.
+
+Any redistributed version must:
+
+- Clearly credit the original author.
+
+- Include a note describing the visual or functional modifications.
+
+- Provide users with access to the modified source code if redistributed in compiled form.
+
+Unauthorized redistribution of the original or minimally altered software is strictly prohibited.</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Help_Icon.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EAAACxABrSO9dQAAAkxJREFUWEftlstOFEEYhWePrHChAhq5qG/gQwiuBZ+AiwsCz+DeHRhXrgCBjYBP
-        4CtAXLknMUEuC28pv9N1itBM93TX6HK+5CQ9p85fU1Xd1dWdAQNyCCGMo2X0CR2jC0vXh2gJjTn+/6DT
-        UbSBfqEm/qBt9MDl/wYdPUdnSPxAm+gFeoyGLF3PIbUpI1Qz6276gw5eIc1IaFYP3VQLmQm0owJQ7bKb
-        8qBQM1cHv9GK7dZQs+pa9ZG3EhTonqdlz/7zBLUahPiO7tpuhvC7ooxlt1UCfwx9QBqktIum3VzCbWLD
-        Vm8Iaqtp6fQwdd1zPP35N3QTeaOOXYE3idSXdlBXexeEtM/Fpq0S+Jq5+Ih0q6R9GbDlWAl8PcBi0VY9
-        hPRCEXO2SuCnZ+NqNlxr1cSprRL4L2Nz2LdVD6EvMRse2WqE7P1YEk5slcDXe0Ic26qHUJrhsK2ekHuK
-        PhcVIby3XQJ/ODaHM1v1KBSzzQMg8zpGC76iynMAP2sArW8BmcsYLQYyYrsL2rJuQc+H8DrOBf+shUjW
-        Q6gjVVRuw36gr7QNF2zVQ0gvGr009PKYsF0J7QX+WQnNU6j9i0gQfIvEjq1KnGkawF5MhXVbzRC+h9Ju
-        WLWdDbVrsYtwiu7YbgcFsygdx9mDoEZ/no7jZ7bzoFDngjoQOtUm3VQLGd3ztOyqXXJTf9DBDNJ5LvQw
-        6YmeR0/QLUvX2mo6qH4ioWXvb+Y3oaPb6A1q81GqjD5g23+AtIVOdfQuoAN0hM4tXetIVlu7rTZgQEGn
-        8xcH7q7XJ/JL7AAAAABJRU5ErkJggg==
+        DgAACw4BQL7hQQAAAgxJREFUWEftlr1OVUEUhenVSgsV1AiKvAEP4U8t+gQIFgafwd5OjBUVKtqI+gS+
+        gsTKnoQEUAsV85kV1zHjOvdeZq7t/ZJJJmft2Wdmz57ZMzU1YUIDwAVgFXgP7ABf3dR/B6wAMznuvwGm
+        gXXgJ8fzC3gBXEo/YwHcAg7t/DuwCdwGrgEn3NRfsiYboTE3018TwH2vSGhVl9MmAWaBrSIaq2lThVcu
+        B0fAg9SPA1jzWPloi4T3vAt78887PAlxAJxLfSjAsy7sqQllOvDSk1R7BVxNO2FNrKc2EB81hU7J1Ntz
+        /3zPTkv0bXqA/Zx96QT19B4+52IzNeGVizfeKrVtf3ue9sIJLO6l1sMXilhKTRS58Xc1jprY/9f6D8Bd
+        69up9QA+2Xg+tWEAFz1mNzXhe0LspNajWOGp1AYBLAIfPGYjdSFf1g9T69EyAeCRbcXnYXWgdQLVWwB8
+        s60mcjr1jtYtGJmEJbYjvyetSaiSKgYew3EojuFyaj180ejS0OUxm3qJnY6MAHCl6SISwFP73kqtpHIC
+        r232JLWhAOeL07CWei3AQ/vYB86mPhKV0KIcN0/CP+/K8fXUq3Bd6B4kqmpzaZN4z7uwa+xK2jQB3HA9
+        F0omZfQdYAE46aa+jpoK1Y8i7OOtPAHOAI8rH6Wy0QO2/gFSi0vvMvAW+Ah8cVNfJVla3VGbMMH8Bgfu
+        rtdLcvSTAAAAAElFTkSuQmCC
 </value>
-  </data>
-  <data name="RichTextBox1.Text" xml:space="preserve">
-    <value>EasyTo-Do
-
-Version: 1.0.0beta
-
-Repository: https://github.com/Nischall01/EasyTo-Do
-
-Copyright © 2024 Nischal
-
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with this program. If not, see &lt;https://www.gnu.org/licenses/&gt;.</value>
   </data>
 </root>

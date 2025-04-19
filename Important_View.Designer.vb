@@ -128,11 +128,11 @@ Partial Class Important_View
         Me.AddNewTask_TextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
         Me.AddNewTask_TextBox.BackColor = System.Drawing.Color.FromArgb(CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer), CType(CType(45, Byte), Integer))
         Me.AddNewTask_TextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.AddNewTask_TextBox.Font = New System.Drawing.Font("Poppins", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AddNewTask_TextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.AddNewTask_TextBox.ForeColor = System.Drawing.Color.White
-        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(18, 10)
+        Me.AddNewTask_TextBox.Location = New System.Drawing.Point(18, 12)
         Me.AddNewTask_TextBox.Name = "AddNewTask_TextBox"
-        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(582, 27)
+        Me.AddNewTask_TextBox.Size = New System.Drawing.Size(582, 22)
         Me.AddNewTask_TextBox.TabIndex = 3
         '
         'SubTlpTaskView_SubTlpTop

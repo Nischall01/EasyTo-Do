@@ -15,7 +15,7 @@ Option Explicit On
 Namespace My
     
     <Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
-     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.11.0.0"),  _
+     Global.System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0"),  _
      Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
     Partial Friend NotInheritable Class MySettings
         Inherits Global.System.Configuration.ApplicationSettingsBase
@@ -258,7 +258,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("v1.0.1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("v1.0.2")>  _
         Public Property Version() As String
             Get
                 Return CType(Me("Version"),String)
@@ -307,9 +307,9 @@ Namespace My
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
-        Public Property OnCloseRunInTheBackground() As String
+        Public Property OnCloseRunInTheBackground() As Boolean
             Get
-                Return CType(Me("OnCloseRunInTheBackground"),String)
+                Return CType(Me("OnCloseRunInTheBackground"),Boolean)
             End Get
             Set
                 Me("OnCloseRunInTheBackground") = value
@@ -318,13 +318,25 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
-        Public Property RunOnWindowsStartup() As String
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property RunOnWindowsStartup() As Boolean
             Get
-                Return CType(Me("RunOnWindowsStartup"),String)
+                Return CType(Me("RunOnWindowsStartup"),Boolean)
             End Get
             Set
                 Me("RunOnWindowsStartup") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property PopupOnStartup() As Boolean
+            Get
+                Return CType(Me("PopupOnStartup"),Boolean)
+            End Get
+            Set
+                Me("PopupOnStartup") = value
             End Set
         End Property
     End Class

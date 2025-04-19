@@ -88,11 +88,11 @@ Partial Class Settings_Dialog
         Me.SelectedFont_TextBox = New System.Windows.Forms.TextBox()
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.TableLayoutPanel23 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel29 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.TableLayoutPanel30 = New System.Windows.Forms.TableLayoutPanel()
-        Me.RadioButton24 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton23 = New System.Windows.Forms.RadioButton()
+        Me.TableLayoutPanel31 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel34 = New System.Windows.Forms.TableLayoutPanel()
+        Me.RadioButton26 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton25 = New System.Windows.Forms.RadioButton()
         Me.TableLayoutPanel24 = New System.Windows.Forms.TableLayoutPanel()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel28 = New System.Windows.Forms.TableLayoutPanel()
@@ -103,6 +103,11 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel33 = New System.Windows.Forms.TableLayoutPanel()
         Me.RadioButton20 = New System.Windows.Forms.RadioButton()
         Me.RadioButton19 = New System.Windows.Forms.RadioButton()
+        Me.TableLayoutPanel29 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.TableLayoutPanel30 = New System.Windows.Forms.TableLayoutPanel()
+        Me.RadioButton24 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton23 = New System.Windows.Forms.RadioButton()
         Me.FontDialog1 = New System.Windows.Forms.FontDialog()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel19.SuspendLayout()
@@ -137,12 +142,14 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel27.SuspendLayout()
         Me.TabPage4.SuspendLayout()
         Me.TableLayoutPanel23.SuspendLayout()
-        Me.TableLayoutPanel29.SuspendLayout()
-        Me.TableLayoutPanel30.SuspendLayout()
+        Me.TableLayoutPanel31.SuspendLayout()
+        Me.TableLayoutPanel34.SuspendLayout()
         Me.TableLayoutPanel24.SuspendLayout()
         Me.TableLayoutPanel28.SuspendLayout()
         Me.TableLayoutPanel32.SuspendLayout()
         Me.TableLayoutPanel33.SuspendLayout()
+        Me.TableLayoutPanel29.SuspendLayout()
+        Me.TableLayoutPanel30.SuspendLayout()
         Me.SuspendLayout()
         '
         'TableLayoutPanel1
@@ -1065,9 +1072,10 @@ Partial Class Settings_Dialog
         '
         Me.TableLayoutPanel23.ColumnCount = 1
         Me.TableLayoutPanel23.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel23.Controls.Add(Me.TableLayoutPanel29, 0, 2)
+        Me.TableLayoutPanel23.Controls.Add(Me.TableLayoutPanel31, 0, 3)
         Me.TableLayoutPanel23.Controls.Add(Me.TableLayoutPanel24, 0, 1)
         Me.TableLayoutPanel23.Controls.Add(Me.TableLayoutPanel32, 0, 0)
+        Me.TableLayoutPanel23.Controls.Add(Me.TableLayoutPanel29, 0, 2)
         Me.TableLayoutPanel23.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TableLayoutPanel23.Location = New System.Drawing.Point(0, 0)
         Me.TableLayoutPanel23.Name = "TableLayoutPanel23"
@@ -1080,78 +1088,78 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel23.Size = New System.Drawing.Size(320, 457)
         Me.TableLayoutPanel23.TabIndex = 4
         '
-        'TableLayoutPanel29
+        'TableLayoutPanel31
         '
-        Me.TableLayoutPanel29.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.TableLayoutPanel29.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.TableLayoutPanel29.ColumnCount = 1
-        Me.TableLayoutPanel29.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel29.Controls.Add(Me.Label12, 0, 0)
-        Me.TableLayoutPanel29.Controls.Add(Me.TableLayoutPanel30, 0, 1)
-        Me.TableLayoutPanel29.ForeColor = System.Drawing.SystemColors.ControlLightLight
-        Me.TableLayoutPanel29.Location = New System.Drawing.Point(22, 197)
-        Me.TableLayoutPanel29.Name = "TableLayoutPanel29"
-        Me.TableLayoutPanel29.RowCount = 2
-        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.0!))
-        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.0!))
-        Me.TableLayoutPanel29.Size = New System.Drawing.Size(275, 60)
-        Me.TableLayoutPanel29.TabIndex = 7
-        Me.TableLayoutPanel29.Visible = False
+        Me.TableLayoutPanel31.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel31.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel31.ColumnCount = 1
+        Me.TableLayoutPanel31.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel31.Controls.Add(Me.Label13, 0, 0)
+        Me.TableLayoutPanel31.Controls.Add(Me.TableLayoutPanel34, 0, 1)
+        Me.TableLayoutPanel31.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.TableLayoutPanel31.Location = New System.Drawing.Point(22, 288)
+        Me.TableLayoutPanel31.Name = "TableLayoutPanel31"
+        Me.TableLayoutPanel31.RowCount = 2
+        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.0!))
+        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.0!))
+        Me.TableLayoutPanel31.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel31.Size = New System.Drawing.Size(275, 60)
+        Me.TableLayoutPanel31.TabIndex = 8
         '
-        'Label12
+        'Label13
         '
-        Me.Label12.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.Label12.AutoSize = True
-        Me.Label12.BackColor = System.Drawing.Color.Transparent
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.ForeColor = System.Drawing.Color.White
-        Me.Label12.Location = New System.Drawing.Point(41, 4)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(193, 18)
-        Me.Label12.TabIndex = 0
-        Me.Label12.Text = "Run on Windows startup"
+        Me.Label13.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label13.AutoSize = True
+        Me.Label13.BackColor = System.Drawing.Color.Transparent
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ForeColor = System.Drawing.Color.White
+        Me.Label13.Location = New System.Drawing.Point(58, 4)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(158, 18)
+        Me.Label13.TabIndex = 0
+        Me.Label13.Text = "( Windows Startup )"
         '
-        'TableLayoutPanel30
+        'TableLayoutPanel34
         '
-        Me.TableLayoutPanel30.ColumnCount = 2
-        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-        Me.TableLayoutPanel30.Controls.Add(Me.RadioButton24, 1, 0)
-        Me.TableLayoutPanel30.Controls.Add(Me.RadioButton23, 0, 0)
-        Me.TableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel30.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.TableLayoutPanel30.Location = New System.Drawing.Point(4, 30)
-        Me.TableLayoutPanel30.Name = "TableLayoutPanel30"
-        Me.TableLayoutPanel30.RowCount = 1
-        Me.TableLayoutPanel30.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel30.Size = New System.Drawing.Size(267, 26)
-        Me.TableLayoutPanel30.TabIndex = 1
+        Me.TableLayoutPanel34.ColumnCount = 2
+        Me.TableLayoutPanel34.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel34.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel34.Controls.Add(Me.RadioButton26, 1, 0)
+        Me.TableLayoutPanel34.Controls.Add(Me.RadioButton25, 0, 0)
+        Me.TableLayoutPanel34.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel34.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.TableLayoutPanel34.Location = New System.Drawing.Point(4, 30)
+        Me.TableLayoutPanel34.Name = "TableLayoutPanel34"
+        Me.TableLayoutPanel34.RowCount = 1
+        Me.TableLayoutPanel34.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel34.Size = New System.Drawing.Size(267, 26)
+        Me.TableLayoutPanel34.TabIndex = 1
         '
-        'RadioButton24
+        'RadioButton26
         '
-        Me.RadioButton24.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RadioButton24.AutoSize = True
-        Me.RadioButton24.ForeColor = System.Drawing.Color.White
-        Me.RadioButton24.Location = New System.Drawing.Point(180, 4)
-        Me.RadioButton24.Name = "RadioButton24"
-        Me.RadioButton24.Size = New System.Drawing.Size(39, 17)
-        Me.RadioButton24.TabIndex = 2
-        Me.RadioButton24.TabStop = True
-        Me.RadioButton24.Text = "No"
-        Me.RadioButton24.UseVisualStyleBackColor = True
+        Me.RadioButton26.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton26.AutoSize = True
+        Me.RadioButton26.ForeColor = System.Drawing.Color.White
+        Me.RadioButton26.Location = New System.Drawing.Point(142, 4)
+        Me.RadioButton26.Name = "RadioButton26"
+        Me.RadioButton26.Size = New System.Drawing.Size(116, 17)
+        Me.RadioButton26.TabIndex = 2
+        Me.RadioButton26.TabStop = True
+        Me.RadioButton26.Text = "Run in background"
+        Me.RadioButton26.UseVisualStyleBackColor = True
         '
-        'RadioButton23
+        'RadioButton25
         '
-        Me.RadioButton23.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.RadioButton23.AutoSize = True
-        Me.RadioButton23.ForeColor = System.Drawing.Color.White
-        Me.RadioButton23.Location = New System.Drawing.Point(45, 4)
-        Me.RadioButton23.Name = "RadioButton23"
-        Me.RadioButton23.Size = New System.Drawing.Size(43, 17)
-        Me.RadioButton23.TabIndex = 1
-        Me.RadioButton23.TabStop = True
-        Me.RadioButton23.Text = "Yes"
-        Me.RadioButton23.UseVisualStyleBackColor = True
+        Me.RadioButton25.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton25.AutoSize = True
+        Me.RadioButton25.ForeColor = System.Drawing.Color.White
+        Me.RadioButton25.Location = New System.Drawing.Point(38, 4)
+        Me.RadioButton25.Name = "RadioButton25"
+        Me.RadioButton25.Size = New System.Drawing.Size(56, 17)
+        Me.RadioButton25.TabIndex = 1
+        Me.RadioButton25.TabStop = True
+        Me.RadioButton25.Text = "Popup"
+        Me.RadioButton25.UseVisualStyleBackColor = True
         '
         'TableLayoutPanel24
         '
@@ -1298,6 +1306,79 @@ Partial Class Settings_Dialog
         Me.RadioButton19.Text = "Yes"
         Me.RadioButton19.UseVisualStyleBackColor = True
         '
+        'TableLayoutPanel29
+        '
+        Me.TableLayoutPanel29.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.TableLayoutPanel29.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel29.ColumnCount = 1
+        Me.TableLayoutPanel29.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel29.Controls.Add(Me.Label12, 0, 0)
+        Me.TableLayoutPanel29.Controls.Add(Me.TableLayoutPanel30, 0, 1)
+        Me.TableLayoutPanel29.ForeColor = System.Drawing.SystemColors.ControlLightLight
+        Me.TableLayoutPanel29.Location = New System.Drawing.Point(22, 197)
+        Me.TableLayoutPanel29.Name = "TableLayoutPanel29"
+        Me.TableLayoutPanel29.RowCount = 2
+        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 45.0!))
+        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.0!))
+        Me.TableLayoutPanel29.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel29.Size = New System.Drawing.Size(275, 60)
+        Me.TableLayoutPanel29.TabIndex = 7
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.Transparent
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.ForeColor = System.Drawing.Color.White
+        Me.Label12.Location = New System.Drawing.Point(41, 4)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(193, 18)
+        Me.Label12.TabIndex = 0
+        Me.Label12.Text = "Run on Windows startup"
+        '
+        'TableLayoutPanel30
+        '
+        Me.TableLayoutPanel30.ColumnCount = 2
+        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel30.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+        Me.TableLayoutPanel30.Controls.Add(Me.RadioButton24, 1, 0)
+        Me.TableLayoutPanel30.Controls.Add(Me.RadioButton23, 0, 0)
+        Me.TableLayoutPanel30.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel30.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
+        Me.TableLayoutPanel30.Location = New System.Drawing.Point(4, 30)
+        Me.TableLayoutPanel30.Name = "TableLayoutPanel30"
+        Me.TableLayoutPanel30.RowCount = 1
+        Me.TableLayoutPanel30.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel30.Size = New System.Drawing.Size(267, 26)
+        Me.TableLayoutPanel30.TabIndex = 1
+        '
+        'RadioButton24
+        '
+        Me.RadioButton24.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton24.AutoSize = True
+        Me.RadioButton24.ForeColor = System.Drawing.Color.White
+        Me.RadioButton24.Location = New System.Drawing.Point(180, 4)
+        Me.RadioButton24.Name = "RadioButton24"
+        Me.RadioButton24.Size = New System.Drawing.Size(39, 17)
+        Me.RadioButton24.TabIndex = 2
+        Me.RadioButton24.TabStop = True
+        Me.RadioButton24.Text = "No"
+        Me.RadioButton24.UseVisualStyleBackColor = True
+        '
+        'RadioButton23
+        '
+        Me.RadioButton23.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.RadioButton23.AutoSize = True
+        Me.RadioButton23.ForeColor = System.Drawing.Color.White
+        Me.RadioButton23.Location = New System.Drawing.Point(45, 4)
+        Me.RadioButton23.Name = "RadioButton23"
+        Me.RadioButton23.Size = New System.Drawing.Size(43, 17)
+        Me.RadioButton23.TabIndex = 1
+        Me.RadioButton23.TabStop = True
+        Me.RadioButton23.Text = "Yes"
+        Me.RadioButton23.UseVisualStyleBackColor = True
+        '
         'Settings_Dialog
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1363,10 +1444,10 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel27.PerformLayout()
         Me.TabPage4.ResumeLayout(False)
         Me.TableLayoutPanel23.ResumeLayout(False)
-        Me.TableLayoutPanel29.ResumeLayout(False)
-        Me.TableLayoutPanel29.PerformLayout()
-        Me.TableLayoutPanel30.ResumeLayout(False)
-        Me.TableLayoutPanel30.PerformLayout()
+        Me.TableLayoutPanel31.ResumeLayout(False)
+        Me.TableLayoutPanel31.PerformLayout()
+        Me.TableLayoutPanel34.ResumeLayout(False)
+        Me.TableLayoutPanel34.PerformLayout()
         Me.TableLayoutPanel24.ResumeLayout(False)
         Me.TableLayoutPanel24.PerformLayout()
         Me.TableLayoutPanel28.ResumeLayout(False)
@@ -1375,6 +1456,10 @@ Partial Class Settings_Dialog
         Me.TableLayoutPanel32.PerformLayout()
         Me.TableLayoutPanel33.ResumeLayout(False)
         Me.TableLayoutPanel33.PerformLayout()
+        Me.TableLayoutPanel29.ResumeLayout(False)
+        Me.TableLayoutPanel29.PerformLayout()
+        Me.TableLayoutPanel30.ResumeLayout(False)
+        Me.TableLayoutPanel30.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1460,4 +1545,9 @@ Partial Class Settings_Dialog
     Friend WithEvents TableLayoutPanel28 As TableLayoutPanel
     Friend WithEvents RadioButton22 As RadioButton
     Friend WithEvents RadioButton21 As RadioButton
+    Friend WithEvents TableLayoutPanel31 As TableLayoutPanel
+    Friend WithEvents Label13 As Label
+    Friend WithEvents TableLayoutPanel34 As TableLayoutPanel
+    Friend WithEvents RadioButton26 As RadioButton
+    Friend WithEvents RadioButton25 As RadioButton
 End Class

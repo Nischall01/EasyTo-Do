@@ -29,11 +29,11 @@ Partial Class Help_Dialog
         Me.TableLayoutPanel3 = New System.Windows.Forms.TableLayoutPanel()
         Me.CloseHelpDialog_Button = New System.Windows.Forms.Button()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.RichTextBox1 = New System.Windows.Forms.RichTextBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.AboutTextBox = New System.Windows.Forms.RichTextBox()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.TableLayoutPanel6.SuspendLayout()
         CType(Me.Help_Icon, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -137,52 +137,6 @@ Partial Class Help_Dialog
         Me.TableLayoutPanel2.Size = New System.Drawing.Size(410, 46)
         Me.TableLayoutPanel2.TabIndex = 7
         '
-        'TableLayoutPanel4
-        '
-        Me.TableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
-        Me.TableLayoutPanel4.ColumnCount = 1
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.TextBox1, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.RichTextBox1, 0, 1)
-        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(0, 72)
-        Me.TableLayoutPanel4.Margin = New System.Windows.Forms.Padding(0)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 2
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.248555!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.75144!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(410, 355)
-        Me.TableLayoutPanel4.TabIndex = 8
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
-        Me.TextBox1.BackColor = System.Drawing.SystemColors.Control
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.Location = New System.Drawing.Point(27, 4)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.ReadOnly = True
-        Me.TextBox1.Size = New System.Drawing.Size(355, 25)
-        Me.TextBox1.TabIndex = 9
-        Me.TextBox1.TabStop = False
-        Me.TextBox1.Text = "About EasyTo-Do"
-        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
-        '
-        'RichTextBox1
-        '
-        Me.RichTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.RichTextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.RichTextBox1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.RichTextBox1.Location = New System.Drawing.Point(6, 39)
-        Me.RichTextBox1.Margin = New System.Windows.Forms.Padding(5)
-        Me.RichTextBox1.Name = "RichTextBox1"
-        Me.RichTextBox1.ReadOnly = True
-        Me.RichTextBox1.Size = New System.Drawing.Size(398, 310)
-        Me.RichTextBox1.TabIndex = 10
-        Me.RichTextBox1.TabStop = False
-        Me.RichTextBox1.Text = resources.GetString("RichTextBox1.Text")
-        '
         'Button2
         '
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -209,6 +163,52 @@ Partial Class Help_Dialog
         Me.Button1.TabStop = False
         Me.Button1.Text = "How To Use"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.[Single]
+        Me.TableLayoutPanel4.ColumnCount = 1
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.TextBox1, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.AboutTextBox, 0, 1)
+        Me.TableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(0, 72)
+        Me.TableLayoutPanel4.Margin = New System.Windows.Forms.Padding(0)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 2
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.248555!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90.75144!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(410, 355)
+        Me.TableLayoutPanel4.TabIndex = 8
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Anchor = System.Windows.Forms.AnchorStyles.Top
+        Me.TextBox1.BackColor = System.Drawing.SystemColors.Control
+        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.TextBox1.Font = New System.Drawing.Font("Microsoft YaHei UI", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox1.Location = New System.Drawing.Point(27, 4)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.ReadOnly = True
+        Me.TextBox1.Size = New System.Drawing.Size(355, 25)
+        Me.TextBox1.TabIndex = 9
+        Me.TextBox1.TabStop = False
+        Me.TextBox1.Text = "About EasyTo-Do"
+        Me.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'AboutTextBox
+        '
+        Me.AboutTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.AboutTextBox.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.AboutTextBox.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.AboutTextBox.Location = New System.Drawing.Point(8, 41)
+        Me.AboutTextBox.Margin = New System.Windows.Forms.Padding(7)
+        Me.AboutTextBox.Name = "AboutTextBox"
+        Me.AboutTextBox.ReadOnly = True
+        Me.AboutTextBox.Size = New System.Drawing.Size(394, 306)
+        Me.AboutTextBox.TabIndex = 10
+        Me.AboutTextBox.TabStop = False
+        Me.AboutTextBox.Text = resources.GetString("AboutTextBox.Text")
         '
         'Help_Dialog
         '
@@ -238,7 +238,7 @@ Partial Class Help_Dialog
     Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents RichTextBox1 As RichTextBox
+    Friend WithEvents AboutTextBox As RichTextBox
     Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
 End Class

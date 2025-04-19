@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Media
 Imports System.Runtime.InteropServices
+Imports System.Windows.Forms.Design
 Imports Microsoft.Win32
 
 Public Class MainWindow
@@ -152,8 +153,6 @@ Public Class MainWindow
 
         Dim minWidth As Integer = Screen.PrimaryScreen.Bounds.Width / 2
         Me.MinimumSize = New Size(minWidth, 575)
-
-        'Me.FormBorderStyle = FormBorderStyle.None
     End Sub
 
     Private Sub MainWindow_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -163,8 +162,29 @@ Public Class MainWindow
             CheckForUpdate(1)
         End If
         InitializeReminder()
+        InitializeTrayIconContextMenu()
+    End Sub
 
-        'Panel1.Hide()
+    Private Sub InitializeTrayIconContextMenu()
+        Dim contextMenu As New ContextMenuStrip()
+        Dim exitItem As New ToolStripMenuItem("Exit")
+
+        AddHandler exitItem.Click, AddressOf ExitItem_Click
+        contextMenu.Items.Add(exitItem)
+
+        ReminderNotification.ContextMenuStrip = contextMenu
+    End Sub
+
+
+    Private Sub ExitItem_Click(sender As Object, e As EventArgs)
+        Application.Exit()
+    End Sub
+
+    Private Sub MainWindow_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+        ' Hide the window if launched with "silent" argument (silent start for tray mode)
+        If Environment.GetCommandLineArgs().Contains("--silent") Then
+            Me.Visible = False
+        End If
     End Sub
 
 #End Region
@@ -460,24 +480,7 @@ Public Class MainWindow
         SetSetting_OnStartupCheckForUpdate()
         SetSetting_OnCloseRunInTheBackground()
         SetSetting_RunOnWindowsStartup()
-    End Sub
-
-    Private Sub SetSetting_OnCloseRunInTheBackground()
-        Select Case My.Settings.OnCloseRunInTheBackground
-            Case True
-                SettingsInstance.RadioButton21.Checked = True
-            Case False
-                SettingsInstance.RadioButton22.Checked = True
-        End Select
-    End Sub
-
-    Private Sub SetSetting_RunOnWindowsStartup()
-        Select Case My.Settings.RunOnWindowsStartup
-            Case True
-                SettingsInstance.RadioButton23.Checked = True
-            Case False
-                SettingsInstance.RadioButton24.Checked = True
-        End Select
+        SetSetting_PopupOnStartup()
     End Sub
 
     Private Sub SetSetting_ColorScheme()
@@ -593,6 +596,33 @@ Public Class MainWindow
                 SettingsInstance.RadioButton19.Checked = True
             Case False
                 SettingsInstance.RadioButton20.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSetting_OnCloseRunInTheBackground()
+        Select Case My.Settings.OnCloseRunInTheBackground
+            Case True
+                SettingsInstance.RadioButton21.Checked = True
+            Case False
+                SettingsInstance.RadioButton22.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSetting_RunOnWindowsStartup()
+        Select Case My.Settings.RunOnWindowsStartup
+            Case True
+                SettingsInstance.RadioButton23.Checked = True
+            Case False
+                SettingsInstance.RadioButton24.Checked = True
+        End Select
+    End Sub
+
+    Private Sub SetSetting_PopupOnStartup()
+        Select Case My.Settings.PopupOnStartup
+            Case True
+                SettingsInstance.RadioButton25.Checked = True
+            Case False
+                SettingsInstance.RadioButton26.Checked = True
         End Select
     End Sub
 
@@ -1259,8 +1289,6 @@ Public Class MainWindow
     Private Sub ReminderNotification_MouseClick(sender As Object, e As MouseEventArgs) Handles ReminderNotification.MouseClick
         If e.Button = MouseButtons.Left Then
             Me.Show()
-        Else
-            Application.Exit()
         End If
     End Sub
 
@@ -1293,5 +1321,4 @@ Public Class MainWindow
     Private Sub MainWindow_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
         ReminderNotification.Dispose()
     End Sub
-
 End Class

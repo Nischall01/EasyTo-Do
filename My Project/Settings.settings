@@ -58,7 +58,7 @@
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="Version" Type="System.String" Scope="User">
-      <Value Profile="(Default)">v1.0.1</Value>
+      <Value Profile="(Default)">v1.0.2</Value>
     </Setting>
     <Setting Name="OnStartupCheckForUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -69,11 +69,14 @@
     <Setting Name="LastSavedWindowSize_Height" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">600</Value>
     </Setting>
-    <Setting Name="OnCloseRunInTheBackground" Type="System.String" Scope="User">
+    <Setting Name="OnCloseRunInTheBackground" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="RunOnWindowsStartup" Type="System.String" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="RunOnWindowsStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="PopupOnStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

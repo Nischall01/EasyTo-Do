@@ -97,6 +97,10 @@ Public Class Settings_Dialog
             RadioButton23.ForeColor = Color.Black
             RadioButton24.ForeColor = Color.Black
 
+            Label13.ForeColor = Color.Black
+            RadioButton25.ForeColor = Color.Black
+            RadioButton26.ForeColor = Color.Black
+
             My.Settings.ColorScheme = "Light"
             SetColorScheme.Light()
         ElseIf ColorScheme_Dark_RadioBtn.Checked Then
@@ -157,6 +161,10 @@ Public Class Settings_Dialog
             Label12.ForeColor = Color.White
             RadioButton23.ForeColor = Color.White
             RadioButton24.ForeColor = Color.White
+
+            Label13.ForeColor = Color.White
+            RadioButton25.ForeColor = Color.White
+            RadioButton26.ForeColor = Color.White
 
             My.Settings.ColorScheme = "Dark"
             SetColorScheme.Dark()
@@ -288,15 +296,38 @@ Public Class Settings_Dialog
         SettingsCache.UpdateSettingsCache()
     End Sub
 
-    'Private Sub RunOnWindowsStartup_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton23.CheckedChanged, RadioButton24.CheckedChanged
-    '    If RadioButton23.Checked Then
-    '        My.Settings.RunOnWindowsStartup = True
-    '        SetStartup(True)
-    '    ElseIf RadioButton24.Checked Then
-    '        My.Settings.RunOnWindowsStartup = False
-    '        SetStartup(False)
-    '    End If
-    'End Sub
+    Private Sub RunOnStartup_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton23.CheckedChanged, RadioButton24.CheckedChanged
+        If RadioButton23.Checked Then
+            My.Settings.RunOnWindowsStartup = True
+
+            TableLayoutPanel31.Enabled = True
+
+            If My.Settings.PopupOnStartup Then
+                StartupShortcut.CreateStartupShortcut(1)
+            Else
+                StartupShortcut.CreateStartupShortcut(2)
+            End If
+
+        ElseIf RadioButton24.Checked Then
+            My.Settings.RunOnWindowsStartup = False
+
+            TableLayoutPanel31.Enabled = False
+
+            StartupShortcut.DeleteStartupShortcut()
+        End If
+    End Sub
+
+    Private Sub PopupOnStartup_CheckedChanged(sender As Object, e As EventArgs) Handles RadioButton25.CheckedChanged, RadioButton26.CheckedChanged
+        If RadioButton25.Checked Then
+            My.Settings.PopupOnStartup = True
+            StartupShortcut.DeleteStartupShortcut()
+            StartupShortcut.CreateStartupShortcut(1)
+        ElseIf RadioButton26.Checked Then
+            My.Settings.PopupOnStartup = False
+            StartupShortcut.DeleteStartupShortcut()
+            StartupShortcut.CreateStartupShortcut(2)
+        End If
+    End Sub
 
     Private Sub PfpSettings_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         If CheckBox1.Checked Then
@@ -341,26 +372,7 @@ Public Class Settings_Dialog
         End Select
     End Function
 
-    'Private Sub SetStartup(runOnStartup As Boolean)
-    '    Dim startupFolder As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
-    '    Dim shortcutPath As String = Path.Combine(startupFolder, "EasyTo-Do.lnk")
-
-    '    If runOnStartup Then
-    '        ' Create a shortcut in the Startup folder
-    '        Dim shell As Object = CreateObject("WScript.Shell")
-    '        Dim shortcut As Object = shell.CreateShortcut(shortcutPath)
-    '        shortcut.TargetPath = Application.ExecutablePath
-    '        shortcut.Save()
-    '    Else
-    '        ' Delete the shortcut if it exists
-    '        If File.Exists(shortcutPath) Then
-    '            File.Delete(shortcutPath)
-    '        End If
-    '    End If
-    'End Sub
-
     Private Sub CloseSettingsDialog_Button_Click(sender As Object, e As EventArgs) Handles CloseSettingsDialog_Button.Click
         Me.Close()
     End Sub
-
 End Class

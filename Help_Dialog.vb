@@ -38,7 +38,7 @@
     End Sub
 
     ' Handle the LinkClicked event to open the URL in the default web browser
-    Private Sub RichTextBox1_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles RichTextBox1.LinkClicked
+    Private Sub RichTextBox1_LinkClicked(sender As Object, e As LinkClickedEventArgs) Handles AboutTextBox.LinkClicked
         Process.Start(New ProcessStartInfo(e.LinkText) With {.UseShellExecute = True})
     End Sub
 
@@ -51,5 +51,4 @@
         Me.ActiveControl = Nothing
         MainWindow.CheckForUpdate(0)
     End Sub
-
 End Class
