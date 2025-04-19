@@ -1,0 +1,23 @@
+EasyTo-Do Custom License Agreement  
+Version 1.0.2 — April 2025
+
+© 2025 Nischall01. All rights reserved.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to use and modify the Software for personal and commercial purposes, subject to the following conditions:
+
+1. Redistribution Restrictions:  
+Redistribution of the Software, whether in its original form or with minimal alterations, is strictly prohibited. Redistribution is permitted only if the Software has been materially modified either:
+   (a) through significant visual changes that are plainly apparent to an end-user, or  
+   (b) through substantial functional changes to its features or behavior.
+
+2. Attribution Requirement:  
+Any redistributed, modified version of the Software must clearly acknowledge the original author (“Nischall01”) in both the user interface and the accompanying documentation.
+
+3. Modification Disclosure:  
+Any redistributed, modified version must include a clear description of the modifications made, and such modifications must not misrepresent the Software as the sole creation of another party.
+
+4. Source Availability:  
+If the modified Software is distributed in compiled or executable form, the corresponding modified source code must also be made available to the public upon request, unless otherwise agreed to in writing by the copyright holder.
+
+5. Disclaimer of Warranty:  
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

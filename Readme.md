@@ -13,7 +13,6 @@ EasyTo-Do is a task management windows appliction designed especially for desk w
 ### Customization
 
 * Light/Dark Mode: Choose between light and dark themes to match your preference.
-* Custom Mode: Personalize the app's appearance with the in-development custom mode.
 * User Profile Settings: Manage your user profile, including profile picture and username.
 
 ### Time Format
@@ -51,3 +50,6 @@ Download [latest EasyTo-Do](https://github.com/Nischall01/EasyTo-do/releases/lat
 
 * Right click the 'Add Reminder' button: Make sure the Task properties is expanded and the task is selected. If the selected task has a reminder set, the reminder time will be displayed on the button. Right click the button and click the 'Remove' popup option to remove the reminder.
 
+# License
+
+This project is licensed under the **EasyTo-Do Custom License** — see [LICENSE.txt](./LICENSE.txt) for more details.
