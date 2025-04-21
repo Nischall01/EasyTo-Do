@@ -410,8 +410,6 @@ Public Class MainWindow
 
                 conn.Close()
             End Using
-
-            MessageBox.Show("No existing database found; A new one has been created successfully.", "Database Initialization", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Catch ex As Exception
             MessageBox.Show($"Error creating database: {ex.Message}")
         End Try
@@ -997,7 +995,7 @@ Public Class MainWindow
 
         My.Settings.IsPfpDefault = True
         My.Settings.PfpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Defaults\DefaultPfp.png")
-        My.Settings.Username = "I'm Batman"
+        My.Settings.Username = "Batman"
         Username_Label.ResetText()
         Username_Label.Text = My.Settings.Username
 
