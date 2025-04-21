@@ -1,23 +1,42 @@
-EasyTo-Do Custom License Agreement  
+EasyTo-Do Open Source License
 Version 1.0.2 — April 2025
 
 © 2025 Nischall01. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to use and modify the Software for personal and commercial purposes, subject to the following conditions:
+Terms and Conditions:
 
-1. Redistribution Restrictions:  
-Redistribution of the Software, whether in its original form or with minimal alterations, is strictly prohibited. Redistribution is permitted only if the Software has been materially modified either:
-   (a) through significant visual changes that are plainly apparent to an end-user, or  
-   (b) through substantial functional changes to its features or behavior.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, subject to the following conditions:
 
-2. Attribution Requirement:  
-Any redistributed, modified version of the Software must clearly acknowledge the original author (“Nischall01”) in both the user interface and the accompanying documentation.
+    1. Attribution Requirement:
+       Any redistributed version of the Software, whether modified or unmodified, must include:
 
-3. Modification Disclosure:  
-Any redistributed, modified version must include a clear description of the modifications made, and such modifications must not misrepresent the Software as the sole creation of another party.
+    - The original copyright notice and this license text.
 
-4. Source Availability:  
-If the modified Software is distributed in compiled or executable form, the corresponding modified source code must also be made available to the public upon request, unless otherwise agreed to in writing by the copyright holder.
+    - Acknowledgment of the original author ("Nischall01") in at least one of the following locations:
 
-5. Disclaimer of Warranty:  
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+        - The user interface (via an "About" section, splash screen, or similar location).
+
+        - The accompanying documentation.
+
+        - The source code header comments.
+
+    2. Modification Disclosure:
+       Any redistributed, modified version must include a clear description of the modifications made, either in the          documentation or in the source code itself.
+
+    3. Source Code Availability:
+       If the Software is distributed in compiled or executable form, the corresponding source code must be made available to the recipients under the same terms as this license, through one of the following methods:
+
+    - Included with the distributed Software.
+
+    - Accessible via a publicly available repository.
+
+    - Provided upon request for a reasonable period of at least three years.
+
+    4. No Misrepresentation:
+    The Software, whether modified or unmodified, must not be misrepresented as being the original work of someone other than the original author.
+
+    5. License Propagation:
+    All copies or substantial portions of the Software, including any modifications, must be covered by this license.
+
+    6. Disclaimer of Warranty:
+       THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
